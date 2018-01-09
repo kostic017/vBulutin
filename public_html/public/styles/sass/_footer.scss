@@ -1,0 +1,58 @@
+.forum-stats {
+    ul {
+        display         : flex;
+        justify-content : center;
+    }
+
+    li {
+        @include margins-but(last, right, 20px);
+    }
+
+    strong {
+        padding      : 2px 5px;
+        display      : inline-block;
+        margin-right : 2px;
+    }
+}
+
+.online-users {
+    padding      : 10px;
+    border-width : 1px;
+    border-style : solid;
+
+    ul {
+        display : flex;
+    }
+
+    .info {
+        display         : flex;
+        justify-content : space-between;
+
+        li {
+            margin-left : 15px;
+        }
+    }
+
+    .list {
+        margin : 15px 0;
+        @include comma-separated-list;
+    }
+}
+
+.footer-links {
+    display         : flex;
+    justify-content : space-between;
+
+    div:first-child {
+        display : flex;
+    }
+
+    ul {
+        display     : flex;
+        margin-left : 15px;
+    }
+
+    li {
+        margin-right : 15px;
+    }
+}

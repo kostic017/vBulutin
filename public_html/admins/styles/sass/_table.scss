@@ -1,0 +1,94 @@
+.table-title {
+    margin: 20px 0 15px;
+    font-size: 30px;
+    // color: #fafafa;
+    font-style: normal;
+    text-transform: uppercase;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.table-fill {
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    border-radius: 3px;
+    background: white;
+    table-layout: fixed;
+    border-collapse: collapse;
+    animation: float 5s infinite;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+
+    th {
+        padding: 5px;
+        font-weight: 300;
+        font-size: 1.05em;
+        position: relative;
+        background: #35496f;
+        vertical-align: middle;
+        border-bottom: 4px solid #9ea7af;
+        border-right: 1px solid #263044;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+        &:first-child {
+            border-top-left-radius: 3px;
+        }
+
+        &:last-child {
+            border-top-right-radius: 3px;
+            border-right: none;
+        }
+
+        a {
+            color: #D5DDE5;
+            text-decoration: none;
+        }
+
+    }
+
+    tr {
+        color: #666B85;
+        font-weight: normal;
+        border-top: 1px solid #C1C3D1;
+        border-bottom: 1px solid #C1C3D1;
+        text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+
+        &:first-child {
+            border-top: none;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:nth-child(odd) td {
+            background: #EBEBEB;
+        }
+
+        &:last-child td:first-child {
+            border-bottom-left-radius: 3px;
+        }
+
+        &:last-child td:last-child {
+            border-bottom-right-radius: 3px;
+        }
+
+    }
+
+    td {
+        padding: 5px;
+        background: #FFFFFF;
+        vertical-align: middle;
+        border-right: 1px solid #C1C3D1;
+        text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+
+        &:last-child {
+            border-right: 0px;
+        }
+    }
+
+    .ui-spinner-input {
+        margin: 0;
+        padding: 0.2em;
+    }
+
+}

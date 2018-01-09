@@ -1,0 +1,61 @@
+body {
+    .content-container {
+        display : block;
+    }
+
+    &.sidebar {
+        .content-container {
+            display         : flex;
+            justify-content : space-between;
+        }
+        main {
+            flex-basis : 70%;
+        }
+    }
+
+}
+
+fieldset {
+    margin-bottom : 5px;
+}
+
+legend {
+    padding-right : 5px;
+}
+
+a {
+    text-decoration : none;
+}
+
+ul {
+    margin     : 0;
+    padding    : 0;
+    list-style : none;
+}
+
+nav ul {
+    display : flex;
+}
+
+button {
+    cursor : pointer;
+}
+
+input, textarea, select, button {
+    font : inherit;
+}
+
+input[type="submit"],
+input[type="button"] {
+    cursor : pointer;
+}
+
+header,
+footer,
+section {
+    margin-bottom : 20px;
+}
+
+footer {
+    margin-top : 50px;
+}

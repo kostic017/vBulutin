@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forum41</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background-color: #666;
+            justify-content: center;
+            font-family: "Reenie Beanie", Arial, sans-serif;
+        }
+
+        div {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        a {
+            width: 60%;
+            color: #000;
+            padding: 1em;
+            height: 200px;
+            display: flex;
+            font-size: 180%;
+            min-width: 250px;
+            background: #ffc;
+            font-weight: bold;
+            text-align: center;
+            align-items: center;
+            text-decoration: none;
+            justify-content: center;
+            box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+        }
+
+        span {
+            width: 200px;
+            height: 200px;
+            display: block;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        a#public span {
+            background-image: url(shared/images/user-icon.png);
+        }
+
+        a#admins span {
+            background-image: url(shared/images/admin-icon.png);
+        }
+
+        div:first-child a {
+            z-index: 2;
+            background-color: #cfc;
+            transform: rotate(-6deg);
+        }
+
+        div:last-child a {
+            z-index: 1;
+            background-color: #ccf;
+            transform: rotate(4deg);
+        }
+
+        div a:hover, div a:focus {
+          z-index: 5;
+          position: relative;
+          transform: scale(1.25);
+          box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+        }
+    </style>
+</head>
+
+<body>
+    <div><a href="public/" id="public"><span></span></a></div>
+    <div><a href="admins/" id="admins"><span></span></a></div>
+</body>
+
+</html>

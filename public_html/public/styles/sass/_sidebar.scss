@@ -1,0 +1,70 @@
+.sidebar {
+    flex-basis : 29%;
+
+    section:last-child {
+        margin-bottom : 0;
+    }
+
+    > .title {
+        margin  : 0;
+        padding : 9px;
+    }
+
+    > .content {
+        padding : 10px;
+    }
+}
+
+.sidebar-populartags li {
+    margin-right : 5px;
+    display      : inline-block;
+}
+
+.sidebar-recentstatuses {
+
+    .updates {
+        display    : block;
+        margin-top : 15px;
+    }
+
+    .status {
+        width : 100%;
+
+        p {
+            margin : 3px 0 4px;
+        }
+
+    }
+
+}
+
+.sidebar-tellafriend {
+
+    p {
+        margin-top : 0;
+    }
+
+    textarea,
+    input[type="email"] {
+        width      : 100%;
+        margin-top : 5px;
+        box-sizing : border-box;
+    }
+
+    textarea {
+        resize     : vertical;
+        min-height: 32px;
+        max-height : 150px;
+    }
+
+    input[type="submit"] {
+        padding : 4px 8px;
+    }
+
+}
+
+.sidebar-newmessages {
+    .post-list li {
+        margin-bottom : 10px;
+    }
+}

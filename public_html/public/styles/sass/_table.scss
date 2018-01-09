@@ -1,0 +1,60 @@
+.main-table {
+    width : 100%;
+    @include margins-but(last, bottom, 20px);
+
+    td {
+        width       : 30%;
+        padding     : 15px 30px;
+        white-space : nowrap;
+
+        &:first-child {
+            width         : 100%;
+            position      : relative;
+            padding-left  : 50px;
+            padding-right : 0;
+        }
+    }
+
+}
+
+.table-row {
+
+    .icon {
+        top               : 50%;
+        left              : -28px;
+        width             : 71px;
+        height            : 47px;
+        display           : block;
+        position          : absolute;
+        transform         : translateY(-(41px / 2));
+        background-repeat : no-repeat;
+    }
+
+    .name {
+        display : block;
+    }
+
+    .desc {
+        margin  : 6px 0;
+        display : block;
+    }
+
+}
+
+.sort-bar {
+    margin-bottom : 0;
+
+    ul {
+        display : flex;
+    }
+
+    li {
+        margin-right : 10px;
+    }
+
+    a {
+        display : block;
+        padding : 0 5px;
+    }
+
+}
