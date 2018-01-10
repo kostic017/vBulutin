@@ -45,11 +45,15 @@
         }
 
         span {
+            color: white;
             width: 200px;
             height: 200px;
-            display: block;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
             background-size: 100% 100%;
             background-repeat: no-repeat;
+            text-shadow: 4px 4px 2px #000;
             background-position: center center;
         }
 
@@ -83,8 +87,8 @@
 </head>
 
 <body>
-    <div><a href="public/" id="public"><span></span></a></div>
-    <div><a href="admins/" id="admins"><span></span></a></div>
+    <div><a href="public/" id="public"><span>Javnost</span></a></div>
+    <div><a href="admins/" id="admins"><span>Administratori</span></a></div>
 </body>
 
 </html>
