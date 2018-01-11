@@ -1,7 +1,6 @@
 <?php require_once "scripts/php/temp.php"; ?>
 <?php require_once "../shared/templates/header.php"; ?>
     <link rel="stylesheet" href="schemes/scheme.css">
-    <script src="scripts/js/sheditor.js"></script>
 </head>
 
 <body <?=$isSidebarSet ? "class='sidebar'" : ""?>>

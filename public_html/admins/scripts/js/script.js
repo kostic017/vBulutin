@@ -1,160 +1,24 @@
 $(function () {
-    // Da se upamti kartica koja je bila
-    // otvorena pre refresovanja stranice.
-    let oldIndex;
-    try {
-        oldIndex = window.sessionStorage.getItem("tabs-index");
-    } catch (e) {
-        oldIndex = 0;
-    }
+    $(`a[href="${getFileName()}"]`).addClass("active");
 
-    $(".jui-tabs").tabs({
-        active: oldIndex,
-        activate(event, ui) {
-            const newIndex = ui.newTab.parent().children().index(ui.newTab);
-            window.sessionStorage.setItem("tabs-index", newIndex);
-        },
-        load() {
-            setupWidgets();
-            setupPositionsSaving();
-            setupSpecificWidgets();
-            setupSortingAction();
-            setupFormValidation();
-            forcingParentsSectionToChildren();
-        },
-        beforeLoad(event, ui) {
-            ui.jqXHR.fail(function () {
-                ui.panel.html("Došlo je do greške, molimo prijavite administratoru.");
-            });
-        }
-    });
+    setupWidgets();
+    setupPositionsSaving();
+    setupSortingAction();
+    setupFormValidation();
+    forcingParentsSectionToChildren();
 });
 
-function updateRowAction(tableName, id) {
-    const table = $(`table[data-name="${tableName}"]`);
-
-    const insertRow = $("tr.insert-row", table);
-    const insertButtonCell = $("td:first-child", insertRow);
-    const insertRowDataCells = $("td:not(:first-child)", insertRow);
-    const dataRowDataCells = $(`tr[data-id="${id}"] td:not(:first-child)`, table);
-
-    // Pozicija, roditelj i sekcija se menjaju samo preko positioning.php.
-    $("select[name=parentid], select[name=sections_id]", insertRowDataCells).selectmenu("disable");
-
-    let index = 0;
-    // Polja za unos popunim postojecim podacima posto se radi o njihovom editovanju.
-    insertRowDataCells.each(function() {
-        const control = $("> *:first-child", this);
-        const data = dataRowDataCells.eq(index++).data("value");
-
-        if (control.hasClass("ui-spinner")) {
-            $(".jui-spinner", control).spinner("value", data);
-        } else if (control.hasClass("jui-selectmenu")) {
-            control.val(data).selectmenu("refresh");
-        } else if (control.is("input[type=text]")) {
-            control.val(data);
-        } else if (control.is("input[type=checkbox]")) {
-            if (data === 0) {
-                control.removeAttr("checked");
-            } else {
-                control.attr("checked", "");
-            }
-        }
-    });
-
-    // Posto je cancel dugme tipa submit, stranica se automatski refresuje i sve se vraca na staro.
-    insertButtonCell.html(`
-        <button type="submit" class="icon icon-okay" name="${tableName}_update" value="${id}"></button>
-        <button type="submit" class="icon icon-cancel"></button>
-    `);
-}
-
-function setupSpecificWidgets() {
-    $(".dd").nestable({
-        maxDepth: 2
-    });
-    $(".dd-handle").on("change", function() {
-        $("#message").html("");
-    });
-
-    $(".sortable-sections").sortable({
-        handle: ".section-header",
-        connectWith: ".sortable-sections"
-    });
-
-    $(".forums-tree-controls").on("click", function(e) {
-        const action = $(e.target).text();
-        if (isEqualToAnyWord("- +", action)) {
-            const dd = $(this).parents(".section-header").siblings(".dd"); // zanima nas odredjena sekcija
-            if (action === "+") {
-                dd.nestable("expandAll");
-            } else if (action === "-") {
-                dd.nestable("collapseAll");
-            }
-        }
-    });
-
-    $(".sections-tree-controls").on("click", function(e) {
-        const action = $(e.target).text();
-        if (isEqualToAnyWord("- +", action)) {
-            const dds = $(".dd"); // zanimaju nas sve sekcije
-            const btns = $(".section-tree-control");
-            if (action === "-") {
-                dds.hide();
-                btns.attr("data-action", "");
-            } else if (action === "+") {
-                dds.show();
-                btns.attr("data-action", "collapse");
-            }
-        }
-    });
-
-    $(".section-tree-control").on("click", function() {
-        const dds = $(this).parents(".section-header").siblings(".dd");
-        if ($(this).attr("data-action") === "collapse") {
-            dds.hide();
-            $(this).attr("data-action", "");
-        } else {
-            dds.show();
-            $(this).attr("data-action", "collapse");
-        }
-    });
-}
-
-function setupPositionsSaving() {
-    $("button[name=save]").on("click", function() {
-        const data = {};
-        $(".dd").each(function() {
-            data[$(this).data("sectionid")] = $(this).nestable("serialize");
-        });
-        $.post("scripts/php/ajax.php",
-            {
-                data,
-                job: "save_positions",
-            },
-            (returnMessage) => {
-                const message = hasSubstring(returnMessage, "error") ?
-                    "Došlo je do greške prilikom snimanja." :
-                    "Snimanje uspešno izvršeno.";
-                $("#message").html(`${message}<br><br>`);
-            }
-        );
-    });
-}
-
-function areYouSure() {
-    return confirm("Sigurno želite da izvršite brisanje?");
-}
+// ==== TABLES ====
 
 function setupFormValidation() {
-    $("form [type=submit]").click(function() {
+    $("form [type=submit]").click(function () {
         // Vodim racuna o tome koje dugme je kliknuto zato sto hocu da
         // validujem formu samo ako se radi o update ili insert akciji.
         $("[type=submit]", $(this).parents("form")).removeAttr("clicked");
         $(this).attr("clicked", "");
     });
 
-    $("form").submit(function() {
+    $("form").submit(function () {
         // Proveravam da li je update ili insert akcija.
         const submitButton = $("[type=submit][clicked]").attr("name");
         if (!(hasSubstring(submitButton, "insert") || hasSubstring(submitButton, "update"))) {
@@ -162,7 +26,7 @@ function setupFormValidation() {
         }
 
         const problems = [];
-        $(this).find("[data-required]").each(function() {
+        $(this).find("[data-required]").each(function () {
             if (!$(this).is("[disabled]") && isEmptyString($(this).val())) {
                 problems.push(`${$(this).attr("name")}`);
             }
@@ -184,7 +48,7 @@ function setupSortingAction() {
     const overlay = $("#overlay");
     $("table[data-name] th:nth-child(2) .icon-sort").addClass("icon-ascending");
 
-    $(".btn-sort").on("click", function() {
+    $(".btn-sort").on("click", function () {
         let order;
         const sortIcon = $(this).siblings(".icon-sort");
         const tableName = $(this).parents("table").data("name");
@@ -225,21 +89,138 @@ function forcingParentsSectionToChildren() {
     const cParentId = $("select[name=parentid]");
     const cSectionsId = $("select[name=sections_id]");
 
-    cParentId.on("change", function() {
+    cParentId.on("change", function () {
         if ($(this).val() === "") {
-            cSectionsId.val("");
             cSectionsId.prop("disabled", false);
+            cSectionsId.val($("option:first-child", cSectionsId).val());
         } else {
             $.post("scripts/php/ajax.php",
                 {
                     id: $(this).val(),
                     job: "parent_section"
                 },
-                function(sectionId) {
+                function (sectionId) {
                     cSectionsId.val(sectionId);
                     cSectionsId.prop("disabled", true);
                 }
             );
         }
     });
+}
+
+function updateRowAction(tableName, id) {
+    const table = $(`table[data-name="${tableName}"]`);
+
+    const insertRow = $("tr.insert-row", table);
+    const insertButtonCell = $("td:first-child", insertRow);
+    const insertRowDataCells = $("td:not(:first-child)", insertRow);
+    const dataRowDataCells = $(`tr[data-id="${id}"] td:not(:first-child)`, table);
+
+    // Pozicija, roditelj i sekcija se menjaju samo preko positioning.php.
+    $("select[name=parentid], select[name=sections_id]", insertRowDataCells).selectmenu("disable");
+
+    let index = 0;
+    // Polja za unos popunim postojecim podacima posto se radi o njihovom editovanju.
+    insertRowDataCells.each(function () {
+        const control = $("> *:first-child", this);
+        const data = dataRowDataCells.eq(index++).data("value");
+
+        if (control.is("input[type=checkbox]")) {
+            if (data === 0) {
+                control.removeAttr("checked");
+            } else {
+                control.attr("checked", "");
+            }
+        } else {
+            control.val(data);
+        }
+    });
+
+    // Cancel dugme je tipa submit, pa ce klik na njega osveziti stranicu i
+    // sve ce se vratiti na staro sto znaci da nista ne mora da se hendluje posebno.
+    insertButtonCell.html(`
+        <button type="submit" class="icon icon-okay" name="${tableName}_update" value="${id}"></button>
+        <button type="submit" class="icon icon-cancel"></button>
+    `);
+}
+
+// ==== POSITIONING ====
+
+function setupWidgets() {
+    $(".dd").nestable({
+        maxDepth: 2
+    });
+
+    $(".sortable-sections").sortable({
+        handle: ".section-header",
+        connectWith: ".sortable-sections"
+    });
+
+    $(".forums-tree-controls").on("click", function (e) {
+        const action = $(e.target).text();
+        if (isEqualToAnyWord("- +", action)) {
+            const dd = $(this).parents(".section-header").siblings(".dd"); // zanima nas odredjena sekcija
+            if (action === "+") {
+                dd.nestable("expandAll");
+            } else if (action === "-") {
+                dd.nestable("collapseAll");
+            }
+        }
+    });
+
+    $(".sections-tree-controls").on("click", function (e) {
+        const action = $(e.target).text();
+        if (isEqualToAnyWord("- +", action)) {
+            const dds = $(".dd"); // zanimaju nas sve sekcije
+            const btns = $(".section-tree-control");
+            if (action === "-") {
+                dds.hide();
+                btns.attr("data-action", "");
+            } else if (action === "+") {
+                dds.show();
+                btns.attr("data-action", "collapse");
+            }
+        }
+    });
+
+    $(".section-tree-control").on("click", function () {
+        const dds = $(this).parents(".section-header").siblings(".dd");
+        if ($(this).attr("data-action") === "collapse") {
+            dds.hide();
+            $(this).attr("data-action", "");
+        } else {
+            dds.show();
+            $(this).attr("data-action", "collapse");
+        }
+    });
+}
+
+function setupPositionsSaving() {
+    $("button[name=save]").on("click", function() {
+        const data = {};
+        $(".dd").each(function() {
+            data[$(this).data("sectionid")] = $(this).nestable("serialize");
+        });
+        $.post("scripts/php/ajax.php",
+            {
+                data,
+                job: "save_positions",
+            },
+            (returnMessage) => {
+                const message = hasSubstring(returnMessage, "error") ?
+                    "Došlo je do greške prilikom snimanja." :
+                    "Snimanje uspešno izvršeno.";
+                $("#message").html(`${message}<br><br>`);
+                setTimeout(function() {
+                    $("#message").html("");
+                }, 3000);
+            }
+        );
+    });
+}
+
+// ==== OTHER ====
+
+function areYouSure() {
+    return confirm("Sigurno želite da izvršite brisanje?");
 }

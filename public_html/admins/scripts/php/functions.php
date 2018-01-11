@@ -1,7 +1,6 @@
 <?php
     function getSelectmenuBasedOnArray($dom, $columnName) {
         $selectMenu = $dom->createElement("select");
-        $selectMenu->setAttribute("class", "jui-selectmenu");
 
         if ($columnName === "parentid") {
             $rows = qGetForums(true);
@@ -31,7 +30,6 @@
             switch ($columnInfo["type"]) {
                 case "int": {
                     $control->setAttribute("type", "number");
-                    $control->setAttribute("class", "jui-spinner");
                 } break;
                 case "varchar": {
                     $control->setAttribute("type", "text");

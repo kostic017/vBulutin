@@ -1,8 +1,7 @@
 .table-title {
-    margin: 20px 0 15px;
     font-size: 30px;
-    // color: #fafafa;
     font-style: normal;
+    margin: 20px 0 15px;
     text-transform: uppercase;
     text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
 }
@@ -24,7 +23,6 @@
         font-size: 1.05em;
         position: relative;
         background: #35496f;
-        vertical-align: middle;
         border-bottom: 4px solid #9ea7af;
         border-right: 1px solid #263044;
         text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -34,8 +32,8 @@
         }
 
         &:last-child {
-            border-top-right-radius: 3px;
             border-right: none;
+            border-top-right-radius: 3px;
         }
 
         a {
@@ -84,11 +82,6 @@
         &:last-child {
             border-right: 0px;
         }
-    }
-
-    .ui-spinner-input {
-        margin: 0;
-        padding: 0.2em;
     }
 
 }
