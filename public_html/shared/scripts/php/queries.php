@@ -1,6 +1,6 @@
 <?php
 
-    function qGetForumsBySectionId($sectionId, $rootOnly = false, $sort = SORT::DEFAULT) {
+    function qGetForumsBySectionId($sectionId, $rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
         $sectionId = dbEscape($sectionId);
         $sortColName = dbEscape($sort["columnName"]);
         $sortOrder = dbEscape($sort["order"]);
@@ -16,7 +16,7 @@
         return execAndFetchAssoc($sql, FETCH::ALL);
     }
 
-    function qGetForumsByParentId($parentId, $sort = SORT::DEFAULT) {
+    function qGetForumsByParentId($parentId, $sort = SORT::DEFAULT_VALUE) {
         $parentId = dbEscape($parentId);
         $sortColName = dbEscape($sort["columnName"]);
         $sortOrder = dbEscape($sort["order"]);
@@ -29,7 +29,7 @@
         return execAndFetchAssoc($sql, FETCH::ALL);
     }
 
-    function qGetSections($sort = SORT::DEFAULT) {
+    function qGetSections($sort = SORT::DEFAULT_VALUE) {
         $sortColName = dbEscape($sort["columnName"]);
         $sortOrder = dbEscape($sort["order"]);
 

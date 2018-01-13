@@ -21,6 +21,6 @@
     }
 
     abstract class SORT {
-        const DEFAULT = ["columnName" => "id", "order" => "ASC"];
+        const DEFAULT_VALUE = ["columnName" => "id", "order" => "ASC"];
         const POSITION_ASCENDING = ["columnName" => "position", "order" => "ASC"];
     }

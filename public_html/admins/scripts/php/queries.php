@@ -153,7 +153,7 @@
         return execAndFetchAssoc($sql);
     }
 
-    function qGetForums($rootOnly = false, $sort = SORT::DEFAULT) {
+    function qGetForums($rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
         $sortColName = dbEscape($sort["columnName"]);
         $sortOrder = dbEscape($sort["order"]);
 
