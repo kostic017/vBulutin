@@ -11,7 +11,7 @@
 
         <title>forum41</title>
 
-        <link rel="icon" href="/shared/images/favicon.png">
+        <link rel="icon" href="/shared/images/favicon.ico">
 
         <link rel="stylesheet" href="/shared/libraries/jquery-ui/jquery-ui.min.css">
         <link rel="stylesheet" href="/shared/libraries/jquery-ui/jquery-ui.theme.min.css">
