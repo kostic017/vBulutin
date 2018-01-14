@@ -229,10 +229,6 @@ function setupShclassSelect() {
     //                              Pomocne funkcije                              //
     // ************************************************************************** //
     
-    function unfocusElements() {
-        $(".focused").removeClass("focused").css("outline", "none");
-    }
-
     function revertControlsToNullValues() {
         const accordion = $("#accordion");
         $("select", accordion).val("");
@@ -291,6 +287,10 @@ function setupShclassSelect() {
         }
     }
 
+}
+
+function unfocusElements() {
+    $(".focused").removeClass("focused").css("outline", "none");
 }
 
 function setToogleForBackgroundEndColor() {
