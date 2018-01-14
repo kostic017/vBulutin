@@ -74,7 +74,7 @@ function setupWidgets() {
                 $("body").css("overflow", "inherit");
             },
             close() {
-                unFocusElements();
+                unfocusElements();
                 $("#target-select select").val("");
                 $("#accordion").accordion("option", "disabled", true);
             }
@@ -228,6 +228,10 @@ function setupShclassSelect() {
     // ************************************************************************** //
     //                              Pomocne funkcije                              //
     // ************************************************************************** //
+    
+    function unfocusElements() {
+        $(".focused").removeClass("focused").css("outline", "none");
+    }
 
     function revertControlsToNullValues() {
         const accordion = $("#accordion");
@@ -239,7 +243,7 @@ function setupShclassSelect() {
     function focusElementsToStyle(shclass) {
         const targets = $(`[data-shclass~=${shclass}]`);
 
-        $(".focused").removeClass("focused").css("outline", "none");
+        unfocusElements();
         targets.addClass("focused");
 
         $(".focused").css({
