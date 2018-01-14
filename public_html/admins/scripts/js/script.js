@@ -158,10 +158,12 @@ function updateRowAction(tableName, id) {
 
 function setupWidgets() {
     $(".dd").nestable({
-        maxDepth: 2
+        maxDepth: 2,
+        scroll: false
     });
 
     $(".sortable-sections").sortable({
+        scroll: false,
         handle: ".section-header",
         connectWith: ".sortable-sections"
     });
