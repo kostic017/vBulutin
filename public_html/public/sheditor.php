@@ -1,3 +1,5 @@
+<?php $fonts = array_filter(glob("../shared/fonts/*"), "is_dir"); ?>
+
 <div id="sheditor" title="Scheme Editor">
 
     <fieldset>
@@ -66,7 +68,22 @@
             </div>
             <div data-property="font-family">
                 <h4>Family</h4>
-                <select></select>
+                <?php if (count($fonts) > 0): ?>
+                    <select>
+                        <?php foreach ($fonts as $font) : ?>
+                            <?php $fontName = basename($font); ?>
+                            <option value="<?=$fontName?>"><?=$fontName?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
+                <select>
+                    <option value="serif">serif</option>
+                    <option value="sans-serif">sans-serif</option>
+                    <option value="monospace">monospace</option>
+                    <option value="cursive">cursive</option>
+                    <option value="fantasy">fantasy</option>
+                    <option value="system-ui">system-ui</option>
+                </select>
             </div>
         </div>
         <!-- Font -->
