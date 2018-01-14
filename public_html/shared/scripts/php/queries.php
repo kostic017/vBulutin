@@ -1,5 +1,16 @@
 <?php
 
+    function qGetRowById($id, $table) {
+        $id = dbEscape($id);
+        $table = dbEscape($table);
+
+        $sql = "SELECT * ";
+        $sql .= "FROM {$table} ";
+        $sql .= "WHERE id='{$id}' ";
+
+        return execAndFetchAssoc($sql);
+    }
+
     function qGetForumsBySectionId($sectionId, $rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
         $sectionId = dbEscape($sectionId);
         $sortColName = dbEscape($sort["columnName"]);

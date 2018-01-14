@@ -1,7 +1,7 @@
 <?php
     require_once "header.php";
 
-    if (($forumId = $_GET["id"] ?? "") === "") {
+    if (($id = $_GET["id"] ?? "") === "") {
         redirectTo("/public/");
     }
 ?>

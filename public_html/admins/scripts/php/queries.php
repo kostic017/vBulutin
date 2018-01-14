@@ -142,17 +142,6 @@
         executeQuery("ALTER TABLE {$tableName} AUTO_INCREMENT=1");
     }
 
-    function qGetRowById($id, $table) {
-        $id = dbEscape($id);
-        $table = dbEscape($table);
-
-        $sql = "SELECT * ";
-        $sql .= "FROM {$table} ";
-        $sql .= "WHERE id='{$id}' ";
-
-        return execAndFetchAssoc($sql);
-    }
-
     function qGetForums($rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
         $sortColName = dbEscape($sort["columnName"]);
         $sortOrder = dbEscape($sort["order"]);
