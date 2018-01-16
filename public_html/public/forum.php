@@ -4,6 +4,8 @@
     if (($id = $_GET["id"] ?? "") === "") {
         redirectTo("/public/");
     }
+    
+    $topics = qGetTopicsByForumId($id);
 ?>
 
 <main>
@@ -26,26 +28,28 @@
 
     <table data-shclass="main-table" class="main-table">
 
-        <tr data-shclass="table-row" class="table-row">
-            <td>
-                <span class="icon icon-forum-new"></span>
-                <a href="topic.php" class="name">Neka tema</a>
-                <span class="desc">Započeo ja.</span>
-            </td>
-            <td>
-                <strong>1</strong> odgovor<br>
-                <strong>50000</strong> pregleda
-            </td>
-            <td>
-                <div class="post-info">
-                    <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
-                    <ul>
-                        <li><a href="">Bitter</a></li>
-                        <li>23 april. 2011.</li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
+        <?php foreach ($topics as $topic): ?>
+            <tr data-shclass="table-row" class="table-row">
+                <td>
+                    <span class="icon icon-forum-new"></span>
+                    <a href="topic.php" class="name"><?=$topic["title"]?></a>
+                    <span class="desc">Prvih nekoliko recenica prvog posta...</span>
+                </td>
+                <td>
+                    <strong><?=qCountPostsInTopic($topic["id"]) - 1?></strong> odgovor<br>
+                    <strong>50000</strong> pregleda
+                </td>
+                <td>
+                    <div class="post-info">
+                        <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
+                        <ul>
+                            <li><a href=""><?=qGetTopicStarterUsername($topic["firstpost_id"])?></a></li>
+                            <li><?=$topic["started"]?></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
 
     </table>
 
