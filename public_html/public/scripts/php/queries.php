@@ -16,22 +16,6 @@
         return execAndFetchAssoc($sql, FETCH::ALL);
     }
     
-    function qGetTopicStarterUsername($firstPostId) {
-        $firstPostId = dbEscape($firstPostId);
-        
-        $sql = "SELECT users_id ";
-        $sql .= "FROM posts ";
-        $sql .= "WHERE id='{$firstPostId}' ";
-        
-        $userId = execAndFetchAssoc($sql)["users_id"];
-        
-        $sql = "SELECT username ";
-        $sql .= "FROM users ";
-        $sql .= "WHERE id='{$userId}' ";
-        
-        return execAndFetchAssoc($sql)["username"];
-    }
-    
     function qCountPostsInTopic($topicId) {
         $topicId = dbEscape($topicId);
         
@@ -79,12 +63,39 @@
         return $count;
     }
     
-    function getNewestTopicInForum($forumId) {
-        $forumId = dbEscape($forumId);
+    function qGetTopicStarterUsername($firstPostId) {
+        $firstPostId = dbEscape($firstPostId);
         
-        $sql = "SELECT ";
+        $sql = "SELECT users_id ";
+        $sql .= "FROM posts ";
+        $sql .= "WHERE id='{$firstPostId}' ";
+        
+        $userId = execAndFetchAssoc($sql)["users_id"];
+        
+        $sql = "SELECT username ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE id='{$userId}' ";
+        
+        return execAndFetchAssoc($sql)["username"];
     }
     
-    function getNewestPosterInForum($forumId) {
+    function qGetTopicLastPosterUsername($topicId) {
+        $topicId = dbEscape($topicId);
         
+        $sql = "SELECT users_id ";
+        $sql .= "FROM posts ";
+        $sql .= "WHERE topics_id='{$topicId}' ";
+        $sql .= "AND posted=( ";
+        $sql .= "   SELECT MAX(posted) ";
+        $sql .= "   FROM posts ";
+        $sql .= "   WHERE topics_id='{$topicId}' ";
+        $sql .= ") ";
+        
+        $userId = execAndFetchAssoc($sql)["users_id"];
+        
+        $sql = "SELECT username ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE id='{$userId}' ";
+        
+        return execAndFetchAssoc($sql)["username"];
     }

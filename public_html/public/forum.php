@@ -43,8 +43,9 @@
                     <div class="post-info">
                         <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
                         <ul>
-                            <li><a href=""><?=qGetTopicStarterUsername($topic["firstpost_id"])?></a></li>
-                            <li><?=$topic["started"]?></li>
+                            <li><a href=""><?=qGetTopicLastPosterUsername($topic["id"])?></a></li>
+                            <li><?=convertMysqlDatetimeToPhpTime($topic["updated"])?></li>
+                            <li><?=convertMysqlDatetimeToPhpDate($topic["updated"])?></li>
                         </ul>
                     </div>
                 </td>
