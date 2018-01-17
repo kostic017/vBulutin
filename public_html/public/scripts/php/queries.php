@@ -41,3 +41,50 @@
         
         return execAndFetchAssoc($sql)["count"];
     }
+    
+    function qCountTopicsInForum($forumId) {
+        $forumId = dbEscape($forumId);
+        
+        $sql = "SELECT COUNT(*) AS count ";
+        $sql .= "FROM topics ";
+        $sql .= "WHERE forums_id='{$forumId}' ";
+        
+        return execAndFetchAssoc($sql)["count"];
+    }
+    
+    function qCountPostsInForum($forumId) {
+        $count = 0;
+        $topics = qGetTopicsByForumId($forumId);
+        foreach ($topics as $topic) {
+            $count += qCountPostsInTopic($topic["id"]);
+        }
+        return $count;
+    }
+    
+    function qCountTopicsInRootForum($forumId) {
+        $count = qCountTopicsInForum($forumId);
+        $childForums = qGetForumsByParentId($forumId);
+        foreach ($childForums as $childForum) {
+            $count += qCountTopicsInForum($childForum["id"]);
+        }
+        return $count;
+    }
+    
+    function qCountPostsInRootForum($forumId) {
+        $count = qCountPostsInForum($forumId);
+        $childForums = qGetForumsByParentId($forumId);
+        foreach ($childForums as $childForum) {
+            $count += qCountPostsInForum($childForum["id"]);
+        }
+        return $count;
+    }
+    
+    function getNewestTopicInForum($forumId) {
+        $forumId = dbEscape($forumId);
+        
+        $sql = "SELECT ";
+    }
+    
+    function getNewestPosterInForum($forumId) {
+        
+    }

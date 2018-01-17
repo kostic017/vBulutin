@@ -32,8 +32,8 @@
                 <?php endif; ?>
             </td>
             <td>
-                <strong>3</strong> teme<br>
-                <strong>1</strong> odgovor
+                <strong><?=qCountTopicsInRootForum($rootForum["id"])?></strong> tema/e<br>
+                <strong><?=qCountPostsInRootForum($rootForum["id"])?></strong> poruka/e
             </td>
             <td>
                 <div class="post-info">
