@@ -1,16 +1,51 @@
 <?php
     require_once "header.php";
+    require_once "../shared/scripts/php/main.php";
 
     if (($id = $_GET["id"] ?? "") === "") {
         redirectTo("/public/");
     }
     
     $topics = qGetTopicsByForumId($id);
+    
+    $childForums = qGetForumsByParentId($id, SORT::POSITION_ASCENDING);
 ?>
 
 <main>
 
     <?php include "topbox.php"; ?>
+    
+    <?php if (count($childForums) > 0): ?>
+        <table data-shclass="main-table" class="main-table">
+            <caption data-shclass="caption captionbar" class="captionbar">
+                <a href="#">Potforumi</a>
+            </caption>
+        
+            <?php foreach ($childForums as $childForum): ?>
+                <tr data-shclass="table-row" class="table-row">
+                    <td>
+                        <span class="icon icon-forum-new"></span>
+                        <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>" class="name"><?=$childForum["title"]?></a>
+                        <span class="desc"><?=$childForum["description"]?></span>
+                    </td>
+                    <td>
+                        <strong><?=qCountTopicsInRootForum($childForum["id"])?></strong> tema/e<br>
+                        <strong><?=qCountPostsInRootForum($childForum["id"])?></strong> poruka/e
+                    </td>
+                    <td>
+                        <div class="post-info">
+                            <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
+                            <ul>
+                                <li><a href="">Zoki</a></li>
+                                <li>14:15</li>
+                                <li>23 april 2011.</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
 
     <section data-shclass="captionbar" class="sort-bar captionbar">
         <ul>
