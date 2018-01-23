@@ -1,15 +1,28 @@
 <?php
-    $data = qGetRowById($id, FILENAME . "s");
+    $thisPage = qGetRowById($id, FILENAME . "s");
 
     if (FILENAME === "section") {
         $follow = "ovu sekciju";
-        $pathSection = $data["title"];
+        
+        $pathSectionTitle = $thisPage["title"];
+        $pathSectionLink = "#";
     } else if (FILENAME === "forum") {
         $follow = "ovaj forum";
         $reply = "Započni novu temu";
-        $section = qGetRowById($data["sections_id"], "sections");
-        $pathSection = $section["title"];
-        $pathForum = $data["title"];
+        
+        $section = qGetRowById($thisPage["sections_id"], "sections");
+        
+        if (isNotBlank($thisPage["parentid"])) {
+           $parent = qGetRowById($thisPage["parentid"], "forums");
+           $pathParentTitle = $parent["title"];
+           $pathParentLink = "forum.php?id={$parent["id"]}";
+        }
+        
+        $pathSectionTitle = $section["title"];
+        $pathSectionLink = "section.php?id={$thisPage["sections_id"]}";
+        
+        $pathForumTitle = $thisPage["title"];
+        $pathForumLink = "#";
     } else if (FILENAME === "topic") {
         $follow = "ovu temu";
         $reply = "Napiši odgovor";
@@ -20,22 +33,25 @@
 
     <nav class="path">
         <ul>
-            <li><a href="">FORUM_NAME</a></li>
-            <li><a href=""><?=$pathSection?></a></li>
-            <?php if (isset($pathForum)): ?>
-                <li><a href=""><?=$pathForum?></a></li>
+            <li><a href="index.php">FORUM_NAME</a></li>
+            <li><a href="<?=$pathSectionLink?>"><?=$pathSectionTitle?></a></li>
+            <?php if (isset($pathParentTitle)): ?>
+                <li><a href="<?=$pathParentLink?>"><?=$pathParentTitle?></a></li>
+            <?php endif; ?>
+            <?php if (isset($pathForumTitle)): ?>
+                <li><a href="<?=$pathForumLink?>"><?=$pathForumTitle?></a></li>
             <?php endif; ?>
         </ul>
     </nav>
 
     <div class="page-info">
 
-        <div data-shclass="page-title" class="title">
+        <div thisPage-shclass="page-title" class="title">
             <?php if (isEqualToAnyWord("forum section", FILENAME)): ?>
-                <h1><?=$data["title"]?></h1>
+                <h1><?=$thisPage["title"]?></h1>
                 
-                <?php if (isNotBlank($data["description"])): ?>
-                    <p class="desc"><?=$data["description"]?></p>
+                <?php if (isNotBlank($thisPage["description"])): ?>
+                    <p class="desc"><?=$thisPage["description"]?></p>
                 <?php endif; ?>
                 
                 <?php if (FILENAME === "forum"): ?>
@@ -66,7 +82,7 @@
             <div class="pages">
                 Stranica 1 od 107
                 <ul>
-                    <li data-shclass="active-page"><a href="">1</a></li>
+                    <li thisPage-shclass="active-page"><a href="">1</a></li>
                     <li><a href="">2</a></li>
                     <li><a href="">3</a></li>
                     <li><a href="">Next</a></li>
@@ -78,7 +94,7 @@
                 <?php if (FILENAME === "forum"): ?>
                     <a href="" id="btn-mark-read">Označi ovaj forum kao pročitan</a>
                 <?php endif; ?>
-                <button data-shclass="btn-reply" id="btn-reply"><?=$reply?></button>
+                <button thisPage-shclass="btn-reply" id="btn-reply"><?=$reply?></button>
             </div>
 
         </div>
