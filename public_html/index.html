@@ -1,98 +1,198 @@
+<!-- https://codepen.io/bradtraversy/pen/dJzzdB -->
+
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Forum41</title>
+        <title>Forum41</title>
 
-    <link rel="icon" href="shared/images/favicon.ico">
+        <link rel="icon" href="shared/images/favicon.ico">
 
-    <style>
-        html {
-            height: 100%;
-        }
+        <style>
+            :root {
+                --container-bg-color: #333;
+                --left-bg-color: rgba(26, 26, 26, 0.4);
+                --left-button-hover-color: rgba(117, 131, 123, 0.3);
+                --right-bg-color: rgba(43, 43, 43, 0.8);
+                --right-button-hover-color: rgba(92, 92, 92, 0.3);
+                --hover-width: 75%;
+                --other-width: 25%;
+                --speed: 1000ms;
+            }
 
-        body {
-            margin: 0;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            background-color: #666;
-            justify-content: center;
-            font-family: "Reenie Beanie", Arial, sans-serif;
-        }
+            html, body {
+                padding: 0;
+                margin: 0;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                width: 100%;
+                height: 100%;
+                overflow-x: hidden;
+            }
 
-        div {
-            width: 50%;
-            display: flex;
-            justify-content: space-around;
-        }
+            h1 {
+                font-size: 4rem;
+                color: #fff;
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                transform: translateX(-50%);
+                white-space: nowrap;
+            }
 
-        a {
-            width: 60%;
-            color: #000;
-            padding: 1em;
-            height: 200px;
-            display: flex;
-            font-size: 180%;
-            min-width: 250px;
-            background: #ffc;
-            font-weight: bold;
-            text-align: center;
-            align-items: center;
-            text-decoration: none;
-            justify-content: center;
-            box-shadow: 5px 5px 7px rgba(33,33,33,.7);
-        }
+            .button {
+                display: block;
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                height: 2.5rem;
+                padding-top: 1.3rem;
+                width: 15rem;
+                text-align: center;
+                color: #fff;
+                border: #fff solid 0.2rem;
+                font-size: 1rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                text-decoration: none;
+                transform: translateX(-50%);
+            }
 
-        span {
-            color: white;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            text-shadow: 4px 4px 2px #000;
-            background-position: center center;
-        }
+            .split.left .button:hover {
+                background-color: var(--left-button-hover-color);
+                border-color: var(--left-button-hover-color);
+            }
 
-        a#public span {
-            background-image: url(shared/images/user-icon.png);
-        }
+            .split.right .button:hover {
+                background-color: var(--right-button-hover-color);
+                border-color: var(--right-button-hover-color);
+            }
 
-        a#admins span {
-            background-image: url(shared/images/admin-icon.png);
-        }
+            .container {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                background: var(--container-bg-color);
+            }
 
-        div:first-child a {
-            z-index: 2;
-            background-color: #cfc;
-            transform: rotate(-6deg);
-        }
+            .split {
+                position: absolute;
+                width: 50%;
+                height: 100%;
+                overflow: hidden;
+            }
 
-        div:last-child a {
-            z-index: 1;
-            background-color: #ccf;
-            transform: rotate(4deg);
-        }
+            .split.left {
+                left: 0;
+                background: url('shared/images/public.jpg') center center no-repeat;
+                background-size: cover;
+            }
 
-        div a:hover, div a:focus {
-          z-index: 5;
-          position: relative;
-          transform: scale(1.25);
-          box-shadow: 10px 10px 7px rgba(0,0,0,.7);
-        }
-    </style>
-</head>
+            .split.left:before {
+                position: absolute;
+                content: "";
+                width: 100%;
+                height: 100%;
+                background: var(--left-bg-color);
+            }
 
-<body>
-    <div><a href="public/" id="public"><span>Javnost</span></a></div>
-    <div><a href="admins/" id="admins"><span>Administratori</span></a></div>
-</body>
+            .split.right {
+                right: 0;
+                background: url('shared/images/administrators.png') center center no-repeat;
+                background-size: cover;
+            }
+
+            .split.right:before {
+                position: absolute;
+                content: "";
+                width: 100%;
+                height: 100%;
+                background: var(--right-bg-color);
+            }
+
+            .split.left, .split.right, .split.right:before, .split.left:before {
+                transition: var(--speed) all ease-in-out;
+            }
+
+            .hover-left .left {
+                width: var(--hover-width);
+            }
+
+            .hover-left .right {
+                width: var(--other-width);
+            }
+
+            .hover-left .right:before {
+                z-index: 2;
+            }
+
+            .hover-right .right {
+                width: var(--hover-width);
+            }
+
+            .hover-right .left {
+                width: var(--other-width);
+            }
+
+            .hover-right .left:before {
+                z-index: 2;
+            }
+
+            @media(max-width: 800px) {
+                h1 {
+                    font-size: 2rem;
+                }
+
+                .button {
+                    width: 12rem;
+                }
+            }
+
+            @media(max-height: 700px) {
+                .button {
+                    top: 70%;
+                }
+            }
+        </style>
+        
+        <script>
+            window.addEventListener("load", function() {
+                const left = document.querySelector(".left");
+                const right = document.querySelector(".right");
+                const container = document.querySelector(".container");
+
+                left.addEventListener("mouseenter", () => {
+                    container.classList.add("hover-left");
+                });
+
+                left.addEventListener("mouseleave", () => {
+                    container.classList.remove("hover-left");
+                });
+
+                right.addEventListener("mouseenter", () => {
+                    container.classList.add("hover-right");
+                });
+
+                right.addEventListener("mouseleave", () => {
+                    container.classList.remove("hover-right");
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="split left">
+                <h1>Za javnost</h1>
+                <a href="public/" class="button">Uđi</a>
+            </div>
+            <div class="split right">
+                <h1>Za administratore</h1>
+                <a href="admins/" class="button">Uđi</a>
+            </div>
+        </div>
+    </body>
 
 </html>
