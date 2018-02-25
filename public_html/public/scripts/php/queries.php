@@ -1,5 +1,67 @@
 <?php
 
+    function qConfirmEmail($data) {
+        $email = dbEscape($data["email"]);
+        $token = dbEscape($data["token"]);
+        
+        $sql = "SELECT id ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE email='{$email}' ";
+        $sql .= "   AND token='{$token}' ";
+        $sql .= "   AND mailConfirmed='0' ";
+        
+        if (isNotBlank($userId = execAndFetchAssoc($sql)["id"] ?? "")) {
+            $sql = "UPDATE users ";
+            $sql .= "SET mailConfirmed='1' ";
+            $sql .= "WHERE id='{$userId}'";
+            executeQuery($sql);
+        }
+    }
+
+    function qLoginUser($data) {
+        $username = dbEscape($data["username"]);
+        $password = dbEscape(password_hash($data["password"], PASSWORD_ALGORITHM));
+        
+        $sql = "SELECT id ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE username='{$username}' ";
+        $sql .= "AND password='{$password}' ";
+        
+        return execAndFetchAssoc($sql)["id"] ?? false;
+    }
+    
+    function qRegisterUser($data) {
+        $username = dbEscape($data["username"]);
+        $password = dbEscape(password_hash($data["password1"], PASSWORD_ALGORITHM));
+        $email = dbEscape($data["email"]);
+        $token = dbEscape($data["token"]);
+        $sex = dbEscape($data["sex"] ?? "");
+        $birthdate = dbEscape($data["birthdate"] ?? "");
+        $avatar = dbEscape($data["avatar"] ?? "");
+        
+        $sql = "INSERT INTO users (id, username, password, email, joined, emailConfirmed, avatar, sex, birthdate) VALUES (";
+    }
+    
+    function isEmailTaken($email) {
+        $email = dbEscape($email);
+        
+        $sql = "SELECT id ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE email='{$email}' ";
+        
+        return isThereAResult($sql);
+    }
+    
+    function qIsUsernameTaken($username) {
+        $username = dbEscape($username);
+        
+        $sql = "SELECT id ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE username='{$username}' ";
+        
+        return isThereAResult($sql);
+    }
+
     function qGetTopicsByForumId($id, $sort = ["started" => "ASC"]) {
         $id = dbEscape($id);
         

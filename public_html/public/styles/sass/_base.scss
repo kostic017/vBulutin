@@ -17,7 +17,7 @@ body {
 
 fieldset {
     margin-bottom : 5px;
-}
+}   
 
 legend {
     padding-right : 5px;
@@ -27,10 +27,8 @@ a {
     text-decoration : none;
 }
 
-ul {
-    margin     : 0;
-    padding    : 0;
-    list-style : none;
+aside ul {
+    @include list-override;
 }
 
 nav ul {

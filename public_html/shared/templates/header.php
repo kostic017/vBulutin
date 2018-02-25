@@ -24,6 +24,7 @@
         <script src="/shared/libraries/jquery-ui/jquery-ui.min.js"></script>
         <script src="/shared/libraries/evol-colorpicker/evol-colorpicker.min.js"></script>
         <script src="/shared/libraries/jquery.nestable.js/jquery.nestable.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
 
         <script src="/shared/scripts/js/functions.js"></script>
 

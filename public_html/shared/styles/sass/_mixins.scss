@@ -1,3 +1,6 @@
+// $child - koje dete (first, last, both) ne treba da ima marginu
+// $side - sa koje strane se udara margina (top, right, bottom, left)
+// $amt - kolika je margina
 @mixin margins-but($child, $side, $amt) {
     margin-#{$side}: $amt;
 
@@ -12,6 +15,12 @@
             margin-#{$side}: 0;
         }
     }
+}
+
+@mixin list-override {
+    margin     : 0;
+    padding    : 0;
+    list-style : none;
 }
 
 @mixin full-block {

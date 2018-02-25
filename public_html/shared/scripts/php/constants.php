@@ -8,7 +8,9 @@
     define("FILENAME", basename($_SERVER["PHP_SELF"], ".php"));
 
     define("DEBUG", true); // false for less verbose error messages
-
+    
+    define(PASSWORD_ALGORITHM, PASSWORD_BCRYPT);
+    
     abstract class VISIBILITY {
         const ALL = 0;
         const VISIBLE = 1;

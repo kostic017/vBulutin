@@ -1,3 +1,7 @@
+footer ul {
+    @include list-override;
+}
+
 .forum-stats {
     ul {
         display         : flex;

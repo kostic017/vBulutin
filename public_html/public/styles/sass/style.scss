@@ -10,6 +10,12 @@
 @import "permissions";
 @import "topic";
 @import "editor";
+@import "registration";
+
+.required-star {
+    color: red;
+    font-weight: bold;
+}
 
 .captionbar {
     line-height: 38px;

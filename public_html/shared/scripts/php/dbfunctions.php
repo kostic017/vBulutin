@@ -11,6 +11,11 @@
             mysqli_close($db);
         }
     }
+    
+    function isThereAResult($sql) {
+        global $db;
+        return mysqli_num_rows(executeQuery($sql)) > 0;
+    }
 
     function executeQuery($sql) {
         global $db;
