@@ -13,6 +13,7 @@
         if (isNotBlank($userId = execAndFetchAssoc($sql)["id"] ?? "")) {
             $sql = "UPDATE users ";
             $sql .= "SET mailConfirmed='1' ";
+            $sql .= "   AND token='' ";
             $sql .= "WHERE id='{$userId}'";
             executeQuery($sql);
         }
@@ -35,14 +36,55 @@
         $password = dbEscape(password_hash($data["password1"], PASSWORD_ALGORITHM));
         $email = dbEscape($data["email"]);
         $token = dbEscape($data["token"]);
-        $sex = dbEscape($data["sex"] ?? "");
-        $birthdate = dbEscape($data["birthdate"] ?? "");
-        $avatar = dbEscape($data["avatar"] ?? "");
         
-        $sql = "INSERT INTO users (id, username, password, email, joined, emailConfirmed, avatar, sex, birthdate) VALUES (";
+        $sex = isNotBlank($data["sex"]) ? q(dbEscape($data["sex"])) : "NULL";
+        $birthdate = isNotBlank($data["birthdate"]) ? q(dbEscape($data["birthdate"])) : "NULL";
+        $avatar = isNotBlank($data["avatar"]) ? q(dbEscape($data["avatar"])) : "NULL";
+        
+        $joinedDate = date("Y-m-d");
+        
+        $sql = "INSERT INTO users (id, username, password, email, joinedDate, emailConfirmed, token, avatar, sex, birthdate) VALUES (";
+        $sql .= "   NULL, '{$username}', '{$password}', '{$email}', '{$joinedDate}', '0', '{$token}', {$avatar}, {$sex}, {$birthdate}";
+        $sql .= ")";
+        
+        executeQuery($sql);
     }
     
-    function isEmailTaken($email) {
+    function qUpdateEmailAndToken($userId, $email, $token) {
+        $userId = dbEscape($userId);
+        $email = dbEscape($email);
+        $token = dbEscape($token);
+        
+        $sql = "UPDATE TABLE users SET ";
+        $sql .= "   email='{$email}', ";
+        $sql .= "   token='{$token}', ";
+        $sql .= "   emailConfirmed='0' ";
+        $sql .= "WHERE id='{$userId}' ";
+        
+        executeQuery($sql);
+    }
+    
+    function qGetUserEmail($userId) {
+        $userId = dbEscape($userId);
+        
+        $sql = "SELECT email ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE id='{$userId}' ";
+        
+        return execAndFetchAssoc($sql)["email"];
+    }
+    
+    function qIsEmailConfirmed($userId) {
+        $userId = dbEscape($userId);
+        
+        $sql = "SELECT emailConfirmed ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE id='{$userId}' ";
+        
+        return execAndFetchAssoc($sql)["emailConfirmed"] === "1";
+    }
+    
+    function qIsEmailTaken($email) {
         $email = dbEscape($email);
         
         $sql = "SELECT id ";

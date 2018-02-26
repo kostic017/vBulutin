@@ -9,7 +9,7 @@
 
     define("DEBUG", true); // false for less verbose error messages
     
-    define(PASSWORD_ALGORITHM, PASSWORD_BCRYPT);
+    define("PASSWORD_ALGORITHM", PASSWORD_BCRYPT);
     
     abstract class VISIBILITY {
         const ALL = 0;

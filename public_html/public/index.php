@@ -8,7 +8,7 @@
     <?php
         foreach ($sections as $section) {
             $id = $section["id"];
-            include "section-table.php";
+            include "tablesection.php";
         }
     ?>
     

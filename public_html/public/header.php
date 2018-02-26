@@ -47,7 +47,7 @@
                         <li><a href="">Odjavi se</a></li>
                     <?php else: ?>
                         <li><a href="login.php">Prijavi se</a></li>
-                        <li><a href="registration.php">Registruj se</a></li>
+                        <li><a href="register.php">Registruj se</a></li>
                     <?php endif; ?>
                 </ul>
                     

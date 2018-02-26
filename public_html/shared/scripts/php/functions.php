@@ -1,4 +1,15 @@
 <?php
+    function sendEmailConfirmation($email) {
+        $token = bin2hex(openssl_random_pseudo_bytes(16));
+            
+        $link = "{$_SERVER["SERVER_NAME"]}/confirm.php?email={$email}&token={$token}";
+        $message = "Kliknite na link da bi potvrdili svoju email adresu: <a href='{$link}'>{$link}</a>.";
+        
+        mail($email, "Forum41: Potvrđivanje email adrese", $message);
+        
+        return $token;
+    }
+
     function convertMysqlDatetimeToPhpDate($datetime) {
         $datetime = strtotime($datetime);
         return date("j. F Y.", $datetime);

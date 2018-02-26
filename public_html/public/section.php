@@ -10,7 +10,7 @@
 
     <?php
         include "topbox.php";
-        include "section-table.php";
+        include "tablesection.php";
     ?>
 
 </main>

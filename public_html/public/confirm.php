@@ -4,5 +4,5 @@
     if (isset($_GET["email"]) && isset($_GET["token"])) {
        qConfirmEmail($_GET); 
     } else {
-        redirectTo("registration.php");
+        redirectTo("register.php");
     }

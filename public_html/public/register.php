@@ -1,4 +1,8 @@
 <?php
+    if (isset($_SESSION["user_id"])) {
+        redirectTo("index.php");
+    }
+    
     include "header.php";
     
     if (isset($_POST["submit"])) {
@@ -8,12 +12,8 @@
             $greske[] = "Ovo korisničko ime je zauzeto.";
         }
         
-        if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            if (isEmailTaken($_POST["email"])) {
-                $greske[] = "Već je registrovan korisnik sa ovim emajlom.";
-            }
-        } else {
-            $greske[] = "Email nije valjanog formata.";
+        if (qIsEmailTaken($_POST["email"])) {
+            $greske[] = "Već je registrovan korisnik sa ovim emajlom.";
         }
         
         if ($_POST["password1"] !== $_POST["password2"]) {
@@ -35,13 +35,7 @@
         }
         
         if (empty($greske)) {
-            $token = bin2hex(openssl_random_pseudo_bytes(16));
-            
-            $link = {$_SERVER['SERVER_NAME']}/confirm.php?email={$email}&token={$token};
-            $message = "Kliknite na link da bi potvrdili svoju email adresu: <a href='{$link}'>{$link}</a>.";
-            
-            mail($email, "Forum41: Potvrđivanje email adrese", $message);
-            
+            $_POST["token"] = sendEmailConfirmation($_POST["email"]);
             qRegisterUser($_POST);
         }
     }
@@ -60,7 +54,7 @@
     <?php endif; ?>
 
     <div class="rules">
-        <h2>Pravila, pravi Vavilon</h2>
+        <h2>Pravila</h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
             magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -79,15 +73,18 @@
         </p>
     </div>
 
-    <form id="registration-input" method="post" action="">
+    <form class="logreg" method="post" action="">
+    
         <label>
             Korisničko ime:<br>
-            <input class="equal-width" type="text" name="username" required> <span class="required-star">*</span>
+            <input class="equal-width" type="text" name="username" required value="<?=$_POST["username"] ?? ""?>">
+            <span class="required-star">*</span>
         </label>
         
         <label>
             E-mail:<br>
-            <input class="equal-width" type="mail" name="email" required> <span class="required-star">*</span>
+            <input class="equal-width" type="email" name="email" required value="<?=$_POST["email"] ?? ""?>">
+            <span class="required-star">*</span>
         </label>
         
         <label>
@@ -103,20 +100,20 @@
         <label>
             Pol:<br>
             <select class="equal-width" name="sex">
-                <option value=""></option>
-                <option value="male">Muški</option>
-                <option value="female">Ženski</option>
+                <option value="" <?=!isNotBlank($_POST["sex"] ?? "") ? "selected" : ""?>></option>
+                <option value="male" <?=($_POST["sex"] ?? "") == "male" ? "selected" : ""?>>Muški</option>
+                <option value="female" <?=($_POST["sex"] ?? "") == "female" ? "selected" : ""?>>Ženski</option>
             </select>
         </label>
         
         <label>
             Datum роđenja:<br>
-            <input class="equal-width" type="date" name="birthdate">
+            <input class="equal-width" type="date" name="birthdate" value="<?=$_POST["birthdate"] ?? ""?>">
         </label>
     
         <label>
             Profilna slika:<br>
-            <input type="file" name="avatar">
+            <input type="file" name="avatar" value="<?=$_POST["avatar"] ?? ""?>">
         </label>
         
         <div class="g-recaptcha" data-sitekey="6LeIdEgUAAAAAEsVfuW9Ts9hRtGxvJaiZniLhwcA"></div>

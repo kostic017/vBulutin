@@ -27,10 +27,6 @@ a {
     text-decoration : none;
 }
 
-aside ul {
-    @include list-override;
-}
-
 nav ul {
     display : flex;
 }
