@@ -11,6 +11,9 @@
     
     define("PASSWORD_ALGORITHM", PASSWORD_BCRYPT);
     
+    define("MAIL_USERNAME", "forum41web@gmail.com");
+    define("MAIL_PASSWORD", "forum41nikola");
+    
     abstract class VISIBILITY {
         const ALL = 0;
         const VISIBLE = 1;

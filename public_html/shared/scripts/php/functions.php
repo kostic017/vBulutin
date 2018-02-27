@@ -1,12 +1,44 @@
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    
     function sendEmailConfirmation($email) {
+        require_once __DIR__ . "/../../libraries/PHPMailer/PHPMailerAutoload.php";
+        
+        $mail = new PHPMailer;
+
+        $mail->isSMTP();
+        $mail->CharSet = "UTF-8";
+        // $mail->SMTPDebug = 3;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPSecure = 'tls';
+        $mail->SMTPAuth = true;
+        
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
+
+        $mail->Username = MAIL_USERNAME;
+        $mail->Password = MAIL_PASSWORD;
+        $mail->setFrom(MAIL_USERNAME, "Forum41");
+
+        $mail->addAddress($email);
+        $mail->Subject = "Forum41: Potvrđivanje email adrese";
+
         $token = bin2hex(openssl_random_pseudo_bytes(16));
-            
-        $link = "{$_SERVER["SERVER_NAME"]}/confirm.php?email={$email}&token={$token}";
-        $message = "Kliknite na link da bi potvrdili svoju email adresu: <a href='{$link}'>{$link}</a>.";
-        
-        mail($email, "Forum41: Potvrđivanje email adrese", $message);
-        
+        $link = "{$_SERVER["SERVER_NAME"]}/public/confirm.php?email={$email}&token={$token}";
+       
+        $mail->Body = "Kliknite na link da bi potvrdili svoju email adresu: {$link}.";
+
+        if (!$mail->send()) {
+            echo "Mailer Error: {$mail->ErrorInfo}";
+        }
+       
         return $token;
     }
 

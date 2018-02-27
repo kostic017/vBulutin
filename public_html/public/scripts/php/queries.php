@@ -8,12 +8,12 @@
         $sql .= "FROM users ";
         $sql .= "WHERE email='{$email}' ";
         $sql .= "   AND token='{$token}' ";
-        $sql .= "   AND mailConfirmed='0' ";
+        $sql .= "   AND emailConfirmed='0' ";
         
         if (isNotBlank($userId = execAndFetchAssoc($sql)["id"] ?? "")) {
             $sql = "UPDATE users ";
-            $sql .= "SET mailConfirmed='1' ";
-            $sql .= "   AND token='' ";
+            $sql .= "SET emailConfirmed='1', ";
+            $sql .= "   token='' ";
             $sql .= "WHERE id='{$userId}'";
             executeQuery($sql);
         }
