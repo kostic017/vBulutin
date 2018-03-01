@@ -1,15 +1,13 @@
 <?php
     require_once "../shared/scripts/php/main.php";
-    require_once "scripts/php/temp.php";
+    require_once "scripts/php/includes.php";
 
-    if (isset($_POST["login"])) {
-        if ($userid = qLoginUser($_POST)) {
-            $SESSION["user_id"] = $userid;
-        }
+    if (isset($_POST["logout"])) {
+        unset($_SESSION["user_id"]);
     }
 ?>
 <?php require_once "../shared/templates/header.php"; ?>
-    <link rel="stylesheet" href="schemes/scheme.css">
+<link rel="stylesheet" href="schemes/scheme.css">
 </head>
 
 <body <?=$isSidebarSet ? "class='sidebar'" : ""?>>
@@ -40,17 +38,17 @@
 
             <section data-shclass="main-navigation" class="main-navigation">
 
-                 <ul data-shclass="nav-profile">
-                    <?php if (isset($SESSION["user_id"])): ?>
+                <ul data-shclass="nav-profile">
+                    <?php if (isset($_SESSION["user_id"])): ?>
                         <li><a href="" id="btn-messages"><span data-newmessages="0">Nema novih poruka</span></a></li>
                         <li><a href="" id="btn-profile"><span>Moj profil</span></a></li>
-                        <li><a href="">Odjavi se</a></li>
+                        <li> <a href="#" id="logout">Odjavi se</a></li>
                     <?php else: ?>
                         <li><a href="login.php">Prijavi se</a></li>
                         <li><a href="register.php">Registruj se</a></li>
                     <?php endif; ?>
                 </ul>
-                    
+
                 <ul>
                     <?php foreach ($forumNavigation as $display => $filename): ?>
                         <li data-shclass="nav-forum-<?=(FILENAME === $filename) ? "active" : "nonactive"?>">
@@ -62,5 +60,15 @@
             </section>
 
         </header>
+
+        <form id="logout-form" method="post" action="">
+            <input type="hidden" name="logout" value="">
+        </form>
+
+        <script>
+            $("#logout").on("click", function() {
+                $("#logout-form").submit();
+            });
+        </script>
 
         <div class="content-container">

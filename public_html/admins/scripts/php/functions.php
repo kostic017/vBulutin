@@ -28,16 +28,22 @@
             $control = $dom->createElement("input");
 
             switch ($columnInfo["type"]) {
-                case "int": {
-                    $control->setAttribute("type", "number");
-                } break;
-                case "varchar": {
-                    $control->setAttribute("type", "text");
-                } break;
-                case "tinyint": {
-                    $control->setAttribute("type", "checkbox");
-                    $control->setAttribute("checked", "");
-                } break;
+                case "int":
+                    {
+                        $control->setAttribute("type", "number");
+                    }
+                    break;
+                case "varchar":
+                    {
+                        $control->setAttribute("type", "text");
+                    }
+                    break;
+                case "tinyint":
+                    {
+                        $control->setAttribute("type", "checkbox");
+                        $control->setAttribute("checked", "");
+                    }
+                    break;
             }
 
             if ($columnInfo["name"] === "position" || hasString($columnInfo["extra"] ?? "", "auto_increment")) {
@@ -75,12 +81,12 @@
         return $button;
     }
 
-    // $table["parent"]:
-    //  - definisano: pripaja redove podataka datoj tabeli
-    //  - nije definisano: pripaja redove podataka datom DOM-u
-    // $table["data"]:
-    //  - definisano: koristi date podatke
-    //  - nije definisano: podatke cita iz baze
+// $table["parent"]:
+//  - definisano: pripaja redove podataka datoj tabeli
+//  - nije definisano: pripaja redove podataka datom DOM-u
+// $table["data"]:
+//  - definisano: koristi date podatke
+//  - nije definisano: podatke cita iz baze
     function appendDataRows($dom, $tableName, $table) {
         $forums = qGetForums();
         $sections = qGetSections();
@@ -91,8 +97,12 @@
             $tableData = $table["data"];
         } else {
             switch ($tableName) {
-                case "forums": $tableData = $forums; break;
-                case "sections": $tableData = $sections; break;
+                case "forums":
+                    $tableData = $forums;
+                    break;
+                case "sections":
+                    $tableData = $sections;
+                    break;
             }
         }
 

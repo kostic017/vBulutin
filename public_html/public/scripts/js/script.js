@@ -1,6 +1,6 @@
 let jsonProperties;
 
-$(function() {
+$(function () {
     setupBackToTopButton();
 
     $.getJSON("/public/schemes/gray/config.json", json => {
@@ -228,7 +228,7 @@ function setupShclassSelect() {
     // ************************************************************************** //
     //                              Pomocne funkcije                              //
     // ************************************************************************** //
-    
+
     function revertControlsToNullValues() {
         const accordion = $("#accordion");
         $("select", accordion).val("");
@@ -280,7 +280,7 @@ function setupShclassSelect() {
         }
 
         if (properties.hasOwnProperty("Background")) {
-            const { style, "start-color": startColor, "end-color": endColor } = properties["Background"];
+            const {style, "start-color": startColor, "end-color": endColor} = properties["Background"];
             $("div[data-property='background-style'] select").val(style);
             $("div[data-property='background-start-color'] .jui-colorpicker").colorpicker("val", startColor);
             $("div[data-property='background-end-color'] .jui-colorpicker").colorpicker("val", endColor);

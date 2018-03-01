@@ -1,55 +1,55 @@
 body {
+  .content-container {
+    display : block;
+  }
+
+  &.sidebar {
     .content-container {
-        display : block;
+      display         : flex;
+      justify-content : space-between;
     }
-
-    &.sidebar {
-        .content-container {
-            display         : flex;
-            justify-content : space-between;
-        }
-        main {
-            flex-basis : 70%;
-        }
+    main {
+      flex-basis : 70%;
     }
+  }
 
-}
-
-fieldset {
-    margin-bottom : 5px;
-}   
-
-legend {
-    padding-right : 5px;
 }
 
 a {
-    text-decoration : none;
+  text-decoration : none;
+}
+
+fieldset {
+  margin-bottom : 5px;
+}
+
+legend {
+  padding-right : 5px;
 }
 
 nav ul {
-    display : flex;
+  display : flex;
 }
 
 button {
-    cursor : pointer;
+  cursor : pointer;
 }
 
 input, textarea, select, button {
-    font : inherit;
+  font : inherit;
 }
 
 input[type="submit"],
 input[type="button"] {
-    cursor : pointer;
+  cursor : pointer;
 }
 
 header,
 footer,
 section {
-    margin-bottom : 20px;
+  margin-bottom : 20px;
 }
 
 footer {
-    margin-top : 50px;
+  margin-top : 50px;
 }

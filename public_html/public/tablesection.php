@@ -14,7 +14,8 @@
         <tr data-shclass="table-row" class="table-row">
             <td>
                 <span class="icon icon-forum-new"></span>
-                <a data-shclass="row-name" href="forum.php?id=<?=$rootForum["id"]?>" class="name"><?=$rootForum["title"]?></a>
+                <a data-shclass="row-name" href="forum.php?id=<?=$rootForum["id"]?>"
+                   class="name"><?=$rootForum["title"]?></a>
                 <span class="desc"><?=$rootForum["description"]?></span>
                 <?php if (count($childForums) > 0): ?>
                     <div class="subforums">

@@ -8,7 +8,7 @@
         $sql .= "FROM {$table} ";
         $sql .= "WHERE id='{$id}' ";
 
-        return execAndFetchAssoc($sql);
+        return executeAndFetchAssoc($sql);
     }
 
     function qGetForumsBySectionId($sectionId, $rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
@@ -24,7 +24,7 @@
         }
         $sql .= "ORDER BY {$sortColName} {$sortOrder} ";
 
-        return execAndFetchAssoc($sql, FETCH::ALL);
+        return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
     function qGetForumsByParentId($parentId, $sort = SORT::DEFAULT_VALUE) {
@@ -37,7 +37,7 @@
         $sql .= "WHERE parentid='{$parentId}' ";
         $sql .= "ORDER BY {$sortColName} {$sortOrder} ";
 
-        return execAndFetchAssoc($sql, FETCH::ALL);
+        return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
     function qGetSections($sort = SORT::DEFAULT_VALUE) {
@@ -48,5 +48,5 @@
         $sql .= "FROM sections ";
         $sql .= "ORDER BY {$sortColName} {$sortOrder} ";
 
-        return execAndFetchAssoc($sql, FETCH::ALL);
+        return executeAndFetchAssoc($sql, FETCH::ALL);
     }

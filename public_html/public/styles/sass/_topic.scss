@@ -1,56 +1,56 @@
 .post-container {
-    padding : 6px;
+  padding : 6px;
 }
 
 .post-box {
-    padding : 6px;
+  padding : 6px;
 }
 
 .post-head {
 
-    .title {
-        margin         : 0;
-        padding-bottom : 8px;
-    }
+  .title {
+    margin         : 0;
+    padding-bottom : 8px;
+  }
 
 }
 
 .post-body {
-    display : flex;
+  display : flex;
 }
 
 .post-user,
 .post-main {
-    padding : 10px;
+  padding : 10px;
 }
 
 .post-user {
-    width      : 15%;
-    text-align : center;
+  width      : 15%;
+  text-align : center;
 
-    p {
-        margin : 2px 0;
-    }
+  p {
+    margin : 2px 0;
+  }
 
-    .avatar img {
-        width : 40%;
-    }
+  .avatar img {
+    width : 40%;
+  }
 
 }
 
 .post-main {
-    width           : 85%;
+  width           : 85%;
+  display         : flex;
+  flex-flow       : column;
+  justify-content : space-between;
+
+  .buttons {
     display         : flex;
-    flex-flow       : column;
-    justify-content : space-between;
+    justify-content : flex-end;
 
-    .buttons {
-        display         : flex;
-        justify-content : flex-end;
-
-        li {
-            margin-left : 10px;
-        }
+    li {
+      margin-left : 10px;
     }
+  }
 
 }

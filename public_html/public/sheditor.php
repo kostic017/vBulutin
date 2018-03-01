@@ -110,10 +110,10 @@
             <div data-property="text-transfrom">
                 <h4>Transformacije</h4>
                 <select>
-                   <option value="none">none</option>
-                   <option value="capitalize">capitalize</option>
-                   <option value="lowercase">lowercase</option>
-                   <option value="full-width">full-width</option>
+                    <option value="none">none</option>
+                    <option value="capitalize">capitalize</option>
+                    <option value="lowercase">lowercase</option>
+                    <option value="full-width">full-width</option>
                 </select>
             </div>
             <div data-property="text-decoration-line">

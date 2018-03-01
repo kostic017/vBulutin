@@ -7,13 +7,13 @@
     define("PRIVATE_DIR", __DIR__);
     define("FILENAME", basename($_SERVER["PHP_SELF"], ".php"));
 
-    define("DEBUG", true); // false for less verbose error messages
-    
-    define("PASSWORD_ALGORITHM", PASSWORD_BCRYPT);
-    
     define("MAIL_USERNAME", "forum41web@gmail.com");
     define("MAIL_PASSWORD", "forum41nikola");
-    
+
+    define("REDIRECT_TIMEOUT", 3000);
+
+    define("DEBUG", true); // false for less verbose error messages
+
     abstract class VISIBILITY {
         const ALL = 0;
         const VISIBLE = 1;

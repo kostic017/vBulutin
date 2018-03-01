@@ -28,51 +28,51 @@
 ?>
 
 .header-top > .logo {
-    background-image: url(<?=$scheme?>/images/logo.png);
+    background-image : url(<?=$scheme?>/images/logo.png);
 }
 
 #btn-messages span[data-newmessages="0"] {
-    background-image: url(<?=$scheme?>/images/icons/newmessage_no.png);
+    background-image : url(<?=$scheme?>/images/icons/newmessage_no.png);
 }
 
 #btn-messages span:not([data-newmessages="0"]) {
-    background-image: url(<?=$scheme?>/images/icons/newmessage_yes.png);
+    background-image : url(<?=$scheme?>/images/icons/newmessage_yes.png);
 }
 
 #btn-profile span {
-    background-image: url(<?=$scheme?>/images/icons/profile.png);
+    background-image : url(<?=$scheme?>/images/icons/profile.png);
 }
 
 #btn-back2top span {
-    background-image: url(<?=$scheme?>/images/icons/triangle_top.png);
+    background-image : url(<?=$scheme?>/images/icons/triangle_top.png);
 }
 
 #btn-mark-read {
-    background-image: url(<?=$scheme?>/images/icons/check.png);
+    background-image : url(<?=$scheme?>/images/icons/check.png);
 }
 
 #btn-follow span {
-    background: url(<?=$scheme?>/images/icons/users.png) no-repeat 5px center;
+    background : url(<?=$scheme?>/images/icons/users.png) no-repeat 5px center;
 }
 
 .icon-forum-new {
-    background-image: url(<?=$scheme?>/images/icons/newposts_yes.png);
+    background-image : url(<?=$scheme?>/images/icons/newposts_yes.png);
 }
 
 .icon-forum--old {
-    background-image: url(<?=$scheme?>/images/icons/newposts_no.png);
+    background-image : url(<?=$scheme?>/images/icons/newposts_no.png);
 }
 
 .icon-forum-redirect {
-    background-image: url(<?=$scheme?>/images/icons/redirect.png);
+    background-image : url(<?=$scheme?>/images/icons/redirect.png);
 }
 
 .icon-post-old {
-    background-image: url(<?=$scheme?>/images/icons/post-old.gif);
+    background-image : url(<?=$scheme?>/images/icons/post-old.gif);
 }
 
 .icon-post-new {
-    background-image: url(<?=$scheme?>/images/icons/post-new.gif);
+    background-image : url(<?=$scheme?>/images/icons/post-new.gif);
 }
 
 .searchbtn.-submitsearch {

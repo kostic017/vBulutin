@@ -10,12 +10,12 @@ $(function () {
 });
 
 function disableFormSumbitOnEnterKeyPress() {
-	$("form input").keydown(function (e) {
-	    if (e.keyCode == 13) {
-	        e.preventDefault();
-	        return false;
-	    }
-	});
+    $("form input").keydown(function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 }
 
 // ==== TABLES ====
@@ -208,9 +208,9 @@ function setupWidgets() {
 }
 
 function setupPositionsSaving() {
-    $("button[name=save]").on("click", function() {
+    $("button[name=save]").on("click", function () {
         const data = {};
-        $(".dd").each(function() {
+        $(".dd").each(function () {
             data[$(this).data("sectionid")] = $(this).nestable("serialize");
         });
         $.post("scripts/php/ajax.php",
@@ -223,7 +223,7 @@ function setupPositionsSaving() {
                     "Došlo je do greške prilikom snimanja." :
                     "Snimanje uspešno izvršeno.";
                 $("#message").html(`${message}<br><br>`);
-                setTimeout(function() {
+                setTimeout(function () {
                     $("#message").html("");
                 }, 3000);
             }

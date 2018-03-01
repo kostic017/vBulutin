@@ -1,29 +1,29 @@
 <?php
-    $thisPage = qGetRowById($id, FILENAME . "s");
+    $thisPage = qGetRowById($id, FILENAME . "s"); // section.s, forum.s...
 
     if (FILENAME === "section") {
         $follow = "ovu sekciju";
-        
+
         $pathSectionTitle = $thisPage["title"];
         $pathSectionLink = "#";
-    } else if (FILENAME === "forum") {
+    } elseif (FILENAME === "forum") {
         $follow = "ovaj forum";
         $reply = "Započni novu temu";
-        
+
         $section = qGetRowById($thisPage["sections_id"], "sections");
-        
+
         if (isNotBlank($thisPage["parentid"])) {
-           $parent = qGetRowById($thisPage["parentid"], "forums");
-           $pathParentTitle = $parent["title"];
-           $pathParentLink = "forum.php?id={$parent["id"]}";
+            $parent = qGetRowById($thisPage["parentid"], "forums");
+            $pathParentTitle = $parent["title"];
+            $pathParentLink = "forum.php?id={$parent["id"]}";
         }
-        
+
         $pathSectionTitle = $section["title"];
         $pathSectionLink = "section.php?id={$thisPage["sections_id"]}";
-        
+
         $pathForumTitle = $thisPage["title"];
         $pathForumLink = "#";
-    } else if (FILENAME === "topic") {
+    } elseif (FILENAME === "topic") {
         $follow = "ovu temu";
         $reply = "Napiši odgovor";
     }
@@ -49,11 +49,11 @@
         <div thisPage-shclass="page-title" class="title">
             <?php if (isEqualToAnyWord("forum section", FILENAME)): ?>
                 <h1><?=$thisPage["title"]?></h1>
-                
+
                 <?php if (isNotBlank($thisPage["description"])): ?>
                     <p class="desc"><?=$thisPage["description"]?></p>
                 <?php endif; ?>
-                
+
                 <?php if (FILENAME === "forum"): ?>
                     <div class="mods">
                         Moderatori:
@@ -74,7 +74,7 @@
         </div>
 
     </div>
-    
+
     <?php if (FILENAME !== "section"): ?>
 
         <div class="page-buttons">
@@ -98,7 +98,7 @@
             </div>
 
         </div>
-        
+
     <?php endif; ?>
 
 </div>

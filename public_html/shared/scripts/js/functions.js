@@ -2,13 +2,13 @@ function ucfirst(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function isEmptyString(string){
+function isEmptyString(string) {
     return $.trim(string) === "";
 }
 
 function isEmptyObject(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
             return false;
     }
     return true;
@@ -54,5 +54,5 @@ function splitUnitAndValue(valWithUnit) {
 }
 
 function animateScroll(position, time = 500) {
-    $("html, body").animate({ scrollTop: position }, time);
+    $("html, body").animate({scrollTop: position}, time);
 }

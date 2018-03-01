@@ -25,21 +25,21 @@
 </head>
 
 <body>
-    <?php include __DIR__ . "/navigation.php"; ?>
+<?php include __DIR__ . "/navigation.php"; ?>
 
-    <main>
-        <h2 class="table-title">Sekcije</h2>
-        <p>Brisanjem sekcije brišete sve forume koje pripadaju toj sekciji kao i teme u tim forumima.</p>
+<main>
+    <h2 class="table-title">Sekcije</h2>
+    <p>Brisanjem sekcije brišete sve forume koje pripadaju toj sekciji kao i teme u tim forumima.</p>
 
-        <form method="post" action="">
-            <?=getDataTable("sections")?>
-        </form>
+    <form method="post" action="">
+        <?=getDataTable("sections")?>
+    </form>
 
-        <h2 class="table-title">Forumi</h2>
+    <h2 class="table-title">Forumi</h2>
 
-        <form method="post" action="">
-            <?=getDataTable("forums")?>
-        </form>
-    </main>
+    <form method="post" action="">
+        <?=getDataTable("forums")?>
+    </form>
+</main>
 
-    <div id="overlay"></div>
+<div id="overlay"></div>

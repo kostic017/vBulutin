@@ -12,7 +12,7 @@
         $sql .= "WHERE table_schema='" . DB_NAME . "' ";
         $sql .= "   AND table_name='{$table}' ";
 
-        return execAndFetchAssoc($sql, FETCH::ALL);
+        return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
     function qUpdateForum($newData) {
@@ -71,7 +71,7 @@
         $sql = "SELECT position, parentid ";
         $sql .= "FROM forums ";
         $sql .= "WHERE id='{$id}' ";
-        $res = execAndFetchAssoc($sql);
+        $res = executeAndFetchAssoc($sql);
         $position = $res["position"];
         $parentId = $res["parentid"];
 
@@ -79,14 +79,14 @@
             $sql = "SELECT id, position ";
             $sql .= "FROM forums ";
             $sql .= "WHERE parentid='{$parentId}' ";
-            $children = execAndFetchAssoc($sql, FETCH::ALL);
+            $children = executeAndFetchAssoc($sql, FETCH::ALL);
 
             executeQuery("UPDATE forums SET parentid=NULL WHERE parentid='{$id}'");
 
             $sql = "SELECT id, position ";
             $sql .= "FROM forums ";
             $sql .= "WHERE position > {$position} AND parentid=NULL ";
-            $forumsAfter = execAndFetchAssoc($sql, FETCH::ALL);
+            $forumsAfter = executeAndFetchAssoc($sql, FETCH::ALL);
 
             if (($childrenCount = count($children)) > 0) {
                 foreach ($forumsAfter as $forum) {
@@ -120,14 +120,14 @@
         $sql = "SELECT position ";
         $sql .= "FROM sections ";
         $sql .= "WHERE id='{$id}' ";
-        $position = execAndFetchAssoc($sql)["position"];
+        $position = executeAndFetchAssoc($sql)["position"];
 
         executeQuery("DELETE FROM sections WHERE id='{$id}' LIMIT 1");
 
         $sql = "SELECT id, position ";
         $sql .= "FROM sections ";
         $sql .= "WHERE position > {$position} ";
-        $sectionsAfter = execAndFetchAssoc($sql, FETCH::ALL);
+        $sectionsAfter = executeAndFetchAssoc($sql, FETCH::ALL);
 
         foreach ($sectionsAfter as $section) {
             $sectionId = $section["id"];
@@ -153,7 +153,7 @@
         }
         $sql .= "ORDER BY {$sortColName} {$sortOrder} ";
 
-        return execAndFetchAssoc($sql, FETCH::ALL);
+        return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
     function qGetForumSection($id) {
@@ -163,7 +163,7 @@
         $sql .= "FROM forums ";
         $sql .= "WHERE id='{$id}' ";
 
-        $res = execAndFetchAssoc($sql);
+        $res = executeAndFetchAssoc($sql);
         return $res["sections_id"];
     }
 
@@ -175,13 +175,13 @@
         } else {
             $sql .= "WHERE parentid='{$parentId}' ";
         }
-        return execAndFetchAssoc($sql)["position"] + 1;
+        return executeAndFetchAssoc($sql)["position"] + 1;
     }
 
     function qGetNewSectionPosition() {
         $sql = "SELECT MAX(position) AS position ";
         $sql .= "FROM sections ";
-        return execAndFetchAssoc($sql)["position"] + 1;
+        return executeAndFetchAssoc($sql)["position"] + 1;
     }
 
     function gInsertForum($forumData) {

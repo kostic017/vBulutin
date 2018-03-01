@@ -1,20 +1,26 @@
 <?php
+
     use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    
-    function sendEmailConfirmation($email) {
+// use PHPMailer\PHPMailer\Exception;
+
+    function hashPassword($password) {
+        return md5($password);
+    }
+
+    function sendEmail($email, $subject, $body, $html = false) {
         require_once __DIR__ . "/../../libraries/PHPMailer/PHPMailerAutoload.php";
-        
+
         $mail = new PHPMailer;
 
         $mail->isSMTP();
+        $mail->IsHTML($html);
         $mail->CharSet = "UTF-8";
         // $mail->SMTPDebug = 3;
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
-        
+
         $mail->SMTPOptions = [
             'ssl' => [
                 'verify_peer' => false,
@@ -28,25 +34,19 @@
         $mail->setFrom(MAIL_USERNAME, "Forum41");
 
         $mail->addAddress($email);
-        $mail->Subject = "Forum41: Potvrđivanje email adrese";
-
-        $token = bin2hex(openssl_random_pseudo_bytes(16));
-        $link = "{$_SERVER["SERVER_NAME"]}/public/confirm.php?email={$email}&token={$token}";
-       
-        $mail->Body = "Kliknite na link da bi potvrdili svoju email adresu: {$link}.";
+        $mail->Subject = $subject;
+        $mail->Body = $body;
 
         if (!$mail->send()) {
-            echo "Mailer Error: {$mail->ErrorInfo}";
+            echo "PHPMailer Error: {$mail->ErrorInfo}";
         }
-       
-        return $token;
     }
 
     function convertMysqlDatetimeToPhpDate($datetime) {
         $datetime = strtotime($datetime);
         return date("j. F Y.", $datetime);
     }
-    
+
     function convertMysqlDatetimeToPhpTime($datetime) {
         $datetime = strtotime($datetime);
         return date("G:i:s", $datetime);

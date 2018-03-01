@@ -11,7 +11,7 @@
             include "tablesection.php";
         }
     ?>
-    
+
 </main>
 
 <?php include "footer.php"; ?>

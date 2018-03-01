@@ -1,59 +1,64 @@
 .header-top {
-    display         : flex;
-    align-items     : center;
-    justify-content : space-between;
+  display         : flex;
+  align-items     : center;
+  justify-content : space-between;
 
-    .logo {
-        width               : 183px;
-        height              : 89px;
-        background-repeat   : no-repeat;
-        background-position : center center;
+  .logo {
+    width               : 183px;
+    height              : 89px;
+    background-repeat   : no-repeat;
+    background-position : center center;
 
-        a {
-            @include full-block;
-        }
+    a {
+      @include full-block;
     }
+  }
 }
 
 .search-form {
-    display : flex;
-    padding : 14px;
+  display : flex;
+  padding : 14px;
 
-    .searchquery {
-        border     : 0;
-        width      : 250px;
-        height     : 35px;
-        display    : block;
-        padding    : 0 0 0 5px;
-        box-sizing : border-box;
-    }
+  .searchquery {
+    border     : 0;
+    width      : 250px;
+    height     : 35px;
+    display    : block;
+    padding    : 0 0 0 5px;
+    box-sizing : border-box;
+  }
 
-    .searchbtn {
-        border              : 0;
-        padding             : 0;
-        width               : 35px;
-        height              : 35px;
-        display             : block;
-        background-size     : 80%;
-        background-repeat   : no-repeat;
-        background-position : center center;
+  .searchbtn {
+    border              : 0;
+    padding             : 0;
+    width               : 35px;
+    height              : 35px;
+    display             : block;
+    background-size     : 80%;
+    background-repeat   : no-repeat;
+    background-position : center center;
 
-        @include hide-text;
-    }
+    @include hide-text;
+  }
 }
 
 .main-navigation {
-    display         : flex;
-    justify-content : space-between;
+  display         : flex;
+  justify-content : space-between;
 
-    a {
-        height         : 45px;
-        padding        : 0 15px;
-        display        : table-cell;
-        vertical-align : middle;
-    }
+  a {
+    height         : 45px;
+    padding        : 0 15px;
+    display        : table-cell;
+    vertical-align : middle;
+  }
 
-    ul {
-        display: flex;
-    }
+  ul {
+    display : flex;
+  }
+
+  form {
+    height: 100%;
+  }
+
 }

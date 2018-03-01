@@ -11,7 +11,7 @@
             mysqli_close($db);
         }
     }
-    
+
     function isThereAResult($sql) {
         global $db;
         return mysqli_num_rows(executeQuery($sql)) > 0;
@@ -31,7 +31,7 @@
         }
     }
 
-    function execAndFetchAssoc($sql, $count = FETCH::ONE) {
+    function executeAndFetchAssoc($sql, $count = FETCH::ONE) {
         $ret = [];
         $result = executeQuery($sql);
         if ($count === FETCH::ONE) {

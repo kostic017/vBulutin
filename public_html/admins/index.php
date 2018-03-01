@@ -5,5 +5,5 @@
 </head>
 
 <body>
-    <?php include __DIR__ . "/navigation.php"; ?>
-    Nešto lepo će se nalaziti ovde, neki summary ili tako nešto.
+<?php include __DIR__ . "/navigation.php"; ?>
+Nešto lepo će se nalaziti ovde, neki summary ili tako nešto.

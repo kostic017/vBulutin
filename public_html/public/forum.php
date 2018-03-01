@@ -5,27 +5,28 @@
     if (($id = $_GET["id"] ?? "") === "") {
         redirectTo("/public/");
     }
-    
+
     $topics = qGetTopicsByForumId($id);
-    
+
     $childForums = qGetForumsByParentId($id, SORT::POSITION_ASCENDING);
 ?>
 
 <main>
 
     <?php include "topbox.php"; ?>
-    
+
     <?php if (count($childForums) > 0): ?>
         <table data-shclass="main-table" class="main-table">
             <caption data-shclass="caption captionbar" class="captionbar">
                 <a href="#">Potforumi</a>
             </caption>
-        
+
             <?php foreach ($childForums as $childForum): ?>
                 <tr data-shclass="table-row" class="table-row">
                     <td>
                         <span class="icon icon-forum-new"></span>
-                        <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>" class="name"><?=$childForum["title"]?></a>
+                        <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>"
+                           class="name"><?=$childForum["title"]?></a>
                         <span class="desc"><?=$childForum["description"]?></span>
                     </td>
                     <td>

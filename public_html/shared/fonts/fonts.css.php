@@ -8,19 +8,20 @@
             continue;
         }
 ?>
-            @font-face {
-                font-style: normal;
-                font-weight: normal;
-                font-family: "<?=$result?>";
-                src: url("/shared/fonts/<?=$result?>/Regular.woff2") format("woff2"),
-                     url("/shared/fonts/<?=$result?>/Regular.woff") format("woff");
-            }
+@font-face {
+    font-style  : normal;
+    font-weight : normal;
+    font-family : "<?=$result?>";
+    src         : url("/shared/fonts/<?=$result?>/Regular.woff2") format("woff2"),
+    url("/shared/fonts/<?=$result?>/Regular.woff") format("woff");
+}
 
-            @font-face {
-                font-weight: bold;
-                font-style: normal;
-                font-family: "<?=$result?>";
-                src: url("/shared/fonts/<?=$result?>/Bold.woff2") format("woff2"),
-                     url("/shared/fonts/<?=$result?>/Bold.woff") format("woff");
-            }
+@font-face {
+    font-weight : bold;
+    font-style  : normal;
+    font-family : "<?=$result?>";
+    src         : url("/shared/fonts/<?=$result?>/Bold.woff2") format("woff2"),
+    url("/shared/fonts/<?=$result?>/Bold.woff") format("woff");
+}
+
 <?php endforeach; ?>
