@@ -1,7 +1,4 @@
-<?php
-    require_once "header.php";
-    $id = getPageId();
-?>
+<?php require_once "header.php"; ?>
 
 <main>
 

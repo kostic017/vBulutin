@@ -26,6 +26,16 @@
     } elseif (FILENAME === "topic") {
         $follow = "ovu temu";
         $reply = "Napiši odgovor";
+
+        $forum = qGetRowById($thisPage["forums_id"], "forums");
+
+        $pathForumTitle = $forum["title"];
+        $pathForumLink = "forum.php?id={$forum["id"]}";
+
+        $section = qGetRowById($forum["sections_id"], "sections");
+
+        $pathSectionTitle = $section["title"];
+        $pathSectionLink = "section.php?id={$section["id"]}";
     }
 ?>
 
@@ -46,7 +56,7 @@
 
     <div class="page-info">
 
-        <div thisPage-shclass="page-title" class="title">
+        <div data-shclass="page-title" class="title">
             <?php if (isEqualToAnyWord("forum section", FILENAME)): ?>
                 <h1><?=$thisPage["title"]?></h1>
 
@@ -64,7 +74,7 @@
                     </div>
                 <?php endif; ?>
             <?php elseif (FILENAME === "topic"): ?>
-                <h1>Ime teme</h1>
+                <h1><?=$thisPage["title"]?></h1>
             <?php endif; ?>
         </div>
 
@@ -82,7 +92,7 @@
             <div class="pages">
                 Stranica 1 od 107
                 <ul>
-                    <li thisPage-shclass="active-page"><a href="">1</a></li>
+                    <li data-shclass="active-page"><a href="">1</a></li>
                     <li><a href="">2</a></li>
                     <li><a href="">3</a></li>
                     <li><a href="">Next</a></li>
@@ -94,7 +104,7 @@
                 <?php if (FILENAME === "forum"): ?>
                     <a href="" id="btn-mark-read">Označi ovaj forum kao pročitan</a>
                 <?php endif; ?>
-                <button thisPage-shclass="btn-reply" id="btn-reply"><?=$reply?></button>
+                <button data-shclass="btn-reply" id="btn-reply"><?=$reply?></button>
             </div>
 
         </div>

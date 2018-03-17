@@ -1,7 +1,4 @@
-<?php
-    include "header.php";
-    $id = getPageId();
-?>
+<?php include "header.php"; ?>
 
 <main>
     <?php include "topbox.php"; ?>
@@ -13,7 +10,7 @@
         <div data-shclass="post-box" class="post-box">
 
             <div class="post-head">
-                <h2 data-shclass="post-title" class="title">New Topic</h2>
+                <h2 data-shclass="post-title" class="title"><?=$thisPage["title"]?></h2>
             </div>
 
             <div data-shclass="post-body" class="post-body">
@@ -48,8 +45,28 @@
 
     </section>
 
+    <section class="new-post">
+        <form action="" method="post">
+            <textarea name="post-content"></textarea>
+            <button type="submit" name="new-post">Pošalji odgovor</button>
+        </form>
+    </section>
+
     <?php include "permissions.php"; ?>
 
 </main>
+
+<script>
+    $(function() {
+        sceditor.create($(".new-post textarea")[0], {
+            width: "100%",
+            height: "350px",
+            format: "bbcode",
+            resizeWidth: false,
+            emoticonsRoot: "/shared/libraries/sceditor/",
+            style: "/shared/libraries/sceditor/minified/themes/content/default.min.css"
+        });
+    });
+</script>
 
 <?php include "footer.php"; ?>

@@ -54,3 +54,18 @@
   }
 
 }
+
+.sceditor-container {
+  box-sizing: border-box;
+  max-width : 100%;
+}
+
+.new-post form {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+}
+
+button[name=new-post] {
+  padding: 5px 0;
+}

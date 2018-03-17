@@ -1,13 +1,5 @@
 <?php
 
-    function getPageId() {
-        if (isNotBlank($id = $_GET["id"] ?? "")) {
-            return $id;
-        } else {
-            redirectTo("/public/");
-        }
-    }
-
     function sendForgottedData($what, $email) {
         if ($what === "username") {
             if (isNotBlank($username = qGetUsernameByEmail($email))) {

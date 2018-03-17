@@ -4,7 +4,6 @@
     define("DB_PASS", "");
     define("DB_NAME", "forum41");
 
-    define("PRIVATE_DIR", __DIR__);
     define("FILENAME", basename($_SERVER["PHP_SELF"], ".php"));
 
     define("MAIL_USERNAME", "forum41web@gmail.com");

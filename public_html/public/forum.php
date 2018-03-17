@@ -2,7 +2,6 @@
     require_once "header.php";
     require_once "../shared/scripts/php/main.php";
 
-    $id = getPageId();
     $topics = qGetTopicsByForumId($id);
     $childForums = qGetForumsByParentId($id, SORT::POSITION_ASCENDING);
 ?>
@@ -21,8 +20,9 @@
                 <tr data-shclass="table-row" class="table-row">
                     <td>
                         <span class="icon icon-forum-new"></span>
-                        <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>"
-                           class="name"><?=$childForum["title"]?></a>
+                        <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>" class="name">
+                            <?=$childForum["title"]?>
+                        </a>
                         <span class="desc"><?=$childForum["description"]?></span>
                     </td>
                     <td>
@@ -64,7 +64,7 @@
             <tr data-shclass="table-row" class="table-row">
                 <td>
                     <span class="icon icon-forum-new"></span>
-                    <a href="topic.php" class="name"><?=$topic["title"]?></a>
+                    <a href="topic.php?id=<?=$topic["id"]?>" class="name"><?=$topic["title"]?></a>
                     <span class="desc">Prvih nekoliko recenica prvog posta...</span>
                 </td>
                 <td>

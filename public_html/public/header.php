@@ -5,9 +5,19 @@
     if (isset($_POST["logout"])) {
         unset($_SESSION["user_id"]);
     }
+
+    if (isEqualToAnyWord("topic forum section", FILENAME)) {
+        if (!isNotBlank($id = $_GET["id"] ?? "")) {
+            redirectTo("index.php");
+        }
+    }
 ?>
 <?php require_once "../shared/templates/header.php"; ?>
-<link rel="stylesheet" href="schemes/scheme.css">
+    <link rel="stylesheet" href="schemes/scheme.css">
+
+    <link rel="stylesheet" href="/shared/libraries/sceditor/minified/themes/default.min.css" />
+    <script src="/shared/libraries/sceditor/minified/sceditor.min.js"></script>
+    <script src="/shared/libraries/sceditor/minified/formats/bbcode.js"></script>
 </head>
 
 <body <?=$isSidebarSet ? "class='sidebar'" : ""?>>
