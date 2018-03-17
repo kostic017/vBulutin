@@ -11,15 +11,20 @@
 @import "editor";
 @import "logreg";
 
-
-
-header,
 aside,
+header,
+footer,
+.top-box,
 .post-info,
-footer {
+.captionbar,
+.usersbrowsing {
   ul {
     @extend .no-bullets;
   }
+}
+
+ul.buttons {
+  @extend .no-bullets;
 }
 
 .required-star {
