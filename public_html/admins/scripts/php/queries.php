@@ -143,15 +143,12 @@
     }
 
     function qGetForums($rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
-        $sortColName = dbEscape($sort["columnName"]);
-        $sortOrder = dbEscape($sort["order"]);
-
         $sql = "SELECT * ";
         $sql .= "FROM forums ";
         if ($rootOnly) {
             $sql .= "WHERE parentid IS NULL ";
         }
-        $sql .= "ORDER BY {$sortColName} {$sortOrder} ";
+        $sql .= orderByStatement($sort);
 
         return executeAndFetchAssoc($sql, FETCH::ALL);
     }

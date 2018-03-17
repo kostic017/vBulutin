@@ -7,6 +7,16 @@
         return md5($password);
     }
 
+    function orderByStatement($sort) {
+        $sql = "ORDER BY ";
+        $counter = count($sort);
+        foreach ($sort as $column => $direction) {
+            $sql .= "{$column} {$direction}";
+            $sql .= (--$counter > 0) ? ", " : " ";
+        }
+        return $sql;
+    }
+
     function sendEmail($email, $subject, $body, $html = false) {
         require_once __DIR__ . "/../../libraries/PHPMailer/PHPMailerAutoload.php";
 
@@ -15,7 +25,7 @@
         $mail->isSMTP();
         $mail->IsHTML($html);
         $mail->CharSet = "UTF-8";
-        // $mail->SMTPDebug = 3;
+        $mail->SMTPDebug = SMTP_DEBUG;
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = 587;
         $mail->SMTPSecure = 'tls';

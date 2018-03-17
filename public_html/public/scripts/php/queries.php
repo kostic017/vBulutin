@@ -135,12 +135,7 @@
         $sql = "SELECT * ";
         $sql .= "FROM topics ";
         $sql .= "WHERE forums_id='{$id}' ";
-        $sql .= "ORDER BY ";
-        $counter = count($sort);
-        foreach ($sort as $column => $direction) {
-            $sql .= "{$column} {$direction}";
-            $sql .= (--$counter > 0) ? ", " : " ";
-        }
+        $sql .= orderByStatement($sort);
 
         return executeAndFetchAssoc($sql, FETCH::ALL);
     }

@@ -13,6 +13,7 @@
     define("REDIRECT_TIMEOUT", 3000);
 
     define("DEBUG", true); // false for less verbose error messages
+    define("SMTP_DEBUG", 0);
 
     abstract class VISIBILITY {
         const ALL = 0;
@@ -26,6 +27,6 @@
     }
 
     abstract class SORT {
-        const DEFAULT_VALUE = ["columnName" => "id", "order" => "ASC"];
-        const POSITION_ASCENDING = ["columnName" => "position", "order" => "ASC"];
+        const DEFAULT_VALUE = ["id" => "ASC"];
+        const POSITION_ASCENDING = ["position" => "ASC"];
     }
