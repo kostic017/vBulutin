@@ -2,12 +2,8 @@
     require_once "header.php";
     require_once "../shared/scripts/php/main.php";
 
-    if (($id = $_GET["id"] ?? "") === "") {
-        redirectTo("/public/");
-    }
-
+    $id = getPageId();
     $topics = qGetTopicsByForumId($id);
-
     $childForums = qGetForumsByParentId($id, SORT::POSITION_ASCENDING);
 ?>
 

@@ -1,4 +1,7 @@
-<?php include "header.php"; ?>
+<?php
+    include "header.php";
+    $id = getPageId();
+?>
 
 <main>
     <?php include "topbox.php"; ?>

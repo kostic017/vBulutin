@@ -1,9 +1,6 @@
 <?php
     require_once "header.php";
-
-    if (($id = $_GET["id"] ?? "") === "") {
-        redirectTo("/public/");
-    }
+    $id = getPageId();
 ?>
 
 <main>
