@@ -6,17 +6,9 @@
   padding : 6px;
 }
 
-.post-head {
-
-  .title {
-    margin         : 0;
-    padding-bottom : 8px;
-  }
-
-}
-
 .post-body {
   display : flex;
+  min-height : 200px;
 }
 
 .post-user,

@@ -17,6 +17,21 @@
         return mysqli_num_rows(executeQuery($sql)) > 0;
     }
 
+    function convertMysqlDatetimeToPhpDate($datetime) {
+        $datetime = strtotime($datetime);
+        return date("j. F Y.", $datetime);
+    }
+
+    function convertMysqlDatetimeToPhpTime($datetime) {
+        $datetime = strtotime($datetime);
+        return date("G:i:s", $datetime);
+    }
+
+    function convertMysqlDatetimeToPhpDatetime($datetime) {
+        $datetime = strtotime($datetime);
+        return date("j. F Y. G:i:s", $datetime);
+    }
+
     function executeQuery($sql) {
         global $db;
         if ($result = mysqli_query($db, $sql)) {

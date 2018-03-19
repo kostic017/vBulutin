@@ -52,18 +52,8 @@
         }
     }
 
-    function convertMysqlDatetimeToPhpDate($datetime) {
-        $datetime = strtotime($datetime);
-        return date("j. F Y.", $datetime);
-    }
-
-    function convertMysqlDatetimeToPhpTime($datetime) {
-        $datetime = strtotime($datetime);
-        return date("G:i:s", $datetime);
-    }
-
-    function echoCode($code) {
-        echo "<pre>{$code}</pre>";
+    function getDatetime() {
+        return date("Y-m-d H:i:s");
     }
 
     function getNewDom() {
@@ -89,8 +79,7 @@
     }
 
     function redirectTo($location) {
-        header("Location: " . $location);
-        exit;
+        echo "<script>location.replace($location);</script>"; // TODO
     }
 
     function isPostRequest() {

@@ -1,5 +1,39 @@
 <?php
 
+    function qCreateNewPost($topicId, $userId, $content) {
+        $topicId = dbEscape($topicId);
+        $userId = dbEscape($userId);
+        $posted = getDatetime();
+//        $content = dbEscape($content);
+
+        $sql = "INSERT INTO posts (id, content, posted, topics_id, users_id) VALUES (";
+        $sql .= "NULL, '{$content}', '{$posted}', '{$topicId}', '{$userId}'";
+        $sql .= ")";
+
+        executeQuery($sql);
+    }
+
+    function qGetPostsByTopicId($id, $sort = ["posted" => "ASC"]) {
+        $id = dbEscape($id);
+
+        $sql = "SELECT * ";
+        $sql .= "FROM posts ";
+        $sql .= "WHERE topics_id='{$id}'";
+        $sql .= orderByStatement($sort);
+
+        return executeAndFetchAssoc($sql, FETCH::ALL);
+    }
+
+    function qGetUserByPostId($id) {
+        $id = dbEscape($id);
+
+        $sql = "SELECT * ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE id='{$id}' ";
+
+        return executeAndFetchAssoc($sql);
+    }
+
     function qCheckPasswordForEmail($email, $password) {
         $email = dbEscape($email);
         $password = hashPassword($password);

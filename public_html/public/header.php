@@ -14,10 +14,8 @@
 ?>
 <?php require_once "../shared/templates/header.php"; ?>
     <link rel="stylesheet" href="schemes/scheme.css">
-
-    <link rel="stylesheet" href="/shared/libraries/sceditor/minified/themes/default.min.css" />
-    <script src="/shared/libraries/sceditor/minified/sceditor.min.js"></script>
-    <script src="/shared/libraries/sceditor/minified/formats/bbcode.js"></script>
+    <link rel="stylesheet" href="/shared/libraries/markdown-editor/simplemde.min.css" />
+    <script src="/shared/libraries/markdown-editor/simplemde.min.js"></script>
 </head>
 
 <body <?=$isSidebarSet ? "class='sidebar'" : ""?>>
