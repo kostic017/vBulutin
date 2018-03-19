@@ -82,12 +82,13 @@
             if (textarea.length > 0 && emojionearea.length > 0) {
                 let simplemde = new SimpleMDE({
                     element: textarea[0],
+                    forceSync: true,
                     spellChecker: false,
                     indentWithTabs: false,
                     autosave: {
+                        delay: 1000,
                         enabled: true,
                         uniqueId: "MyUniqueID",
-                        delay: 1000,
                     }
                 });
 
@@ -96,6 +97,9 @@
                     events: {
                         emojibtn_click: function(button, event) {
                             simplemde.value(simplemde.value() + button[0].dataset.name);
+                        },
+                        focus: function (editor, event) {
+                            $("i[data-name=':flag_xk:'").remove();
                         }
                     }
                 });
