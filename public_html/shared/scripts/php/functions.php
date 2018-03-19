@@ -1,7 +1,7 @@
 <?php
 
     use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\Exception;
 
     function hashPassword($password) {
         return md5($password);
@@ -23,7 +23,7 @@
         $mail = new PHPMailer;
 
         $mail->isSMTP();
-        $mail->IsHTML($html);
+        $mail->isHTML($html);
         $mail->CharSet = "UTF-8";
         $mail->SMTPDebug = SMTP_DEBUG;
         $mail->Host = 'smtp.gmail.com';
@@ -41,14 +41,20 @@
 
         $mail->Username = MAIL_USERNAME;
         $mail->Password = MAIL_PASSWORD;
-        $mail->setFrom(MAIL_USERNAME, "Forum41");
+        try {
+            $mail->setFrom(MAIL_USERNAME, "Forum41");
+        } catch (Exception $e) {
+            echo "PHPMailer Exception: {$e->getMessage()}";
+        }
 
         $mail->addAddress($email);
         $mail->Subject = $subject;
         $mail->Body = $body;
 
-        if (!$mail->send()) {
-            echo "PHPMailer Error: {$mail->ErrorInfo}";
+        try {
+            $mail->send();
+        } catch (Exception $e) {
+            echo "PHPMailer Exception: {$e->getMessage()}";
         }
     }
 
@@ -79,7 +85,7 @@
     }
 
     function redirectTo($location) {
-        echo "<script>location.replace($location);</script>"; // TODO
+        echo "<script>location.replace('{$location}');</script>"; // TODO
     }
 
     function isPostRequest() {

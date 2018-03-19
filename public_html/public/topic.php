@@ -1,6 +1,7 @@
 <?php
     include "header.php";
     require_once "../shared/libraries/Parsedown/Parsedown.php";
+    require_once "../shared/libraries/emojione/autoload.php";
 
     if (isset($_POST["new-post"])) {
         qCreateNewPost($id, $_SESSION["user_id"], $_POST["post-content"]);
@@ -8,6 +9,7 @@
 
     $parsedown = new Parsedown();
     $posts = qGetPostsByTopicId($id);
+    $emojione = new \Emojione\Client(new \Emojione\Ruleset());
 ?>
 
 <main>
@@ -38,7 +40,7 @@
 
                         <div class="content">
                             <small>Napisano <?=convertMysqlDatetimeToPhpDatetime($post["posted"])?></small>
-                            <?=$parsedown->text($post["content"]);?>
+                            <?=$emojione->shortnameToImage($parsedown->text($post["content"]));?>
                         </div>
 
                         <ul class="buttons">
@@ -62,7 +64,10 @@
         <section class="new-post">
             <form action="" method="post">
                 <textarea name="post-content"></textarea>
-                <button type="submit" name="new-post">Pošalji odgovor</button>
+                <div class="new-post-row">
+                    <button type="submit" name="new-post">Pošalji odgovor</button>
+                    <input type="text" id="emojionearea">
+                </div>
             </form>
         </section>
     <?php endif; ?>
@@ -71,16 +76,27 @@
 
     <script>
         $(function() {
-            const textarea = $("textarea[name=post-content]")[0];
-            if (textarea !== undefined) {
+            const textarea = $("textarea[name=post-content]");
+            const emojionearea = $("#emojionearea");
+
+            if (textarea.length > 0 && emojionearea.length > 0) {
                 let simplemde = new SimpleMDE({
-                    element: textarea,
+                    element: textarea[0],
                     spellChecker: false,
                     indentWithTabs: false,
                     autosave: {
                         enabled: true,
                         uniqueId: "MyUniqueID",
                         delay: 1000,
+                    }
+                });
+
+                emojionearea.emojioneArea({
+                    saveEmojisAs: "shortname",
+                    events: {
+                        emojibtn_click: function(button, event) {
+                            simplemde.value(simplemde.value() + button[0].dataset.name);
+                        }
                     }
                 });
             }

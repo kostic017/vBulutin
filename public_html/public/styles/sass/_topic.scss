@@ -1,9 +1,14 @@
+.emojionearea {
+  width: 32px !important;
+}
+
 .post-container {
   padding : 6px;
 }
 
 .post-box {
   padding : 6px;
+  @include margins-but(first, top, 10px);
 }
 
 .post-body {
@@ -52,12 +57,7 @@
   max-width : 100%;
 }
 
-.new-post form {
+.new-post-row {
   display: flex;
-  flex-flow: column;
-  justify-content: flex-end;
-}
-
-button[name=new-post] {
-  padding: 5px 0;
+  justify-content: space-between;
 }
