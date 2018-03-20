@@ -9,7 +9,7 @@ body {
       justify-content : space-between;
     }
     main {
-      flex-basis : 70%;
+      width : 70%;
     }
   }
 
@@ -29,10 +29,6 @@ legend {
 
 nav ul {
   display : flex;
-}
-
-button {
-  cursor : pointer;
 }
 
 input, textarea, select, button {

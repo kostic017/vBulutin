@@ -15,11 +15,11 @@
 <?php require_once "../shared/templates/header.php"; ?>
     <link rel="stylesheet" href="schemes/scheme.css">
     <link rel="stylesheet" href="/shared/libraries/emojione/emojione.min.css">
-    <link rel="stylesheet" href="/shared/libraries/markdown-editor/simplemde.min.css">
+    <link rel="stylesheet" href="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.css">
     <link rel="stylesheet" href="/shared/libraries/emojionearea/emojionearea.min.css">
 
     <script src="/shared/libraries/emojionearea/emojionearea.min.js"></script>
-    <script src="/shared/libraries/markdown-editor/simplemde.min.js"></script>
+    <script src="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.js"></script>
 </head>
 
 <body <?=$isSidebarSet ? "class='sidebar'" : ""?>>

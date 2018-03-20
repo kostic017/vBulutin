@@ -80,7 +80,7 @@
             const emojionearea = $("#emojionearea");
 
             if (textarea.length > 0 && emojionearea.length > 0) {
-                let simplemde = new SimpleMDE({
+                let inscrybmde = new InscrybMDE({
                     element: textarea[0],
                     spellChecker: false,
                     indentWithTabs: false,
