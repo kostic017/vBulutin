@@ -88,14 +88,25 @@
                         delay: 1000,
                         enabled: true,
                         uniqueId: "MyUniqueID",
-                    }
+                    },
+                    toolbar: [
+                        "bold", "italic", "strikethrough", "|",
+                        "heading-1", "heading-2", "heading-3", "|",
+                        "quote", "code", "unordered-list", "ordered-list", "|",
+                        "link", "image", "table", "horizontal-rule", "|",
+                        "clean-block", "preview", "side-by-side", "fullscreen", "|",
+                        "guide"
+                    ]
                 });
+
+                inscrybmde.value("");
+                inscrybmde.clearAutosavedValue();
 
                 emojionearea.emojioneArea({
                     saveEmojisAs: "shortname",
                     events: {
                         emojibtn_click: function(button, event) {
-                            simplemde.value(simplemde.value() + button[0].dataset.name);
+                            inscrybmde.value(inscrybmde.value() + button[0].dataset.name);
                         },
                         focus: function (editor, event) {
                             $("i[data-name=':flag_xk:'").remove(); // ukloni zastavu Kosova
