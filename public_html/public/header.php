@@ -14,11 +14,12 @@
 ?>
 <?php require_once "../shared/templates/header.php"; ?>
     <link rel="stylesheet" href="schemes/scheme.css">
-    <link rel="stylesheet" href="/shared/libraries/emojione/emojione.min.css">
-    <link rel="stylesheet" href="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.css">
-    <link rel="stylesheet" href="/shared/libraries/emojionearea/emojionearea.min.css">
 
-    <script src="/shared/libraries/emojionearea/emojionearea.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojione@3.1.2/extras/css/emojione.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.css">
+    <link rel="stylesheet" href="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.js"></script>
     <script src="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.js"></script>
 </head>
 

@@ -11,7 +11,7 @@
     $posts = qGetPostsByTopicId($id);
 
     $emojione = new \Emojione\Client(new \Emojione\Ruleset());
-    $emojione->ignoredRegexp .= "|<code[^>]*>.*?<\/code>"; // ne parsuj smajlije u kodu
+    $emojione->ignoredRegexp .= "|<code[^>]*>.*?<\/code>"; // ne parsuj smajlije unutar code tagova
 ?>
 
 <main>
