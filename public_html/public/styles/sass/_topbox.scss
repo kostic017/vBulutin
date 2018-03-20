@@ -1,67 +1,67 @@
 .top-box {
-  padding       : 5px;
-  margin        : 8px 0;
-  border-radius : 2px;
-  margin-bottom : 30px;
+    padding       : 5px;
+    margin        : 8px 0;
+    border-radius : 2px;
+    margin-bottom : 30px;
 
-  .path {
-    li {
-      &:after {
-        content : "#{$NBSP}#{$NBSP}#{$RARROW}#{$NBSP}#{$NBSP}";
-      }
-      &:last-child:after {
-        content : "";
-      }
+    .path {
+        li {
+            &:after {
+                content : "#{$NBSP}#{$NBSP}#{$RARROW}#{$NBSP}#{$NBSP}";
+            }
+            &:last-child:after {
+                content : "";
+            }
+        }
     }
-  }
 }
 
 .page-info {
-  display         : flex;
-  margin          : 10px 0;
-  justify-content : space-between;
+    display         : flex;
+    margin          : 10px 0;
+    justify-content : space-between;
 
-  .title {
-    width : 100%;
-    h1 {
-      margin      : 0 50px 10px 0;
-      font-weight : 500;
+    .title {
+        width : 100%;
+        h1 {
+            margin      : 0 50px 10px 0;
+            font-weight : 500;
+        }
     }
-  }
 
-  .desc {
-    margin : 0 10px 0 0;
-  }
-
-  .mods {
-    display : flex;
-    ul {
-      margin-left : 5px;
-      @include comma-separated-list;
+    .desc {
+        margin : 0 10px 0 0;
     }
-  }
+
+    .mods {
+        display : flex;
+        ul {
+            margin-left : 5px;
+            @include comma-separated-list;
+        }
+    }
 }
 
 .page-buttons {
-  display         : flex;
-  justify-content : space-between;
+    display         : flex;
+    justify-content : space-between;
 
-  .pages {
-    display     : flex;
-    align-items : center;
+    .pages {
+        display     : flex;
+        align-items : center;
 
-    ul {
-      margin-left : 10px;
-      display     : inline-flex;
+        ul {
+            margin-left : 10px;
+            display     : inline-flex;
+        }
+
+        li {
+            margin-right : 5px;
+        }
+
+        a {
+            padding       : 5px;
+            border-radius : 5px;
+        }
     }
-
-    li {
-      margin-right : 5px;
-    }
-
-    a {
-      padding       : 5px;
-      border-radius : 5px;
-    }
-  }
 }

@@ -25,7 +25,7 @@
 </head>
 
 <body>
-<?php include __DIR__ . "/navigation.php"; ?>
+<?php require_once __DIR__ . "/navigation.php"; ?>
 
 <main>
     <h2 class="table-title">Sekcije</h2>

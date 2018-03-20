@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . "/header.php";
+    require_once __DIR__ . "/header.php";
 
     if (!isset($_SESSION["redirect"])) {
         redirectTo("index.php");
@@ -24,12 +24,12 @@
 </main>
 
 <script>
-    $(function() {
+    $(function () {
         redirectTo("<?=$url?>", <?=REDIRECT_TIMEOUT?>);
     });
 </script>
 
 <?php
     unset($_SESSION["redirect"]);
-    include __DIR__ . "/footer.php";
+    require_once __DIR__ . "/footer.php";
 ?>

@@ -2,26 +2,32 @@
     require_once "../shared/scripts/php/main.php";
     require_once "scripts/php/includes.php";
 
+    if (FILENAME !== "login") {
+        $_SESSION["redirect_back"] = $_SERVER["REQUEST_URI"];
+    }
+
     if (isset($_POST["logout"])) {
         unset($_SESSION["user_id"]);
     }
+?>
+<?php require_once "../shared/templates/header.php"; ?>
+<link rel="stylesheet" href="schemes/scheme.css">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojione@3.1.2/extras/css/emojione.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.css">
+<link rel="stylesheet" href="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.js"></script>
+<script src="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.js"></script>
+</head>
+
+<?php
     if (isEqualToAnyWord("topic forum section", FILENAME)) {
-        if (!isNotBlank($id = $_GET["id"] ?? "")) {
+        if (!isNotBlank($thisPageId = $_GET["id"] ?? "")) {
             redirectTo("index.php");
         }
     }
 ?>
-<?php require_once "../shared/templates/header.php"; ?>
-    <link rel="stylesheet" href="schemes/scheme.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojione@3.1.2/extras/css/emojione.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.css">
-    <link rel="stylesheet" href="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.js"></script>
-    <script src="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.js"></script>
-</head>
 
 <body <?=$isSidebarSet ? "class='sidebar'" : ""?>>
 
@@ -55,9 +61,9 @@
                     <?php if (isset($_SESSION["user_id"])): ?>
                         <li><a href="" id="btn-messages"><span data-newmessages="0">Nema novih poruka</span></a></li>
                         <li><a href="" id="btn-profile"><span>Moj profil</span></a></li>
-                        <li> <a href="#" id="logout">Odjavi se</a></li>
+                        <li><a href="#" id="logout">Odjavi se</a></li>
                     <?php else: ?>
-                        <li><a href="login.php?page=<?=$_SERVER["REQUEST_URI"]?>">Prijavi se</a></li>
+                        <li><a href="login.php">Prijavi se</a></li>
                         <li><a href="register.php">Registruj se</a></li>
                     <?php endif; ?>
                 </ul>
@@ -79,7 +85,7 @@
         </form>
 
         <script>
-            $("#logout").on("click", function() {
+            $("#logout").on("click", function () {
                 $("#logout-form").submit();
             });
         </script>

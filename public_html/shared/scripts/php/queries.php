@@ -13,7 +13,7 @@
 
     function qGetForumsBySectionId($sectionId, $rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
         $sectionId = dbEscape($sectionId);
-        
+
         $sql = "SELECT * ";
         $sql .= "FROM forums ";
         $sql .= "WHERE sections_id='{$sectionId}' ";

@@ -3,10 +3,10 @@
 <main>
 
     <?php
-        include "topbox.php";
-        include "tablesection.php";
+        require_once "topbox.php";
+        require_once "tablesection.php";
     ?>
 
 </main>
 
-<?php include "footer.php"; ?>
+<?php require_once "footer.php"; ?>

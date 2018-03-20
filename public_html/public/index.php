@@ -1,5 +1,5 @@
 <?php
-    include "header.php";
+    require_once "header.php";
     $sections = qGetSections(SORT::POSITION_ASCENDING);
 ?>
 
@@ -7,11 +7,10 @@
 
     <?php
         foreach ($sections as $section) {
-            $id = $section["id"];
-            include "tablesection.php";
+            require "tablesection.php";
         }
     ?>
 
 </main>
 
-<?php include "footer.php"; ?>
+<?php require_once "footer.php"; ?>

@@ -1,99 +1,99 @@
 div[aria-describedby="sheditor"] {
-  // ceo dijalog
-  z-index   : 200;
-  position  : fixed;
-  font-size : 14px;
+    // ceo dijalog
+    z-index   : 200;
+    position  : fixed;
+    font-size : 14px;
 
-  li.ui-state-disabled {
-    // placeholder
-    display : none;
-  }
+    li.ui-state-disabled {
+        // placeholder
+        display : none;
+    }
 }
 
 #sheditor {
-  // sadrzaj dijaloga
-  padding    : 10px;
-  overflow-y : auto;
+    // sadrzaj dijaloga
+    padding    : 10px;
+    overflow-y : auto;
 
-  h4 {
-    margin : 0.5em 0;
-  }
-
-  .jui-accordion {
-    margin-top : 15px;
-  }
-
-  .ui-selecting {
-    background : #feca40;
-  }
-
-  .ui-selected {
-    color      : white;
-    background : #f39814;
-  }
-
-  .jui-selectable {
-    width           : 60%;
-    margin          : 0;
-    padding         : 0;
-    list-style-type : none;
-
-    li {
-      margin  : 3px;
-      height  : 18px;
-      border  : 1px solid #dddddd;
-      padding : 0.4em;
-      display : block;
-
-      &:hover {
-        cursor : pointer;
-      }
+    h4 {
+        margin : 0.5em 0;
     }
-  }
+
+    .jui-accordion {
+        margin-top : 15px;
+    }
+
+    .ui-selecting {
+        background : #feca40;
+    }
+
+    .ui-selected {
+        color      : white;
+        background : #f39814;
+    }
+
+    .jui-selectable {
+        width           : 60%;
+        margin          : 0;
+        padding         : 0;
+        list-style-type : none;
+
+        li {
+            margin  : 3px;
+            height  : 18px;
+            border  : 1px solid #dddddd;
+            padding : 0.4em;
+            display : block;
+
+            &:hover {
+                cursor : pointer;
+            }
+        }
+    }
 
 }
 
 #target-select {
-  display     : flex;
-  flex-wrap   : wrap;
-  align-items : center;
+    display     : flex;
+    flex-wrap   : wrap;
+    align-items : center;
 
-  .jui-selectable {
-    display : flex;
-  }
+    .jui-selectable {
+        display : flex;
+    }
 }
 
 .evo-cp-wrap {
-  width   : 100% !important;
-  display : flex;
+    width   : 100% !important;
+    display : flex;
 }
 
 .evo-colorind {
-  margin-left : 10px;
+    margin-left : 10px;
 }
 
 .number-and-unit .ui-selectmenu-button {
-  width       : auto;
-  margin-left : 10px;
+    width       : auto;
+    margin-left : 10px;
 }
 
 div[data-property] {
-  @include margins-but(first, top, 10px);
+    @include margins-but(first, top, 10px);
 }
 
 .jui-spinner {
-  width : 2rem;
+    width : 2rem;
 }
 
 .ui-widget-overlay {
-  z-index : 100 !important;
+    z-index : 100 !important;
 }
 
 .ui-button-icon {
-  cursor : pointer;
+    cursor : pointer;
 }
 
 .ui-selectmenu-open ul {
-  max-height : 22px * 10;
-  overflow-y : auto;
+    max-height : 22px * 10;
+    overflow-y : auto;
 }

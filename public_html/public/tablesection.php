@@ -1,5 +1,4 @@
 <?php
-    $section = qGetRowById($id, "sections");
     $rootForums = qGetForumsBySectionId($section["id"], true, SORT::POSITION_ASCENDING);
 ?>
 

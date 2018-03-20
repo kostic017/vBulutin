@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . "/header.php";
+    require_once __DIR__ . "/header.php";
 
     $errors = [];
     $username = "";
@@ -45,7 +45,7 @@
                 Lozinka:<br>
                 <input class="equal-width" type="password" name="password" required>
                 <span class="required-star">*</span>
-        </label></p>
+            </label></p>
 
         <button type="submit" name="confirm">Potvrdi email adresu</button>
 
@@ -53,4 +53,4 @@
 
 </main>
 
-<?php include __DIR__ . "/footer.php"; ?>
+<?php require_once __DIR__ . "/footer.php"; ?>

@@ -2,7 +2,7 @@
     if ($isSidebarSet) {
         echo "<aside class='sidebar'>";
         foreach ($sidebarItems as $sidebarItem) {
-            include "sidebar/{$sidebarItem}.php";
+            require_once "sidebar/{$sidebarItem}.php";
         }
         echo "</aside>";
     }

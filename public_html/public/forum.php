@@ -2,13 +2,13 @@
     require_once "header.php";
     require_once "../shared/scripts/php/main.php";
 
-    $topics = qGetTopicsByForumId($id);
-    $childForums = qGetForumsByParentId($id, SORT::POSITION_ASCENDING);
+    $topics = qGetTopicsByForumId($thisPageId);
+    $childForums = qGetForumsByParentId($thisPageId, SORT::POSITION_ASCENDING);
 ?>
 
 <main>
 
-    <?php include "topbox.php"; ?>
+    <?php require_once "topbox.php"; ?>
 
     <?php if (count($childForums) > 0): ?>
         <table data-shclass="main-table" class="main-table">
@@ -86,8 +86,8 @@
 
     </table>
 
-    <?php include "permissions.php"; ?>
+    <?php require_once "permissions.php"; ?>
 
 </main>
 
-<?php include "footer.php"; ?>
+<?php require_once "footer.php"; ?>

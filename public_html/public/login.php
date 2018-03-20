@@ -1,9 +1,9 @@
 <?php
-    if (isset($_SESSION["user_id"])) {
-        redirectTo("index.php");
-    }
+    require_once "header.php";
 
-    include "header.php";
+    if (isset($_SESSION["user_id"])) {
+        redirectTo($_SESSION["redirect_back"] ?? "index.php");
+    }
 
     if (isset($_POST["login"])) {
         $errors = [];
@@ -12,7 +12,7 @@
             if ($emailConfirmed = qIsEmailConfirmed($userId)) {
                 $_SESSION["user_id"] = $userId;
                 $_SESSION["redirect"] = [
-                    "url" => $_GET["page"] ?? "index.php",
+                    "url" => $_SESSION["redirect_back"] ?? "index.php",
                     "message" => "Uspešno ste se prijavili."
                 ];
                 redirectTo("redirect.php");
@@ -55,13 +55,13 @@
                 Korisničko ime:<br>
                 <input class="equal-width" type="text" name="username" required>
                 <span class="required-star">*</span>
-        </label></p>
+            </label></p>
 
         <p><label>
                 Lozinka:<br>
                 <input class="equal-width" type="password" name="password" required>
                 <span class="required-star">*</span>
-        </label></p>
+            </label></p>
 
         <button type="submit" name="login">Prijavi se</button>
 
@@ -81,7 +81,7 @@
                 Vaša email adresa:<br>
                 <input class="equal-width" type="email" name="email" required>
                 <span class="required-star">*</span>
-        </label></p>
+            </label></p>
 
         <button type="submit" name="forgot">Pošalji</button>
     </form>
@@ -94,4 +94,4 @@
     });
 </script>
 
-<?php include "footer.php"; ?>
+<?php require_once "footer.php"; ?>

@@ -1,4 +1,4 @@
-function redirectTo(url, timeout) {
+function redirectTo(url, timeout = 0) {
     setTimeout(location.replace(url), timeout);
 }
 

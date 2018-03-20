@@ -1,66 +1,66 @@
 #btn {
 
-  &-follow {
-    white-space : nowrap;
+    &-follow {
+        white-space : nowrap;
 
-    button {
-      padding : 5px 10px;
+        button {
+            padding : 5px 10px;
+        }
+
+        span {
+            margin-left  : 5px;
+            padding-left : 28px;
+        }
     }
 
-    span {
-      margin-left  : 5px;
-      padding-left : 28px;
+    &-mark-read {
+        padding-left        : 18px;
+        background-repeat   : no-repeat;
+        background-position : left center;
     }
-  }
 
-  &-mark-read {
-    padding-left        : 18px;
-    background-repeat   : no-repeat;
-    background-position : left center;
-  }
-
-  &-reply {
-    padding     : 6px 12px;
-    margin-left : 15px;
-  }
-
-  &-profile,
-  &-messages {
-    width   : 54px;
-    padding : 0 !important;
-
-    span {
-      width               : 25px;
-      height              : 25px;
-      margin              : 0 auto;
-      display             : block;
-      background-size     : 100%;
-      background-repeat   : no-repeat;
-      background-position : center center;
-      @include hide-text;
+    &-reply {
+        padding     : 6px 12px;
+        margin-left : 15px;
     }
-  }
 
-  &-back2top {
-    left          : 50%;
-    width         : 25px;
-    height        : 25px;
-    bottom        : 20px;
-    display       : none;
-    position      : fixed;
-    transform     : translateX(-50%);
-    border-radius : 30%;
+    &-profile,
+    &-messages {
+        width   : 54px;
+        padding : 0 !important;
 
-    span {
-      width               : 100%;
-      height              : 100%;
-      display             : block;
-      cursor              : pointer;
-      background-size     : 50%;
-      background-repeat   : no-repeat;
-      background-position : center center;
-      @include hide-text;
+        span {
+            width               : 25px;
+            height              : 25px;
+            margin              : 0 auto;
+            display             : block;
+            background-size     : 100%;
+            background-repeat   : no-repeat;
+            background-position : center center;
+            @include hide-text;
+        }
     }
-  }
+
+    &-back2top {
+        left          : 50%;
+        width         : 25px;
+        height        : 25px;
+        bottom        : 20px;
+        display       : none;
+        position      : fixed;
+        transform     : translateX(-50%);
+        border-radius : 30%;
+
+        span {
+            width               : 100%;
+            height              : 100%;
+            display             : block;
+            cursor              : pointer;
+            background-size     : 50%;
+            background-repeat   : no-repeat;
+            background-position : center center;
+            @include hide-text;
+        }
+    }
 
 }

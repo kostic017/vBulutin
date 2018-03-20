@@ -1,5 +1,5 @@
 <?php
-    $thisPage = qGetRowById($id, FILENAME . "s"); // section.s, forum.s...
+    $thisPage = qGetRowById($thisPageId, FILENAME . "s"); // section.s, forum.s...
 
     if (FILENAME === "section") {
         $follow = "ovu sekciju";

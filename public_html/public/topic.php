@@ -1,21 +1,22 @@
 <?php
-    include "header.php";
+    require_once "header.php";
     require_once "../shared/libraries/Parsedown/Parsedown.php";
     require_once "../shared/libraries/emojione/autoload.php";
 
     if (isset($_POST["new-post"])) {
-        qCreateNewPost($id, $_SESSION["user_id"], $_POST["post-content"]);
+        qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["post-content"]);
+        redirectTo($_SERVER["REQUEST_URI"]);
     }
 
     $parsedown = new Parsedown();
-    $posts = qGetPostsByTopicId($id);
+    $posts = qGetPostsByTopicId($thisPageId);
 
     $emojione = new \Emojione\Client(new \Emojione\Ruleset());
     $emojione->ignoredRegexp .= "|<code[^>]*>[\s\S]*?<\/code>"; // ne parsuj smajlije unutar code tagova
 ?>
 
 <main>
-    <?php include "topbox.php"; ?>
+    <?php require_once "topbox.php"; ?>
 
     <div data-shclass="captionbar" class="captionbar">1 reply to this topic</div>
 
@@ -31,8 +32,8 @@
                     <div data-shclass="post-user" class="post-user">
                         <p class="name"><a href=""><?=$user["username"]?></a></p>
                         <p class="avatar"><a href="">
-                            <img src="/public/images/avatars/default.png" alt="<?=$user["username"]?>">
-                        </a></p>
+                                <img src="/public/images/avatars/default.png" alt="<?=$user["username"]?>">
+                            </a></p>
                         <p data-shclass="user-title user-admin"><a href="sviadmini"><span>Administrators</span></a></p>
                         <p class="titleimg"><a href="sviadmini"><img src="" alt="Administrator"></a></p>
                         <p class="postcount"><span>5 posts</span></p>
@@ -74,10 +75,10 @@
         </section>
     <?php endif; ?>
 
-    <?php include "permissions.php"; ?>
+    <?php require_once "permissions.php"; ?>
 
     <script>
-        $(function() {
+        $(function () {
             const textarea = $("textarea[name=post-content]");
             const emojionearea = $("#emojionearea");
 
@@ -107,7 +108,7 @@
                 emojionearea.emojioneArea({
                     saveEmojisAs: "shortname",
                     events: {
-                        emojibtn_click: function(button, event) {
+                        emojibtn_click: function (button, event) {
                             inscrybmde.value(inscrybmde.value() + button[0].dataset.name);
                         },
                         focus: function (editor, event) {
@@ -121,4 +122,4 @@
 
 </main>
 
-<?php include "footer.php"; ?>
+<?php require_once "footer.php"; ?>
