@@ -11,7 +11,7 @@
     $message = $data["message"];
 
     $title = $url;
-    if (strpos($url, "index")) {
+    if (strpos($url, "index") || $url == "/public/") {
         $title = "Početna strana";
     } elseif (strpos($url, "login")) {
         $title = "Prijavi se";
