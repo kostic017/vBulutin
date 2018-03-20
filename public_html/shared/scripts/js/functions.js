@@ -1,3 +1,7 @@
+function redirectTo(url, timeout) {
+    setTimeout(location.replace(url), timeout);
+}
+
 function ucfirst(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

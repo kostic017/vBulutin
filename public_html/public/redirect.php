@@ -25,7 +25,7 @@
 
 <script>
     $(function() {
-        setTimeout("window.location.href='<?=$url?>';", <?=REDIRECT_TIMEOUT?>);
+        redirectTo("<?=$url?>", <?=REDIRECT_TIMEOUT?>);
     });
 </script>
 

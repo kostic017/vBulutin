@@ -84,8 +84,8 @@
         return urlencode($string);
     }
 
-    function redirectTo($location) {
-        echo "<script>location.replace('{$location}');</script>";
+    function redirectTo($url, $timeout = 0) {
+        echo "<script>redirectTo('{$url}', {$timeout});</script>";
     }
 
     function isPostRequest() {
