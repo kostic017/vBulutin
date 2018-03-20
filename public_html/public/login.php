@@ -12,7 +12,7 @@
             if ($emailConfirmed = qIsEmailConfirmed($userId)) {
                 $_SESSION["user_id"] = $userId;
                 $_SESSION["redirect"] = [
-                    "url" => "index.php",
+                    "url" => $_GET["page"] ?? "index.php",
                     "message" => "Uspešno ste se prijavili."
                 ];
                 redirectTo("redirect.php");

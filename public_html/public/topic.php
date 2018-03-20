@@ -82,7 +82,6 @@
             if (textarea.length > 0 && emojionearea.length > 0) {
                 let simplemde = new SimpleMDE({
                     element: textarea[0],
-                    forceSync: true,
                     spellChecker: false,
                     indentWithTabs: false,
                     autosave: {
@@ -99,7 +98,7 @@
                             simplemde.value(simplemde.value() + button[0].dataset.name);
                         },
                         focus: function (editor, event) {
-                            $("i[data-name=':flag_xk:'").remove();
+                            $("i[data-name=':flag_xk:'").remove(); // ukloni zastavu Kosova
                         }
                     }
                 });

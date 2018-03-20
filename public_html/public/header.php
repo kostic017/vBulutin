@@ -56,7 +56,7 @@
                         <li><a href="" id="btn-profile"><span>Moj profil</span></a></li>
                         <li> <a href="#" id="logout">Odjavi se</a></li>
                     <?php else: ?>
-                        <li><a href="login.php">Prijavi se</a></li>
+                        <li><a href="login.php?page=<?=$_SERVER["REQUEST_URI"]?>">Prijavi se</a></li>
                         <li><a href="register.php">Registruj se</a></li>
                     <?php endif; ?>
                 </ul>

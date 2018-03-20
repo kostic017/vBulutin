@@ -85,7 +85,7 @@
     }
 
     function redirectTo($location) {
-        echo "<script>location.replace('{$location}');</script>"; // TODO
+        echo "<script>location.replace('{$location}');</script>";
     }
 
     function isPostRequest() {

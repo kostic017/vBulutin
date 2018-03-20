@@ -10,9 +10,11 @@
     $url = $data["url"];
     $message = $data["message"];
 
-    switch ($url) {
-        case "index.php": $title = "Početna strana"; break;
-        case "login.php": $title = "Prijavi se"; break;
+    $title = $url;
+    if (strpos($url, "index")) {
+        $title = "Početna strana";
+    } elseif (strpos($url, "login")) {
+        $title = "Prijavi se";
     }
 ?>
 
