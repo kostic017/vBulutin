@@ -1,18 +1,17 @@
 <?php
 
-    function qGetRowById($id, $table) {
-        $id = dbEscape($id);
-        $table = dbEscape($table);
+    function qGetRowById($rowId, $tableName) {
+        dbEscape($rowId, $tableName);
 
         $sql = "SELECT * ";
-        $sql .= "FROM {$table} ";
-        $sql .= "WHERE id='{$id}' ";
+        $sql .= "FROM {$tableName} ";
+        $sql .= "WHERE id='{$rowId}' ";
 
         return executeAndFetchAssoc($sql);
     }
 
     function qGetForumsBySectionId($sectionId, $rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
-        $sectionId = dbEscape($sectionId);
+        dbEscape($sectionId);
 
         $sql = "SELECT * ";
         $sql .= "FROM forums ";
@@ -26,7 +25,7 @@
     }
 
     function qGetForumsByParentId($parentId, $sort = SORT::DEFAULT_VALUE) {
-        $parentId = dbEscape($parentId);
+        dbEscape($parentId);
 
         $sql = "SELECT * ";
         $sql .= "FROM forums ";

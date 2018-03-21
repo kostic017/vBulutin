@@ -86,6 +86,7 @@
 
     </table>
 
+    <?php require_once "textarea.php"; ?>
     <?php require_once "permissions.php"; ?>
 
 </main>

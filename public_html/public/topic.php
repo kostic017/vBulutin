@@ -3,11 +3,6 @@
     require_once "../shared/libraries/Parsedown/Parsedown.php";
     require_once "../shared/libraries/emojione/autoload.php";
 
-    if (isset($_POST["new-post"])) {
-        qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["post-content"]);
-        redirectTo($_SERVER["REQUEST_URI"]);
-    }
-
     $parsedown = new Parsedown();
     $posts = qGetPostsByTopicId($thisPageId);
 
@@ -63,62 +58,8 @@
 
     </section>
 
-    <?php if (isset($_SESSION["user_id"])): ?>
-        <section class="new-post">
-            <form action="" method="post">
-                <textarea name="post-content"></textarea>
-                <div class="new-post-row">
-                    <button type="submit" name="new-post">Pošalji odgovor</button>
-                    <input type="text" id="emojionearea">
-                </div>
-            </form>
-        </section>
-    <?php endif; ?>
-
+    <?php require_once "textarea.php"; ?>
     <?php require_once "permissions.php"; ?>
-
-    <script>
-        $(function () {
-            const textarea = $("textarea[name=post-content]");
-            const emojionearea = $("#emojionearea");
-
-            if (textarea.length > 0 && emojionearea.length > 0) {
-                let inscrybmde = new InscrybMDE({
-                    element: textarea[0],
-                    spellChecker: false,
-                    indentWithTabs: false,
-                    autosave: {
-                        delay: 1000,
-                        enabled: true,
-                        uniqueId: "MyUniqueID",
-                    },
-                    toolbar: [
-                        "bold", "italic", "strikethrough", "|",
-                        "heading-1", "heading-2", "heading-3", "|",
-                        "quote", "code", "unordered-list", "ordered-list", "|",
-                        "link", "image", "table", "horizontal-rule", "|",
-                        "clean-block", "preview", "side-by-side", "fullscreen", "|",
-                        "guide"
-                    ]
-                });
-
-                inscrybmde.value("");
-                inscrybmde.clearAutosavedValue();
-
-                emojionearea.emojioneArea({
-                    saveEmojisAs: "shortname",
-                    events: {
-                        emojibtn_click: function (button, event) {
-                            inscrybmde.value(inscrybmde.value() + button[0].dataset.name);
-                        },
-                        focus: function (editor, event) {
-                            $("i[data-name=':flag_xk:'").remove(); // ukloni zastavu Kosova
-                        }
-                    }
-                });
-            }
-        });
-    </script>
 
 </main>
 

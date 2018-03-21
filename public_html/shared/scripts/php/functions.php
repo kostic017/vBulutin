@@ -58,10 +58,6 @@
         }
     }
 
-    function getDatetime() {
-        return date("Y-m-d H:i:s");
-    }
-
     function getNewDom() {
         return new DOMDocument('1.0', 'utf-8');
     }

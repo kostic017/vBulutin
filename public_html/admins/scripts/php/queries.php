@@ -1,7 +1,7 @@
 <?php
 
     function qGetColumnsInfo($table) {
-        $table = dbEscape($table);
+        dbEscape($table);
 
         $sql = "SELECT ";
         $sql .= "   column_name as name, ";

@@ -36,7 +36,7 @@
 
         if (empty($errors)) {
             sendEmailConfirmation($_POST["email"]);
-            qRegisterUser($_POST);
+            qRegisterUser($_POST["username"], $_POST["email"], $_POST["password1"]);
 
             $message = "Nalog ti je napravljen ali prvo moraš da potvrdiš svoju email adresu.";
             $message .= "Poslali smo ti mejl na <b>{$_POST["email"]}</b>";

@@ -1,8 +1,18 @@
 <?php
 
-    function dbEscape($string) {
+    function getDatetimeForMysql() {
+        return date("Y-m-d H:i:s");
+    }
+
+    function getDateForMysql() {
+        return date("Y-m-d");
+    }
+
+    function dbEscape(&...$arguments) {
         global $db;
-        return mysqli_real_escape_string($db, $string);
+        for ($i = 0; $i < count($arguments); ++$i) {
+            $arguments[$i] = mysqli_real_escape_string($db, $arguments[$i]);
+        }
     }
 
     function dbClose() {
@@ -10,6 +20,11 @@
         if (isset($db)) {
             mysqli_close($db);
         }
+    }
+
+    function getInsertId() {
+        global $db;
+        return mysqli_insert_id($db);
     }
 
     function isThereAResult($sql) {
