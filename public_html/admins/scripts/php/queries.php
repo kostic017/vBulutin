@@ -1,6 +1,6 @@
 <?php
 
-    function qGetForums($rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
+    function qGetAllForums($rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
         $sql = "SELECT * ";
         $sql .= "FROM forums ";
         if ($rootOnly) {
@@ -27,40 +27,36 @@
     }
 
     function qUpdateForum($newData) {
-        $id = dbEscape($newData["forums_update"]);
-        $title = dbEscape($newData["title"]);
-        $description = dbEscape($newData["description"]);
+        extract($newData);
+        dbEscape($id, $title, $description, $sections_id);
         $visible = isset($newData["visible"]) ? "1" : "0";
-        $sectionsId = dbEscape($newData["sections_id"]);
 
         $sql = "UPDATE forums SET ";
         $sql .= "   title='{$title}', ";
         $sql .= "   description='{$description}', ";
         $sql .= "   visible='{$visible}', ";
-        $sql .= "   sections_id='{$sectionsId}' ";
+        $sql .= "   sections_id='{$sections_id}' ";
         $sql .= "WHERE id='{$id}' ";
 
         executeQuery($sql);
     }
 
-    function qUpdateForumCell($id, $colName, $newValue) {
-        $id = dbEscape($id);
-        $colName = dbEscape($colName);
+    function qUpdateForumCell($rowId, $colName, $newValue) {
+        dbEscape($rowId, $colName, $newValue);
         if ($newValue !== "NULL") {
-            $newValue = q(dbEscape($newValue));
+            $newValue = q($newValue);
         }
 
         $sql = "UPDATE forums SET ";
         $sql .= "   {$colName}={$newValue} ";
-        $sql .= "WHERE id='{$id}' ";
+        $sql .= "WHERE id='{$rowId}' ";
 
         executeQuery($sql);
     }
 
     function qUpdateSection($newData) {
-        $id = dbEscape($newData["sections_update"]);
-        $title = dbEscape($newData["title"]);
-        $description = dbEscape($newData["description"]);
+        extract($newData);
+        dbEscape($id, $title, $description);
         $visible = isset($newData["visible"]) ? "1" : "0";
 
         $sql = "UPDATE sections SET ";
@@ -77,7 +73,7 @@
         // se oslobodilo mesto za decu koja ce ostati bez roditelja. Inace
         // ce se forumi nakon njega pomeriti za po jedno mesto navise.
 
-        $id = dbEscape($id);
+        dbEscape($id);
 
         $sql = "SELECT position, parentid ";
         $sql .= "FROM forums ";
@@ -126,7 +122,7 @@
     function qDeleteSection($id) {
         // Sekcije nakon obrisane se pomeraju za jedno mesto navise.
 
-        $id = dbEscape($id);
+        dbEscape($id);
 
         $sql = "SELECT position ";
         $sql .= "FROM sections ";
@@ -148,13 +144,13 @@
     }
 
     function qClearTable($tableName) {
-        $tableName = dbEscape($tableName);
+        dbEscape($tableName);
         executeQuery("DELETE FROM {$tableName}");
         executeQuery("ALTER TABLE {$tableName} AUTO_INCREMENT=1");
     }
 
     function qGetForumSection($id) {
-        $id = dbEscape($id);
+        dbEscape($id);
 
         $sql = "SELECT sections_id ";
         $sql .= "FROM forums ";
@@ -182,32 +178,31 @@
     }
 
     function gInsertForum($forumData) {
-        $title = dbEscape($forumData["title"]);
-        $description = dbEscape($forumData["description"]);
+        extract($forumData);
+        dbEscape($title, $description, $parentid, $sections_id);
         $visible = isset($forumData["visible"]) ? "1" : "0";
 
-        if (isNotBlank($forumData["parentid"])) {
+        if (isNotBlank($parentid)) {
             // ako ima roditelja onda pripada istoj sekciji kao on
-            $parentId = dbEscape($forumData["parentid"]);
-            $parent = qGetRowById($forumData["parentid"], "forums");
-            $sectionsId = dbEscape($parent["sections_id"]);
+            if ($parent = qGetRowById($parentid, "forums")) {
+                $sections_id = $parent["sections_id"];
+            }
         } else {
-            $parentId = "NULL";
-            $sectionsId = dbEscape($forumData["sections_id"]);
+            $parentid = "NULL";
         }
 
-        $position = qGetNewForumPosition($parentId, $sectionsId);
+        $position = qGetNewForumPosition($parentid, $sections_id);
 
         $sql = "INSERT INTO forums (title, description, position, visible, parentid, sections_id) VALUES (";
-        $sql .= "'{$title}', '{$description}', {$position}, {$visible}, {$parentId}, {$sectionsId}";
+        $sql .= "'{$title}', '{$description}', {$position}, {$visible}, {$parentid}, {$sections_id}";
         $sql .= ")";
 
         executeQuery($sql);
     }
 
     function qInsertSection($data) {
-        $title = dbEscape($data["title"]);
-        $description = dbEscape($data["description"]);
+        extract($data);
+        dbEscape($title, $description);
         $visible = isset($data["visible"]) ? "1" : "0";
 
         $position = qGetNewSectionPosition();

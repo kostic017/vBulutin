@@ -22,6 +22,7 @@
 ?>
 
 <main>
+
     <h2 class="table-title">Sekcije</h2>
     <p>Brisanjem sekcije brišete sve forume koje pripadaju toj sekciji kao i teme u tim forumima.</p>
 
@@ -40,6 +41,7 @@
             require "datatable.php";
         ?>
     </form>
+
 </main>
 
 <div id="overlay"></div>

@@ -1,7 +1,7 @@
 <?php
     require_once __DIR__ . "/includes.php";
 
-    if (isPostRequest() && isset($_POST["job"])) {
+    if (isset($_POST["job"])) {
         switch ($_POST["job"]) {
 
             case "parent_section":
@@ -16,20 +16,22 @@
                     $columnName = $_POST["columnName"];
                     $tableName = $_POST["tableName"];
 
-                    $options = ["columnName" => $columnName, "order" => $order];
+                    $options = [$columnName => $order];
 
                     switch ($tableName) {
                         case "forums":
-                            $tableData = qGetForums(false, $options);
+                            $tableData = qGetAllForums(false, $options);
                             break;
                         case "sections":
-                            $tableData = qGetSections($options);
+                            $tableData = qGetRowsByTableName("sections", $options);
                             break;
                     }
 
-                    $dom = getNewDom();
-                    appendDataRows($dom, $tableName, ["data" => $tableData]);
-                    echo $dom->saveHTML();
+                    foreach ($tableData as $rows) {
+                        foreach ($rows as $row) {
+                            require "datarow.php";
+                        }
+                    }
                 }
                 break;
 

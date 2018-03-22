@@ -7,7 +7,7 @@
 
     <tr>
         <th>
-            <button value="" class="icon icon-clear" title="Clear" name="<?=$tableName?>_clear"></button>
+            <button class="icon icon-clear" title="Clear" name="<?=$tableName?>_clear"></button>
         </th>
         <?php foreach ($columnsInfo as $columnInfo): ?>
             <th>
@@ -20,8 +20,7 @@
 
     <tr class="insert-row">
         <td>
-            <button value="" type="submit" class="icon icon-insert"
-                    title="Insert" name="<?=$tableName?>_insert"></button>
+            <button type="submit" class="icon icon-insert" title="Insert" name="<?=$tableName?>_insert"></button>
         </td>
         <?php foreach ($columnsInfo as $columnInfo): ?>
             <td><?=getInsertControlForColumn($columnInfo)?></td>
@@ -39,33 +38,18 @@
                         title="Delete" name="<?=$tableName?>_delete"></button>
             </td>
 
-            <?php foreach ($row as $columnName => $value): ?>
-                <td data-value="<?=$value?>">
-                    <?php
-                        echo $value;
-                        switch ($columnName) {
-                            case "visibility":
-                                $visibility = calculateForumVisibilityValue($row);
-                                echo "<span class='icon icon-{$visibility["value"]}' ";
-                                echo "title='{$visibility["reason"]}'></span>";
-                            break;
-                            case "parentid":
-                                echo $value;
-                                if ($parent = qGetRowById($value, "forums")) {
-                                    echo " ({$parent["title"]})";
-                                }
-                            break;
-                            case "sections_id":
-                                if ($section = qGetRowById($value, "sections")) {
-                                    echo " ({$section["title"]})";
-                                }
-                            break;
-                        }
-                    ?>
-                </td>
-            <?php endforeach; ?>
+            <?php require "datarow.php"; ?>
 
         </tr>
     <?php endforeach; ?>
 
 </table>
+
+<script>
+    $(function() {
+        // $("button.icon-clear, button.icon-delete").on("click", () => confirm("Sigurno želite da izvršite brisanje?"));
+        $("button.icon-clear, button.icon-delete").on("click", function() {
+            return confirm("Sigurno želite da izvršite brisanje?");
+        });
+    });
+</script>

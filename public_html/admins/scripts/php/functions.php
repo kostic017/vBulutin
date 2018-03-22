@@ -44,10 +44,10 @@
         $selectMenu->appendChild($option);
 
         if ($columnName === "parentid") {
-            $rows = qGetForums(true);
-            $selectMenu->setAttribute("required", "");
+            $rows = qGetAllForums(true);
         } else {
-            $row = qGetRowsByTableName("sections");
+            $rows = qGetRowsByTableName("sections");
+            $selectMenu->setAttribute("required", "");
         }
 
         foreach ($rows ?? [] as $row) {

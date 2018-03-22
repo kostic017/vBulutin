@@ -1,6 +1,6 @@
 <?php
     require_once "header.php";
-    $sections = qGetSections(SORT::POSITION_ASCENDING);
+    $sections = qGetRowsByTableName("sections", SORT::POSITION_ASCENDING);
 ?>
 
 <main>

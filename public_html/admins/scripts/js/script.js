@@ -231,8 +231,3 @@ function setupPositionsSaving() {
     });
 }
 
-// ==== OTHER ====
-
-function areYouSure() {
-    return confirm("Sigurno želite da izvršite brisanje?");
-}
