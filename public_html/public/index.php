@@ -7,7 +7,7 @@
 
     <?php
         foreach ($sections as $section) {
-            require "tablesection.php";
+            require "sectiontable.php";
         }
     ?>
 

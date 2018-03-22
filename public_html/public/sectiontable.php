@@ -8,7 +8,10 @@
     </caption>
 
     <?php foreach ($rootForums as $rootForum): ?>
-        <?php $childForums = qGetForumsByParentId($rootForum["id"], SORT::POSITION_ASCENDING); ?>
+        <?php
+            $lastPost = qGetLastPostInfoByForumId($rootForum["id"]);
+            $childForums = qGetForumsByParentId($rootForum["id"], SORT::POSITION_ASCENDING);
+        ?>
 
         <tr data-shclass="table-row" class="table-row">
             <td>
@@ -37,9 +40,9 @@
                 <div class="post-info">
                     <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
                     <ul>
-                        <li><a href="">Zoki</a></li>
-                        <li>14:15</li>
-                        <li>23 april 2011.</li>
+                        <li><a href=""><?=$lastPost["username"]?></a></li>
+                        <li><?=$lastPost["time"]?></li>
+                        <li><?=$lastPost["date"]?></li>
                     </ul>
                 </div>
             </td>

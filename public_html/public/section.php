@@ -4,7 +4,7 @@
 
     <?php
         require_once "topbox.php";
-        require_once "tablesection.php";
+        require_once "sectiontable.php";
     ?>
 
 </main>

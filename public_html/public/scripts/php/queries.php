@@ -1,5 +1,23 @@
 <?php
 
+    function qGetLastPostInfoByForumId($forumId) {
+        dbEscape($forumId);
+
+        $sql = "SELECT id, updated ";
+        $sql .= "FROM topics ";
+        $sql .= "WHERE forums_id='{$forumId}' ";
+        $sql .= "ORDER BY updated DESC ";
+
+        $lastlyUpdatedTopic = executeAndFetchAssoc($sql);
+        $lastPosterUsername = qGetTopicLastPosterUsername($lastlyUpdatedTopic["id"]);
+
+        return [
+            "username" => $lastPosterUsername,
+            "date" => convertMysqlDatetimeToPhpDate($lastlyUpdatedTopic["updated"]),
+            "time" => convertMysqlDatetimeToPhpTime($lastlyUpdatedTopic["updated"])
+        ];
+    }
+
     function qCreateNewTopic($forumId, $userId, $title, $content) {
         dbEscape($forumId, $title, $userId, $content);
 
@@ -18,6 +36,7 @@
         $sql .= "firstpost_id = '{$postId}', ";
         $sql .= "started = '{$postTime}', ";
         $sql .= "updated = '{$postTime}' ";
+        $sql .= "WHERE id='{$topicId}' ";
 
         executeQuery($sql);
     }
@@ -34,7 +53,7 @@
         return [getInsertId(), $posted];
     }
 
-    function qGetPostsByTopicId($id, $sort = ["posted" => "ASC"]) {
+    function qGetPostsByTopicId($id, $sort = ["updated" => "DESC"]) {
         dbEscape($id);
 
         $sql = "SELECT * ";
