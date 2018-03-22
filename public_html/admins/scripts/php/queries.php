@@ -1,5 +1,16 @@
 <?php
 
+    function qGetForums($rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
+        $sql = "SELECT * ";
+        $sql .= "FROM forums ";
+        if ($rootOnly) {
+            $sql .= "WHERE parentid IS NULL ";
+        }
+        $sql .= orderByStatement($sort);
+
+        return executeAndFetchAssoc($sql, FETCH::ALL);
+    }
+
     function qGetColumnsInfo($table) {
         dbEscape($table);
 
@@ -140,17 +151,6 @@
         $tableName = dbEscape($tableName);
         executeQuery("DELETE FROM {$tableName}");
         executeQuery("ALTER TABLE {$tableName} AUTO_INCREMENT=1");
-    }
-
-    function qGetForums($rootOnly = false, $sort = SORT::DEFAULT_VALUE) {
-        $sql = "SELECT * ";
-        $sql .= "FROM forums ";
-        if ($rootOnly) {
-            $sql .= "WHERE parentid IS NULL ";
-        }
-        $sql .= orderByStatement($sort);
-
-        return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
     function qGetForumSection($id) {

@@ -18,7 +18,7 @@
     <section data-shclass="post-container" class="post-container">
 
         <?php foreach ($posts as $post): ?>
-            <?php $user = qGetUserByPostId($post["id"]); ?>
+            <?php $user = qGetUserById($post["users_id"]); ?>
 
             <div data-shclass="post-box" class="post-box">
 

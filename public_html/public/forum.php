@@ -62,30 +62,35 @@
 
     <table data-shclass="main-table" class="main-table">
 
-        <?php foreach ($topics as $topic): ?>
+        <?php if ($topics): ?>
+            <?php foreach ($topics as $topic): ?>
+                <tr data-shclass="table-row" class="table-row">
+                    <td>
+                        <span class="icon icon-forum-new"></span>
+                        <a href="topic.php?id=<?=$topic["id"]?>" class="name"><?=$topic["title"]?></a>
+                        <span class="desc">Prvih nekoliko recenica prvog posta...</span>
+                    </td>
+                    <td>
+                        <strong><?=qCountPostsInTopic($topic["id"]) - 1?></strong> odgovor<br>
+                        <strong>50000</strong> pregleda
+                    </td>
+                    <td>
+                        <div class="post-info">
+                            <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
+                            <ul>
+                                <li><a href=""><?=qGetTopicLastPosterUsername($topic["id"])?></a></li>
+                                <li><?=convertMysqlDatetimeToPhpTime($topic["updated"])?></li>
+                                <li><?=convertMysqlDatetimeToPhpDate($topic["updated"])?></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
             <tr data-shclass="table-row" class="table-row">
-                <td>
-                    <span class="icon icon-forum-new"></span>
-                    <a href="topic.php?id=<?=$topic["id"]?>" class="name"><?=$topic["title"]?></a>
-                    <span class="desc">Prvih nekoliko recenica prvog posta...</span>
-                </td>
-                <td>
-                    <strong><?=qCountPostsInTopic($topic["id"]) - 1?></strong> odgovor<br>
-                    <strong>50000</strong> pregleda
-                </td>
-                <td>
-                    <div class="post-info">
-                        <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
-                        <ul>
-                            <li><a href=""><?=qGetTopicLastPosterUsername($topic["id"])?></a></li>
-                            <li><?=convertMysqlDatetimeToPhpTime($topic["updated"])?></li>
-                            <li><?=convertMysqlDatetimeToPhpDate($topic["updated"])?></li>
-                        </ul>
-                    </div>
-                </td>
+                <td>Nema tema u ovom forumu.</td>
             </tr>
-        <?php endforeach; ?>
-
+        <?php endif; ?>
     </table>
 
     <?php require_once "textarea.php"; ?>

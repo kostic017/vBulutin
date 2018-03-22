@@ -1,13 +1,9 @@
 <?php
-    require_once __DIR__ . "/scripts/php/includes.php";
-    require_once $TEMPLATE_HEADER_PATH;
+    require_once "header.php";
+    require_once "scripts/php/includes.php";
 
-    $allSections = qGetSections();
+    $allSections = qGetRowsByTableName("sections", SORT::POSITION_ASCENDING);
 ?>
-</head>
-
-<body>
-<?php require_once __DIR__ . "/navigation.php"; ?>
 
 <main>
     <p id="message"></p>

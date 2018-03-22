@@ -126,7 +126,7 @@ function updateRowAction(tableName, id) {
     const insertRowDataCells = $("td:not(:first-child)", insertRow);
     const dataRowDataCells = $(`tr[data-id="${id}"] td:not(:first-child)`, table);
 
-    // Pozicija, roditelj i sekcija se menjaju samo preko positioning.php.
+    // Pozicija, roditelj i sekcija se menjaju samo preko positioning-sf.php.
     $("select[name=parentid], select[name=sections_id]", insertRowDataCells).selectmenu("disable");
 
     let index = 0;

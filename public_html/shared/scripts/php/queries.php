@@ -1,5 +1,15 @@
 <?php
 
+    function qGetRowsByTableName($tableName, $sort = SORT::DEFAULT_VALUE) {
+        dbEscape($tableName);
+
+        $sql = "SELECT * ";
+        $sql .= "FROM {$tableName} ";
+        $sql .= orderByStatement($sort);
+
+        return executeAndFetchAssoc($sql, FETCH::ALL);
+    }
+
     function qGetRowById($rowId, $tableName) {
         dbEscape($rowId, $tableName);
 
@@ -35,10 +45,3 @@
         return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
-    function qGetSections($sort = SORT::DEFAULT_VALUE) {
-        $sql = "SELECT * ";
-        $sql .= "FROM sections ";
-        $sql .= orderByStatement($sort);
-
-        return executeAndFetchAssoc($sql, FETCH::ALL);
-    }

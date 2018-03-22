@@ -6,8 +6,10 @@
 <main>
 
     <?php
-        foreach ($sections as $section) {
-            require "sectiontable.php";
+        if ($sections) {
+            foreach ($sections as $section) {
+                require "sectable.php";
+            }
         }
     ?>
 

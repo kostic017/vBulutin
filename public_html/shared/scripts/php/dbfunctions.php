@@ -28,7 +28,6 @@
     }
 
     function isThereAResult($sql) {
-        global $db;
         return mysqli_num_rows(executeQuery($sql)) > 0;
     }
 
@@ -64,6 +63,7 @@
     function executeAndFetchAssoc($sql, $count = FETCH::ONE) {
         $ret = [];
         $result = executeQuery($sql);
+
         if ($count === FETCH::ONE) {
             $ret[0] = mysqli_fetch_assoc($result);
         } elseif ($count === FETCH::ALL) {
@@ -77,6 +77,7 @@
                 }
             }
         }
+
         mysqli_free_result($result);
-        return ($count === FETCH::ONE) ? $ret[0] : $ret;
+        return !empty($ret) ? ($count === FETCH::ONE ? $ret[0] : $ret) : null;
     }

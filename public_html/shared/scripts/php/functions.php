@@ -84,10 +84,6 @@
         echo "<script>redirectTo('{$url}', {$timeout});</script>";
     }
 
-    function isPostRequest() {
-        return $_SERVER['REQUEST_METHOD'] === 'POST';
-    }
-
     function isNotBlank($value) {
         return isset($value) && trim($value) !== "";
     }
