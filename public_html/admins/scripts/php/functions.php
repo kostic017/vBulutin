@@ -10,14 +10,23 @@
             switch ($columnInfo["type"]) {
                 case "int":
                     $control->setAttribute("type", "number");
-                    break;
+                break;
                 case "varchar":
                     $control->setAttribute("type", "text");
-                    break;
+                break;
                 case "tinyint":
-                    $control->setAttribute("type", "checkbox");
+                    $control->setAttribute("value", "1");
                     $control->setAttribute("checked", "");
-                    break;
+                    $control->setAttribute("type", "checkbox");
+
+                    // ako polje nije cekirano, nece se proslediti nista u POST te
+                    // cu imati nedefinisanu promenljivu. ovako ce se proslediti 0
+                    $hidden = $dom->createElement("input");
+                    $hidden->setAttribute("value", "0");
+                    $hidden->setAttribute("type", "hidden");
+                    $hidden->setAttribute("name", $columnInfo["name"]);
+                    $dom->appendChild($hidden);
+                break;
             }
 
             if ($columnInfo["name"] === "position" || hasString($columnInfo["extra"] ?? "", "auto_increment")) {
@@ -25,8 +34,8 @@
             }
         }
 
-        if ($columnInfo["is_nullable"] === "NO") {
-            $control->setAttribute("data-required", "");
+        if ($columnInfo["is_nullable"] === "NO" && $columnInfo["type"] !== "tinyint") {
+            $control->setAttribute("required", "");
         }
 
         $control->setAttribute("name", $columnInfo["name"]);

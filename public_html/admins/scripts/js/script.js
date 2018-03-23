@@ -1,15 +1,16 @@
 $(function () {
+    $("button.icon-clear, button.icon-delete").on("click", () => confirm("Sigurno želite da izvršite brisanje?"));
+
     setupWidgets();
     setupPositionsSaving();
     setupSortingAction();
-    setupFormValidation();
     forcingParentsSectionToChildren();
-    disableFormSumbitOnEnterKeyPress();
+    disableFormSubmitOnEnterKeyPress();
 
     $(`a[href="${getFileName()}"]`).addClass("active");
 });
 
-function disableFormSumbitOnEnterKeyPress() {
+function disableFormSubmitOnEnterKeyPress() {
     $("form input").keydown(function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
@@ -19,40 +20,6 @@ function disableFormSumbitOnEnterKeyPress() {
 }
 
 // ==== TABLES ====
-
-function setupFormValidation() {
-    $("form [type=submit]").click(function () {
-        // Vodim racuna o tome koje dugme je kliknuto zato sto hocu da
-        // validujem formu samo ako se radi o update ili insert akciji.
-        $("[type=submit]", $(this).parents("form")).removeAttr("clicked");
-        $(this).attr("clicked", "");
-    });
-
-    $("form").submit(function () {
-        // Proveravam da li je update ili insert akcija.
-        const submitButton = $("[type=submit][clicked]").attr("name");
-        if (!(hasSubstring(submitButton, "insert") || hasSubstring(submitButton, "update"))) {
-            return true;
-        }
-
-        const problems = [];
-        $(this).find("[data-required]").each(function () {
-            if (!$(this).is("[disabled]") && isEmptyString($(this).val())) {
-                problems.push(`${$(this).attr("name")}`);
-            }
-        });
-
-        if (problems.length === 0) {
-            $(this).find(".problem").removeClass("prolem");
-            return true;
-        } else {
-            for (let name of problems) {
-                $(this).find(`[name=${name}]`).addClass("problem");
-            }
-            return false;
-        }
-    });
-}
 
 function setupSortingAction() {
     const overlay = $("#overlay");
@@ -101,7 +68,7 @@ function forcingParentsSectionToChildren() {
 
     cParentId.on("change", function () {
         if ($(this).val() === "") {
-            cSectionsId.prop("disabled", false);
+            cSectionsId.prop("readonly", false);
             cSectionsId.val($("option:first-child", cSectionsId).val());
         } else {
             $.post("scripts/php/ajax.php",
@@ -111,7 +78,7 @@ function forcingParentsSectionToChildren() {
                 },
                 function (sectionId) {
                     cSectionsId.val(sectionId);
-                    cSectionsId.prop("disabled", true);
+                    cSectionsId.prop("readonly", true);
                 }
             );
         }

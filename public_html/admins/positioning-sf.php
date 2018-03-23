@@ -2,7 +2,7 @@
     require_once "header.php";
     require_once "scripts/php/includes.php";
 
-    $allSections = qGetRowsByTableName("sections", SORT::POSITION_ASCENDING);
+    $sections = qGetRowsByTableName("sections", SORT::POSITION_ASCENDING);
 ?>
 
 <main>
@@ -21,8 +21,10 @@
     </div>
 
     <div class="sortable-sections collapse-buttons">
-        <?php foreach ($allSections as $section): ?>
+
+        <?php foreach ($sections ?? [] as $section): ?>
             <?php $rootForums = qGetForumsBySectionId($section["id"], true, SORT::POSITION_ASCENDING); ?>
+
             <div class="sortable-section">
 
                 <div class="section-header">
@@ -36,32 +38,45 @@
                     </div>
                 </div>
 
-                <div class="dd" data-sectionid="<?=$section["id"]?>">
-                    <ol class="dd-list">
-                        <?php foreach ($rootForums as $rootForum): ?>
-                            <?php $childForums = qGetForumsByParentId($rootForum["id"], SORT::POSITION_ASCENDING); ?>
+                <?php if (count($rootForums) > 0): ?>
 
-                            <li class="dd-item" data-id="<?=$rootForum["id"]?>">
-                                <div class="dd-handle">
-                                    (<?=$rootForum["id"]?>) <?=$rootForum["title"]?>
-                                </div>
-                                <?php if (count($childForums) > 0): ?>
-                                    <ol class="dd-list">
-                                        <?php foreach ($childForums as $childForum): ?>
-                                            <li class="dd-item" data-id="<?=$childForum["id"]?>">
-                                                <div class="dd-handle">
-                                                    (<?=$childForum["id"]?>) <?=$childForum["title"]?>
-                                                </div>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ol>
-                                <?php endif; ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ol>
-                </div>
+                    <div class="dd" data-sectionid="<?=$section["id"]?>">
+                        <ol class="dd-list">
+
+                            <?php foreach ($rootForums ?? [] as $rootForum): ?>
+                                <?php $childForums =
+                                    qGetForumsByParentId($rootForum["id"], SORT::POSITION_ASCENDING); ?>
+
+                                <li class="dd-item" data-id="<?=$rootForum["id"]?>">
+
+                                    <div class="dd-handle">
+                                        (<?=$rootForum["id"]?>) <?=$rootForum["title"]?>
+                                    </div>
+
+                                    <?php if (count($childForums) > 0): ?>
+                                        <ol class="dd-list">
+                                            <?php foreach ($childForums as $childForum): ?>
+                                                <li class="dd-item" data-id="<?=$childForum["id"]?>">
+                                                    <div class="dd-handle">
+                                                        (<?=$childForum["id"]?>) <?=$childForum["title"]?>
+                                                    </div>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ol>
+                                    <?php endif; ?>
+
+                                </li>
+
+                            <?php endforeach; ?>
+
+                        </ol>
+                    </div>
+
+                <?php endif; ?>
 
             </div>
+
         <?php endforeach; ?>
+
     </div>
 </main>

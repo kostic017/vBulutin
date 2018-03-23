@@ -26,46 +26,73 @@
         return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
-    function qUpdateForum($newData) {
-        extract($newData);
-        dbEscape($id, $title, $description, $sections_id);
-        $visible = isset($newData["visible"]) ? "1" : "0";
+    function gInsertForum($title, $description, $visible, $parentId, $sectionsId) {
+        dbEscape($title, $description, $visible, $parentId, $sectionsId);
 
-        $sql = "UPDATE forums SET ";
-        $sql .= "   title='{$title}', ";
-        $sql .= "   description='{$description}', ";
-        $sql .= "   visible='{$visible}', ";
-        $sql .= "   sections_id='{$sections_id}' ";
-        $sql .= "WHERE id='{$id}' ";
-
-        executeQuery($sql);
-    }
-
-    function qUpdateForumCell($rowId, $colName, $newValue) {
-        dbEscape($rowId, $colName, $newValue);
-        if ($newValue !== "NULL") {
-            $newValue = q($newValue);
+        if (isNotBlank($parentId)) {
+            // ako ima roditelja onda pripada istoj sekciji kao on
+            if ($parent = qGetRowById($parentId, "forums")) {
+                $sectionsId = $parent["sections_id"];
+            }
+            $parentId = q($parentId);
+        } else {
+            $parentId = "NULL";
         }
 
-        $sql = "UPDATE forums SET ";
-        $sql .= "   {$colName}={$newValue} ";
-        $sql .= "WHERE id='{$rowId}' ";
+        $position = qGetNewForumPosition($parentId, $sectionsId);
+
+        $sql = "INSERT INTO forums (title, description, position, visible, parentid, sections_id) VALUES (";
+        $sql .= "'{$title}', '{$description}', '{$position}', '{$visible}', {$parentId}, '{$sectionsId}'";
+        $sql .= ")";
 
         executeQuery($sql);
     }
 
-    function qUpdateSection($newData) {
-        extract($newData);
-        dbEscape($id, $title, $description);
-        $visible = isset($newData["visible"]) ? "1" : "0";
+    function qGetNewForumPosition($parentId, $sectionsId) {
+        $sql = "SELECT MAX(position) as position ";
+        $sql .= "FROM forums ";
+        if ($parentId === "NULL") {
+            $sql .= "WHERE sections_id='{$sectionsId}' AND parentid IS NULL";
+        } else {
+            $sql .= "WHERE parentid={$parentId} ";
+        }
+        return executeAndFetchAssoc($sql)["position"] + 1;
+    }
 
-        $sql = "UPDATE sections SET ";
-        $sql .= "   title='{$title}', ";
-        $sql .= "   description='{$description}', ";
-        $sql .= "   visible='{$visible}' ";
-        $sql .= "WHERE id='{$id}' ";
+    function qInsertSection($title, $description, $visible) {
+        dbEscape($title, $description, $visible);
+
+        $position = qGetNewSectionPosition();
+
+        $sql = "INSERT INTO sections (title, description, position, visible) VALUES (";
+        $sql .= "'{$title}', '{$description}', '{$position}', '{$visible}'";
+        $sql .= ")";
 
         executeQuery($sql);
+    }
+
+    function qDeleteSection($id) {
+        // Sekcije nakon obrisane se pomeraju za jedno mesto navise.
+
+        dbEscape($id);
+
+        $sql = "SELECT position ";
+        $sql .= "FROM sections ";
+        $sql .= "WHERE id='{$id}' ";
+        $position = executeAndFetchAssoc($sql)["position"];
+
+        executeQuery("DELETE FROM sections WHERE id='{$id}' LIMIT 1");
+
+        $sql = "SELECT id, position ";
+        $sql .= "FROM sections ";
+        $sql .= "WHERE position > {$position} ";
+        $sectionsAfter = executeAndFetchAssoc($sql, FETCH::ALL);
+
+        foreach ($sectionsAfter ?? [] as $section) {
+            $sectionId = $section["id"];
+            $sectionPosition = $section["position"] - 1;
+            executeQuery("UPDATE sections SET position='{$sectionPosition}' WHERE id='{$sectionId}'");
+        }
     }
 
     function qDeleteForum($id) {
@@ -119,28 +146,46 @@
         executeQuery("DELETE FROM forums WHERE id='{$id}' LIMIT 1");
     }
 
-    function qDeleteSection($id) {
-        // Sekcije nakon obrisane se pomeraju za jedno mesto navise.
+    function qUpdateForum($newData) {
+        extract($newData);
+        dbEscape($id, $title, $description, $sections_id);
+        $visible = isset($newData["visible"]) ? "1" : "0";
 
-        dbEscape($id);
-
-        $sql = "SELECT position ";
-        $sql .= "FROM sections ";
+        $sql = "UPDATE forums SET ";
+        $sql .= "   title='{$title}', ";
+        $sql .= "   description='{$description}', ";
+        $sql .= "   visible='{$visible}', ";
+        $sql .= "   sections_id='{$sections_id}' ";
         $sql .= "WHERE id='{$id}' ";
-        $position = executeAndFetchAssoc($sql)["position"];
 
-        executeQuery("DELETE FROM sections WHERE id='{$id}' LIMIT 1");
+        executeQuery($sql);
+    }
 
-        $sql = "SELECT id, position ";
-        $sql .= "FROM sections ";
-        $sql .= "WHERE position > {$position} ";
-        $sectionsAfter = executeAndFetchAssoc($sql, FETCH::ALL);
-
-        foreach ($sectionsAfter as $section) {
-            $sectionId = $section["id"];
-            $sectionPosition = $section["position"] - 1;
-            executeQuery("UPDATE sections SET position='{$sectionPosition}' WHERE id='{$sectionId}'");
+    function qUpdateForumCell($rowId, $colName, $newValue) {
+        dbEscape($rowId, $colName, $newValue);
+        if ($newValue !== "NULL") {
+            $newValue = q($newValue);
         }
+
+        $sql = "UPDATE forums SET ";
+        $sql .= "   {$colName}={$newValue} ";
+        $sql .= "WHERE id='{$rowId}' ";
+
+        executeQuery($sql);
+    }
+
+    function qUpdateSection($newData) {
+        extract($newData);
+        dbEscape($id, $title, $description);
+        $visible = isset($newData["visible"]) ? "1" : "0";
+
+        $sql = "UPDATE sections SET ";
+        $sql .= "   title='{$title}', ";
+        $sql .= "   description='{$description}', ";
+        $sql .= "   visible='{$visible}' ";
+        $sql .= "WHERE id='{$id}' ";
+
+        executeQuery($sql);
     }
 
     function qClearTable($tableName) {
@@ -160,57 +205,13 @@
         return $res["sections_id"];
     }
 
-    function qGetNewForumPosition($parentId, $sectionsId) {
-        $sql = "SELECT MAX(position) as position ";
-        $sql .= "FROM forums ";
-        if ($parentId === "NULL") {
-            $sql .= "WHERE sections_id='{$sectionsId}' AND parentid IS NULL";
-        } else {
-            $sql .= "WHERE parentid='{$parentId}' ";
-        }
-        return executeAndFetchAssoc($sql)["position"] + 1;
-    }
-
     function qGetNewSectionPosition() {
         $sql = "SELECT MAX(position) AS position ";
         $sql .= "FROM sections ";
         return executeAndFetchAssoc($sql)["position"] + 1;
     }
 
-    function gInsertForum($forumData) {
-        extract($forumData);
-        dbEscape($title, $description, $parentid, $sections_id);
-        $visible = isset($forumData["visible"]) ? "1" : "0";
 
-        if (isNotBlank($parentid)) {
-            // ako ima roditelja onda pripada istoj sekciji kao on
-            if ($parent = qGetRowById($parentid, "forums")) {
-                $sections_id = $parent["sections_id"];
-            }
-        } else {
-            $parentid = "NULL";
-        }
 
-        $position = qGetNewForumPosition($parentid, $sections_id);
 
-        $sql = "INSERT INTO forums (title, description, position, visible, parentid, sections_id) VALUES (";
-        $sql .= "'{$title}', '{$description}', {$position}, {$visible}, {$parentid}, {$sections_id}";
-        $sql .= ")";
-
-        executeQuery($sql);
-    }
-
-    function qInsertSection($data) {
-        extract($data);
-        dbEscape($title, $description);
-        $visible = isset($data["visible"]) ? "1" : "0";
-
-        $position = qGetNewSectionPosition();
-
-        $sql = "INSERT INTO sections (title, description, position, visible) VALUES (";
-        $sql .= "'{$title}', '{$description}', {$position}, {$visible}";
-        $sql .= ")";
-
-        executeQuery($sql);
-    }
 

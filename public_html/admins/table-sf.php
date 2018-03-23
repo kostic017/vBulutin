@@ -2,22 +2,38 @@
     require_once "header.php";
     require_once "scripts/php/includes.php";
 
-    if (isset($_POST["forums_insert"])) {
-        gInsertForum($_POST);
-    } elseif (isset($_POST["forums_update"])) {
-        qUpdateForum($_POST);
-    } elseif (isset($_POST["forums_delete"])) {
-        qDeleteForum($_POST["forums_delete"]);
-    } elseif (isset($_POST["sections_insert"])) {
-        qInsertSection($_POST);
-    } elseif (isset($_POST["sections_update"])) {
-        qUpdateSection($_POST);
-    } elseif (isset($_POST["sections_delete"])) {
-        qDeleteSection($_POST["sections_delete"]);
-    } elseif (isset($_POST["forums_clear"])) {
-        qClearTable("forums");
-    } elseif (isset($_POST["sections_clear"])) {
-        qClearTable("sections");
+    $redirect = false;
+
+    if (isset($_POST["clear"])) {
+        $redirect = true;
+        qClearTable($_POST["clear"]);
+    }
+
+    if (isset($_POST["insert"])) {
+        $redirect = true;
+        switch ($_POST["insert"]) {
+            case "forums":
+                gInsertForum($_POST["title"], $_POST["description"],
+                    $_POST["visible"], $_POST["parentid"], $_POST["sections_id"]);
+            break;
+            case "sections":
+                qInsertSection($_POST["title"], $_POST["description"], $_POST["visible"]);
+            break;
+        }
+    }
+
+    if (isset($_POST["delete"])) {
+        $redirect = true;
+        $id = explode("_", $_POST["delete"])[1];
+        if (hasString($_POST["delete"], "forums")) {
+            qDeleteForum($id);
+        } elseif (hasString($_POST["delete"], "sections")) {
+            qDeleteSection($id);
+        }
+    }
+
+    if ($redirect) {
+        redirectTo("table-sf.php");
     }
 ?>
 

@@ -10,7 +10,6 @@
 .collapse-buttons button {
     width          : 25px;
     height         : 25px;
-    padding-bottom : 5px;
     box-sizing     : border-box;
 }
 
@@ -19,6 +18,11 @@
     font-weight     : bold;
     cursor          : ns-resize;
     justify-content : space-between;
+
+    div {
+        display: flex;
+        align-items: center;
+    }
 }
 
 .sortable-section {
