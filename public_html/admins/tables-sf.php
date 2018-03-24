@@ -32,8 +32,18 @@
         }
     }
 
+    if (isset($_POST["update"])) {
+        $redirect = true;
+        $id = explode("_", $_POST["update"])[1];
+        if (hasString($_POST["update"], "forums")) {
+            qUpdateForum($id, $_POST["title"], $_POST["description"], $_POST["visible"], $_POST["sections_id"]);
+        } elseif (hasString($_POST["update"], "sections")) {
+            qUpdateSection($id, $_POST["title"], $_POST["description"], $_POST["visible"]);
+        }
+    }
+
     if ($redirect) {
-        redirectTo("table-sf.php");
+        redirectTo("tables-sf.php");
     }
 ?>
 
@@ -47,7 +57,7 @@
     <form method="post" action="">
         <?php
             $tableName = "sections";
-            require "datatable.php";
+            require "table-data.php";
         ?>
     </form>
 
@@ -56,7 +66,7 @@
     <form method="post" action="">
         <?php
             $tableName = "forums";
-            require "datatable.php";
+            require "table-data.php";
         ?>
     </form>
 

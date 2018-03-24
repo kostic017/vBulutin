@@ -6,7 +6,7 @@
         switch ($_POST["job"]) {
 
             case "parent_section":
-                echo qGetForumSection($_POST["id"]);
+                echo qGetSectionByForumId($_POST["id"]);
             break;
 
             case "table_sort":
@@ -26,7 +26,7 @@
                 }
 
                 foreach ($tableData as $row) {
-                    require "../../datarow.php";
+                    require "../../table-row.php";
                 }
             break;
 

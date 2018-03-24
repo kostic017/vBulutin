@@ -4,6 +4,16 @@ $(function () {
     disableFormSubmitOnEnterKeyPress();
 
     $("button.icon-clear, button.icon-delete").on("click", () => confirm("Sigurno želite da izvršite brisanje?"));
+
+    $("button[name=insert]").on("click", function () {
+        // da bi se prosledilo i sections_id u POST
+        $("select[name=sections_id]").removeAttr("disabled");
+    });
+
+    $("button[name=update]").on("click", function() {
+        const value = $(this).val().split("_");
+        updateRowAction(value[0], value[1]);
+    });
 });
 
 function disableFormSubmitOnEnterKeyPress() {
@@ -21,7 +31,7 @@ function forcingParentsSectionToChildren() {
 
     cParentId.on("change", function () {
         if ($(this).val() === "") {
-            cSectionsId.prop("readonly", false);
+            cSectionsId.removeAttr("disabled");
             cSectionsId.val($("option:first-child", cSectionsId).val());
         } else {
             $.post("scripts/php/ajax.php", {
@@ -30,7 +40,7 @@ function forcingParentsSectionToChildren() {
                 },
                 function (sectionId) {
                     cSectionsId.val(sectionId);
-                    cSectionsId.prop("readonly", true);
+                    cSectionsId.attr("disabled", "");
                 }
             );
         }
@@ -45,8 +55,6 @@ function setupSortingAction() {
         let order;
         const sortIcon = $(this).siblings(".icon-sort");
         const tableName = $(this).parents("table").data("name");
-
-        console.log(sortIcon);
 
         $(this).parents("tbody")
             .children("tr:nth-child(n + 3)") // preskoci zaglavlja i insert kontrole

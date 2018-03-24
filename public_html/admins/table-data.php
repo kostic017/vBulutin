@@ -32,7 +32,7 @@
 
 
     <?php foreach ($rows ?? [] as $row): ?>
-        <?php require "datarow.php"; ?>
+        <?php require "table-row.php"; ?>
     <?php endforeach; ?>
 
 </table>

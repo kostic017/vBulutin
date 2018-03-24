@@ -1,7 +1,7 @@
 <tr data-id="<?=$row["id"]?>">
 
     <td>
-        <button type="submit" class="icon icon-update" title="Update"
+        <button type="button" class="icon icon-update" title="Update"
                 name="update" value="<?=$tableName . "_" . $row["id"]?>" formnovalidate></button>
         <button type="submit" class="icon icon-delete" title="Delete"
                 name="delete" value="<?=$tableName . "_" . $row["id"]?>" formnovalidate></button>
