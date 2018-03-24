@@ -1,9 +1,9 @@
 <?php
     define("DB_HOST", "localhost");
-    define("DB_USER", "root");
-    define("DB_PASS", "");
-    define("DB_NAME", "forum41");
-
+    define("DB_NAME", "id5177213_forum41");
+    define("DB_USER", "id5177213_admin");
+    define("DB_PASS", "admin");
+    
     define("FILENAME", basename($_SERVER["PHP_SELF"], ".php"));
 
     define("MAIL_USERNAME", "forum41web@gmail.com");
