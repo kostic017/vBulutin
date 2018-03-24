@@ -45,7 +45,7 @@
     /// TOPICS ///
 
     function qCreateNewTopic($forumId, $userId, $title, $content) {
-        dbEscape($forumId, $title, $userId, $content);
+        dbEscape($forumId, $title, $userId); // ne zelimo da eskejpujemo $content dva puta
 
         $sql = "INSERT INTO topics (id, title, forumId) VALUES (";
         $sql .= "NULL, '{$title}', '{$forumId}'";
@@ -63,6 +63,7 @@
         $sql .= "WHERE id='{$topicId}' ";
 
         executeQuery($sql);
+        return $topicId;
     }
 
     function qGetTopicsByForumId($id, $sort = ["latestPostDT" => "DESC"]) {

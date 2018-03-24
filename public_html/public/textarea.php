@@ -1,8 +1,9 @@
 <?php
     if (isset($_POST["textarea-submit"])) {
         if (FILENAME === "forum") {
-            qCreateNewTopic($thisPageId, $_SESSION["user_id"],
+            $topicId = qCreateNewTopic($thisPageId, $_SESSION["user_id"],
                 $_POST["textarea-title"], $_POST["textarea-content"]);
+            redirectTo("topic.php?id={$topicId}");
         } else {
             qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["textarea-content"]);
         }
@@ -32,8 +33,8 @@
 
 <script>
     $(function () {
-        const textarea = $("textarea");
         const emojionearea = $("#emojionearea");
+        const textarea = $("textarea[name=textarea-content]");
 
         if (textarea.length > 0 && emojionearea.length > 0) {
             let inscrybmde = new InscrybMDE({
