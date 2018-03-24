@@ -161,13 +161,13 @@
         executeQuery($sql);
     }
 
-    function qUpdateForumCell($rowId, $colName, $newValue) {
-        dbEscape($rowId, $colName, $newValue);
+    function qUpdateCell($tableName, $rowId, $colName, $newValue) {
+        dbEscape($tableName, $rowId, $colName, $newValue);
         if ($newValue !== "NULL") {
             $newValue = q($newValue);
         }
 
-        $sql = "UPDATE forums SET ";
+        $sql = "UPDATE {$tableName} SET ";
         $sql .= "   {$colName}={$newValue} ";
         $sql .= "WHERE id='{$rowId}' ";
 

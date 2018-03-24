@@ -71,8 +71,7 @@ function forcingParentsSectionToChildren() {
             cSectionsId.prop("readonly", false);
             cSectionsId.val($("option:first-child", cSectionsId).val());
         } else {
-            $.post("scripts/php/ajax.php",
-                {
+            $.post("scripts/php/ajax.php", {
                     id: $(this).val(),
                     job: "parent_section"
                 },
@@ -116,7 +115,7 @@ function updateRowAction(tableName, id) {
     // Cancel dugme je tipa submit, pa ce klik na njega osveziti stranicu i
     // sve ce se vratiti na staro sto znaci da nista ne mora da se hendluje posebno.
     insertButtonCell.html(`
-        <button type="submit" class="icon icon-okay" name="${tableName}_update" value="${id}"></button>
+        <button type="submit" class="icon icon-okay" name="update" value="${tableName}_${id}"></button>
         <button type="submit" class="icon icon-cancel"></button>
     `);
 }
@@ -177,16 +176,23 @@ function setupWidgets() {
 function setupPositionsSaving() {
     $("button[name=save]").on("click", function () {
         const data = {};
+
+        let position = 1;
         $(".dd").each(function () {
-            data[$(this).data("sectionid")] = $(this).nestable("serialize");
+            data[$(this).data("sectionid")] = {
+                position: position++,
+                forums: $(this).nestable("serialize")
+            };
         });
-        $.post("scripts/php/ajax.php",
-            {
+
+        console.log(data);
+
+        $.post("scripts/php/ajax.php", {
                 data,
-                job: "save_positions",
+                job: "positioning_save",
             },
             (returnMessage) => {
-                const message = hasSubstring(returnMessage, "error") ?
+                const message = hasSubstring(returnMessage, "error") || hasSubstring(returnMessage, "failed") ?
                     "Došlo je do greške prilikom snimanja." :
                     "Snimanje uspešno izvršeno.";
                 $("#message").html(`${message}<br><br>`);

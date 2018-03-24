@@ -7,10 +7,12 @@
     require_once __DIR__ . "/dbfunctions.php";
     require_once __DIR__ . "/queries.php";
 
+    ini_set("xdebug.var_display_max_depth", 10);
+
     if ($db = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME)) {
-        mysqli_set_charset($db, 'utf8mb4');
+        mysqli_set_charset($db, "utf8mb4");
     } else {
-        exit(sprintf('Database connection failed: %s (%d).',
+        exit(sprintf("Database connection failed: %s (%d).",
             h(mysqli_connect_error()), h(mysqli_connect_errno())
         ));
     }

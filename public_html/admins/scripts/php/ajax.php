@@ -32,18 +32,17 @@
                 }
             break;
 
-            case "save_positions":
-                foreach ($_POST["data"] as $sectionId => $forums) {
-                    foreach ($forums as $rootIndex => $rootForum) {
-                        qUpdateForumCell($rootForum["id"], "parentid", "NULL");
-                        qUpdateForumCell($rootForum["id"], "sections_id", $sectionId);
-                        qUpdateForumCell($rootForum["id"], "position", $rootIndex + 1);
-                        if (isset($rootForum["children"])) {
-                            foreach ($rootForum["children"] as $childIndex => $childForum) {
-                                qUpdateForumCell($childForum["id"], "parentid", $rootForum["id"]);
-                                qUpdateForumCell($childForum["id"], "sections_id", $sectionId);
-                                qUpdateForumCell($childForum["id"], "position", $childIndex + 1);
-                            }
+            case "positioning_save":
+                foreach ($_POST["data"] ?? [] as $sectionId => $sectionData) {
+                    qUpdateCell("sections", $sectionId, "position", $sectionData["position"]);
+                    foreach ($sectionData["forums"] ?? [] as $rootIndex => $rootForum) {
+                        qUpdateCell("forums", $rootForum["id"], "parentid", "NULL");
+                        qUpdateCell("forums", $rootForum["id"], "sections_id", $sectionId);
+                        qUpdateCell("forums", $rootForum["id"], "position", $rootIndex + 1);
+                        foreach ($rootForum["children"] ?? [] as $childIndex => $childForum) {
+                            qUpdateCell("forums", $childForum["id"], "parentid", $rootForum["id"]);
+                            qUpdateCell("forums", $childForum["id"], "sections_id", $sectionId);
+                            qUpdateCell("forums", $childForum["id"], "position", $childIndex + 1);
                         }
                     }
                 }

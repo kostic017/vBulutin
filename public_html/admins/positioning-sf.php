@@ -38,41 +38,40 @@
                     </div>
                 </div>
 
-                <?php if (count($rootForums) > 0): ?>
 
-                    <div class="dd" data-sectionid="<?=$section["id"]?>">
-                        <ol class="dd-list">
+                <div class="dd" data-sectionid="<?=$section["id"]?>">
 
-                            <?php foreach ($rootForums ?? [] as $rootForum): ?>
-                                <?php $childForums =
-                                    qGetForumsByParentId($rootForum["id"], SORT::POSITION_ASCENDING); ?>
+                    <ol class="dd-list">
 
-                                <li class="dd-item" data-id="<?=$rootForum["id"]?>">
+                        <?php foreach ($rootForums ?? [] as $rootForum): ?>
+                            <?php $childForums =
+                                qGetForumsByParentId($rootForum["id"], SORT::POSITION_ASCENDING); ?>
 
-                                    <div class="dd-handle">
-                                        (<?=$rootForum["id"]?>) <?=$rootForum["title"]?>
-                                    </div>
+                            <li class="dd-item" data-id="<?=$rootForum["id"]?>">
 
-                                    <?php if (count($childForums) > 0): ?>
-                                        <ol class="dd-list">
-                                            <?php foreach ($childForums as $childForum): ?>
-                                                <li class="dd-item" data-id="<?=$childForum["id"]?>">
-                                                    <div class="dd-handle">
-                                                        (<?=$childForum["id"]?>) <?=$childForum["title"]?>
-                                                    </div>
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </ol>
-                                    <?php endif; ?>
+                                <div class="dd-handle">
+                                    (<?=$rootForum["id"]?>) <?=$rootForum["title"]?>
+                                </div>
 
-                                </li>
+                                <?php if (count($childForums) > 0): ?>
+                                    <ol class="dd-list">
+                                        <?php foreach ($childForums as $childForum): ?>
+                                            <li class="dd-item" data-id="<?=$childForum["id"]?>">
+                                                <div class="dd-handle">
+                                                    (<?=$childForum["id"]?>) <?=$childForum["title"]?>
+                                                </div>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ol>
+                                <?php endif; ?>
 
-                            <?php endforeach; ?>
+                            </li>
 
-                        </ol>
-                    </div>
+                        <?php endforeach; ?>
 
-                <?php endif; ?>
+                    </ol>
+
+                </div>
 
             </div>
 
