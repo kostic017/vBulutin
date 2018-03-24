@@ -25,21 +25,22 @@
                         <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>" class="name">
                             <?=$childForum["title"]?>
                         </a>
-                        <span class="desc"><?=$childForum["description"]?></span>
                     </td>
                     <td>
                         <strong><?=qCountTopicsInRootForum($childForum["id"])?></strong> tema/e<br>
                         <strong><?=qCountPostsInRootForum($childForum["id"])?></strong> poruka/e
                     </td>
                     <td>
-                        <div class="post-info">
-                            <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
-                            <ul>
-                                <li><a href=""><?=$lastPost["username"]?></a></li>
-                                <li><?=$lastPost["time"]?></li>
-                                <li><?=$lastPost["date"]?></li>
-                            </ul>
-                        </div>
+                        <?php if ($lastPost): ?>
+                            <div class="post-info">
+                                <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
+                                <ul>
+                                    <li><a href=""><?=$lastPost["username"]?></a></li>
+                                    <li><?=$lastPost["time"]?></li>
+                                    <li><?=$lastPost["date"]?></li>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -68,7 +69,6 @@
                     <td>
                         <span class="icon icon-forum-new"></span>
                         <a href="topic.php?id=<?=$topic["id"]?>" class="name"><?=$topic["title"]?></a>
-                        <span class="desc">Prvih nekoliko recenica prvog posta...</span>
                     </td>
                     <td>
                         <strong><?=qCountPostsInTopic($topic["id"]) - 1?></strong> odgovor<br>
@@ -79,8 +79,8 @@
                             <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
                             <ul>
                                 <li><a href=""><?=qGetTopicLastPosterUsername($topic["id"])?></a></li>
-                                <li><?=convertMysqlDatetimeToPhpTime($topic["updated"])?></li>
-                                <li><?=convertMysqlDatetimeToPhpDate($topic["updated"])?></li>
+                                <li><?=convertMysqlDatetimeToPhpTime($topic["latestPostDT"])?></li>
+                                <li><?=convertMysqlDatetimeToPhpDate($topic["latestPostDT"])?></li>
                             </ul>
                         </div>
                     </td>

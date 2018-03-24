@@ -37,7 +37,10 @@
         </div>
     <?php endif; ?>
 
-    <p><b><?=$username?></b>, ovim potvrđuješ da je <b><?=$email?></b> tvoja email adresa.</p>
+    <p>
+        <b>Korisničko ime:</b> <?=$username?><br>
+        <b>Email adresa:</b> <?=$email?>
+    </p>
 
     <form class="logreg" method="post" action="">
 

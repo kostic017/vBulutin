@@ -14,7 +14,7 @@
         switch ($_POST["insert"]) {
             case "forums":
                 gInsertForum($_POST["title"], $_POST["description"],
-                    $_POST["visible"], $_POST["parentid"], $_POST["sections_id"]);
+                    $_POST["visible"], $_POST["parentId"], $_POST["sectionId"]);
             break;
             case "sections":
                 qInsertSection($_POST["title"], $_POST["description"], $_POST["visible"]);
@@ -36,7 +36,7 @@
         $redirect = true;
         $id = explode("_", $_POST["update"])[1];
         if (hasString($_POST["update"], "forums")) {
-            qUpdateForum($id, $_POST["title"], $_POST["description"], $_POST["visible"], $_POST["sections_id"]);
+            qUpdateForum($id, $_POST["title"], $_POST["description"], $_POST["visible"], $_POST["sectionId"]);
         } elseif (hasString($_POST["update"], "sections")) {
             qUpdateSection($id, $_POST["title"], $_POST["description"], $_POST["visible"]);
         }

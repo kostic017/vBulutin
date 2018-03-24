@@ -2,7 +2,7 @@
     function getInsertControlForColumn($columnInfo) {
         $dom = getNewDom();
 
-        if (isEqualToAnyWord("parentid sections_id", $columnInfo["name"])) {
+        if (isEqualToAnyWord("parentId sectionId", $columnInfo["name"])) {
             $control = getSelectmenuBasedOnArray($dom, $columnInfo["name"]);
         } else {
             $control = $dom->createElement("input");
@@ -11,6 +11,7 @@
                 case "int":
                     $control->setAttribute("type", "number");
                 break;
+                case "text":
                 case "varchar":
                     $control->setAttribute("type", "text");
                 break;
@@ -52,7 +53,7 @@
         $option->setAttribute("value", "");
         $selectMenu->appendChild($option);
 
-        if ($columnName === "parentid") {
+        if ($columnName === "parentId") {
             $rows = qGetAllForums(true);
         } else {
             $rows = qGetRowsByTableName("sections");
@@ -75,7 +76,7 @@
             $visible = "visible";
 
             // ako sekcija nije vidljiva, nije ni forum
-            if ($section = qGetRowById($row["sections_id"], "sections")) {
+            if ($section = qGetRowById($row["sectionId"], "sections")) {
                 if ($section["visible"] !== "1") {
                     $reason = "Sekcija nije vidljiva.";
                     $visible = "invisible";
@@ -83,7 +84,7 @@
             }
 
             // ako roditeljski forum nije vidljiv, nije ni ovaj forum
-            if ($parentForum = qGetRowById($row["parentid"], "forums")) {
+            if ($parentForum = qGetRowById($row["parentId"], "forums")) {
                 if ($parentForum["visible"] !== "1") {
                     $reason = "Roditeljski forum nije vidljiv.";
                     $visible = "invisible";

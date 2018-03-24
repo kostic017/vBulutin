@@ -1,5 +1,9 @@
 function redirectTo(url, timeout = 0) {
-    setTimeout(location.replace(url), timeout);
+    if (timeout === 0) {
+        location.replace(url);
+    } else {
+        setTimeout(function() { location.replace(url) }, timeout);
+    }
 }
 
 function ucfirst(string) {

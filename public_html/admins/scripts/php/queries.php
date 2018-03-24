@@ -4,7 +4,7 @@
         $sql = "SELECT * ";
         $sql .= "FROM forums ";
         if ($rootOnly) {
-            $sql .= "WHERE parentid IS NULL ";
+            $sql .= "WHERE parentId IS NULL ";
         }
         $sql .= orderByStatement($sort);
 
@@ -26,35 +26,35 @@
         return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
-    function gInsertForum($title, $description, $visible, $parentId, $sectionsId) {
-        dbEscape($title, $description, $visible, $parentId, $sectionsId);
+    function gInsertForum($title, $description, $visible, $parentId, $sectionId) {
+        dbEscape($title, $description, $visible, $parentId, $sectionId);
 
         if (isNotBlank($parentId)) {
             // ako ima roditelja onda pripada istoj sekciji kao on
             if ($parent = qGetRowById($parentId, "forums")) {
-                $sectionsId = $parent["sections_id"];
+                $sectionId = $parent["sectionId"];
             }
             $parentId = q($parentId);
         } else {
             $parentId = "NULL";
         }
 
-        $position = qGetNewForumPosition($parentId, $sectionsId);
+        $position = qGetNewForumPosition($parentId, $sectionId);
 
-        $sql = "INSERT INTO forums (title, description, position, visible, parentid, sections_id) VALUES (";
-        $sql .= "'{$title}', '{$description}', '{$position}', '{$visible}', {$parentId}, '{$sectionsId}'";
+        $sql = "INSERT INTO forums (title, description, position, visible, parentId, sectionId) VALUES (";
+        $sql .= "'{$title}', '{$description}', '{$position}', '{$visible}', {$parentId}, '{$sectionId}'";
         $sql .= ")";
 
         executeQuery($sql);
     }
 
-    function qGetNewForumPosition($parentId, $sectionsId) {
+    function qGetNewForumPosition($parentId, $sectionId) {
         $sql = "SELECT MAX(position) as position ";
         $sql .= "FROM forums ";
         if ($parentId === "NULL") {
-            $sql .= "WHERE sections_id='{$sectionsId}' AND parentid IS NULL";
+            $sql .= "WHERE sectionId='{$sectionId}' AND parentId IS NULL";
         } else {
-            $sql .= "WHERE parentid={$parentId} ";
+            $sql .= "WHERE parentId={$parentId} ";
         }
         return executeAndFetchAssoc($sql)["position"] + 1;
     }
@@ -108,25 +108,25 @@
 
         dbEscape($id);
 
-        $sql = "SELECT position, parentid ";
+        $sql = "SELECT position, parentId ";
         $sql .= "FROM forums ";
         $sql .= "WHERE id='{$id}' ";
 
         if ($forum = executeAndFetchAssoc($sql)) {
             $position = $forum["position"];
-            $parentId = $forum["parentid"];
+            $parentId = $forum["parentId"];
 
             if ($parentId === "NULL") {
                 $sql = "SELECT id, position ";
                 $sql .= "FROM forums ";
-                $sql .= "WHERE parentid='{$parentId}' ";
+                $sql .= "WHERE parentId='{$parentId}' ";
                 $children = executeAndFetchAssoc($sql, FETCH::ALL);
 
-                executeQuery("UPDATE forums SET parentid=NULL WHERE parentid='{$id}'");
+                executeQuery("UPDATE forums SET parentId=NULL WHERE parentId='{$id}'");
 
                 $sql = "SELECT id, position ";
                 $sql .= "FROM forums ";
-                $sql .= "WHERE position > {$position} AND parentid IS NULL ";
+                $sql .= "WHERE position > {$position} AND parentId IS NULL ";
                 $forumsAfter = executeAndFetchAssoc($sql, FETCH::ALL);
 
                 if (($childrenCount = count($children)) > 0) {
@@ -154,14 +154,14 @@
         }
     }
 
-    function qUpdateForum($id, $title, $description, $visible, $sectionsId) {
-        dbEscape($id, $title, $description, $visible, $sectionsId);
+    function qUpdateForum($id, $title, $description, $visible, $sectionId) {
+        dbEscape($id, $title, $description, $visible, $sectionId);
 
         $sql = "UPDATE forums SET ";
         $sql .= "   title='{$title}', ";
         $sql .= "   description='{$description}', ";
         $sql .= "   visible='{$visible}', ";
-        $sql .= "   sections_id='{$sectionsId}' ";
+        $sql .= "   sectionId='{$sectionId}' ";
         $sql .= "WHERE id='{$id}' ";
 
         executeQuery($sql);
@@ -201,12 +201,12 @@
     function qGetSectionByForumId($id) {
         dbEscape($id);
 
-        $sql = "SELECT sections_id ";
+        $sql = "SELECT sectionId ";
         $sql .= "FROM forums ";
         $sql .= "WHERE id='{$id}' ";
 
         if ($forum = executeAndFetchAssoc($sql)) {
-            return $forum["sections_id"];
+            return $forum["sectionId"];
         }
 
         return null;

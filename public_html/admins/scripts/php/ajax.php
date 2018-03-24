@@ -34,12 +34,12 @@
                 foreach ($_POST["data"] ?? [] as $sectionId => $sectionData) {
                     qUpdateCell("sections", $sectionId, "position", $sectionData["position"]);
                     foreach ($sectionData["forums"] ?? [] as $rootIndex => $rootForum) {
-                        qUpdateCell("forums", $rootForum["id"], "parentid", "NULL");
-                        qUpdateCell("forums", $rootForum["id"], "sections_id", $sectionId);
+                        qUpdateCell("forums", $rootForum["id"], "parentId", "NULL");
+                        qUpdateCell("forums", $rootForum["id"], "sectionId", $sectionId);
                         qUpdateCell("forums", $rootForum["id"], "position", $rootIndex + 1);
                         foreach ($rootForum["children"] ?? [] as $childIndex => $childForum) {
-                            qUpdateCell("forums", $childForum["id"], "parentid", $rootForum["id"]);
-                            qUpdateCell("forums", $childForum["id"], "sections_id", $sectionId);
+                            qUpdateCell("forums", $childForum["id"], "parentId", $rootForum["id"]);
+                            qUpdateCell("forums", $childForum["id"], "sectionId", $sectionId);
                             qUpdateCell("forums", $childForum["id"], "position", $childIndex + 1);
                         }
                     }

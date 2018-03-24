@@ -21,12 +21,12 @@ function setupBackToTopButton() {
 }
 
 function fileDoneLoading() {
-    setupWidgets();
-    setupPlainControls();
-    addOptionsToControls();
-    setupShclassSelect();
-    setToogleForBackgroundEndColor();
-    liveUpdateElementStyles();
+    // setupWidgets();
+    // setupPlainControls();
+    // addOptionsToControls();
+    // setupShclassSelect();
+    // setToogleForBackgroundEndColor();
+    // liveUpdateElementStyles();
 }
 
 function setupWidgets() {

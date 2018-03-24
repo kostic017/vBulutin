@@ -3,6 +3,7 @@
 ?>
 
 <table data-shclass="main-table" class="main-table">
+
     <caption data-shclass="caption captionbar" class="captionbar">
         <a href="section.php?id=<?=$section["id"]?>"><?=$section["title"]?></a>
     </caption>
@@ -19,8 +20,7 @@
                 <td>
                     <span class="icon icon-forum-new"></span>
                     <a data-shclass="row-name" href="forum.php?id=<?=$rootForum["id"]?>"
-                       class="name"><?=$rootForum["title"]?></a>
-                    <span class="desc"><?=$rootForum["description"]?></span>
+                        class="name"><?=$rootForum["title"]?></a>
                     <?php if (count($childForums) > 0): ?>
                         <div class="subforums">
                             Potforumi:

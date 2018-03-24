@@ -31,14 +31,20 @@
     }
 
     .name {
-        display : block;
+        margin-bottom: 12px;
+        white-space: pre-line;
+        display: inline-block;
     }
+}
 
-    .desc {
-        margin  : 6px 0;
-        display : block;
+.subforum-list {
+    margin-top: 5px;
+    list-style-type : none;
+    padding-left    : 15px;
+
+    li {
+        margin-top : 3px;
     }
-
 }
 
 .sort-bar {

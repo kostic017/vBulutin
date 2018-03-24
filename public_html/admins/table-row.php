@@ -2,7 +2,7 @@
 
     <td>
         <button type="button" class="icon icon-update" title="Update"
-                name="update" value="<?=$tableName . "_" . $row["id"]?>" formnovalidate></button>
+                name="edit" value="<?=$tableName . "_" . $row["id"]?>" formnovalidate></button>
         <button type="submit" class="icon icon-delete" title="Delete"
                 name="delete" value="<?=$tableName . "_" . $row["id"]?>" formnovalidate></button>
     </td>
@@ -18,12 +18,12 @@
                             echo "<span class='icon icon-{$visibility["value"]}' ";
                             echo "title='{$visibility["reason"]}'></span>";
                         break;
-                        case "parentid":
+                        case "parentId":
                             if ($parent = qGetRowById($value, "forums")) {
                                 echo " ({$parent["title"]})";
                             }
                         break;
-                        case "sections_id":
+                        case "sectionId":
                             if ($section = qGetRowById($value, "sections")) {
                                 echo " ({$section["title"]})";
                             }

@@ -18,7 +18,7 @@
     <section data-shclass="post-container" class="post-container">
 
         <?php foreach ($posts as $post): ?>
-            <?php $user = qGetUserById($post["users_id"]); ?>
+            <?php $user = qGetUserById($post["userId"]); ?>
 
             <div data-shclass="post-box" class="post-box">
 
@@ -37,7 +37,7 @@
                     <div class="post-main">
 
                         <div class="content">
-                            <small>Napisano <?=convertMysqlDatetimeToPhpDatetime($post["posted"])?></small>
+                            <small>Napisano <?=convertMysqlDatetimeToPhpDatetime($post["postedDT"])?></small>
                             <?=$emojione->shortnameToImage($parsedown->text($post["content"]));?>
                         </div>
 

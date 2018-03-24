@@ -10,16 +10,16 @@
         $follow = "ovaj forum";
         $reply = "Započni novu temu";
 
-        $section = qGetRowById($thisPage["sections_id"], "sections");
+        $section = qGetRowById($thisPage["sectionId"], "sections");
 
-        if (isNotBlank($thisPage["parentid"])) {
-            $parent = qGetRowById($thisPage["parentid"], "forums");
+        if (isNotBlank($thisPage["parentId"])) {
+            $parent = qGetRowById($thisPage["parentId"], "forums");
             $pathParentTitle = $parent["title"];
             $pathParentLink = "forum.php?id={$parent["id"]}";
         }
 
         $pathSectionTitle = $section["title"];
-        $pathSectionLink = "section.php?id={$thisPage["sections_id"]}";
+        $pathSectionLink = "section.php?id={$thisPage["sectionId"]}";
 
         $pathForumTitle = $thisPage["title"];
         $pathForumLink = "#";
@@ -27,12 +27,12 @@
         $follow = "ovu temu";
         $reply = "Napiši odgovor";
 
-        $forum = qGetRowById($thisPage["forums_id"], "forums");
+        $forum = qGetRowById($thisPage["forumId"], "forums");
 
         $pathForumTitle = $forum["title"];
         $pathForumLink = "forum.php?id={$forum["id"]}";
 
-        $section = qGetRowById($forum["sections_id"], "sections");
+        $section = qGetRowById($forum["sectionId"], "sections");
 
         $pathSectionTitle = $section["title"];
         $pathSectionLink = "section.php?id={$section["id"]}";

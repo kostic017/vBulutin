@@ -5,12 +5,12 @@ $(function () {
 
     $("button.icon-clear, button.icon-delete").on("click", () => confirm("Sigurno želite da izvršite brisanje?"));
 
-    $("button[name=insert]").on("click", function () {
-        // da bi se prosledilo i sections_id u POST
-        $("select[name=sections_id]").removeAttr("disabled");
+    $("form").on("submit", function () {
+        // da bi se prosledilo i sectionId u POST
+        $("select[name=sectionId]").removeAttr("disabled");
     });
 
-    $("button[name=update]").on("click", function() {
+    $("button[name=edit]").on("click", function() {
         const value = $(this).val().split("_");
         updateRowAction(value[0], value[1]);
     });
@@ -26,8 +26,8 @@ function disableFormSubmitOnEnterKeyPress() {
 }
 
 function forcingParentsSectionToChildren() {
-    const cParentId = $("select[name=parentid]");
-    const cSectionsId = $("select[name=sections_id]");
+    const cParentId = $("select[name=parentId]");
+    const cSectionsId = $("select[name=sectionId]");
 
     cParentId.on("change", function () {
         if ($(this).val() === "") {
@@ -96,7 +96,7 @@ function updateRowAction(tableName, id) {
     const dataRowDataCells = $(`tr[data-id="${id}"] td:not(:first-child)`, table);
 
     // Pozicija, roditelj i sekcija se menjaju samo preko positioning-sf.php.
-    $("select[name=parentid], select[name=sections_id]", insertRowDataCells).selectmenu("disable");
+    $("select[name=parentId], select[name=sectionId]", insertRowDataCells).attr("disabled", "");
 
     let index = 0;
     // Polja za unos popunim postojecim podacima posto se radi o njihovom editovanju.

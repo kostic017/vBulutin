@@ -25,9 +25,9 @@
 
         $sql = "SELECT * ";
         $sql .= "FROM forums ";
-        $sql .= "WHERE sections_id='{$sectionId}' ";
+        $sql .= "WHERE sectionId='{$sectionId}' ";
         if ($rootOnly) {
-            $sql .= "AND parentid IS NULL ";
+            $sql .= "AND parentId IS NULL ";
         }
         $sql .= orderByStatement($sort);
 
@@ -39,7 +39,7 @@
 
         $sql = "SELECT * ";
         $sql .= "FROM forums ";
-        $sql .= "WHERE parentid='{$parentId}' ";
+        $sql .= "WHERE parentId='{$parentId}' ";
         $sql .= orderByStatement($sort);
 
         return executeAndFetchAssoc($sql, FETCH::ALL);

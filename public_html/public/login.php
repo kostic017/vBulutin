@@ -9,7 +9,7 @@
         $errors = [];
 
         if ($userId = qLoginUser($_POST["username"], $_POST["password"])) {
-            if ($emailConfirmed = qIsEmailConfirmed($userId)) {
+            if ($confirmed = qIsEmailConfirmed($userId)) {
                 $_SESSION["user_id"] = $userId;
                 $_SESSION["redirect"] = [
                     "url" => $_SESSION["redirect_back"] ?? "index.php",

@@ -7,7 +7,7 @@
 
         $sql = "SELECT COUNT(*) AS count ";
         $sql .= "FROM topics ";
-        $sql .= "WHERE forums_id='{$forumId}' ";
+        $sql .= "WHERE forumId='{$forumId}' ";
 
         return executeAndFetchAssoc($sql)["count"];
     }
@@ -47,7 +47,7 @@
     function qCreateNewTopic($forumId, $userId, $title, $content) {
         dbEscape($forumId, $title, $userId, $content);
 
-        $sql = "INSERT INTO topics (id, title, forums_id) VALUES (";
+        $sql = "INSERT INTO topics (id, title, forumId) VALUES (";
         $sql .= "NULL, '{$title}', '{$forumId}'";
         $sql .= ")";
 
@@ -57,20 +57,20 @@
         $post = qCreateNewPost($topicId, $userId, $content);
 
         $sql = "UPDATE topics SET ";
-        $sql .= "   firstpost_id = '{$post["id"]}', ";
-        $sql .= "   started = '{$post["posted"]}', ";
-        $sql .= "   updated = '{$post["posted"]}' ";
+        $sql .= "   firstPostId = '{$post["id"]}', ";
+        $sql .= "   startedDT = '{$post["postedDT"]}', ";
+        $sql .= "   latestPostDT = '{$post["postedDT"]}' ";
         $sql .= "WHERE id='{$topicId}' ";
 
         executeQuery($sql);
     }
 
-    function qGetTopicsByForumId($id, $sort = ["updated" => "DESC"]) {
+    function qGetTopicsByForumId($id, $sort = ["latestPostDT" => "DESC"]) {
         dbEscape($id);
 
         $sql = "SELECT * ";
         $sql .= "FROM topics ";
-        $sql .= "WHERE forums_id='{$id}' ";
+        $sql .= "WHERE forumId='{$id}' ";
         $sql .= orderByStatement($sort);
 
         return executeAndFetchAssoc($sql, FETCH::ALL);
@@ -79,19 +79,19 @@
     function qGetTopicStarterUsername($topicId) {
         dbEscape($topicId);
 
-        $sql = "SELECT firstpost_id ";
+        $sql = "SELECT firstPostId ";
         $sql .= "FROM topics ";
         $sql .= "WHERE id='{$topicId}'";
 
         if ($forum = executeAndFetchAssoc($sql)) {
-            $sql = "SELECT users_id ";
+            $sql = "SELECT userId ";
             $sql .= "FROM posts ";
             $sql .= "WHERE id='{$forum["id"]}' ";
 
             if ($post = executeAndFetchAssoc($sql)) {
                 $sql = "SELECT username ";
                 $sql .= "FROM users ";
-                $sql .= "WHERE id='{$post["users_id"]}' ";
+                $sql .= "WHERE id='{$post["userId"]}' ";
 
                 if ($user = executeAndFetchAssoc($sql)) {
                     return $user["username"];
@@ -105,19 +105,19 @@
     function qGetTopicLastPosterUsername($topicId) {
         dbEscape($topicId);
 
-        $sql = "SELECT users_id ";
+        $sql = "SELECT userId ";
         $sql .= "FROM posts ";
-        $sql .= "WHERE topics_id='{$topicId}' ";
-        $sql .= "AND posted=( ";
-        $sql .= "   SELECT MAX(posted) ";
+        $sql .= "WHERE topicId='{$topicId}' ";
+        $sql .= "AND postedDT=( ";
+        $sql .= "   SELECT MAX(postedDT) ";
         $sql .= "   FROM posts ";
-        $sql .= "   WHERE topics_id='{$topicId}' ";
+        $sql .= "   WHERE topicId='{$topicId}' ";
         $sql .= ") ";
 
         if ($post = executeAndFetchAssoc($sql)) {
             $sql = "SELECT username ";
             $sql .= "FROM users ";
-            $sql .= "WHERE id='{$post["users_id"]}' ";
+            $sql .= "WHERE id='{$post["userId"]}' ";
 
             if ($user = executeAndFetchAssoc($sql)) {
                 return $user["username"];
@@ -132,7 +132,7 @@
 
         $sql = "SELECT COUNT(*) AS count ";
         $sql .= "FROM posts ";
-        $sql .= "WHERE topics_id='{$topicId}' ";
+        $sql .= "WHERE topicId='{$topicId}' ";
 
         return executeAndFetchAssoc($sql)["count"];
     }
@@ -141,26 +141,26 @@
 
     function qCreateNewPost($topicId, $userId, $content) {
         dbEscape($topicId, $userId, $content);
-        $posted = getDatetimeForMysql();
+        $postedDT = getDatetimeForMysql();
 
-        $sql = "INSERT INTO posts (id, content, posted, topics_id, users_id) VALUES (";
-        $sql .= "NULL, '{$content}', '{$posted}', '{$topicId}', '{$userId}'";
+        $sql = "INSERT INTO posts (id, content, postedDT, topicId, userId) VALUES (";
+        $sql .= "NULL, '{$content}', '{$postedDT}', '{$topicId}', '{$userId}'";
         $sql .= ")";
 
         executeQuery($sql);
 
         return [
             "id" => getInsertId(),
-            "posted" => $posted
+            "postedDT" => $postedDT
         ];
     }
 
-    function qGetPostsByTopicId($id, $sort = ["updated" => "DESC"]) {
+    function qGetPostsByTopicId($id, $sort = ["postedDT" => "ASC"]) {
         dbEscape($id);
 
         $sql = "SELECT * ";
         $sql .= "FROM posts ";
-        $sql .= "WHERE topics_id='{$id}' ";
+        $sql .= "WHERE topicId='{$id}' ";
         $sql .= orderByStatement($sort);
 
         return executeAndFetchAssoc($sql, FETCH::ALL);
@@ -169,17 +169,17 @@
     function qGetLastPostInfoByForumId($forumId) {
         dbEscape($forumId);
 
-        $sql = "SELECT id, updated ";
+        $sql = "SELECT id, latestPostDT ";
         $sql .= "FROM topics ";
-        $sql .= "WHERE forums_id='{$forumId}' ";
-        $sql .= "ORDER BY updated DESC ";
+        $sql .= "WHERE forumId='{$forumId}' ";
+        $sql .= "ORDER BY latestPostDT DESC ";
 
         if ($lastlyUpdatedTopic = executeAndFetchAssoc($sql)) {
             if ($lastPosterUsername = qGetTopicLastPosterUsername($lastlyUpdatedTopic["id"])) {
                 return [
                     "username" => $lastPosterUsername,
-                    "date" => convertMysqlDatetimeToPhpDate($lastlyUpdatedTopic["updated"]),
-                    "time" => convertMysqlDatetimeToPhpTime($lastlyUpdatedTopic["updated"])
+                    "date" => convertMysqlDatetimeToPhpDate($lastlyUpdatedTopic["latestPostDT"]),
+                    "time" => convertMysqlDatetimeToPhpTime($lastlyUpdatedTopic["latestPostDT"])
                 ];
             }
         }
@@ -218,10 +218,10 @@
     function qRegisterUser($username, $email, $password) {
         dbEscape($username, $email);
         $password = hashPassword($password);
-        $joinedDate = getDateForMysql();
+        $joinedDT = getDateForMysql();
 
-        $sql = "INSERT INTO users (id, username, password, email, joinedDate, emailConfirmed) VALUES (";
-        $sql .= "   NULL, '{$username}', '{$password}', '{$email}', '{$joinedDate}', '0'";
+        $sql = "INSERT INTO users (id, username, password, email, joinedDT, confirmed) VALUES (";
+        $sql .= "   NULL, '{$username}', '{$password}', '{$email}', '{$joinedDT}', '0'";
         $sql .= ")";
 
         executeQuery($sql);
@@ -245,11 +245,11 @@
         $sql = "SELECT id ";
         $sql .= "FROM users ";
         $sql .= "WHERE email='{$email}' ";
-        $sql .= "   AND emailConfirmed='0' ";
+        $sql .= "   AND confirmed='0' ";
 
         if ($user = executeAndFetchAssoc($sql)) {
             $sql = "UPDATE users ";
-            $sql .= "SET emailConfirmed='1' ";
+            $sql .= "SET confirmed='1' ";
             $sql .= "WHERE id='{$user["id"]}' ";
             executeQuery($sql);
         }
@@ -311,12 +311,12 @@
     function qIsEmailConfirmed($userId) {
         dbEscape($userId);
 
-        $sql = "SELECT emailConfirmed ";
+        $sql = "SELECT confirmed ";
         $sql .= "FROM users ";
         $sql .= "WHERE id='{$userId}' ";
 
         if ($user = executeAndFetchAssoc($sql)) {
-            return $user["emailConfirmed"] === "1";
+            return $user["confirmed"] === "1";
         }
 
         return null;
