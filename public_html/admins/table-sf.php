@@ -37,6 +37,8 @@
     }
 ?>
 
+<script src="scripts/js/table.js"></script>
+
 <main>
 
     <h2 class="table-title">Sekcije</h2>

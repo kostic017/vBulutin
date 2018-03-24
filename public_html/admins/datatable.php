@@ -13,8 +13,9 @@
         <?php foreach ($columnsInfo as $columnInfo): ?>
             <th>
                 <a href="javascript:void(0)" class="btn-sort" data-columnName="<?=$columnInfo["name"]?>">
-                    <?=$columnInfo["name"]?> <span class="icon icon-sort"></span>
+                    <?=$columnInfo["name"]?>
                 </a>
+                <span class="icon icon-sort"></span>
             </th>
         <?php endforeach; ?>
     </tr>
@@ -31,18 +32,7 @@
 
 
     <?php foreach ($rows ?? [] as $row): ?>
-        <tr data-id="<?=$row["id"]?>">
-
-            <td>
-                <button type="submit" class="icon icon-update" title="Update"
-                        name="update" value="<?=$tableName . "_" . $row["id"]?>" formnovalidate></button>
-                <button type="submit" class="icon icon-delete" title="Delete"
-                        name="delete" value="<?=$tableName . "_" . $row["id"]?>" formnovalidate></button>
-            </td>
-
-            <?php require "datarow.php"; ?>
-
-        </tr>
+        <?php require "datarow.php"; ?>
     <?php endforeach; ?>
 
 </table>

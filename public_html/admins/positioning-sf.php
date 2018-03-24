@@ -5,6 +5,8 @@
     $sections = qGetRowsByTableName("sections", SORT::POSITION_ASCENDING);
 ?>
 
+<script src="scripts/js/positioning.js"></script>
+
 <main>
     <p id="message"></p>
 

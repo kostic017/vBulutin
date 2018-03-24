@@ -19,6 +19,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.js"></script>
 <script src="/shared/libraries/inscryb-markdown-editor/inscrybmde.min.js"></script>
+
+<script src="scripts/js/script.js"></script>
 </head>
 
 <?php

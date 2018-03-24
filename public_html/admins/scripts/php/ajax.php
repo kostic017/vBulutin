@@ -9,10 +9,10 @@
                 echo qGetForumSection($_POST["id"]);
             break;
 
-            case "sort":
+            case "table_sort":
                 $order = $_POST["order"];
-                $columnName = $_POST["columnName"];
                 $tableName = $_POST["tableName"];
+                $columnName = $_POST["columnName"];
 
                 $options = [$columnName => $order];
 
@@ -25,10 +25,8 @@
                         break;
                 }
 
-                foreach ($tableData as $rows) {
-                    foreach ($rows as $row) {
-                        require "../../datarow.php";
-                    }
+                foreach ($tableData as $row) {
+                    require "../../datarow.php";
                 }
             break;
 

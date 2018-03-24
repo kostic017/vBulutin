@@ -27,4 +27,3 @@
     <link rel="stylesheet" href="styles/css/style.css">
 
     <script src="/shared/scripts/js/functions.js"></script>
-    <script src="scripts/js/script.js"></script>

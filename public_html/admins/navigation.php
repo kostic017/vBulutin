@@ -8,3 +8,7 @@
         </li>
     </ul>
 </nav>
+
+<script>
+    $(`a[href="${getFileName()}"]`).addClass("active");
+</script>
