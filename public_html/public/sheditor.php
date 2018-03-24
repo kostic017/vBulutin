@@ -1,4 +1,4 @@
-<?php $fonts = array_filter(glob("../shared/fonts/*"), "is_dir"); ?>
+<?php $fonts = json_decode(file_get_contents("../shared/fonts.json")); ?>
 
 <div id="sheditor" title="Scheme Editor">
 
@@ -33,7 +33,7 @@
                 <!-- Svi elementi koji imaju data-shclass atribut. -->
             </select>
         </div>
-        <div>
+        <div class="pseudo">
             <label><input type="radio" name="pseudo" value="plain"> plain</label>
             <label><input type="radio" name="pseudo" value="a"> a</label>
             <label><input type="radio" name="pseudo" value="a:hover"> a:hover</label>
@@ -68,15 +68,13 @@
             </div>
             <div data-property="font-family">
                 <h4>Family</h4>
-                <?php if (count($fonts) > 0): ?>
-                    <select>
-                        <?php foreach ($fonts as $font) : ?>
-                            <?php $fontName = basename($font); ?>
-                            <option value="<?=$fontName?>"><?=$fontName?></option>
-                        <?php endforeach; ?>
-                    </select>
-                <?php endif; ?>
-                <select>
+                <select name="custom-font">
+                    <option value=""></option>
+                    <?php foreach ($fonts as $font): ?>
+                        <option value="<?=$font->name?>"><?=$font->name?></option>
+                    <?php endforeach; ?>
+                </select>
+                <select name="generic-family">
                     <option value="serif">serif</option>
                     <option value="sans-serif">sans-serif</option>
                     <option value="monospace">monospace</option>
@@ -86,7 +84,6 @@
                 </select>
             </div>
         </div>
-        <!-- Font -->
 
         <h3>Tekst</h3>
         <div>
@@ -241,7 +238,6 @@
                 </div>
             </fieldset>
         </div>
-        <!-- Border -->
 
         <h3>Background</h3>
         <div>
@@ -271,9 +267,7 @@
                 <input class="jui-colorpicker">
             </div>
         </div>
-        <!-- Background -->
 
     </div>
-    <!-- .jui-accordion -->
 
-</div> <!-- #sheditor-dialog -->
+</div>

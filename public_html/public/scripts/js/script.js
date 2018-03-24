@@ -1,7 +1,10 @@
 let jsonProperties;
 
 $(function () {
-    setupBackToTopButton();
+    const back2top = $("#btn-back2top");
+    $(window).scroll(() => { $(window).scrollTop() > 200 ? back2top.fadeIn() : back2top.fadeOut(); });
+    back2top.click(() => { animateScroll(0); });
+    $(window).scroll();
 
     $.getJSON("/public/schemes/gray/config.json", json => {
         jsonProperties = json;
@@ -9,31 +12,14 @@ $(function () {
     });
 });
 
-function setupBackToTopButton() {
-    const back2top = $("#btn-back2top");
-    $(window).scroll(() => {
-        $(window).scrollTop() > 200 ? back2top.fadeIn() : back2top.fadeOut();
-    });
-    back2top.click(() => {
-        animateScroll(0);
-    });
-    $(window).scroll();
-}
-
 function fileDoneLoading() {
-    // setupWidgets();
-    // setupPlainControls();
-    // addOptionsToControls();
-    // setupShclassSelect();
-    // setToogleForBackgroundEndColor();
-    // liveUpdateElementStyles();
-}
-
-function setupWidgets() {
+    const sheditor = $("#sheditor");
+    const cShclassSelect = $("#target-select select");
 
     // ************************************************************************** //
     //                                   Dialog                                   //
     // ************************************************************************** //
+
 
     // Menjamo nezeljena ponasanja widget-a.
     $.widget("ui.dialog", $.ui.dialog, {
@@ -55,38 +41,40 @@ function setupWidgets() {
 
     });
 
-    $("#sheditor")
-        .dialog({
-            width: 600,
-            height: 400,
-            modal: true,
-            autoOpen: false,
-            open() {
-                $(".ui-widget-overlay").css({
-                    opacity: $("#sh-overlay-opacity").val() / 100.0,
-                    background: $("#sh-overlay-color").val()
-                });
-                // Delimicno onemucava skrolovanje stranice dok je dijalog otvoren. Skrolovanje koje
-                // se desava kada vucemo dijalog ka ivici prozora resavamo pomocu Widget Factory.
-                $("body").css("overflow", "hidden");
-            },
-            beforeClose() {
-                $("body").css("overflow", "inherit");
-            },
-            close() {
-                unfocusElements();
-                $("#target-select select").val("");
-                $("#accordion").accordion("option", "disabled", true);
-            }
-        })
-        .scroll(() => {
-            // Drop-down za Colorpicker je apsolutno pozicioniran tako da ne
-            // prati skrolovanje dijaloga nego ostaje zakljucan u mestu i uvek vidljiv.
-            $(".jui-colorpicker").colorpicker("hidePalette");
-        });
+    sheditor.dialog({
+        width: 600,
+        height: 400,
+        modal: true,
+        autoOpen: false,
+        open() {
+            $("body").css("overflow", "hidden");
+            $(".fieldset-toggle.start-collapsed").click();
+            $(".ui-widget-overlay").css({
+                opacity: $("#sh-overlay-opacity").val() / 100.0,
+                background: $("#sh-overlay-color").val()
+            });
+        },
+        beforeClose() {
+            $("body").css("overflow", "inherit");
+        },
+        close() {
+            unfocusElements();
+            cShclassSelect.val("");
+            $(".fieldset-toggle.start-collapsed").click();
+            $("#accordion")
+                .accordion("option", "disabled", true)
+                .accordion("option", "active", false);
+        }
+    });
+
+    sheditor.scroll(() => {
+        // Drop-down za Colorpicker je apsolutno pozicioniran tako da ne
+        // prati skrolovanje dijaloga nego ostaje zakljucan u mestu i uvek vidljiv.
+        $(".jui-colorpicker").colorpicker("hidePalette");
+    });
 
     $("#btn-open-editor").click(() => {
-        $("#sheditor").dialog("open");
+        sheditor.dialog("open");
     });
 
     // ************************************************************************** //
@@ -118,9 +106,6 @@ function setupWidgets() {
         collapsible: true,
         heightStyle: "content"
     });
-}
-
-function setupPlainControls() {
 
     // ************************************************************************** //
     //                            Podesavanja editora                             //
@@ -153,21 +138,17 @@ function setupPlainControls() {
     const fieldsetToogle = $(".fieldset-toggle");
     $(".arrow-icon", fieldsetToogle).addClass("ui-icon ui-icon-triangle-1-n");
 
-    fieldsetToogle
-        .addClass("_pointer")
-        .click(function () {
-            $(".arrow-icon", this).toggleClass("ui-icon-triangle-1-n").toggleClass("ui-icon-triangle-1-s");
-            $(this).siblings("div").toggle($(this).hasClass("in-sheditor") ? "" : "blind");
-        });
-
-    $(".fieldset-toggle.start-collapsed").click();
+    fieldsetToogle.click(function () {
+        $(".arrow-icon", this).toggleClass("ui-icon-triangle-1-n").toggleClass("ui-icon-triangle-1-s");
+        $(this).siblings("div").toggle("blind");
+    });
 
     // ************************************************************************** //
     //                        Broj sa mernom jedinicom                            //
     // ************************************************************************** //
 
     $(".number-and-unit").append(`
-        <input type="number" min="1" max="100" step="1">
+        <input type="number" min="0" max="100" step="1" value="0">
         <select>
             <option value="%">%</option>
             <option value="cm">cm</option>
@@ -177,15 +158,17 @@ function setupPlainControls() {
             <option value="mm">mm</option>
             <option value="pc">pc</option>
             <option value="pt">pt</option>
-            <option value="px">px</option>
+            <option value="px" selected>px</option>
             <option value="vh">vh</option>
             <option value="vw">vw</option>
             <option value="vmin">vmin</option>
         </select>
     `);
-}
 
-function addOptionsToControls() {
+    // ************************************************************************** //
+    //                         Dodaj opcije kontrolama                            //
+    // ************************************************************************** //
+
     for (let side of ["-", "-top-", "-right-", "-bottom-", "-left-"]) {
         appendOptionsToSelect(
             `border${side}style`,
@@ -193,18 +176,10 @@ function addOptionsToControls() {
         );
     }
 
-    function appendOptionsToSelect(propertyName, options) {
-        const select = $(`div[data-property='${propertyName}'] select`);
-        for (let val of options) {
-            select.append($(`<option value="${val}">${val}</option>`));
-        }
-    }
-}
+    // ************************************************************************** //
+    //                        Select meni za shclass-e                            //
+    // ************************************************************************** //
 
-function setupShclassSelect() {
-    const cShclassSelect = $("#target-select select");
-
-    // dodaj shklase meniju
     $("[data-shclass]").each((i, elem) => {
         for (let shclass of $(elem).attr("data-shclass").split(" ")) {
             if (!doesOptionExist(cShclassSelect[0], shclass)) {
@@ -226,83 +201,19 @@ function setupShclassSelect() {
     });
 
     // ************************************************************************** //
-    //                              Pomocne funkcije                              //
+    //                      Toogle Background End Color                           //
     // ************************************************************************** //
 
-    function revertControlsToNullValues() {
-        const accordion = $("#accordion");
-        $("select", accordion).val("");
-        $("input[type=number]", accordion).val("0");
-        $("input[type=checkbox], input[type=radio]", accordion).prop("checked", false);
-    }
-
-    function focusElementsToStyle(shclass) {
-        const targets = $(`[data-shclass~=${shclass}]`);
-
-        unfocusElements();
-        targets.addClass("focused");
-
-        $(".focused").css({
-            "outline-style": "solid",
-            "outline-width": $("#sh-outline-width").val(),
-            "outline-color": $("#sh-outline-color").val()
-        });
-
-        animateScroll(
-            shclass !== "btn-back2top"           // btn-back2top je vidljivo samo ako
-                ? $(targets[0]).offset().top     // skrolujemo stranicu na dole.
-                : $("body").prop("scrollHeight")
-        );
-    }
-
-    function readJsonValues(shclass) {
-        const properties = jsonProperties[shclass];
-
-        for (let propertyName in properties) {
-            if (!properties.hasOwnProperty(propertyName) || "Link Background".includes(propertyName))
-                continue;
-            if (propertyName === "font-family") continue; // TODO
-
-            const propertyValue = properties[propertyName];
-            const propertyControl = $(`div[data-property="${propertyName}"] > select, input, label, .number-and-unit`);
-
-            if (propertyControl.hasClass("number-and-unit")) {
-                const unitAndValue = splitUnitAndValue(propertyValue);
-                $("input", propertyControl).val(unitAndValue.value);
-                $("select", propertyControl).val(unitAndValue.unit);
-            } else if (propertyControl.hasClass("jui-colorpicker")) {
-                propertyControl.colorpicker("val", propertyValue);
-            } else if (propertyControl.is("select, input")) {
-                propertyControl.val(propertyValue);
-            } else if (propertyControl.is("label")) {
-                $(`input[value="${propertyValue}"]`, propertyControl).prop("checked", "true");
-            }
-        }
-
-        if (properties.hasOwnProperty("Background")) {
-            const {style, "start-color": startColor, "end-color": endColor} = properties["Background"];
-            $("div[data-property='background-style'] select").val(style);
-            $("div[data-property='background-start-color'] .jui-colorpicker").colorpicker("val", startColor);
-            $("div[data-property='background-end-color'] .jui-colorpicker").colorpicker("val", endColor);
-        }
-    }
-
-}
-
-function unfocusElements() {
-    $(".focused").removeClass("focused").css("outline", "none");
-}
-
-function setToogleForBackgroundEndColor() {
-    $("div[data-property='background-style'] .jui-selectmenu").on("selectmenuchange", (event, ui) => {
-        const value = ui.item.value;
+    $("div[data-property='background-style'] select").on("change", function() {
         const endColorDiv = $("div[data-property='background-end-color']");
-        value.includes("gradient") ? endColorDiv.show() : endColorDiv.hide();
+        $(this).val().includes("gradient") ? endColorDiv.show() : endColorDiv.hide();
     });
-}
 
-function liveUpdateElementStyles() {
-    $(".jui-selectmenu.in-sheditor").on("selectmenuchange", function () {
+    // ************************************************************************** //
+    //                     Live Update stilova elemenata                          //
+    // ************************************************************************** //
+
+    $("#sheditor select").on("change", function () {
         const targets = $(".focused");
         const parent = $(this).parent();
 
@@ -313,7 +224,7 @@ function liveUpdateElementStyles() {
             propertyValue = $(this).val();
         } else if (parent.hasClass("number-and-unit")) {
             propertyName = parent.parent().attr("data-property");
-            propertyValue = $(".jui-spinner", parent).spinner("value") + $(this).val();
+            propertyValue = $("input[type=number]", parent).val() + $(this).val();
         }
 
         if (!(propertyName === undefined || propertyValue.includes("-"))) {
@@ -321,7 +232,81 @@ function liveUpdateElementStyles() {
         }
 
     });
-
 }
+
+function appendOptionsToSelect(propertyName, options) {
+    const select = $(`div[data-property='${propertyName}'] select`);
+    for (let val of options) {
+        select.append($(`<option value="${val}">${val}</option>`));
+    }
+}
+
+function revertControlsToNullValues() {
+    const accordion = $("#accordion");
+    $("select", accordion).val("");
+    $("input[type=number]", accordion).val("0");
+    $("input[type=checkbox], input[type=radio]", accordion).prop("checked", false);
+}
+
+function focusElementsToStyle(shclass) {
+    const targets = $(`[data-shclass~=${shclass}]`);
+
+    unfocusElements();
+    targets.addClass("focused");
+
+    $(".focused").css({
+        "outline-style": "solid",
+        "outline-width": $("#sh-outline-width").val(),
+        "outline-color": $("#sh-outline-color").val()
+    });
+
+    animateScroll(
+        shclass === "btn-back2top"           // btn-back2top je vidljivo samo ako
+            ? $("body").prop("scrollHeight") // skrolujemo stranicu na dole.
+            : $(targets[0]).offset().top
+    );
+}
+
+function unfocusElements() {
+    $(".focused").removeClass("focused").css("outline", "none");
+}
+
+function readJsonValues(shclass) {
+    const properties = jsonProperties[shclass];
+
+    for (let propertyName in properties) {
+        if (properties.hasOwnProperty(propertyName) && !"Link Background".includes(propertyName)) {
+            const propertyValue = properties[propertyName];
+            const propertyControl =
+                $("select, input, label, .number-and-unit", $(`div[data-property="${propertyName}"]`));
+
+            if (propertyControl.hasClass("number-and-unit")) {
+                const unitAndValue = splitUnitAndValue(propertyValue);
+                $("input", propertyControl).val(unitAndValue.value);
+                $("select", propertyControl).val(unitAndValue.unit);
+            } else if (propertyControl.hasClass("jui-colorpicker")) {
+                propertyControl.colorpicker("val", propertyValue);
+            } else if (propertyControl.is("select, input")) {
+                if (propertyName === "font-family") {
+                    const fonts = propertyValue.split(",");
+                    $(propertyControl[0]).val(fonts[0].replace(/'/g, ""));
+                    $(propertyControl[1]).val(fonts[1]);
+                } else {
+                    propertyControl.val(propertyValue);
+                }
+            } else if (propertyControl.is("label")) {
+                $(`input[value="${propertyValue}"]`, propertyControl).prop("checked", "true");
+            }
+        }
+    }
+
+    if (properties.hasOwnProperty("Background")) {
+        const {style, "start-color": startColor, "end-color": endColor} = properties["Background"];
+        $("div[data-property='background-style'] select").val(style);
+        $("div[data-property='background-start-color'] .jui-colorpicker").colorpicker("val", startColor);
+        $("div[data-property='background-end-color'] .jui-colorpicker").colorpicker("val", endColor);
+    }
+}
+
 
 

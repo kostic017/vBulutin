@@ -11,7 +11,7 @@
     }
 ?>
 <?php require_once "../shared/templates/header.php"; ?>
-<link rel="stylesheet" href="schemes/scheme.css">
+<link rel="stylesheet" href="schemes/scheme.css.php">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojione@3.1.2/extras/css/emojione.min.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emojionearea@3.4.1/dist/emojionearea.min.css">
