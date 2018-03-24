@@ -23,7 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-nestable@0.8.0/jquery.nestable.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js"></script>
 
-    <link rel="stylesheet" href="/shared/fonts/fonts.css">
+    <link rel="stylesheet" href="/shared/fonts/fonts.css.php">
     <link rel="stylesheet" href="styles/css/style.css">
 
     <script src="/shared/scripts/js/functions.js"></script>

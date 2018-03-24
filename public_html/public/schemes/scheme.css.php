@@ -1,13 +1,12 @@
 <?php
-    $PUBLIC_HTML_PATH = $_SERVER['DOCUMENT_ROOT'];
-    require_once "{$PUBLIC_HTML_PATH}/shared/scripts/php/main.php";
-
     session_start();
+    header("Content-type: text/css; charset: UTF-8");
+
+    require_once "../../shared/scripts/php/main.php";
+
     $_SESSION["scheme"] = "gray";
     $scheme = $_SESSION["scheme"] ?? "gray";
     $configs = parseJsonFile("{$scheme}/config.json");
-
-    header("Content-type: text/css; charset: UTF-8");
 
     foreach ($configs as $shclass => $properties) {
         $selector = "[data-shclass~='{$shclass}']";

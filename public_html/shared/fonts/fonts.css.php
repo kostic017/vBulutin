@@ -1,5 +1,5 @@
 <?php
-    header("Content-type: text/css; charset: UTF-8");
+    header("Content-type: text/css; charset=utf-8");
 
     $results = scandir(__DIR__);
 
