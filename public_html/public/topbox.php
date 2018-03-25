@@ -8,7 +8,6 @@
         $pathSectionLink = "#";
     } elseif (FILENAME === "forum") {
         $follow = "ovaj forum";
-        $reply = "Započni novu temu";
 
         $section = qGetRowById($thisPage["sectionId"], "sections");
 
@@ -25,7 +24,6 @@
         $pathForumLink = "#";
     } elseif (FILENAME === "topic") {
         $follow = "ovu temu";
-        $reply = "Napiši odgovor";
 
         $forum = qGetRowById($thisPage["forumId"], "forums");
 
@@ -104,7 +102,6 @@
                 <?php if (FILENAME === "forum"): ?>
                     <a href="" id="btn-mark-read">Označi ovaj forum kao pročitan</a>
                 <?php endif; ?>
-                <button data-shclass="btn-reply" id="btn-reply"><?=$reply?></button>
             </div>
 
         </div>

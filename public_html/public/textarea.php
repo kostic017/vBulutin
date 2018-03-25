@@ -22,8 +22,8 @@
             <?php endif; ?>
             <textarea name="textarea-content"></textarea>
             <div class="textarea-submit-row">
-                <button type="submit" name="textarea-submit">
-                    <?=FILENAME === "topic" ? "Pošalji odgovor" : "Nova tema"?>
+                <button data-shclass="btn-reply" type="submit" name="textarea-submit">
+                    Nova <?=FILENAME === "topic" ? "poruka" : "tema"?>
                 </button>
                 <input type="text" id="emojionearea">
             </div>

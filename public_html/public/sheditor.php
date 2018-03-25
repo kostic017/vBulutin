@@ -1,4 +1,4 @@
-<?php $fonts = json_decode(file_get_contents("../shared/fonts.json")); ?>
+<?php $fonts = json_decode(file_get_contents("../shared/configs.json")); ?>
 
 <div id="sheditor" title="Scheme Editor">
 

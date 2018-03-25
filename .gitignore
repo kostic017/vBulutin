@@ -1,5 +1,5 @@
 *.bak
-public_html/**/styles/css
+public_html/**/css
 
 *.cab
 *.msi
@@ -12,15 +12,3 @@ ehthumbs.db
 ehthumbs_vista.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
-
-.idea/
-cmake-build-debug/
-*.iws
-/out/
-.idea_modules/
-atlassian-ide-plugin.xml
-/.rakeTasks
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties

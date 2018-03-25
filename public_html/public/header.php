@@ -10,6 +10,19 @@
         unset($_SESSION["user_id"]);
         unset($_SESSION["lastVisitDT"]);
     }
+
+    if (isEqualToAnyWord("topic forum section", FILENAME)) {
+        if (!isNotBlank($thisPageId = $_GET["id"] ?? "")) {
+            redirectTo("index.php");
+        }
+    }
+    
+    $configs = parseJsonFile("../shared/configs.json");
+    $isSidebarSet = isset($configs->sidebar) && count($configs->sidebar) > 0;
+    
+    function navShClass($filename) {
+        return "nav-forum-" . (FILENAME === $filename ? "active" : "nonactive");
+    }
 ?>
 <?php require_once "../shared/templates/header.php"; ?>
 <link rel="stylesheet" href="schemes/scheme.css.php">
@@ -24,15 +37,7 @@
 <script src="scripts/js/script.js"></script>
 </head>
 
-<?php
-    if (isEqualToAnyWord("topic forum section", FILENAME)) {
-        if (!isNotBlank($thisPageId = $_GET["id"] ?? "")) {
-            redirectTo("index.php");
-        }
-    }
-?>
-
-<body <?=$isSidebarSet ? "class='sidebar'" : ""?>>
+<body <?=$isSidebarSet ? "class='has-sidebar'" : ""?>>
 
 <div data-shclass="main-container">
 
@@ -72,11 +77,16 @@
                 </ul>
 
                 <ul>
-                    <?php foreach ($forumNavigation as $display => $filename): ?>
-                        <li data-shclass="nav-forum-<?=(FILENAME === $filename) ? "active" : "nonactive"?>">
-                            <a href="<?="{$filename}.php"?>"><?=$display?></a>
-                        </li>
-                    <?php endforeach; ?>
+
+                    <li data-shclass="<?=navShClass("index")?>"><a href="index.php">Početna</a></li>
+                    <li data-shclass="<?=navShClass("rules")?>"><a href="rules.php">Pravilnik</a></li>
+
+                    <?php if (isset($_SESSION["user_id"])): ?>
+                        <li data-shclass="<?=navShClass("members")?>"><a href="members.php">Članovi</a></li>
+                        <li data-shclass="<?=navShClass("groups")?>"><a href="groups.php">Korisnicke grupe</a></li>
+                        <li data-shclass="<?=navShClass("chat")?>"><a href="chat.php">Ćaskanje</a></li>
+                    <?php endif; ?>
+
                 </ul>
 
             </section>
