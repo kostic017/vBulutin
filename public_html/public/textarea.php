@@ -1,15 +1,26 @@
 <?php
-    if (isset($_POST["textarea-submit"])) {
-        if (isNotBlank($_POST["textarea-content"])) {
-            if (FILENAME === "forum") {
-                $topicId = qCreateNewTopic($thisPageId, $_SESSION["user_id"],
-                    $_POST["textarea-title"], $_POST["textarea-content"]);
+    if (isset($_POST["textarea-submit"]) && isNotBlank($_POST["textarea-content"])) {
+
+        switch (FILENAME) {
+
+            case "forum":
+                $topicId = qCreateNewTopic($thisPageId, $_SESSION["user_id"], $_POST["textarea-title"], $_POST["textarea-content"]);
                 redirectTo("topic.php?id={$topicId}");
-            } else {
-                qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["textarea-content"]);
-            }
-            redirectTo($_SERVER["REQUEST_URI"]);
+            break;
+
+            case "topic":
+                $lastPost = qGetTopicLastPoster($thisPageId);
+                if ($lastPost["user"]["id"] === $_SESSION["user_id"]) {
+                    qAppendToPost($lastPost["postId"], $_SESSION["user_id"], $_POST["textarea-content"]);
+                    redirectTo("topic.php?id={$thisPageId}#post-{$lastPost["postId"]}");
+                } else {
+                    $post = qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["textarea-content"]);
+                    redirectTo("topic.php?id={$thisPageId}#post-{$post["id"]}");
+                }
+            break;
+
         }
+
     }
 ?>
 

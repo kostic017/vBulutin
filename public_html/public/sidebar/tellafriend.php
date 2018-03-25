@@ -15,7 +15,7 @@
             <p>
                 <label>
                     Poruka:<br>
-                    <textarea name="content">Dođi da vidiš kako strava forum - kostic41.vacau.com. Pozz...</textarea>
+                    <textarea name="content">Dođi da vidiš kako strava forum - http://forum41.tk/. Pozz...</textarea>
                 </label>
             </p>
 

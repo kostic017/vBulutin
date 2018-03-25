@@ -12,10 +12,9 @@
 
   "sidebar": [
     "welcome",
+    "newposts",
     "newtopics",
-    "latestfiles",
     "populartags",
-    "recentstatuses",
     "upcomingevents",
     "tellafriend"
   ]

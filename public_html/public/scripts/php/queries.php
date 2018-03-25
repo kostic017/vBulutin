@@ -130,10 +130,29 @@
         return null;
     }
 
-    function qGetTopicLastPosterUsername($topicId) {
+    function qGetTopicLastPoster($topicId) {
         dbEscape($topicId);
 
-        $sql = "SELECT userId ";
+        if ($post = qGetLastPostByTopicId($topicId)) {
+            $sql = "SELECT * ";
+            $sql .= "FROM users ";
+            $sql .= "WHERE id='{$post["userId"]}' ";
+
+            if ($user = executeAndFetchAssoc($sql)) {
+                return [
+                    "user" => $user,
+                    "postId" => $post["id"]
+                ];
+            }
+        }
+
+        return null;
+    }
+
+    function qGetLastPostByTopicId($topicId) {
+        dbEscape($topicId);
+
+        $sql = "SELECT * ";
         $sql .= "FROM posts ";
         $sql .= "WHERE topicId='{$topicId}' ";
         $sql .= "AND postedDT=( ";
@@ -143,13 +162,7 @@
         $sql .= ") ";
 
         if ($post = executeAndFetchAssoc($sql)) {
-            $sql = "SELECT username ";
-            $sql .= "FROM users ";
-            $sql .= "WHERE id='{$post["userId"]}' ";
-
-            if ($user = executeAndFetchAssoc($sql)) {
-                return $user["username"];
-            }
+            return $post;
         }
 
         return null;
@@ -196,6 +209,20 @@
         ];
     }
 
+    function qAppendToPost($postId, $userId, $content) {
+        dbEscape($postId, $userId, $content);
+        $appendixDate = getDatetimeForMysql();
+
+        $appendix = "\n### ===== DOPUNA {$appendixDate} ===== \n";
+        $appendix .= $content;
+
+        $sql = "UPDATE posts SET ";
+        $sql .= "content=CONCAT(content, '{$appendix}') ";
+        $sql .= "WHERE id='{$postId}' ";
+
+        executeQuery($sql);
+    }
+
     function qGetPostsByTopicId($id, $sort = ["postedDT" => "ASC"]) {
         dbEscape($id);
 
@@ -216,9 +243,9 @@
         $sql .= "ORDER BY latestPostDT DESC ";
 
         if ($lastlyUpdatedTopic = executeAndFetchAssoc($sql)) {
-            if ($lastPosterUsername = qGetTopicLastPosterUsername($lastlyUpdatedTopic["id"])) {
+            if ($lastPoster = qGetTopicLastPoster($lastlyUpdatedTopic["id"])) {
                 return [
-                    "username" => $lastPosterUsername,
+                    "username" => $lastPoster["user"]["username"],
                     "date" => convertMysqlDatetimeToPhpDate($lastlyUpdatedTopic["latestPostDT"]),
                     "time" => convertMysqlDatetimeToPhpTime($lastlyUpdatedTopic["latestPostDT"])
                 ];

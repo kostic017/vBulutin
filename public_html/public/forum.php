@@ -78,7 +78,8 @@
                         <div class="post-info">
                             <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
                             <ul>
-                                <li><a href=""><?=qGetTopicLastPosterUsername($topic["id"])?></a></li>
+                                <?php $lastPoster = qGetTopicLastPoster($topic["id"])["user"]; ?>
+                                <li><a href=""><?=$lastPoster["username"]?></a></li>
                                 <li><?=convertMysqlDatetimeToPhpTime($topic["latestPostDT"])?></li>
                                 <li><?=convertMysqlDatetimeToPhpDate($topic["latestPostDT"])?></li>
                             </ul>

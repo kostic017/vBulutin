@@ -1,7 +1,7 @@
 <?php
     require_once "header.php";
-    require_once "../shared/libraries/Parsedown/Parsedown.php";
     require_once "../shared/libraries/emojione/autoload.php";
+    require_once "../shared/libraries/Parsedown/Parsedown.php";
 
     $parsedown = new Parsedown();
     $posts = qGetPostsByTopicId($thisPageId);
