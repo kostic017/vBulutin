@@ -25,9 +25,9 @@
     if (isset($_POST["delete"])) {
         $redirect = true;
         $id = explode("_", $_POST["delete"])[1];
-        if (hasString($_POST["delete"], "forums")) {
+        if (hasSubstring($_POST["delete"], "forums")) {
             qDeleteForum($id);
-        } elseif (hasString($_POST["delete"], "sections")) {
+        } elseif (hasSubstring($_POST["delete"], "sections")) {
             qDeleteSection($id);
         }
     }
@@ -35,9 +35,9 @@
     if (isset($_POST["update"])) {
         $redirect = true;
         $id = explode("_", $_POST["update"])[1];
-        if (hasString($_POST["update"], "forums")) {
+        if (hasSubstring($_POST["update"], "forums")) {
             qUpdateForum($id, $_POST["title"], $_POST["description"], $_POST["visible"], $_POST["sectionId"]);
-        } elseif (hasString($_POST["update"], "sections")) {
+        } elseif (hasSubstring($_POST["update"], "sections")) {
             qUpdateSection($id, $_POST["title"], $_POST["description"], $_POST["visible"]);
         }
     }

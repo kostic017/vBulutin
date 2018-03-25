@@ -5,16 +5,16 @@
         redirectTo("index.php");
     }
 
-    $data = $_SESSION["redirect"];
-
-    $url = $data["url"];
-    $message = $data["message"];
+    $url = $_SESSION["redirect"]["url"];
+    $message = $_SESSION["redirect"]["message"];
 
     $title = $url;
-    if (strpos($url, "index") || $url == "/public/") {
+    if (hasSubstring($url, "index") || $url == "/public/") {
         $title = "Početna strana";
-    } elseif (strpos($url, "login")) {
+    } elseif (hasSubstring($url, "login")) {
         $title = "Prijavi se";
+    } elseif (hasSubstring($url, "register")) {
+        $title = "Registruj se.";
     }
 ?>
 

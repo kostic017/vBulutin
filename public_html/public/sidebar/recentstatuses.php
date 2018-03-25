@@ -1,4 +1,4 @@
-<section class="sidebar sidebar-recentstatuses">
+<section class="sidebar-recentstatuses">
 
     <h2 data-shclass="sidebar-title" class="title">Skorašnji statusi</h2>
 

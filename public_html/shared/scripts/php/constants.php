@@ -9,6 +9,8 @@
     define("MAIL_USERNAME", "forum41web@gmail.com");
     define("MAIL_PASSWORD", "forum41nikola");
 
+    define("SHORTEN_LIMIT", 30);
+    define("LIMIT_LAST_VISIT", 5);
     define("REDIRECT_TIMEOUT", 3000);
 
     define("DEBUG", true); // false for less verbose error messages

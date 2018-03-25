@@ -1,4 +1,4 @@
-<section class="sidebar sidebar-tellafriend">
+<section class="sidebar-tellafriend">
 
     <h2 data-shclass="sidebar-title" class="title">Pozovi prijatelja</h2>
 

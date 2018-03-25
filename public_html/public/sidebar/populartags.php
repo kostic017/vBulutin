@@ -1,4 +1,4 @@
-<section class="sidebar sidebar-populartags">
+<section class="sidebar-populartags">
 
     <h2 data-shclass="sidebar-title" class="title">Popularne oznake</h2>
 

@@ -1,18 +1,41 @@
-<section class="sidebar sidebar-newtopics">
+<?php if (isset($_SESSION["user_id"]) && isset($_SESSION["lastVisitDT"])): ?>
+    <?php $topics = qGetTopicsFromLastVisit($_SESSION["lastVisitDT"], LIMIT_LAST_VISIT); ?>
 
-    <h2 data-shclass="sidebar-title" class="title">Nove teme</h2>
+    <section class="sidebar-newtopics">
 
-    <div data-shclass="sidebar-content" class="content">
+        <h2 data-shclass="sidebar-title" class="title">Nove teme</h2>
 
-        <div class="post-info">
-            <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
-            <ul>
-                <li><a href="">test</a></li>
-                <li><a href="">Bitter</a> - Yesterday, 12:16 AM</li>
-            </ul>
+        <div data-shclass="sidebar-content" class="content">
+
+            <?php if ($topics): ?>
+
+                <?php foreach ($topics as $topic): ?>
+                    <?php $username = qGetTopicStarterUsername($topic["id"]); ?>
+
+                    <div class="post-info">
+                        <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
+                        <ul>
+                            <?php if ($username): ?>
+                                <li><a href=""><?=$username?></a></li>
+                            <?php endif; ?>
+                            <li><a href="topic.php?id=<?=$topic["id"]?>"><?php echoShorten($topic["title"]); ?></a></li>
+                            <li><?=convertMysqlDatetimeToPhpDatetime($topic["startedDT"])?></li>
+                        </ul>
+                    </div>
+
+                <?php endforeach; ?>
+
+                <a href="newtopics.php">Sve teme od tvoje poslednje posete.</a>
+
+            <?php else: ?>
+
+                <p>Nema tema od tvoje poslednje posete.</p>
+
+            <?php endif; ?>
+
         </div>
-        <a href="">Nove teme od tvoje poslednje posete.</a>
 
-    </div>
+    </section>
 
-</section>
+
+<?php endif; ?>

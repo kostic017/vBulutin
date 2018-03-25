@@ -1,23 +1,26 @@
-.sidebar {
-    flex-basis : 29%;
+aside {
+    padding-left: 10px;
 
-    section:last-child {
-        margin-bottom : 0;
-    }
+    section {
 
-    > .title {
-        margin  : 0;
-        padding : 9px;
-    }
-
-    > .content {
-        padding : 10px;
-
-        p:first-child {
-            margin-top: 0;
+        > .title {
+            margin  : 0;
+            padding : 9px;
         }
 
-        p:last-child {
+        > .content {
+            padding : 10px;
+
+            p:first-child {
+                margin-top: 0;
+            }
+
+            p:last-child {
+                margin-bottom : 0;
+            }
+        }
+
+        &:last-child {
             margin-bottom : 0;
         }
     }

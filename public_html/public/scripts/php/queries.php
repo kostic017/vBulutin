@@ -44,6 +44,19 @@
 
     /// TOPICS ///
 
+    function qGetTopicsFromLastVisit($lastVisitDT, $limit = 0) {
+        dbEscape($lastVisitDT);
+
+        $sql = "SELECT id, title, firstPostId, startedDT ";
+        $sql .= "FROM topics ";
+        $sql .= "WHERE startedDT <= '$lastVisitDT' ";
+        if ($limit > 0) {
+            $sql .= "LIMIT {$limit} ";
+        }
+
+        return executeAndFetchAssoc($sql, FETCH::ALL);
+    }
+
     function qCreateNewTopic($forumId, $userId, $title, $content) {
         dbEscape($forumId, $title, $userId); // ne zelimo da eskejpujemo $content dva puta
 
@@ -84,10 +97,10 @@
         $sql .= "FROM topics ";
         $sql .= "WHERE id='{$topicId}'";
 
-        if ($forum = executeAndFetchAssoc($sql)) {
+        if ($topics = executeAndFetchAssoc($sql)) {
             $sql = "SELECT userId ";
             $sql .= "FROM posts ";
-            $sql .= "WHERE id='{$forum["id"]}' ";
+            $sql .= "WHERE id='{$topics["firstPostId"]}' ";
 
             if ($post = executeAndFetchAssoc($sql)) {
                 $sql = "SELECT username ";
@@ -341,12 +354,26 @@
         return null;
     }
 
-    function qIsEmailConfirmed($userId) {
+    function qIsEmailConfirmedByUserId($userId) {
         dbEscape($userId);
 
         $sql = "SELECT confirmed ";
         $sql .= "FROM users ";
         $sql .= "WHERE id='{$userId}' ";
+
+        if ($user = executeAndFetchAssoc($sql)) {
+            return $user["confirmed"] === "1";
+        }
+
+        return null;
+    }
+
+    function qIsEmailConfirmedByEmail($email) {
+        dbEscape($email);
+
+        $sql = "SELECT confirmed ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE email='{$email}' ";
 
         if ($user = executeAndFetchAssoc($sql)) {
             return $user["confirmed"] === "1";

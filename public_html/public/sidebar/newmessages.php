@@ -1,4 +1,4 @@
-<section class="sidebar sidebar-newmessages">
+<section class="sidebar-newmessages">
 
     <h2 data-shclass="sidebar-title" class="title">Nove poruke</h2>
 

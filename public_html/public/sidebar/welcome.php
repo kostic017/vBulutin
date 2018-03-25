@@ -3,7 +3,7 @@
 
     <?php if ($username): ?>
 
-        <section class="sidebar sidebar-welcome">
+        <section class="sidebar-welcome">
 
             <h2 data-shclass="sidebar-title" class="title">Dobro došao <?=$username?>!</h2>
 
@@ -14,7 +14,7 @@
                         <b><?=convertMysqlDatetimeToPhpDatetime($_SESSION["lastVisitDT"])?></b>.
                     </p>
                 <?php endif; ?>
-                <p>Sada je <?=strftime("%d %B %Y - %H:%M")?>.</p>
+                <p>Sada je <?=getPHPDateTime()?>.</p>
             </div>
 
         </section>

@@ -9,13 +9,21 @@
         $errors = [];
 
         if ($user = qLoginUser($_POST["username"], $_POST["password"])) {
-            if ($confirmed = qIsEmailConfirmed($user["id"])) {
+            if ($confirmed = qIsEmailConfirmedByUserId($user["id"])) {
                 $_SESSION["user_id"] = $user["id"];
                 if (isset($user["lastVisitDT"])) {
                     $_SESSION["lastVisitDT"] = $user["lastVisitDT"];
                 }
+
+                $redirectBack = "index.php";
+                if (isset($_SESSION["redirect_back"])) {
+                        if (!hasSubstring($_SESSION["redirect_back"], "register")) {
+                            $redirectBack = $_SESSION["redirect_back"];
+                        }
+                }
+
                 $_SESSION["redirect"] = [
-                    "url" => $_SESSION["redirect_back"] ?? "index.php",
+                    "url" => $redirectBack,
                     "message" => "Uspešno ste se prijavili."
                 ];
                 redirectTo("redirect.php");

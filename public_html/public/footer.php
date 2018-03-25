@@ -1,6 +1,6 @@
 <?php
     if ($isSidebarSet) {
-        echo "<aside class='sidebar'>";
+        echo "<aside>";
         foreach ($sidebarItems as $sidebarItem) {
             require_once "sidebar/{$sidebarItem}.php";
         }

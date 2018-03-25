@@ -1,4 +1,4 @@
-<section class="sidebar sidebar-latestfiles">
+<section class="sidebar-latestfiles">
 
     <h2 data-shclass="sidebar-title" class="title">Novi fajlovi</h2>
 

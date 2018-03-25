@@ -1,6 +1,12 @@
 <?php
     require_once __DIR__ . "/header.php";
 
+    if (isset($_GET["email"])) {
+        if (qIsEmailConfirmedByEmail($_GET["email"])) {
+            redirectTo("login.php");
+        }
+    }
+
     $errors = [];
     $username = "";
     $email = $_GET["email"] ?? "";

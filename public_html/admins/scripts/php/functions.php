@@ -30,7 +30,7 @@
                 break;
             }
 
-            if ($columnInfo["name"] === "position" || hasString($columnInfo["extra"] ?? "", "auto_increment")) {
+            if ($columnInfo["name"] === "position" || hasSubstring($columnInfo["extra"] ?? "", "auto_increment")) {
                 $control->setAttribute("disabled", "disabled");
             }
         }

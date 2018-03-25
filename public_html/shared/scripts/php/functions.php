@@ -3,6 +3,18 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
+    function echoShorten($string) {
+        echo trim(substr($string, 0, SHORTEN_LIMIT)) . "...";
+    }
+
+    function getPHPDate() {
+        return strftime("%d. %B %Y.");
+    }
+
+    function getPHPDateTime() {
+        return strftime("%d. %B %Y. %H:%M");
+    }
+
     function hashPassword($password) {
         return md5($password);
     }
@@ -88,7 +100,7 @@
         return isset($value) && trim($value) !== "";
     }
 
-    function hasString($haystack, $needle) {
+    function hasSubstring($haystack, $needle) {
         return strpos($haystack, $needle) !== false;
     }
 

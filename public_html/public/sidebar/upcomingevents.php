@@ -1,4 +1,4 @@
-<section class="sidebar sidebar-upcomingevents">
+<section class="sidebar-upcomingevents">
 
     <h2 data-shclass="sidebar-title" class="title">Nadolazeći događaji</h2>
 
