@@ -1,13 +1,15 @@
 <?php
     if (isset($_POST["textarea-submit"])) {
-        if (FILENAME === "forum") {
-            $topicId = qCreateNewTopic($thisPageId, $_SESSION["user_id"],
-                $_POST["textarea-title"], $_POST["textarea-content"]);
-            redirectTo("topic.php?id={$topicId}");
-        } else {
-            qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["textarea-content"]);
+        if (isNotBlank($_POST["textarea-content"])) {
+            if (FILENAME === "forum") {
+                $topicId = qCreateNewTopic($thisPageId, $_SESSION["user_id"],
+                    $_POST["textarea-title"], $_POST["textarea-content"]);
+                redirectTo("topic.php?id={$topicId}");
+            } else {
+                qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["textarea-content"]);
+            }
+            redirectTo($_SERVER["REQUEST_URI"]);
         }
-        redirectTo($_SERVER["REQUEST_URI"]);
     }
 ?>
 
@@ -22,9 +24,7 @@
             <?php endif; ?>
             <textarea name="textarea-content"></textarea>
             <div class="textarea-submit-row">
-                <button data-shclass="btn-reply" type="submit" name="textarea-submit">
-                    Nova <?=FILENAME === "topic" ? "poruka" : "tema"?>
-                </button>
+                <button data-shclass="btn-reply" type="submit" name="textarea-submit"></button>
                 <input type="text" id="emojionearea">
             </div>
         </form>
@@ -37,6 +37,8 @@
         const textarea = $("textarea[name=textarea-content]");
 
         if (textarea.length > 0 && emojionearea.length > 0) {
+
+
             let inscrybmde = new InscrybMDE({
                 element: textarea[0],
                 spellChecker: false,
@@ -57,7 +59,9 @@
             });
 
             inscrybmde.value("");
+            toggleSubmit(inscrybmde);
             inscrybmde.clearAutosavedValue();
+            inscrybmde.codemirror.on("change", () => { toggleSubmit(inscrybmde) });
 
             emojionearea.emojioneArea({
                 saveEmojisAs: "shortname",
@@ -72,4 +76,17 @@
             });
         }
     });
+
+    function toggleSubmit(inscrybmde) {
+        const submitButton = $("button[name=textarea-submit]");
+        if (inscrybmde.value().length >= <?=POST_MIN_LENGTH?>) {
+            submitButton.removeAttr("title");
+            submitButton.removeAttr("disabled");
+            submitButton.html("<?=FILENAME?>" === "topic" ? "Pošalji odgovor" : "Otvori novu temu");
+        } else {
+            submitButton.attr("disabled", "");
+            submitButton.html("Poruka prekratka!");
+            submitButton.attr("title", "Poruka mora sadržati najmanje <?=POST_MIN_LENGTH?> karaktera.");
+        }
+    }
 </script>

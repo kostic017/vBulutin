@@ -3,13 +3,14 @@
     define("DB_NAME", "id5177213_forum41");
     define("DB_USER", "id5177213_admin");
     define("DB_PASS", "admin");
-    
+
     define("FILENAME", basename($_SERVER["PHP_SELF"], ".php"));
 
     define("MAIL_USERNAME", "forum41web@gmail.com");
     define("MAIL_PASSWORD", "forum41nikola");
 
     define("SHORTEN_LIMIT", 30);
+    define("POST_MIN_LENGTH", 10);
     define("LIMIT_LAST_VISIT", 5);
     define("REDIRECT_TIMEOUT", 3000);
 

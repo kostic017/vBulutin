@@ -3,7 +3,7 @@ body {
         display : block;
     }
 
-    &.sidebar {
+    &.has-sidebar {
         .content-container {
             display         : flex;
             justify-content : space-between;
