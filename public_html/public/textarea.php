@@ -38,7 +38,6 @@
 
         if (textarea.length > 0 && emojionearea.length > 0) {
 
-
             let inscrybmde = new InscrybMDE({
                 element: textarea[0],
                 spellChecker: false,

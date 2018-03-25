@@ -11,8 +11,8 @@ $(function () {
     });
 
     $("button[name=edit]").on("click", function() {
-        const value = $(this).val().split("_");
-        updateRowAction(value[0], value[1]);
+        const tableName = $(".table-title").data("name");
+        updateRowAction(tableName, $(this).val());
     });
 });
 
@@ -118,7 +118,7 @@ function updateRowAction(tableName, id) {
     // Cancel dugme je tipa submit, pa ce klik na njega osveziti stranicu i
     // sve ce se vratiti na staro sto znaci da nista ne mora da se hendluje posebno.
     insertButtonCell.html(`
-        <button type="submit" class="icon icon-okay" name="update" value="${tableName}_${id}"></button>
+        <button type="submit" class="icon icon-okay" name="update" value="${id}"></button>
         <button type="submit" class="icon icon-cancel"></button>
     `);
 }
