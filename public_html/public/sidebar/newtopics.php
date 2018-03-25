@@ -25,11 +25,11 @@
 
                 <?php endforeach; ?>
 
-                <a href="newtopics.php">Sve teme od tvoje poslednje posete.</a>
+                <a href="newtopics.php">Sve nove teme od tvoje poslednje posete.</a>
 
             <?php else: ?>
 
-                <p>Nema tema od tvoje poslednje posete.</p>
+                <p>Nema novih tema od tvoje poslednje posete.</p>
 
             <?php endif; ?>
 

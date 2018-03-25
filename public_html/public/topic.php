@@ -13,7 +13,9 @@
 <main>
     <?php require_once "topbox.php"; ?>
 
-    <div data-shclass="captionbar" class="captionbar">1 reply to this topic</div>
+    <div data-shclass="captionbar" class="captionbar">
+        <?=qCountPostsInTopic($thisPageId) - 1?> odgovor(a) na ovu temu
+    </div>
 
     <section data-shclass="post-container" class="post-container">
 
@@ -21,6 +23,8 @@
             <?php $user = qGetUserById($post["userId"]); ?>
 
             <div data-shclass="post-box" class="post-box">
+
+                <a href="" id="post-<?=$post["id"]?>"></a>
 
                 <div data-shclass="post-body" class="post-body">
 
@@ -37,7 +41,9 @@
                     <div class="post-main">
 
                         <div class="content">
-                            <small>Napisano <?=convertMysqlDatetimeToPhpDatetime($post["postedDT"])?></small>
+                            <a href="topic.php?id=<?=$thisPageId?>#post-<?=$post["id"]?>">
+                                <small>Napisano <?=convertMysqlDatetimeToPhpDatetime($post["postedDT"])?></small>
+                            </a>
                             <?=$emojione->shortnameToImage($parsedown->text($post["content"]));?>
                         </div>
 

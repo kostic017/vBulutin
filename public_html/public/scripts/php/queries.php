@@ -44,6 +44,20 @@
 
     /// TOPICS ///
 
+    function qGetTopicTitleById($topicId) {
+        dbEscape($topicId);
+
+        $sql = "SELECT title ";
+        $sql .= "FROM topics ";
+        $sql .= "WHERE id='{$topicId}' ";
+
+        if ($topic = executeAndFetchAssoc($sql)) {
+            return $topic["title"];
+        }
+
+        return null;
+    }
+
     function qGetTopicsFromLastVisit($lastVisitDT, $limit = 0) {
         dbEscape($lastVisitDT);
 
@@ -152,6 +166,19 @@
     }
 
     /// POSTS ///
+
+    function qGetPostsFromLastVisit($lastVisitDT, $limit = 0) {
+        dbEscape($lastVisitDT);
+
+        $sql = "SELECT * ";
+        $sql .= "FROM posts ";
+        $sql .= "WHERE postedDT <= '$lastVisitDT' ";
+        if ($limit > 0) {
+            $sql .= "LIMIT {$limit} ";
+        }
+
+        return executeAndFetchAssoc($sql, FETCH::ALL);
+    }
 
     function qCreateNewPost($topicId, $userId, $content) {
         dbEscape($topicId, $userId, $content);

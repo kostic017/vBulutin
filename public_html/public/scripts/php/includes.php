@@ -7,7 +7,7 @@
     /* ==========================================================================
        SIDEBAR
        ========================================================================== */
-    $sidebarItems = ["welcome", "newtopics", "newmessages", "latestfiles", "populartags",
+    $sidebarItems = ["welcome", "newtopics", "newposts", "latestfiles", "populartags",
         "recentstatuses", "upcomingevents", "tellafriend"];
     $isSidebarSet = isset($sidebarItems) && !empty($sidebarItems);
 
