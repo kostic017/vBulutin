@@ -1,5 +1,5 @@
 <?php
-    setlocale(LC_TIME, "Serbian");
+    setlocale(LC_ALL, "Serbian");
     date_default_timezone_set("Europe/Belgrade");
 
     require_once __DIR__ . "/constants.php";

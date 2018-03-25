@@ -33,17 +33,17 @@
 
     function convertMysqlDatetimeToPhpDate($datetime) {
         $datetime = strtotime($datetime);
-        return date("j. F Y.", $datetime);
+        return strftime("%e. %B %Y.", $datetime);
     }
 
     function convertMysqlDatetimeToPhpTime($datetime) {
         $datetime = strtotime($datetime);
-        return date("G:i:s", $datetime);
+        return strftime("%T", $datetime);
     }
 
     function convertMysqlDatetimeToPhpDatetime($datetime) {
         $datetime = strtotime($datetime);
-        return date("j. F Y. G:i:s", $datetime);
+        return strftime("%e. %B %Y. %T", $datetime);
     }
 
     function executeQuery($sql) {
