@@ -8,9 +8,12 @@
     if (isset($_POST["login"])) {
         $errors = [];
 
-        if ($userId = qLoginUser($_POST["username"], $_POST["password"])) {
-            if ($confirmed = qIsEmailConfirmed($userId)) {
-                $_SESSION["user_id"] = $userId;
+        if ($user = qLoginUser($_POST["username"], $_POST["password"])) {
+            if ($confirmed = qIsEmailConfirmed($user["id"])) {
+                $_SESSION["user_id"] = $user["id"];
+                if (isset($user["lastVisitDT"])) {
+                    $_SESSION["lastVisitDT"] = $user["lastVisitDT"];
+                }
                 $_SESSION["redirect"] = [
                     "url" => $_SESSION["redirect_back"] ?? "index.php",
                     "message" => "Uspešno ste se prijavili."

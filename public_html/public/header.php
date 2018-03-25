@@ -8,6 +8,7 @@
 
     if (isset($_POST["logout"])) {
         unset($_SESSION["user_id"]);
+        unset($_SESSION["lastVisitDT"]);
     }
 ?>
 <?php require_once "../shared/templates/header.php"; ?>

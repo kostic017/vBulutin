@@ -1,10 +1,24 @@
-<section class="sidebar sidebar-welcome">
+<?php if (isset($_SESSION["user_id"])): ?>
+    <?php $username = qGetUsernameById($_SESSION["user_id"]); ?>
 
-    <h2 data-shclass="sidebar-title" class="title">Dobro došao!</h2>
+    <?php if ($username): ?>
 
-    <div data-shclass="sidebar-content" class="content">
-        Poslednji put si posetio forum<br> <b>datum poslednje posete</b>.<br><br>
-        Sada je <?=strftime("%d %B %Y - %H:%M")?>.
-    </div>
+        <section class="sidebar sidebar-welcome">
 
-</section>
+            <h2 data-shclass="sidebar-title" class="title">Dobro došao <?=$username?>!</h2>
+
+            <div data-shclass="sidebar-content" class="content">
+                <?php if (isset($_SESSION["lastVisitDT"])): ?>
+                    <p>
+                        Poslednji put si posetio forum<br>
+                        <b><?=convertMysqlDatetimeToPhpDatetime($_SESSION["lastVisitDT"])?></b>.
+                    </p>
+                <?php endif; ?>
+                <p>Sada je <?=strftime("%d %B %Y - %H:%M")?>.</p>
+            </div>
+
+        </section>
+
+    <?php endif; ?>
+
+<?php endif; ?>

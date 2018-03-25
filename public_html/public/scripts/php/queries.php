@@ -210,7 +210,25 @@
         $sql .= "   AND password='{$password}' ";
 
         if ($user = executeAndFetchAssoc($sql)) {
-            return $user["id"];
+            $ret = [];
+
+            $sql = "SELECT lastVisitDT ";
+            $sql .= "FROM users ";
+            $sql .= "WHERE id='{$user["id"]}' ";
+
+            if ($res = executeAndFetchAssoc($sql)) {
+                $ret["lastVisitDT"] = $res["lastVisitDT"];
+
+                $lastVisitDT = getDatetimeForMysql();
+
+                $sql = "UPDATE users ";
+                $sql .= "SET lastVisitDT='{$lastVisitDT}' ";
+                $sql .= "WHERE id='{$user["id"]}' ";
+                executeQuery($sql);
+            }
+
+            $ret["id"] = $user["id"];
+            return $ret;
         }
 
         return null;
@@ -287,6 +305,20 @@
         $sql = "SELECT username ";
         $sql .= "FROM users ";
         $sql .= "WHERE email='{$email}' ";
+
+        if ($user = executeAndFetchAssoc($sql)) {
+            return $user["username"];
+        }
+
+        return null;
+    }
+
+    function qGetUsernameById($userId) {
+        dbEscape($userId);
+
+        $sql = "SELECT username ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE id='{$userId}' ";
 
         if ($user = executeAndFetchAssoc($sql)) {
             return $user["username"];
