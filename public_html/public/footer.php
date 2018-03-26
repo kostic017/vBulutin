@@ -80,7 +80,7 @@
             <span>Povratak na vrh</span>
         </div>
 
-        <?php require_once "sheditor.php"; ?>
+        <?php // require_once "sheditor.php"; ?>
 
     </body>
 

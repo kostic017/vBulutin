@@ -6,10 +6,10 @@ $(function () {
     back2top.click(() => { animateScroll(0); });
     $(window).scroll();
 
-    $.getJSON("/public/schemes/gray/config.json", json => {
-        jsonProperties = json;
-        fileDoneLoading();
-    });
+    // $.getJSON("/public/schemes/gray/config.json", json => {
+    //     jsonProperties = json;
+    //     fileDoneLoading();
+    // });
 });
 
 function fileDoneLoading() {
@@ -19,7 +19,6 @@ function fileDoneLoading() {
     // ************************************************************************** //
     //                                   Dialog                                   //
     // ************************************************************************** //
-
 
     // Menjamo nezeljena ponasanja widget-a.
     $.widget("ui.dialog", $.ui.dialog, {

@@ -21,7 +21,7 @@
                 ?>
 
                 <li class="icon-post-new">
-                    <a href="topic.php?id=<?=$post["topicId"]?>#post-<?=$post["id"]?>"><?=($topicTitle)?></a>
+                    <a href="topic.php?id=<?=$post["topicId"]?>&post=<?=$post["id"]?>"><?=($topicTitle)?></a>
                     - <a href=""><?=$username?></a><br>
                     <?=convertMysqlDatetimeToPhpDatetime($post["postedDT"])?>
                 </li>

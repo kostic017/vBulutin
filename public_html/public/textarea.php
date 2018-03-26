@@ -12,10 +12,10 @@
                 $lastPost = qGetTopicLastPoster($thisPageId);
                 if ($lastPost["user"]["id"] === $_SESSION["user_id"]) {
                     qAppendToPost($lastPost["postId"], $_SESSION["user_id"], $_POST["textarea-content"]);
-                    redirectTo("topic.php?id={$thisPageId}#post-{$lastPost["postId"]}");
+                    redirectTo("topic.php?id={$thisPageId}&post={$lastPost["postId"]}");
                 } else {
                     $post = qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["textarea-content"]);
-                    redirectTo("topic.php?id={$thisPageId}#post-{$post["id"]}");
+                    redirectTo("topic.php?id={$thisPageId}&post={$post["id"]}");
                 }
             break;
 
@@ -84,6 +84,31 @@
                     }
                 }
             });
+
+            $(".quote").on("click", function() {
+
+                $.post("scripts/php/ajax.php", {
+                        job: "post_info",
+                        id: $(this).parents(".post-box").attr("id")
+                    },
+                    function (postInfo) {
+                        if (postInfo = JSON.parse(postInfo)) {
+                            let content = "";
+                            contentArr = postInfo.content.split(/\r?\n/);
+                            contentArr.forEach(function(e) {
+                                content += ">" + e + "\n";
+                            });
+                            console.log(content);
+
+                            inscrybmde.value(inscrybmde.value()
+                                + `\n**${postInfo.username} - ${postInfo.postedDT}**`
+                                + `\n${content}`);
+                        }
+                    }
+                );
+
+            });
+
         }
     });
 
