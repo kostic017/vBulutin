@@ -2,6 +2,39 @@
 
     /// FORUMS ///
 
+    function qIsForumRead($userId, $forumId) {
+        dbEscape($userId, $forumId);
+
+        // teme direktno u ovom forumu
+        $sql = "SELECT id ";
+        $sql .= "FROM topics ";
+        $sql .= "WHERE forumId='{$forumId}' ";
+        $sql .= "    AND DATEDIFF(CURDATE(), latestPostDT) <= " . GARBAGE_COLLECTION_DAYS;
+
+        if ($topics = executeAndFetchAssoc($sql, FETCH::ALL)) {
+            foreach ($topics as $topic) {
+                if (!qDidUserReadTopic($userId, $topic["id"])) {
+                    return false;
+                }
+            }
+        }
+
+        // teme u child forumima
+        $sql = "SELECT id ";
+        $sql .= "FROM forums ";
+        $sql .= "WHERE parentId='{$forumId}' ";
+
+        if ($children = executeAndFetchAssoc($sql, FETCH::ALL)) {
+            foreach ($children as $child) {
+                if (!qIsForumRead($userId, $child["id"])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     function qCountTopicsInForum($forumId) {
         dbEscape($forumId);
 
@@ -43,6 +76,16 @@
     }
 
     /// TOPICS ///
+
+    function qDidUserReadTopic($userId, $topicId) {
+        $flag = qIsTopicReadMarked($userId, $topicId);
+        if ($topic = qGetRowById($topicId, "topics")) {
+            // Na svakih GARBAGE_COLLECTION_DAYS se cisti tabela readTopics, pa bi ispalo kao da
+            // korisnik nije procitao temu. Zato ja kazem da je svaka tema starija od 30 dana procitana.
+            $flag = $flag || dateDifference(getDatetimeForMysql(), $topic["latestPostDT"]) > GARBAGE_COLLECTION_DAYS;
+        }
+        return $flag;
+    }
 
     function qIsTopicReadMarked($userId, $topicId) {
         dbEscape($userId, $topicId);

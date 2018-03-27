@@ -1,15 +1,5 @@
 <?php
 
-    function didUserReadTopic($userId, $topicId) {
-        $flag = qIsTopicReadMarked($userId, $topicId);
-        if ($topic = qGetRowById($topicId, "topics")) {
-            // Na svakih GARBAGE_COLLECTION_DAYS se cisti tabela readTopics, pa bi ispalo kao da
-            // korisnik nije procitao temu. Zato ja kazem da je svaka tema starija od 30 dana procitana.
-            $flag = $flag || dateDifference(getDatetime(), $topic["latestPostDT"]) > GARBAGE_COLLECTION_DAYS;
-        }
-        return $flag;
-    }
-
     function sendForgottedData($what, $email) {
         if ($what === "username") {
             if (isNotBlank($username = qGetUsernameByEmail($email))) {

@@ -21,7 +21,14 @@
 
                 <tr data-shclass="table-row" class="table-row">
                     <td>
-                        <span class="icon icon-forum-new"></span>
+                        <?php
+                            if (isset($_SESSION["user_id"])) {
+                                $forumIcon = qIsForumRead($_SESSION["user_id"], $childForum["id"]) ? "old" : "new";
+                            } else {
+                                $forumIcon = "none";
+                            }
+                        ?>
+                        <span class="icon icon-forum-<?=$forumIcon?>"></span>
                         <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>" class="name">
                             <?=$childForum["title"]?>
                         </a>
@@ -68,7 +75,7 @@
                     <td>
                         <?php
                             if (isset($_SESSION["user_id"])) {
-                                $topicIcon = didUserReadTopic($_SESSION["user_id"], $topic["id"]) ? "old" : "new";
+                                $topicIcon = qDidUserReadTopic($_SESSION["user_id"], $topic["id"]) ? "old" : "new";
                             } else {
                                 $topicIcon = "none";
                             }

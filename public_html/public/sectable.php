@@ -18,15 +18,28 @@
 
             <tr data-shclass="table-row" class="table-row">
                 <td>
-                    <span class="icon icon-forum-new"></span>
-                    <a data-shclass="row-name" href="forum.php?id=<?=$rootForum["id"]?>"
-                        class="name"><?=$rootForum["title"]?></a>
+                    <?php
+                        if (isset($_SESSION["user_id"])) {
+                            $forumIcon = qIsForumRead($_SESSION["user_id"], $rootForum["id"]) ? "old" : "new";
+                        } else {
+                            $forumIcon = "none";
+                        }
+                    ?>
+                    <span class="icon icon-forum-<?=$forumIcon?>"></span>
+                    <a data-shclass="row-name" href="forum.php?id=<?=$rootForum["id"]?>" class="name"><?=$rootForum["title"]?></a>
                     <?php if (count($childForums) > 0): ?>
                         <div class="subforums">
                             Potforumi:
                             <ul data-shclass="subforums" class="subforum-list post-list">
                                 <?php foreach ($childForums as $childForum): ?>
-                                    <li class="icon-post-old">
+                                    <?php
+                                        if (isset($_SESSION["user_id"])) {
+                                            $forumIcon = qIsForumRead($_SESSION["user_id"], $childForum["id"]) ? "old" : "new";
+                                        } else {
+                                            $forumIcon = "none";
+                                        }
+                                    ?>
+                                    <li class="icon-post-<?=$forumIcon?>">
                                         <a href="forum.php?id=<?=$childForum["id"]?>"><?=$childForum["title"]?></a>
                                     </li>
                                 <?php endforeach; ?>
