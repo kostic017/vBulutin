@@ -44,6 +44,17 @@
 
     /// TOPICS ///
 
+    function qIsTopicReadMarked($userId, $topicId) {
+        dbEscape($userId, $topicId);
+
+        $sql = "SELECT id ";
+        $sql .= "FROM readTopics ";
+        $sql .= "WHERE userId='{$userId}' ";
+        $sql .= "    AND topicId='{$topicId}' ";
+
+        return isThereAResult($sql);
+    }
+
     function qGetTopicTitleById($topicId) {
         dbEscape($topicId);
 
@@ -56,6 +67,19 @@
         }
 
         return null;
+    }
+
+    function qMarkTopicAsRead($userId, $topicId) {
+        dbEscape($userId, $topicId);
+        $timeDT = getDatetimeForMysql();
+
+        if (!qIsTopicReadMarked($userId, $topicId)) {
+            $sql = "INSERT INTO readTopics (userId, topicId, timeDT) VALUES (";
+            $sql .= "'{$userId}', '{$topicId}', '{$timeDT}'";
+            $sql .= ")";
+
+            executeQuery($sql);
+        }
     }
 
     function qGetTopicsFromLastVisit($lastVisitDT, $limit = 0) {

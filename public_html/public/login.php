@@ -17,9 +17,10 @@
 
                 $redirectBack = "index.php";
                 if (isset($_SESSION["redirect_back"])) {
-                        if (!hasSubstring($_SESSION["redirect_back"], "register")) {
-                            $redirectBack = $_SESSION["redirect_back"];
-                        }
+                    $url = $_SESSION["redirect_back"];
+                    if (!hasSubstring($url, "redirect")) {
+                        $redirectBack = $url;
+                    }
                 }
 
                 $_SESSION["redirect"] = [

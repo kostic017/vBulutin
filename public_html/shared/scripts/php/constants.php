@@ -13,6 +13,7 @@
     define("POST_MIN_LENGTH", 10);
     define("LIMIT_LAST_VISIT", 5);
     define("REDIRECT_TIMEOUT", 3000);
+    define("GARBAGE_COLLECTION_DAYS", 30);
 
     define("DEBUG", true); // false for less verbose error messages
     define("SMTP_DEBUG", 0);

@@ -58,7 +58,7 @@
     background-image : url(<?=$scheme?>/images/icons/newposts_yes.png);
 }
 
-.icon-forum--old {
+.icon-forum-old {
     background-image : url(<?=$scheme?>/images/icons/newposts_no.png);
 }
 
