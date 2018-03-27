@@ -14,6 +14,8 @@
     define("LIMIT_LAST_VISIT", 5);
     define("REDIRECT_TIMEOUT", 3000);
     define("GARBAGE_COLLECTION_DAYS", 30);
+    define("DOMAIN", "http://forum41.com/");
+    define("FORUM_NAME", "Forum41");
 
     define("DEBUG", true); // false for less verbose error messages
     define("SMTP_DEBUG", 0);

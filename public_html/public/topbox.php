@@ -41,7 +41,7 @@
 
     <nav class="path">
         <ul>
-            <li><a href="index.php">FORUM_NAME</a></li>
+            <li><a href="index.php"><?=FORUM_NAME?></a></li>
             <li><a href="<?=$pathSectionLink?>"><?=$pathSectionTitle?></a></li>
             <?php if (isset($pathParentTitle)): ?>
                 <li><a href="<?=$pathParentLink?>"><?=$pathParentTitle?></a></li>

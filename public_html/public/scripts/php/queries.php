@@ -372,12 +372,14 @@
         dbEscape($username, $email);
         $password = hashPassword($password);
         $joinedDT = getDateForMysql();
+        $token = bin2hex(openssl_random_pseudo_bytes(16));
 
-        $sql = "INSERT INTO users (id, username, password, email, joinedDT, confirmed) VALUES (";
-        $sql .= "   NULL, '{$username}', '{$password}', '{$email}', '{$joinedDT}', '0'";
+        $sql = "INSERT INTO users (id, username, password, email, joinedDT, confirmed, token) VALUES (";
+        $sql .= "   NULL, '{$username}', '{$password}', '{$email}', '{$joinedDT}', '0', '{$token}'";
         $sql .= ")";
 
         executeQuery($sql);
+        return $token;
     }
 
     function qCheckPasswordForEmail($email, $password) {
@@ -392,20 +394,25 @@
         return isThereAResult($sql);
     }
 
-    function qConfirmEmail($email) {
+    function qConfirmEmail($email, $token) {
         dbEscape($email);
 
         $sql = "SELECT id ";
         $sql .= "FROM users ";
         $sql .= "WHERE email='{$email}' ";
-        $sql .= "   AND confirmed='0' ";
+        $sql .= "    AND confirmed='0' ";
+        $sql .= "    AND token='{$token}' ";
 
         if ($user = executeAndFetchAssoc($sql)) {
             $sql = "UPDATE users ";
-            $sql .= "SET confirmed='1' ";
+            $sql .= "SET confirmed='1', ";
+            $sql .= "    token='' ";
             $sql .= "WHERE id='{$user["id"]}' ";
             executeQuery($sql);
+            return true;
         }
+
+        return false;
     }
 
     function qGetUserIdByEmail($email) {

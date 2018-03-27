@@ -17,8 +17,8 @@
         }
     }
 
-    function sendEmailConfirmation($email) {
+    function sendEmailConfirmation($email, $token) {
         $body = "Kliknite na link da bi potvrdili svoju email adresu: ";
-        $body .= "{$_SERVER["SERVER_NAME"]}/public/confirm.php?email={$email}";
+        $body .= DOMAIN . "/public/confirm.php?email={$email}&token={$token}";
         sendEmail($email, "Forum41: Potvrđivanje email adrese", $body);
     }

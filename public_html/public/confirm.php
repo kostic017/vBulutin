@@ -9,20 +9,23 @@
 
     $errors = [];
     $username = "";
+    $token = $_GET["token"] ?? "";
     $email = $_GET["email"] ?? "";
 
-    if (isNotBlank($email) && qIsEmailTaken($email)) {
+    if (isNotBlank($email) && isNotBlank($token) && qIsEmailTaken($email)) {
         $username = qGetUsernameByEmail($email);
         if (isset($_POST["confirm"])) {
             if (qCheckPasswordForEmail($email, $_POST["password"])) {
-                qConfirmEmail($email);
+                if (qConfirmEmail($email, $token)) {
+                    $_SESSION["redirect"] = [
+                        "url" => "login.php",
+                        "message" => "Uspešno ste potvrdili svoju email adresu."
+                    ];
 
-                $_SESSION["redirect"] = [
-                    "url" => "login.php",
-                    "message" => "Uspešno ste potvrdili svoju email adresu."
-                ];
-
-                redirectTo("redirect.php");
+                    redirectTo("redirect.php");
+                } else {
+                    $errors[] = "Token nije ispravan.";
+                }
             } else {
                 $errors[] = "Pogrešna lozinka.";
             }
