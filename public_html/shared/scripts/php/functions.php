@@ -14,7 +14,6 @@
         $interval = date_diff($datetime1, $datetime2);
 
         return $interval->format($differenceFormat);
-
     }
 
     function getPHPDate() {
