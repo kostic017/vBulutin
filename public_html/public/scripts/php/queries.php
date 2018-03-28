@@ -1,5 +1,14 @@
 <?php
 
+    function qCountTableRows($tableName) {
+        dbEscape($tableName);
+
+        $sql = "SELECT COUNT(*) as count ";
+        $sql .= "FROM {$tableName} ";
+
+        return executeAndFetchAssoc($sql)["count"];
+    }
+
     /// FORUMS ///
 
     function qIsForumRead($userId, $forumId) {
@@ -324,12 +333,10 @@
 
     /// USERS ///
 
-    function qGetUserById($userId) {
-        dbEscape($userId);
-
-        $sql = "SELECT * ";
+    function qGetNewestUser() {
+        $sql = "SELECT id, username ";
         $sql .= "FROM users ";
-        $sql .= "WHERE id='{$userId}' ";
+        $sql .= "ORDER BY joinedDT DESC ";
 
         return executeAndFetchAssoc($sql);
     }

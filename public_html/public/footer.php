@@ -15,15 +15,21 @@
                         <section data-shclass="forum-stats" class="forum-stats">
                             <ul>
                                 <li>
-                                    <strong data-shclass="stats-data">4</strong>
+                                    <strong data-shclass="stats-data"><?=qCountTableRows("posts")?></strong>
                                     poruka/e
                                 </li>
                                 <li>
-                                    <strong data-shclass="stats-data">4</strong>
+                                    <strong data-shclass="stats-data"><?=qCountTableRows("users")?></strong>
                                     član(ova)
                                 </li>
                                 <li>
-                                    <strong data-shclass="stats-data"><a href="">gamefeed</a></strong>
+                                    <strong data-shclass="stats-data">
+                                        <?php if ($newestUser = qGetNewestUser()): ?>
+                                            <a href=""><?=$newestUser["username"]?></a>
+                                        <?php else: ?>
+                                            -
+                                        <?php endif; ?>
+                                    </strong>
                                     najnoviji član
                                 </li>
                                 <li>
@@ -39,7 +45,7 @@
 
                         <div class="info">
                             <div>
-                                <strong>2 korisnika su na mreži</strong><br>
+                                <strong>2 korisnika su na mreži (ne ažurira se istog trena)</strong><br>
                                 <small><?=count($onlineUsers)?> član, 1 gost, 0 anonimnih korisnika <a href="">(Pogledaj celu listu)</a></small>
                             </div>
                             <ul>

@@ -26,7 +26,7 @@
     <section data-shclass="post-container" class="post-container">
 
         <?php foreach ($posts as $post): ?>
-            <?php $user = qGetUserById($post["userId"]); ?>
+            <?php $user = qGetRowById($post["userId"], "users"); ?>
 
             <div data-shclass="post-box" class="post-box" id="<?=$post["id"]?>">
 
