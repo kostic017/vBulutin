@@ -23,11 +23,7 @@
                     }
                 }
 
-                $_SESSION["redirect"] = [
-                    "url" => $redirectBack,
-                    "message" => "Uspešno ste se prijavili."
-                ];
-                redirectTo("redirect.php");
+                redirectTo($redirectBack);
             } else {
                 $errors[] = "Niste potvrdili svoju email adresu.";
             }
