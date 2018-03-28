@@ -51,13 +51,13 @@
         <b>Email adresa:</b> <?=$email?>
     </p>
 
-    <form class="logreg" method="post" action="">
+    <form class="inputform" method="post" action="">
 
         <p><label>
-                Lozinka:<br>
-                <input class="equal-width" type="password" name="password" required>
-                <span class="required-star">*</span>
-            </label></p>
+            Lozinka:<br>
+            <input type="password" name="password" required>
+            <span class="required-star">*</span>
+        </label></p>
 
         <button type="submit" name="confirm">Potvrdi email adresu</button>
 

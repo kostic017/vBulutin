@@ -15,10 +15,10 @@
     }
 }
 
-.logreg {
+.inputform {
     margin-top : 10px;
 
-    .equal-width {
+    input:not([type=checkbox]):not([type=radio]) {
         width      : 150px;
         box-sizing : border-box;
     }

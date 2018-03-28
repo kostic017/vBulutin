@@ -15,15 +15,7 @@
                     $_SESSION["lastVisitDT"] = $user["lastVisitDT"];
                 }
 
-                $redirectBack = "index.php";
-                if (isset($_SESSION["redirect_back"])) {
-                    $url = $_SESSION["redirect_back"];
-                    if (!hasSubstring($url, "redirect")) {
-                        $redirectBack = $url;
-                    }
-                }
-
-                redirectTo($redirectBack);
+                redirectBack();
             } else {
                 $errors[] = "Niste potvrdili svoju email adresu.";
             }
@@ -57,17 +49,17 @@
         </div>
     <?php endif; ?>
 
-    <form class="logreg" method="post" action="">
+    <form class="inputform" method="post" action="">
 
         <p><label>
-                Korisničko ime:<br>
-                <input class="equal-width" type="text" name="username" required>
-                <span class="required-star">*</span>
-            </label></p>
+            Korisničko ime:<br>
+            <input type="text" name="username" required>
+            <span class="required-star">*</span>
+        </label></p>
 
         <p><label>
                 Lozinka:<br>
-                <input class="equal-width" type="password" name="password" required>
+                <input type="password" name="password" required>
                 <span class="required-star">*</span>
             </label></p>
 
@@ -77,7 +69,7 @@
 
     <p><a href="#" id="forgot-link">Zaboravio sam podatke!</a></p>
 
-    <form class="logreg" method="post" action="" style="display:none;" id="forgot">
+    <form class="inputform" method="post" action="" style="display:none;" id="forgot">
         <p>Šta ste zaboravili?</p>
 
         <p>
@@ -86,10 +78,10 @@
         </p>
 
         <p><label>
-                Vaša email adresa:<br>
-                <input class="equal-width" type="email" name="email" required>
-                <span class="required-star">*</span>
-            </label></p>
+            Vaša email adresa:<br>
+            <input type="email" name="email" required>
+            <span class="required-star">*</span>
+        </label></p>
 
         <button type="submit" name="forgot">Pošalji</button>
     </form>

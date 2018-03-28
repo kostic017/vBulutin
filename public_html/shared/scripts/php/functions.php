@@ -109,8 +109,17 @@
         return isset($value) && trim($value) !== "";
     }
 
-    function hasSubstring($haystack, $needle) {
-        return strpos($haystack, $needle) !== false;
+    function hasSubstring($haystack, $needles) {
+        if (is_array($needles)) {
+            foreach ($needles as $needle) {
+                if (strpos($haystack, $needle)) {
+                    return true;
+                }
+            }
+        } else {
+            return strpos($haystack, $needles) !== false;
+        }
+        return false;
     }
 
     function isEqualToAnyWord($haystack, $needle) {

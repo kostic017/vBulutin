@@ -94,58 +94,37 @@
         </p>
     </div>
 
-    <form class="logreg" method="post" action="">
+    <form class="inputform" method="post" action="">
 
         <p><label>
-                Korisničko ime:<br>
-                <input class="equal-width" type="text" name="username" required value="<?=$_POST["username"] ?? ""?>">
-                <span class="required-star">*</span>
-            </label></p>
-
-        <p><label>
-                E-mail:<br>
-                <input class="equal-width" type="email" name="email" required value="<?=$_POST["email"] ?? ""?>">
-                <span class="required-star">*</span>
-            </label></p>
-
-        <p><label>
-                Lozinka:<br>
-                <input class="equal-width" type="password" name="password1" required> <span
-                        class="required-star">*</span>
-            </label></p>
-
-        <p><label>
-                Ponovi lozinku:<br>
-                <input class="equal-width" type="password" name="password2" required> <span
-                        class="required-star">*</span>
-            </label></p>
-        <?php /*
-        <p><label>
-            Pol:<br>
-            <select class="equal-width" name="sex">
-                <option value="" <?=!isNotBlank($_POST["sex"] ?? "") ? "selected" : ""?>></option>
-                <option value="male" <?=($_POST["sex"] ?? "") == "male" ? "selected" : ""?>>Muški</option>
-                <option value="female" <?=($_POST["sex"] ?? "") == "female" ? "selected" : ""?>>Ženski</option>
-            </select>
+            Korisničko ime:<br>
+            <input type="text" name="username" required value="<?=$_POST["username"] ?? ""?>">
+            <span class="required-star">*</span>
         </label></p>
 
         <p><label>
-            Datum роđenja:<br>
-            <input class="equal-width" type="date" name="birthdate" value="<?=$_POST["birthdate"] ?? ""?>">
+            E-mail:<br>
+            <input type="email" name="email" required value="<?=$_POST["email"] ?? ""?>">
+            <span class="required-star">*</span>
         </label></p>
 
         <p><label>
-            Profilna slika:<br>
-            <input type="file" name="avatar" value="<?=$_POST["avatar"] ?? ""?>">
+            Lozinka:<br>
+            <input type="password" name="password1" required> <span class="required-star">*</span>
         </label></p>
-*/ ?>
+
+        <p><label>
+            Ponovi lozinku:<br>
+            <input type="password" name="password2" required> <span class="required-star">*</span>
+        </label></p>
+
         <div class="g-recaptcha" data-sitekey="6LeIdEgUAAAAAEsVfuW9Ts9hRtGxvJaiZniLhwcA"></div>
 
         <p><label>
-                <input type="checkbox" name="rules" required">
-                Pročitao sam i prihvatam pravila.
-                <span class="required-star">*</span>
-            </label></p>
+            <input type="checkbox" name="rules" required">
+            Pročitao sam i prihvatam pravila.
+            <span class="required-star">*</span>
+        </label></p>
 
         <button type="submit" name="submit">Registruj se</button>
 

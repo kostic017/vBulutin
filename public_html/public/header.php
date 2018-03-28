@@ -76,7 +76,7 @@
                     <ul data-shclass="nav-profile">
                         <?php if (isset($_SESSION["userId"])): ?>
                             <li><a href="" id="btn-messages"><span data-newmessages="0">Nema novih poruka</span></a></li>
-                            <li><a href="" id="btn-profile"><span>Moj profil</span></a></li>
+                            <li><a href="profile.php?id=<?=$_SESSION["userId"]?>" id="btn-profile"><span>Moj profil</span></a></li>
                             <li><a href="#" id="logout">Odjavi se</a></li>
                         <?php else: ?>
                             <li><a href="login.php">Prijavi se</a></li>

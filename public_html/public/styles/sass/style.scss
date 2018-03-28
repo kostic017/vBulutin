@@ -1,4 +1,5 @@
 @import "../../../shared/styles/sass/import";
+
 @import "buttons";
 @import "base";
 @import "header";
@@ -9,8 +10,9 @@
 @import "permissions";
 @import "topic";
 @import "editor";
-@import "logreg";
+@import "inputform";
 @import "textarea";
+@import "profile";
 
 aside,
 header,

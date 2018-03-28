@@ -1,5 +1,25 @@
 <?php
 
+    function redirectBack($message = null) {
+        if (isset($_SESSION["redirect_back"])) {
+            $redirectBack = $_SESSION["redirect_back"];
+            $disallow = ["redirect", "profile", "register"];
+            $url = hasSubstring($redirectBack, $disallow) ? "index.php" : $redirectBack;
+
+            if ($message) {
+                $_SESSION["redirect"] = [
+                    "url" => $url,
+                    "message" => $message
+                ];
+                redirectTo("redirect.php");
+            } else {
+                redirectTo($url);
+            }
+        } else {
+            $url = "index.php";
+        }
+    }
+
     function sendForgottedData($what, $email) {
         if ($what === "username") {
             if (isNotBlank($username = qGetUsernameByEmail($email))) {
