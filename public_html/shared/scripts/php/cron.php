@@ -1,12 +1,12 @@
 <?php
 
     require_once __DIR__ . "/main.php";
-
+    echo __DIR__ . "/main.php";
     $sql = "SELECT id ";
     $sql .= "FROM users ";
     $sql .= "WHERE TIMEDIFF(NOW(), lastActivityDT) > " . LOGOUT_TIMEOUT_MINS;
 
-    if ($user = qExecuteAndFetchAssoc($sql)) {
+    if ($user = executeAndFetchAssoc($sql)) {
         $sql = "UPDATE users ";
         $sql .= "SET loggedIn='0' ";
         $sql .= "WHERE id='{$user["id"]}' ";
