@@ -12,6 +12,16 @@
         }
     }
 
+    function displayAvatar($user, $class) {
+        $url = isNotBlank($user["avatar"]) ? $user["avatar"] : DEFAULT_AVATAR;
+        echo "<img src='{$url}' alt='{$user["username"]}' class='{$class}'>";
+    }
+
+    function displayOnlineStatus($userId) {
+        $status = qIsUserOnline($userId);
+        echo "<img src='/public/images/icon-{$status}.png' alt='{$status}' class='online-status'>";
+    }
+
     function redirectBack($message = null) {
         if (isset($_SESSION["redirect_back"])) {
             $redirectBack = $_SESSION["redirect_back"];

@@ -175,6 +175,33 @@
 
     <?php else: ?>
 
+        <h2>
+            <?php
+                echo $profile["username"];
+                displayOnlineStatus($profileId);
+            ?>
+        </h2>
+        <div class="profile-display">
+            <div>
+                <?php displayAvatar($profile, "avatar-big"); ?>
+            </div>
+            <div class="info">
+                <p>
+                    <b>Pridružio</b><br>
+                    <?=convertMysqlDatetimeToPhpDatetime($profile["joinedDT"])?>
+                </p>
+                <p>
+                    <b>Ukupno poruka</b><br>
+                    <?=qCountUserPosts($profileId)?>
+                </p>
+                <p>
+                    <a href="">Sve poruke korisnika <?=$profile["username"]?></a><br>
+                    <a href="">Sve teme koje je započeo korisnik <?=$profile["username"]?></a><br>
+                    <a href="">Sve teme u kojima je učestvovao korisnik <?=$profile["username"]?></a>
+                </p>
+            </div>
+        </div>
+
     <?php endif; ?>
 </main>
 

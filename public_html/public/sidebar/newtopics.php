@@ -10,14 +10,14 @@
             <?php if ($topics): ?>
 
                 <?php foreach ($topics as $topic): ?>
-                    <?php $username = qGetTopicStarterUsername($topic["id"]); ?>
+                    <?php $topicStarter = qGetTopicStarter($topic["id"]); ?>
 
                     <div class="post-info">
-                        <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
+                        <a href="profile.php?id=<?=$topicStarter["id"]?>">
+                            <?php displayAvatar($topicStarter, "avatar-small"); ?>
+                        </a>
                         <ul>
-                            <?php if ($username): ?>
-                                <li><a href=""><?=$username?></a></li>
-                            <?php endif; ?>
+                            <li><a href=""><?=$topicStarter["username"]?></a></li>
                             <li><a href="topic.php?id=<?=$topic["id"]?>"><?php echoShorten($topic["title"]); ?></a></li>
                             <li><?=convertMysqlDatetimeToPhpDatetime($topic["startedDT"])?></li>
                         </ul>

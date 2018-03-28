@@ -26,15 +26,6 @@ footer,
     }
 }
 
-.avatar {
-    display: block;
-
-    &-medium {
-        width: 100px;
-        height: 115px;
-    }
-}
-
 ul.buttons {
     @extend .no-bullets;
 }
@@ -75,16 +66,13 @@ tr.focused td {
         margin-bottom : 0;
     }
 
-    img {
-        width         : 34px;
-        height        : 34px;
-        display       : block;
-        padding-right : 10px;
-    }
-
     .title {
         display         : flex;
         justify-content : space-between;
+    }
+
+    img {
+        padding-right: 8px;
     }
 }
 

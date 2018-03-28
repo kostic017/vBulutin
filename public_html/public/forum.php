@@ -40,9 +40,11 @@
                     <td>
                         <?php if ($lastPost): ?>
                             <div class="post-info">
-                                <a href=""><img src="/public/images/avatars/default.png" alt=""></a>
+                                <a href="profile.php?id=<?=$lastPost["user"]["id"]?>">
+                                    <?php displayAvatar($lastPost["user"], "avatar-small"); ?>
+                                </a>
                                 <ul>
-                                    <li><a href=""><?=$lastPost["username"]?></a></li>
+                                    <li><a href=""><?=$lastPost["user"]["username"]?></a></li>
                                     <li><?=$lastPost["time"]?></li>
                                     <li><?=$lastPost["date"]?></li>
                                 </ul>

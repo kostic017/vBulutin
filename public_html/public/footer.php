@@ -69,7 +69,7 @@
 
                     <section class="footer-links">
                         <div>
-                            <a href=""><img src="/public/images/icons/rss.png" alt="RSS" style="width:14px;height:14px;"></a>
+                            <a href=""><img src="/public/images/icon-rss.png" alt="RSS" style="width:14px;height:14px;"></a>
                             <ul>
                                 <li><a href="javascript:void(0)" id="btn-open-editor" data-active="0">Promeni izgled</a></li>
                                 <li><a href="">Označi sve kao pročitano</a></li>

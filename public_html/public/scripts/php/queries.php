@@ -6,7 +6,11 @@
         $sql = "SELECT COUNT(*) as count ";
         $sql .= "FROM {$tableName} ";
 
-        return executeAndFetchAssoc($sql)["count"];
+        if ($res = executeAndFetchAssoc($sql)) {
+            return $res["count"];
+        }
+
+        return null;
     }
 
     /// FORUMS ///
@@ -51,7 +55,11 @@
         $sql .= "FROM topics ";
         $sql .= "WHERE forumId='{$forumId}' ";
 
-        return executeAndFetchAssoc($sql)["count"];
+        if ($res = executeAndFetchAssoc($sql)) {
+            return $res["count"];
+        }
+
+        return null;
     }
 
     function qCountPostsInForum($forumId) {
@@ -180,7 +188,7 @@
         return executeAndFetchAssoc($sql, FETCH::ALL);
     }
 
-    function qGetTopicStarterUsername($topicId) {
+    function qGetTopicStarter($topicId) {
         dbEscape($topicId);
 
         $sql = "SELECT firstPostId ";
@@ -193,13 +201,11 @@
             $sql .= "WHERE id='{$topics["firstPostId"]}' ";
 
             if ($post = executeAndFetchAssoc($sql)) {
-                $sql = "SELECT username ";
+                $sql = "SELECT id, username, avatar ";
                 $sql .= "FROM users ";
                 $sql .= "WHERE id='{$post["userId"]}' ";
 
-                if ($user = executeAndFetchAssoc($sql)) {
-                    return $user["username"];
-                }
+                return executeAndFetchAssoc($sql);
             }
         }
 
@@ -321,7 +327,7 @@
         if ($lastlyUpdatedTopic = executeAndFetchAssoc($sql)) {
             if ($lastPoster = qGetTopicLastPoster($lastlyUpdatedTopic["id"])) {
                 return [
-                    "username" => $lastPoster["user"]["username"],
+                    "user" => $lastPoster["user"],
                     "date" => convertMysqlDatetimeToPhpDate($lastlyUpdatedTopic["latestPostDT"]),
                     "time" => convertMysqlDatetimeToPhpTime($lastlyUpdatedTopic["latestPostDT"])
                 ];
@@ -369,7 +375,7 @@
     function qRegisterUser($username, $email, $password) {
         dbEscape($username, $email);
         $password = hashPassword($password);
-        $joinedDT = getDateForMysql();
+        $joinedDT = getDatetimeForMysql();
         $token = generateToken();
 
         $sql = "INSERT INTO users (id, username, password, email, joinedDT, confirmed, token) VALUES (";
@@ -491,6 +497,20 @@
         return null;
     }
 
+    function qIsUserOnline($userId) {
+        dbEscape($userId);
+
+        $sql = "SELECT loggedIn ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE id='{$userId}' ";
+
+        if ($res = executeAndFetchAssoc($sql)) {
+            return $res["loggedIn"] === "1" ? "online" : "offline";
+        }
+
+        return null;
+    }
+
     function qLogoutUser($userId) {
         dbEscape($userId);
 
@@ -607,4 +627,18 @@
         $sql .= "WHERE id='{$userId}' ";
 
         executeQuery($sql);
+    }
+
+    function qCountUserPosts($userId) {
+        dbEscape($userId);
+
+        $sql = "SELECT COUNT(*) as count ";
+        $sql .= "FROM posts ";
+        $sql .= "WHERE userId='{$userId}' ";
+
+        if ($res = executeAndFetchAssoc($sql)) {
+            return $res["count"];
+        }
+
+        return null;
     }
