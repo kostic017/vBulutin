@@ -8,8 +8,6 @@
 
     if (isset($_POST["logout"])) {
         qLogoutUser($_SESSION["userId"]);
-
-        unset($_SESSION["userId"]);
         unset($_SESSION["lastVisitDT"]);
     }
 
@@ -75,12 +73,12 @@
 
                     <ul data-shclass="nav-profile">
                         <?php if (isset($_SESSION["userId"])): ?>
-                            <li><a href="" id="btn-messages"><span data-newmessages="0">Nema novih poruka</span></a></li>
-                            <li><a href="profile.php?id=<?=$_SESSION["userId"]?>" id="btn-profile"><span>Moj profil</span></a></li>
-                            <li><a href="#" id="logout">Odjavi se</a></li>
+                            <li data-shclass="<?=navShClass("messages")?>"><a href="" id="btn-messages"><span data-newmessages="0">Nema novih poruka</span></a></li>
+                            <li data-shclass="<?=navShClass("profile")?>"><a href="profile.php?id=<?=$_SESSION["userId"]?>" id="btn-profile"><span>Moj profil</span></a></li>
+                            <li data-shclass="<?=navShClass("logout")?>"><a href="#" id="logout">Odjavi se</a></li>
                         <?php else: ?>
-                            <li><a href="login.php">Prijavi se</a></li>
-                            <li><a href="register.php">Registruj se</a></li>
+                            <li data-shclass="<?=navShClass("login")?>"><a href="login.php">Prijavi se</a></li>
+                            <li data-shclass="<?=navShClass("register")?>"><a href="register.php">Registruj se</a></li>
                         <?php endif; ?>
                     </ul>
 

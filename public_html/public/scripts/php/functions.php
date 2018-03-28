@@ -1,5 +1,17 @@
 <?php
 
+    function printErrors($errors) {
+        if (!empty($errors)) {
+            echo "<div>";
+            echo "<ul>";
+            foreach ($errors as $error) {
+                echo "<li>$error</li>";
+            }
+            echo "</ul>";
+            echo "</div>";
+        }
+    }
+
     function redirectBack($message = null) {
         if (isset($_SESSION["redirect_back"])) {
             $redirectBack = $_SESSION["redirect_back"];
@@ -23,7 +35,7 @@
     function sendForgottedData($what, $email) {
         if ($what === "username") {
             if (isNotBlank($username = qGetUsernameByEmail($email))) {
-                sendEmail($email, "Forum41: Zaboravljeno korisničko ime",
+                sendEmail($email, FORUM_NAME . ": Zaboravljeno korisničko ime",
                     "Vaše korisničko ime je:<br><code>{$username}</code>", true);
             }
         } else {
@@ -32,7 +44,7 @@
 
             qSetNewPassword(qGetUserIdByEmail($email), $password);
 
-            sendEmail($email, "Forum41: Zaboravljena lozinka",
+            sendEmail($email, FORUM_NAME . ": Zaboravljena lozinka",
                 "Vaša nova lozinka je:<br><code>{$password}</code>", true);
         }
     }
@@ -40,5 +52,5 @@
     function sendEmailConfirmation($email, $token) {
         $body = "Kliknite na link da bi potvrdili svoju email adresu: ";
         $body .= DOMAIN . "/public/confirm.php?email={$email}&token={$token}";
-        sendEmail($email, "Forum41: Potvrđivanje email adrese", $body);
+        sendEmail($email, FORUM_NAME . ": Potvrđivanje email adrese", $body);
     }

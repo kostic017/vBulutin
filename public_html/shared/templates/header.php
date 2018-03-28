@@ -9,7 +9,7 @@
     <meta name="author" content="Nikola Kostić">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <title>forum41</title>
+    <title><?=FORUM_NAME?></title>
 
     <link rel="icon" href="/shared/images/favicon.ico">
 

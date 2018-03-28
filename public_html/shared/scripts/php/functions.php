@@ -3,6 +3,10 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
+    function generateToken() {
+        return bin2hex(openssl_random_pseudo_bytes(16));
+    }
+
     function echoShorten($string) {
         echo trim(substr($string, 0, SHORTEN_LIMIT)) . "...";
     }
@@ -63,7 +67,7 @@
         $mail->Username = MAIL_USERNAME;
         $mail->Password = MAIL_PASSWORD;
         try {
-            $mail->setFrom(MAIL_USERNAME, "Forum41");
+            $mail->setFrom(MAIL_USERNAME, FORUM_NAME);
         } catch (Exception $e) {
             echo "PHPMailer Exception: {$e->getMessage()}";
         }

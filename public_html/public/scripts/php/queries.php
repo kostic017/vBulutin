@@ -370,7 +370,7 @@
         dbEscape($username, $email);
         $password = hashPassword($password);
         $joinedDT = getDateForMysql();
-        $token = bin2hex(openssl_random_pseudo_bytes(16));
+        $token = generateToken();
 
         $sql = "INSERT INTO users (id, username, password, email, joinedDT, confirmed, token) VALUES (";
         $sql .= "   NULL, '{$username}', '{$password}', '{$email}', '{$joinedDT}', '0', '{$token}'";
@@ -499,6 +499,7 @@
         $sql .= "WHERE id='{$userId}' ";
 
         executeQuery($sql);
+        unset($_SESSION["userId"]);
     }
 
     function qIsEmailConfirmedByUserId($userId) {
@@ -555,4 +556,55 @@
         $sql .= "WHERE loggedIn='1' ";
 
         return executeAndFetchAssoc($sql, FETCH::ALL) ?? [];
+    }
+
+    function qUpdateUserInvisibility($userId, $invisible) {
+        dbEscape($userId, $invisible);
+
+        $sql = "UPDATE users ";
+        $sql .= "SET invisible='{$invisible}' ";
+        $sql .= "WHERE id='{$userId}' ";
+
+        executeQuery($sql);
+    }
+
+    function qUpdateUserData($userId, $sex, $birthdate, $birthplace, $residence, $job, $avatar) {
+        dbEscape($userId, $sex, $birthdate, $birthplace, $residence, $job, $avatar);
+
+        $sql = "UPDATE users ";
+        $sql .= "SET sex='{$sex}', ";
+        $sql .= "    birthdate='{$birthdate}', ";
+        $sql .= "    birthplace='{$birthplace}', ";
+        $sql .= "    residence='{$residence}', ";
+        $sql .= "    job='{$job}', ";
+        $sql .= "    avatar='{$avatar}' ";
+        $sql .= "WHERE id='{$userId}' ";
+
+        executeQuery($sql);
+    }
+
+    function qUpdateUserEmail($userId, $email) {
+        dbEscape($userId, $email);
+        $token = generateToken();
+
+        $sql = "UPDATE users ";
+        $sql .= "SET email='{$email}', ";
+        $sql .= "    confirmed='0', ";
+        $sql .= "    token='{$token}' ";
+        $sql .= "WHERE id='{$userId}' ";
+
+        executeQuery($sql);
+
+        return $token;
+    }
+
+    function qUpdateUserPassword($userId, $password) {
+        dbEscape($userId);
+        $password = hashPassword($password);
+
+        $sql = "UPDATE users ";
+        $sql .= "SET password='{$password}' ";
+        $sql .= "WHERE id='{$userId}' ";
+
+        executeQuery($sql);
     }

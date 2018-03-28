@@ -5,8 +5,9 @@
 
     require_once __DIR__ . "/header.php";
 
+    $errors = [];
+
     if (isset($_POST["submit"])) {
-        $errors = [];
 
         if (qIsUsernameTaken($_POST["username"])) {
             $errors[] = "Ovo korisničko ime je zauzeto.";
@@ -53,15 +54,7 @@
 
 <main>
 
-    <?php if (isset($errors)): ?>
-        <div>
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?=$error?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+    <?php printErrors($errors); ?>
 
     <div class="rules">
         <h2>Pravila</h2>

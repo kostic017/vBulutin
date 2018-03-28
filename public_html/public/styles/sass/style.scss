@@ -26,6 +26,15 @@ footer,
     }
 }
 
+.avatar {
+    display: block;
+
+    &-medium {
+        width: 100px;
+        height: 115px;
+    }
+}
+
 ul.buttons {
     @extend .no-bullets;
 }

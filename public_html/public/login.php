@@ -5,8 +5,9 @@
         redirectTo($_SESSION["redirect_back"] ?? "index.php");
     }
 
+    $errors = [];
+
     if (isset($_POST["login"])) {
-        $errors = [];
 
         if ($user = qLoginUser($_POST["username"], $_POST["password"])) {
             if ($confirmed = qIsEmailConfirmedByUserId($user["id"])) {
@@ -39,15 +40,7 @@
 
 <main>
 
-    <?php if (isset($errors)): ?>
-        <div>
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?=$error?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+    <?php printErrors($errors); ?>
 
     <form class="inputform" method="post" action="">
 

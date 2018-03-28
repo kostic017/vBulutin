@@ -9,6 +9,7 @@
         redirectBack("Morate biti prijavljeni da bi videli profile članova.");
     }
 
+    $errors = [];
     $profile = qGetRowById($profileId, "users");
 
     function selectSex($value) {
@@ -19,11 +20,72 @@
             }
         }
     }
+
+    if (isset($_POST["change-invisible"])) {
+        qUpdateUserInvisibility($_SESSION["userId"], $_POST["invisible"]);
+
+        $_SESSION["redirect"] = [
+            "url" => $_SERVER["REQUEST_URI"],
+            "message" => "Podešavanja vidljivosti su promenjena."
+        ];
+
+        redirectTo("redirect.php");
+    }
+
+    if (isset($_POST["change-email"])) {
+        if (qIsEmailTaken($_POST["email"])) {
+            $errors[] = "Već je registrovan korisnik sa ovim emajlom.";
+        } else {
+            $token = qUpdateUserEmail($_SESSION["userId"], $_POST["email"]);
+            sendEmailConfirmation($_POST["email"], $token);
+
+            $message = "Promenili smo ti email adresu ali prvo moraš da je potvrdiš. ";
+            $message .= "Poslali smo ti mejl na <b>{$_POST["email"]}</b>.";
+
+            $_SESSION["redirect"] = [
+                "url" => "login.php",
+                "message" => $message
+            ];
+
+            qLogoutUser($_SESSION["userId"]);
+            redirectTo("redirect.php");
+        }
+    }
+
+    if (isset($_POST["change-password"])) {
+        if ($_POST["password1"] !== $_POST["password2"]) {
+            $errors[] = "Lozinke se ne poklapaju.";
+        } else {
+            qUpdateUserPassword($_SESSION["userId"], $_POST["password1"]);
+            qLogoutUser($_SESSION["userId"]);
+
+            $_SESSION["redirect"] = [
+                "url" => "login.php",
+                "message" => "Lozinka ti je promenjena, ali morćeš ponovo da se prijaviš."
+            ];
+
+            redirectTo("redirect.php");
+        }
+    }
+
+    if (isset($_POST["change-data"])) {
+        qUpdateUserData($_SESSION["userId"], $_POST["sex"], $_POST["birthdate"],
+            $_POST["birthplace"], $_POST["residence"], $_POST["job"], $_POST["avatar"]);
+
+        $_SESSION["redirect"] = [
+            "url" => $_SERVER["REQUEST_URI"],
+            "message" => "Podaci su ti promenjeni."
+        ];
+
+        redirectTo("redirect.php");
+    }
 ?>
 
 <main>
 
     <?php if ($profileId === $_SESSION["userId"]): ?>
+
+        <?php printErrors($errors); ?>
 
         <p><label>
             Korisničko ime:<br>
@@ -33,9 +95,9 @@
         <form action="" method="post" class="inputform">
             <fieldset>
                 <p><label>
-                    <input type="checkbox" <?=$profile["invisible"] === "1" ? "checked" : ""?>>
-                    hoću da sam nevidljiv<br>
                     <input type="hidden" name="invisible" value="0">
+                    <input type="checkbox" name="invisible" <?=$profile["invisible"] === "1" ? "checked" : ""?> value="1">
+                    hoću da sam nevidljiv<br>
                 </label></p>
                 <button type="submit" name="change-invisible">Promeni</button>
             </fieldset>
@@ -45,7 +107,7 @@
             <fieldset>
                 <p><label>
                     E-mail:<br>
-                    <input type="email" name="email" required value="<?=$profile["email"]?>">
+                    <input type="email" name="email" required value="<?=$profile["email"]?>"> <span class="required-star">*</span>
                 </label></p>
                 <button type="submit" name="change-email">Promeni</button>
             </fieldset>
@@ -101,10 +163,10 @@
 
                 <p><label>
                     Profilna slika:<br>
-                    <input type="text" name="avatar" value="<?=$profile["avatar"]?>">
                     <?php if (isNotBlank($profile["avatar"])): ?>
-                        <img src="<?=$profile["avatar"]?>" alt="<?=$profile["username"]?>">
+                        <img src="<?=$profile["avatar"]?>" alt="<?=$profile["username"]?>" class="avatar avatar-medium">
                     <?php endif; ?>
+                    <input type="text" name="avatar" value="<?=$profile["avatar"]?>" placeholder="URL do slike">
                 </label></p>
 
                 <button type="submit" name="change-data">Promeni</button>
