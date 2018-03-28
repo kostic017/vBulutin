@@ -21,12 +21,12 @@
 
                 <tr data-shclass="table-row" class="table-row">
                     <?php
-                            if (isset($_SESSION["userId"])) {
-                                $icon = qIsForumRead($_SESSION["userId"], $childForum["id"]) ? "old" : "new";
-                            } else {
-                                $icon = "none";
-                            }
-                        ?>
+                        if (isset($_SESSION["userId"])) {
+                            $icon = qDidUserReadForum($_SESSION["userId"], $childForum["id"]) ? "old" : "new";
+                        } else {
+                            $icon = "none";
+                        }
+                    ?>
                     <td class="post-<?=$icon?>">
                         <span class="icon"></span>
                         <a data-shclass="row-name" href="forum.php?id=<?=$childForum["id"]?>" class="name">

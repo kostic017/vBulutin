@@ -19,7 +19,7 @@
             <tr data-shclass="table-row" class="table-row">
                 <?php
                     if (isset($_SESSION["userId"])) {
-                        $icon = qIsForumRead($_SESSION["userId"], $rootForum["id"]) ? "old" : "new";
+                        $icon = qDidUserReadForum($_SESSION["userId"], $rootForum["id"]) ? "old" : "new";
                     } else {
                         $icon = "none";
                     }
@@ -34,7 +34,7 @@
                                 <?php foreach ($childForums as $childForum): ?>
                                     <?php
                                         if (isset($_SESSION["userId"])) {
-                                            $icon = qIsForumRead($_SESSION["userId"], $childForum["id"]) ? "old" : "new";
+                                            $icon = qDidUserReadForum($_SESSION["userId"], $childForum["id"]) ? "old" : "new";
                                         } else {
                                             $icon = "none";
                                         }

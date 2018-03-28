@@ -11,7 +11,7 @@
 
     /// FORUMS ///
 
-    function qIsForumRead($userId, $forumId) {
+    function qDidUserReadForum($userId, $forumId) {
         dbEscape($userId, $forumId);
 
         // teme direktno u ovom forumu
@@ -35,7 +35,7 @@
 
         if ($children = executeAndFetchAssoc($sql, FETCH::ALL)) {
             foreach ($children as $child) {
-                if (!qIsForumRead($userId, $child["id"])) {
+                if (!qDidUserReadForum($userId, $child["id"])) {
                     return false;
                 }
             }

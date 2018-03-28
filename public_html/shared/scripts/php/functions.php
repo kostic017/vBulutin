@@ -11,7 +11,7 @@
         echo trim(substr($string, 0, SHORTEN_LIMIT)) . "...";
     }
 
-    function dateDifference($date1, $date2, $differenceFormat = "%a") {
+    function dateDifference($date1, $date2 = null, $differenceFormat = "%a") {
         $datetime1 = date_create($date1);
         $datetime2 = date_create($date2 ?? getDatetimeForMysql());
 

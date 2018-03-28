@@ -18,9 +18,15 @@
                 <?php
                     $username = qGetUsernameById($post["userId"]);
                     $topicTitle = qGetTopicTitleById($post["topicId"]);
+
+                    if (isset($_SESSION["userId"])) {
+                        $icon = qDidUserReadTopic($_SESSION["userId"], $post["topicId"]) ? "old" : "new";
+                    } else {
+                        $icon = "none";
+                    }
                 ?>
 
-                <li class="icon-post-new">
+                <li class="icon-post-<?=$icon?>">
                     <a href="topic.php?id=<?=$post["topicId"]?>&post=<?=$post["id"]?>"><?=($topicTitle)?></a>
                     - <a href=""><?=$username?></a><br>
                     <?=convertMysqlDatetimeToPhpDatetime($post["postedDT"])?>
