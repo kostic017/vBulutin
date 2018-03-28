@@ -4,17 +4,17 @@
         switch (FILENAME) {
 
             case "forum":
-                $topicId = qCreateNewTopic($thisPageId, $_SESSION["user_id"], $_POST["textarea-title"], $_POST["textarea-content"]);
+                $topicId = qCreateNewTopic($thisPageId, $_SESSION["userId"], $_POST["textarea-title"], $_POST["textarea-content"]);
                 redirectTo("topic.php?id={$topicId}");
             break;
 
             case "topic":
                 $lastPost = qGetTopicLastPoster($thisPageId);
-                if ($lastPost["user"]["id"] === $_SESSION["user_id"]) {
-                    qAppendToPost($lastPost["postId"], $_SESSION["user_id"], $_POST["textarea-content"]);
+                if ($lastPost["user"]["id"] === $_SESSION["userId"]) {
+                    qAppendToPost($lastPost["postId"], $_SESSION["userId"], $_POST["textarea-content"]);
                     redirectTo("topic.php?id={$thisPageId}&post={$lastPost["postId"]}");
                 } else {
-                    $post = qCreateNewPost($thisPageId, $_SESSION["user_id"], $_POST["textarea-content"]);
+                    $post = qCreateNewPost($thisPageId, $_SESSION["userId"], $_POST["textarea-content"]);
                     redirectTo("topic.php?id={$thisPageId}&post={$post["id"]}");
                 }
             break;
@@ -24,7 +24,7 @@
     }
 ?>
 
-<?php if (isset($_SESSION["user_id"])): ?>
+<?php if (isset($_SESSION["userId"])): ?>
     <section class="textarea">
         <form action="" method="post" class="new-post-form">
             <?php if (FILENAME === "forum"): ?>

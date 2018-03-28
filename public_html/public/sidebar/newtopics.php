@@ -1,4 +1,4 @@
-<?php if (isset($_SESSION["user_id"]) && isset($_SESSION["lastVisitDT"])): ?>
+<?php if (isset($_SESSION["userId"]) && isset($_SESSION["lastVisitDT"])): ?>
     <?php $topics = qGetTopicsFromLastVisit($_SESSION["lastVisitDT"], LIMIT_LAST_VISIT); ?>
 
     <section class="sidebar-newtopics">

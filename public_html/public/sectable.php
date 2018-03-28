@@ -18,8 +18,8 @@
 
             <tr data-shclass="table-row" class="table-row">
                 <?php
-                    if (isset($_SESSION["user_id"])) {
-                        $icon = qIsForumRead($_SESSION["user_id"], $rootForum["id"]) ? "old" : "new";
+                    if (isset($_SESSION["userId"])) {
+                        $icon = qIsForumRead($_SESSION["userId"], $rootForum["id"]) ? "old" : "new";
                     } else {
                         $icon = "none";
                     }
@@ -33,8 +33,8 @@
                             <ul data-shclass="subforums" class="subforum-list post-list">
                                 <?php foreach ($childForums as $childForum): ?>
                                     <?php
-                                        if (isset($_SESSION["user_id"])) {
-                                            $icon = qIsForumRead($_SESSION["user_id"], $childForum["id"]) ? "old" : "new";
+                                        if (isset($_SESSION["userId"])) {
+                                            $icon = qIsForumRead($_SESSION["userId"], $childForum["id"]) ? "old" : "new";
                                         } else {
                                             $icon = "none";
                                         }

@@ -1,7 +1,7 @@
 <?php
     require_once "header.php";
 
-    if (isset($_SESSION["user_id"])) {
+    if (isset($_SESSION["userId"])) {
         redirectTo($_SESSION["redirect_back"] ?? "index.php");
     }
 
@@ -10,7 +10,7 @@
 
         if ($user = qLoginUser($_POST["username"], $_POST["password"])) {
             if ($confirmed = qIsEmailConfirmedByUserId($user["id"])) {
-                $_SESSION["user_id"] = $user["id"];
+                $_SESSION["userId"] = $user["id"];
                 if (isset($user["lastVisitDT"])) {
                     $_SESSION["lastVisitDT"] = $user["lastVisitDT"];
                 }

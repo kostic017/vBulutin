@@ -7,8 +7,14 @@
     }
 
     if (isset($_POST["logout"])) {
-        unset($_SESSION["user_id"]);
+        qLogoutUser($_SESSION["userId"]);
+
+        unset($_SESSION["userId"]);
         unset($_SESSION["lastVisitDT"]);
+    }
+
+    if (isset($_SESSION["userId"])) {
+        qUpdateLastActivityForUser($_SESSION["userId"]);
     }
 
     if (isEqualToAnyWord("topic forum section", FILENAME)) {
@@ -68,7 +74,7 @@
                 <section data-shclass="main-navigation" class="main-navigation">
 
                     <ul data-shclass="nav-profile">
-                        <?php if (isset($_SESSION["user_id"])): ?>
+                        <?php if (isset($_SESSION["userId"])): ?>
                             <li><a href="" id="btn-messages"><span data-newmessages="0">Nema novih poruka</span></a></li>
                             <li><a href="" id="btn-profile"><span>Moj profil</span></a></li>
                             <li><a href="#" id="logout">Odjavi se</a></li>
@@ -83,7 +89,7 @@
                         <li data-shclass="<?=navShClass("index")?>"><a href="index.php">Početna</a></li>
                         <li data-shclass="<?=navShClass("rules")?>"><a href="rules.php">Pravilnik</a></li>
 
-                        <?php if (isset($_SESSION["user_id"])): ?>
+                        <?php if (isset($_SESSION["userId"])): ?>
                             <li data-shclass="<?=navShClass("members")?>"><a href="members.php">Članovi</a></li>
                             <li data-shclass="<?=navShClass("groups")?>"><a href="groups.php">Korisnicke grupe</a></li>
                             <li data-shclass="<?=navShClass("chat")?>"><a href="chat.php">Ćaskanje</a></li>

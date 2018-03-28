@@ -35,11 +35,12 @@
                     <?php endif; ?>
 
                     <section data-shclass="online-users" class="online-users">
+                        <?php $onlineUsers = qGetOnlineUsers(); ?>
 
                         <div class="info">
                             <div>
-                                <strong>2 korisnika su na mreži (u prethodnih 15 minuta)</strong><br>
-                                <small>1 član, 1 gost, 0 anonimnih korisnika <a href="">(Pogledaj celu listu)</a></small>
+                                <strong>2 korisnika su na mreži</strong><br>
+                                <small><?=count($onlineUsers)?> član, 1 gost, 0 anonimnih korisnika <a href="">(Pogledaj celu listu)</a></small>
                             </div>
                             <ul>
                                 <li><a href="">Moderatorski tim</a></li>
@@ -47,8 +48,10 @@
                         </div>
 
                         <ul data-shclass="online-users-list" class="list">
-                            <li data-shclass="user-admin"><a href="">Kostić</a></li>
-                            <li data-shclass="user-admin"><a href="">Kostić</a></li>
+                            <?php foreach ($onlineUsers as $onlineUser): ?>
+                                <li><a href=""><?=$onlineUser["username"]?></a></li>
+                            <?php endforeach; ?>
+                            <!-- <li data-shclass="user-admin"><a href="">Kostić</a></li> -->
                         </ul>
 
                         <div class="chat">

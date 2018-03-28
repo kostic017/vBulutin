@@ -1,5 +1,5 @@
-<?php if (isset($_SESSION["user_id"])): ?>
-    <?php $username = qGetUsernameById($_SESSION["user_id"]); ?>
+<?php if (isset($_SESSION["userId"])): ?>
+    <?php $username = qGetUsernameById($_SESSION["userId"]); ?>
 
     <?php if ($username): ?>
 

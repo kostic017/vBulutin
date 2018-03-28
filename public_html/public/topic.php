@@ -11,8 +11,8 @@
     $emojione = new \Emojione\Client(new \Emojione\Ruleset());
     $emojione->ignoredRegexp .= "|<code[^>]*>[\s\S]*?<\/code>"; // ne parsuj smajlije unutar code tagova
 
-    if (isset($_SESSION["user_id"])) {
-        qMarkTopicAsRead($_SESSION["user_id"], $thisPageId);
+    if (isset($_SESSION["userId"])) {
+        qMarkTopicAsRead($_SESSION["userId"], $thisPageId);
     }
 ?>
 

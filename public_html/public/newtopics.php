@@ -1,7 +1,7 @@
 <?php
     require_once "header.php";
 
-    if (!(isset($_SESSION["user_id"]) && isset($_SESSION["lastVisitDT"]))) {
+    if (!(isset($_SESSION["userId"]) && isset($_SESSION["lastVisitDT"]))) {
         redirectTo("index.php");
     }
 

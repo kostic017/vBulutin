@@ -9,7 +9,7 @@
 
     function dateDifference($date1, $date2, $differenceFormat = "%a") {
         $datetime1 = date_create($date1);
-        $datetime2 = date_create($date2);
+        $datetime2 = date_create($date2 ?? getDatetimeForMysql());
 
         $interval = date_diff($datetime1, $datetime2);
 

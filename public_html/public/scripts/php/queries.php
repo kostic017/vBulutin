@@ -82,7 +82,7 @@
         if ($topic = qGetRowById($topicId, "topics")) {
             // Na svakih GARBAGE_COLLECTION_DAYS se cisti tabela readTopics, pa bi ispalo kao da
             // korisnik nije procitao temu. Zato ja kazem da je svaka tema starija od 30 dana procitana.
-            $flag = $flag || dateDifference(getDatetimeForMysql(), $topic["latestPostDT"]) > GARBAGE_COLLECTION_DAYS;
+            $flag = $flag || dateDifference($topic["latestPostDT"]) > GARBAGE_COLLECTION_DAYS;
         }
         return $flag;
     }
@@ -338,31 +338,22 @@
         dbEscape($username);
         $password = hashPassword($password);
 
-        $sql = "SELECT id ";
+        $sql = "SELECT id, lastVisitDT ";
         $sql .= "FROM users ";
         $sql .= "WHERE username='{$username}' ";
         $sql .= "   AND password='{$password}' ";
 
         if ($user = executeAndFetchAssoc($sql)) {
-            $ret = [];
+            $now = getDatetimeForMysql();
 
-            $sql = "SELECT lastVisitDT ";
-            $sql .= "FROM users ";
+            $sql = "UPDATE users ";
+            $sql .= "SET lastVisitDT='{$now}', ";
+            $sql .= "    lastActivityDT='{$now}', ";
+            $sql .= "    loggedIn='1' ";
             $sql .= "WHERE id='{$user["id"]}' ";
+            executeQuery($sql);
 
-            if ($res = executeAndFetchAssoc($sql)) {
-                $ret["lastVisitDT"] = $res["lastVisitDT"];
-
-                $lastVisitDT = getDatetimeForMysql();
-
-                $sql = "UPDATE users ";
-                $sql .= "SET lastVisitDT='{$lastVisitDT}' ";
-                $sql .= "WHERE id='{$user["id"]}' ";
-                executeQuery($sql);
-            }
-
-            $ret["id"] = $user["id"];
-            return $ret;
+            return $user;
         }
 
         return null;
@@ -468,6 +459,17 @@
         return null;
     }
 
+    function qUpdateLastActivityForUser($userId) {
+        dbEscape($userId);
+        $lastActivityDT = getDatetimeForMysql();
+
+        $sql = "UPDATE users ";
+        $sql .= "SET lastActivityDT='{$lastActivityDT}' ";
+        $sql .= "WHERE id='{$userId}' ";
+
+        executeQuery($sql);
+    }
+
     function qGetUserEmailById($userId) {
         dbEscape($userId);
 
@@ -480,6 +482,16 @@
         }
 
         return null;
+    }
+
+    function qLogoutUser($userId) {
+        dbEscape($userId);
+
+        $sql = "UPDATE users ";
+        $sql .= "SET loggedIn='0' ";
+        $sql .= "WHERE id='{$userId}' ";
+
+        executeQuery($sql);
     }
 
     function qIsEmailConfirmedByUserId($userId) {
@@ -528,4 +540,12 @@
         $sql .= "WHERE username='{$username}' ";
 
         return isThereAResult($sql);
+    }
+
+    function qGetOnlineUsers() {
+        $sql = "SELECT username ";
+        $sql .= "FROM users ";
+        $sql .= "WHERE loggedIn='1' ";
+
+        return executeAndFetchAssoc($sql, FETCH::ALL) ?? [];
     }

@@ -16,6 +16,7 @@
     define("GARBAGE_COLLECTION_DAYS", 30);
     define("DOMAIN", "http://forum41.com/");
     define("FORUM_NAME", "Forum41");
+    define("LOGOUT_TIMEOUT_MINS", 30);
 
     define("DEBUG", true); // false for less verbose error messages
     define("SMTP_DEBUG", 0);
