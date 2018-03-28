@@ -9,9 +9,11 @@
 
         &:first-child {
             width         : 100%;
-            position      : relative;
-            padding-left  : 50px;
             padding-right : 0;
+            position      : relative;
+            &:not(.post-none) {
+                padding-left  : 50px;
+            }
         }
     }
 

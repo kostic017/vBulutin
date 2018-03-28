@@ -54,24 +54,24 @@
     background : url(<?=$scheme?>/images/icons/users.png) no-repeat 5px center;
 }
 
-.icon-forum-new {
-    background-image : url(<?=$scheme?>/images/icons/newposts_yes.png);
+.post-new .icon {
+    background-image : url(<?=$scheme?>/images/icons/post-new-big.png);
 }
 
-.icon-forum-old {
-    background-image : url(<?=$scheme?>/images/icons/newposts_no.png);
+.post-old .icon {
+    background-image : url(<?=$scheme?>/images/icons/post-old-big.png);
 }
 
-.icon-forum-redirect {
+.icon-forum-redirect .icon {
     background-image : url(<?=$scheme?>/images/icons/redirect.png);
 }
 
 .icon-post-old {
-    background-image : url(<?=$scheme?>/images/icons/post-old.gif);
+    background-image : url(<?=$scheme?>/images/icons/post-old-small.gif);
 }
 
 .icon-post-new {
-    background-image : url(<?=$scheme?>/images/icons/post-new.gif);
+    background-image : url(<?=$scheme?>/images/icons/post-new-small.gif);
 }
 
 .searchbtn.-submitsearch {

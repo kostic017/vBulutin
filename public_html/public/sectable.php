@@ -17,15 +17,15 @@
             ?>
 
             <tr data-shclass="table-row" class="table-row">
-                <td>
-                    <?php
-                        if (isset($_SESSION["user_id"])) {
-                            $forumIcon = qIsForumRead($_SESSION["user_id"], $rootForum["id"]) ? "old" : "new";
-                        } else {
-                            $forumIcon = "none";
-                        }
-                    ?>
-                    <span class="icon icon-forum-<?=$forumIcon?>"></span>
+                <?php
+                    if (isset($_SESSION["user_id"])) {
+                        $icon = qIsForumRead($_SESSION["user_id"], $rootForum["id"]) ? "old" : "new";
+                    } else {
+                        $icon = "none";
+                    }
+                ?>
+                <td class="post-<?=$icon?>">
+                    <span class="icon"></span>
                     <a data-shclass="row-name" href="forum.php?id=<?=$rootForum["id"]?>" class="name"><?=$rootForum["title"]?></a>
                     <?php if (count($childForums) > 0): ?>
                         <div class="subforums">
@@ -34,12 +34,12 @@
                                 <?php foreach ($childForums as $childForum): ?>
                                     <?php
                                         if (isset($_SESSION["user_id"])) {
-                                            $forumIcon = qIsForumRead($_SESSION["user_id"], $childForum["id"]) ? "old" : "new";
+                                            $icon = qIsForumRead($_SESSION["user_id"], $childForum["id"]) ? "old" : "new";
                                         } else {
-                                            $forumIcon = "none";
+                                            $icon = "none";
                                         }
                                     ?>
-                                    <li class="icon-post-<?=$forumIcon?>">
+                                    <li class="icon-post-<?=$icon?>">
                                         <a href="forum.php?id=<?=$childForum["id"]?>"><?=$childForum["title"]?></a>
                                     </li>
                                 <?php endforeach; ?>
