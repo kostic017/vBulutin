@@ -143,7 +143,7 @@
 
                 <p><label>
                     Datum rоđenja:<br>
-                    <input type="date" name="birthdate" value="<?=$profile["birthdate"]?>">
+                    <input type="date" name="birthdate" value="<?=$profile["birthdate"]?>" max="<?=getDateForMySql()?>">
                 </label></p>
 
                 <p><label>

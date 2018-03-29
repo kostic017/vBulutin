@@ -8,6 +8,10 @@
         return date("Y-m-d");
     }
 
+    function getTomorrowsDateForMySql() {
+        return date("Y-m-d", strtotime("+1 day"));
+    }
+
     function dbEscape(&...$arguments) {
         global $db;
         for ($i = 0; $i < count($arguments); ++$i) {

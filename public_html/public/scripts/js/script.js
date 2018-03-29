@@ -1,10 +1,16 @@
 let jsonProperties;
 
 $(function () {
+    // Back2Top dugme
     const back2top = $("#btn-back2top");
     $(window).scroll(() => { $(window).scrollTop() > 200 ? back2top.fadeIn() : back2top.fadeOut(); });
     back2top.click(() => { animateScroll(0); });
     $(window).scroll();
+
+    // ako nema itema u sidebar, prosiri tabelu
+    if (isEmptyString($("aside").html())) {
+        $("body").removeClass("has-sidebar");
+    }
 
     // $.getJSON("/public/schemes/gray/config.json", json => {
     //     jsonProperties = json;

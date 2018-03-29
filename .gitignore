@@ -1,6 +1,3 @@
-*.bak
-public_html/**/css
-
 *.cab
 *.msi
 *.msm
@@ -12,3 +9,10 @@ ehthumbs.db
 ehthumbs_vista.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+
+composer.phar
+/vendor/
+
+*.bak
+.phpintel/
+public_html/**/css

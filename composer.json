@@ -1,0 +1,12 @@
+{
+    "require": {
+        "monolog/monolog": "^1.23",
+        "twig/twig": "^2.4"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Forum41\\": "src"
+        }
+    }
+}

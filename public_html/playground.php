@@ -1,5 +1,4 @@
 <?php
-
 // Cron debugging
 // <!DOCTYPE html>
 // <html>
