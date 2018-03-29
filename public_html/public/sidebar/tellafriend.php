@@ -1,29 +1,48 @@
-<section class="sidebar-tellafriend">
+<?php
+    if (isset($_POST["tellafriend"])) {
+        $username = qGetUsernameById($_SESSION["userId"]);
+        $subject = FORUM_NAME . ": Poziv za učlanjenje ({$username})";
+        sendEmail($_POST["email"], $subject, $_POST["content"]);
 
-    <h2 data-shclass="sidebar-title" class="title">Pozovi prijatelja</h2>
+        redirectBack("Poziv za učlanjenje je uspešno poslat.");
+    }
+?>
 
-    <div data-shclass="sidebar-content" class="content">
+<?php if (isset($_SESSION["userId"])): ?>
+    <section class="sidebar-tellafriend">
 
-        <form method="post" action="">
-            <p>
-                <label>
-                    Email adresa tvog prijatelja:
-                    <input type="email" name="email">
-                </label>
-            </p>
+        <h2 data-shclass="sidebar-title" class="title">Pozovi prijatelja</h2>
 
-            <p>
-                <label>
-                    Poruka:<br>
-                    <textarea name="content">Dođi da vidiš kako strava forum - http://forum41.tk/. Pozz...</textarea>
-                </label>
-            </p>
+        <div data-shclass="sidebar-content" class="content">
 
-            <p>
-                <input type="submit" name="submit" value="Pošalji">
-            </p>
-        </form>
+            <form method="post" action="">
+                <p>
+                    <label>
+                        Email adresa tvog prijatelja:
+                        <input type="email" name="email">
+                    </label>
+                </p>
 
-    </div>
+                <p>
+                    <label>
+                        Poruka:<br>
+                        <textarea name="content"><?php
+                            echo "Dođi da vidiš kako strava forum!!! Pozz..." . PHP_EOL;
+                            echo "http://{$_SERVER["SERVER_NAME"]}/";
+                        ?></textarea>
+                    </label>
+                </p>
 
-</section>
+                <p>
+                    <small>Ne skladištimo ove podatke.</small>
+                </p>
+
+                <p>
+                    <button type="submit" name="tellafriend">Pošalji</button>
+                </p>
+            </form>
+
+        </div>
+
+    </section>
+<?php endif; ?>

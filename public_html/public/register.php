@@ -7,7 +7,7 @@
 
     $errors = [];
 
-    if (isset($_POST["submit"])) {
+    if (isset($_POST["register"])) {
 
         if (qIsUsernameTaken($_POST["username"])) {
             $errors[] = "Ovo korisničko ime je zauzeto.";
@@ -119,7 +119,7 @@
             <span class="required-star">*</span>
         </label></p>
 
-        <button type="submit" name="submit">Registruj se</button>
+        <button type="submit" name="register">Registruj se</button>
 
     </form>
 
