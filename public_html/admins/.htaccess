@@ -1,4 +1,0 @@
-AuthName "Restricted Area"
-AuthType Basic
-AuthUserFile D:/Workspace/forum41/public_html/admins/.htpasswd
-require valid-user
