@@ -22,3 +22,7 @@ Route::get("/admin/", function() {
 Route::get("/admin/table/{name}", function() {
     return view("admin.table")->with("pageTitle", "Table");
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
