@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get("/admin/", function() {
+    return view("admin.index")->with("pageTitle", "Admin panel - Početna");
+});
+
+Route::get("/admin/table/{name}", function() {
+    return view("admin.table")->with("pageTitle", "Table");
+});
