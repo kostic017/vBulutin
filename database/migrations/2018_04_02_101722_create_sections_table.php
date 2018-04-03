@@ -21,7 +21,6 @@ class CreateSectionsTable extends Migration
             $table->text("description")->nullable();
 
             $table->integer("position");
-            $table->boolean("is_visible")->default(true);
 
             $table->softDeletes();
         });

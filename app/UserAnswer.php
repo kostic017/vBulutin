@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserAnswer extends Model
 {
-    //
+    public $timestamps = false;
 }

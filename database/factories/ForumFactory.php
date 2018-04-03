@@ -8,12 +8,12 @@ $factory->define(App\Forum::class, function (Faker $faker, $args) {
         "section_id" => []
     ];
 
+    $parentId = $args["parent_id"];
     $sectionId = $args["section_id"];
-    $parentId = $args["parent_id"] ?? null;
 
     return [
         "title" => $faker->sentence(6),
-        "description" => $faker->paragraph(),
+        "description" => $faker->optional()->paragraph(),
 
         "position" => function() use (&$positions, $sectionId, $parentId) {
             if ($parentId) {
@@ -29,8 +29,9 @@ $factory->define(App\Forum::class, function (Faker $faker, $args) {
             return $positions["section_id"][$sectionId]++;
         },
 
-        "parent_id" => $parentId,
-        "section_id" => $sectionId
+        "is_locked" => $faker->randomElement([true, false]),
+
+        "deleted_at" => $faker->optional(0.1)->dateTime()
     ];
 
 });

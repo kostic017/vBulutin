@@ -1,4 +1,4 @@
-.mwb.bak
+*.mwb.bak
 /node_modules
 /public/hot
 /public/storage

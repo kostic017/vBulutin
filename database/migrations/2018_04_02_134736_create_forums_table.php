@@ -21,7 +21,6 @@ class CreateForumsTable extends Migration
             $table->text("description")->nullable();
 
             $table->integer("position");
-            $table->boolean("is_visible")->default(true);
             $table->boolean("is_locked")->default(false);
 
             $table->integer("section_id");
