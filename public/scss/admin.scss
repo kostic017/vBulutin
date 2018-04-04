@@ -1,8 +1,6 @@
-@import "admin/imports";
-
-.line {
-    width: 100%;
-    height: 1px;
-    margin: 40px 0;
-    border-bottom: 1px dashed #ddd;
-}
+@import "admin/fonts";
+@import "admin/variables";
+@import "admin/partials/base";
+@import "admin/partials/sidebar";
+@import "admin/partials/content";
+@import "admin/partials/media";

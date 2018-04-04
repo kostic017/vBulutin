@@ -11,18 +11,21 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/admin/", function() {
-    return view("admin.index")->with("pageTitle", "Admin panel - Početna");
-});
-
-Route::get("/admin/table/{name}", function() {
-    return view("admin.table")->with("pageTitle", "Table");
-});
-
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(["prefix" => "admin", "middleware" => "auth"], function () {
+    Route::get("/table/{name}", [
+        "as" => "table.index",
+        "uses" => "AdminTableController@index"
+    ]);
+    Route::resource("forums", "ForumsController");
+    Route::resource("sections", "SectionsController");
+});
+
+

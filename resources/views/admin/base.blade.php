@@ -7,9 +7,16 @@
 @section("body")
     <div class="wrapper">
 
-        @include("admin.navigation")
+        @include("admin.includes.sidebar")
 
         <div id="content">
+
+            <div id="title">
+                <h2>@yield("title")</h2>
+                <button type="button" id="toggle-sidebar" class="navbar-btn show">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
 
             @yield("content")
 
@@ -22,8 +29,9 @@
     <script>
         $(function() {
             $("li.active .collapse").addClass("show");
-            $("a[data-toggle='collapse']").on("click", function() {
-                $(".fa-caret-down, .fa-caret-up", $(this)).toggleClass("fa-caret-down").toggleClass("fa-caret-up");
+            $("#toggle-sidebar").on("click", function() {
+                $(this).toggleClass("show").toggleClass("hide");
+                $("#sidebar").toggleClass("show").toggleClass("hide");
             });
         });
     </script>

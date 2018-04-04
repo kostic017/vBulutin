@@ -2,12 +2,21 @@
     top: 0;
     left: 0;
     color: #fff;
-    width: 250px;
     z-index: 999;
     height: 100vh;
     position: fixed;
+    width: $sidebarL;
     background: #7386D5;
     transition: all 0.3s;
+
+    h3 {
+        text-align: center;
+    }
+
+    strong {
+        display: none;
+        font-size: 1.8em;
+    }
 
     .sidebar-header {
         padding: 20px;
@@ -29,8 +38,9 @@
     }
 
     a {
-        display: block;
         padding: 10px;
+        color: inherit;
+        display: block;
         font-size: 1.1em;
 
         &:hover {
@@ -49,7 +59,6 @@
     }
 
     ul {
-
         margin: 0;
 
         ul a {
@@ -58,7 +67,7 @@
         }
 
         &.components {
-            padding: 20px 0;
+            padding: 0 0 20px 0;
         }
 
         &.CTAs {
@@ -86,6 +95,44 @@
             }
         }
 
+    }
+
+}
+
+#toggle-sidebar {
+    border: 0;
+    width: 30px;
+    height: 30px;
+    display: none;
+    cursor: pointer;
+    background: #e6e6e6;
+
+    span {
+        width: 80%;
+        height: 2px;
+        margin: 0 auto;
+        display: block;
+        background: #555;
+        transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+
+        &:first-of-type {
+            transform: rotate(45deg) translate(2px, 2px);
+        }
+
+        &:nth-of-type(2) {
+            opacity: 0;
+        }
+
+        &:last-of-type {
+            transform: rotate(-45deg) translate(1px, -1px);
+        }
+
+    }
+
+    &.show span {
+        opacity: 1;
+        transform: none;
+        margin: 5px auto;
     }
 
 }

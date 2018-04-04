@@ -1,6 +1,7 @@
-<nav id="sidebar">
+<nav id="sidebar" class="hide">
     <div class="sidebar-header">
         <h3>Admin panel</h3>
+        <strong>AP</strong>
     </div>
 
     <ul class="list-unstyled components">
@@ -17,10 +18,10 @@
             </a>
             <ul class="collapse list-unstyled" id="tablesSubmenu">
                 <li class="{{ active_class(if_uri(["admin/table/sections"])) }}">
-                    <a href="/admin/table/sections">Sekcije</a>
+                    <a href="{{ route("table.index", ["name" => "sections"]) }}">Sekcije</a>
                 </li>
                 <li class="{{ active_class(if_uri(["admin/table/forums"])) }}">
-                    <a href="/admin/table/forums">Forumi</a>
+                    <a href="{{ route("table.index", ["name" => "forums"]) }}">Forumi</a>
                 </li>
             </ul>
         </li>

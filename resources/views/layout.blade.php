@@ -7,7 +7,7 @@
         <meta name="author" content="Nikola Kostić">
         <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <title>{{ $forumTitle }}: {{ $pageTitle }}</title>
+        <title>Forum41</title>
 
         <link rel="icon" href="/shared/images/favicon.ico">
 
