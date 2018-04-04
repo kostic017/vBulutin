@@ -12,11 +12,13 @@
             </a>
         </li>
 
-        <li class="{{ active_class(if_uri_pattern(["admin/table/*"])) }}">
+        @php ($isActive = if_uri_pattern(["admin/table/*"]))
+        <li class="{{ active_class($isActive) }}">
             <a href="#tablesSubmenu" data-toggle="collapse" aria-expanded="false">
-                <i class="fas fa-table fa-fw"></i>Tabele<i class="fas fa-caret-down"></i>
+                <i class="fas fa-table fa-fw"></i>Tabele
+                <i class="fas {{ $isActive ? "fa-caret-up" : "fa-caret-down" }}"></i>
             </a>
-            <ul class="collapse list-unstyled" id="tablesSubmenu">
+            <ul class="{{ $isActive ? "show" : "collapse" }} list-unstyled" id="tablesSubmenu">
                 <li class="{{ active_class(if_uri(["admin/table/sections"])) }}">
                     <a href="{{ route("table.index", ["name" => "sections"]) }}">Sekcije</a>
                 </li>

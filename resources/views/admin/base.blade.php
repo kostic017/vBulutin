@@ -28,7 +28,10 @@
 @section("scripts")
     <script>
         $(function() {
-            $("li.active .collapse").addClass("show");
+            $("a[data-toggle='collapse']").on("click", function() {
+                $("svg.fa-caret-up, svg.fa-caret-down").toggleClass("fa-caret-up").toggleClass("fa-caret-down");
+            })
+
             $("#toggle-sidebar").on("click", function() {
                 $(this).toggleClass("show").toggleClass("hide");
                 $("#sidebar").toggleClass("show").toggleClass("hide");

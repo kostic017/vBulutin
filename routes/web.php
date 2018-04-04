@@ -20,10 +20,15 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(["prefix" => "admin", "middleware" => "auth"], function () {
+    Route::get("/", function () {
+        return view("admin.index");
+    });
+
     Route::get("/table/{name}", [
         "as" => "table.index",
         "uses" => "AdminTableController@index"
     ]);
+
     Route::resource("forums", "ForumsController");
     Route::resource("sections", "SectionsController");
 });
