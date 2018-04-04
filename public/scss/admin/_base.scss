@@ -18,3 +18,10 @@ a:focus {
     text-decoration: none;
     transition: all 0.3s;
 }
+
+main {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: $sidebarL;
+    width: calc(100% - $sidebarL);
+}

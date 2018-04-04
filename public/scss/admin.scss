@@ -1,6 +1,10 @@
+@import "common/includes";
+
 @import "admin/fonts";
 @import "admin/variables";
-@import "admin/partials/base";
-@import "admin/partials/sidebar";
-@import "admin/partials/content";
-@import "admin/partials/media";
+
+@import "admin/base";
+@import "admin/sidebar";
+@import "admin/navbar";
+@import "admin/content";
+@import "admin/media";

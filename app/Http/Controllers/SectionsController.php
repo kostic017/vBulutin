@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use \App\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class SectionsController extends Controller
 {
@@ -13,7 +16,9 @@ class SectionsController extends Controller
      */
     public function index()
     {
-        //
+        return view("admin.table")
+            ->with("rows", DB::table("sections")->get())
+            ->with("tableName", "sections");
     }
 
     /**

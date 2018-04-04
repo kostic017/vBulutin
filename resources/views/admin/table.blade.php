@@ -4,37 +4,51 @@
     {{ $tableName }}
 @stop
 
-@section("content")
+@section("real-content")
     @if (empty($rows))
         <p>
             Tabela je prazna.<br>
             <a href="{{ route("{$tableName}.create") }}">Ubaci neki podatak.</a>
         </p>
     @else
-        <table class="table table-striped horizontal">
-            <thead class="thead-dark">
-                <tr>
-                    @foreach ($rows[0] as $key => $value)
-                        <th>{{ $key }}</th>
+        <section class="horizontal">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>&nbsp;</th>
+                        @foreach ($rows[0] as $key => $value)
+                            <th>{{ $key }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($rows as $row)
+                        <tr>
+                            <td class="nowrap">
+                                <a href="{{ route("{$tableName}.edit", [0 => $row->id]) }}">
+                                    <span class="icon ic_b_edit" title="Izmeni"></span>
+                                </a>
+                                <a href="{{ route("{$tableName}.destroy", [0 => $row->id]) }}">
+                                    <span class="icon ic_b_drop" title="Obriši"></span>
+                                </a>
+                            </td>
+                            @foreach ($row as $value)
+                                <td><div>{{ $value }}</div></td>
+                            @endforeach
+                        </tr>
                     @endforeach
-                </tr>
-            </thead>
-            @foreach ($rows as $row)
-                <tr>
-                    @foreach ($row as $value)
-                        <td><div>{{ $value }}</div></td>
-                    @endforeach
-                </tr>
-            @endforeach
-        </table>
+                </tbody>
+            </table>
+        </section>
 
         <section class="vertical">
             @foreach ($rows as $row)
-                {{-- <ul class="list-unstyled">
-                    @foreach ($row as $key => $value)
-                        <li><b>{{ $key }}:</b> {{ $value }}</li>
-                    @endforeach
-                </ul> --}}
+                <a href="{{ route("{$tableName}.edit", [0 => $row->id]) }}">
+                    <span class="icon ic_b_edit"></span>Izmeni
+                </a>
+                <a href="{{ route("{$tableName}.destroy", [0 => $row->id]) }}">
+                    <span class="icon ic_b_drop"></span>Obriši
+                </a>
                 <table class="table table-striped">
                     @foreach ($row as $key => $value)
                         <tr>

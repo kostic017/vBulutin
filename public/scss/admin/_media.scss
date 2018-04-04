@@ -1,7 +1,12 @@
 @media (max-width: 885px) {
 
-    #content {
+    main {
+        margin-left: $sidebarS;
         width: calc(100% - #{$sidebarS});
+    }
+
+    .navbar {
+        margin-left: $sidebarS;
     }
 
     #sidebar {
@@ -69,8 +74,13 @@
         }
     }
 
-    #content {
+    main {
         width: 100%;
+        margin-left: 0;
+    }
+
+    .navbar {
+        margin-left: 0;
     }
 
     #toggle-sidebar {

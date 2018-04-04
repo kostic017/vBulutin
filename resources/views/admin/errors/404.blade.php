@@ -2,5 +2,5 @@
 
 @section("content")
     <h2>Stranica nije pronađena</h2>
-    <p>{{ $message }}</p>
+    <p>404</p>
 @stop
