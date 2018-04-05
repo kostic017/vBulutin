@@ -48,8 +48,26 @@
             background: #fff;
         }
 
-        &[data-toggle="collapse"] {
+        &[data-toggle=collapse] {
             position: relative;
+        }
+
+        &[aria-expanded=true] {
+            .fa-caret-up {
+                display: block;
+            }
+            .fa-caret-down {
+                display: none;
+            }
+        }
+
+        &[aria-expanded=false] {
+            .fa-caret-up {
+                display: none;
+            }
+            .fa-caret-down {
+                display: block;
+            }
         }
     }
 

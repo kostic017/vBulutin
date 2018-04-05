@@ -15,11 +15,12 @@
 
         @php ($isActive = if_uri(["admin/sections", "admin/forums"]))
         <li class="{{ active_class($isActive) }}">
-            <a href="#tablesSubmenu" data-toggle="collapse" aria-expanded="false">
+            <a href="#tables" data-target="#tables" data-toggle="collapse" aria-controls="tables" aria-expanded="{{ active_class($isActive, "true", "false") }}">
                 <i class="fas fa-table fa-fw"></i>Tabele
-                <i class="fas {{ $isActive ? "fa-caret-up" : "fa-caret-down" }}"></i>
+                <i class="fas fa-caret-up"></i>
+                <i class="fas fa-caret-down"></i>
             </a>
-            <ul class="{{ $isActive ? "show" : "collapse" }} list-unstyled" id="tablesSubmenu">
+            <ul class="collapse {{ active_class($isActive, "show") }} list-unstyled" id="tables">
                 <li class="{{ active_class(if_uri(["admin/sections"])) }}">
                     <a href="{{ route("sections.index") }}">Sekcije</a>
                 </li>

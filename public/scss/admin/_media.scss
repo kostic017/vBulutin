@@ -1,12 +1,11 @@
 @media (max-width: 885px) {
 
     main {
-        margin-left: $sidebarS;
-        width: calc(100% - #{$sidebarS});
+        margin-left: $sidebarS !important;
     }
 
     .navbar {
-        margin-left: $sidebarS;
+        left: $sidebarS;
     }
 
     #sidebar {
@@ -33,9 +32,7 @@
             font-size: 0.9em;
         }
 
-        .fa-fw,
-        .fa-caret-up,
-        .fa-caret-down {
+        .fa-fw {
             float: none;
             margin: 0 auto;
             display: block;
@@ -75,12 +72,11 @@
     }
 
     main {
-        width: 100%;
-        margin-left: 0;
+        margin-left: 0 !important;
     }
 
     .navbar {
-        margin-left: 0;
+        left: 0;
     }
 
     #toggle-sidebar {

@@ -35,6 +35,11 @@
         position: absolute;
     }
 
+    th div {
+        display: flex;
+        justify-content: space-between;
+    }
+
     td {
         vertical-align: middle;
 
@@ -47,6 +52,11 @@
             max-height: 110px;
         }
     }
+
+    a {
+        color: #fff;
+    }
+
 }
 
 .vertical {

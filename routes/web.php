@@ -28,4 +28,9 @@ Route::group(["prefix" => "admin", "middleware" => "auth"], function () {
     Route::resource("sections", "SectionsController");
 });
 
-
+Route::group(["prefix" => "/ajax"], function() {
+    Route::get("/sort/{table}/{column}/{order}", [
+        "as" => "ajax.sort",
+        "uses" => "AjaxController@sort"
+    ]);
+});

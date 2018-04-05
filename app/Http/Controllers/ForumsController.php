@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use \App\Forum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class ForumsController extends Controller
 {
@@ -18,7 +16,9 @@ class ForumsController extends Controller
     {
         return view("admin.table")
             ->with("rows", DB::table("forums")->get())
-            ->with("tableName", "forums");
+            ->with("table", "forums")
+            ->with("sortColumn", "id")
+            ->with("sortOrder", "asc");
     }
 
     /**
