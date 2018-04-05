@@ -25,8 +25,8 @@ Route::group(["prefix" => "/admin", "middleware" => "auth"], function () {
         return view("admin.index");
     });
 
-    Route::get("positioning/", [
-        "uses" => "SectionsController@positioning"
+    Route::get("positions/", [
+        "uses" => "SectionsController@positions"
     ]);
 
     Route::resource("forums", "ForumsController");
@@ -41,7 +41,7 @@ Route::group(["prefix" => "/ajax"], function() {
         "uses" => "AjaxController@sort"
     ]);
 
-    Route::post("/positioning/save", [
+    Route::post("/positions/save", [
         "as" => "ajax.save.positions",
         "uses" => "AjaxController@savePositions"
     ]);

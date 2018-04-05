@@ -30,8 +30,8 @@
             </ul>
         </li>
 
-        <li class="{{ active_class(if_uri(["admin/positioning"])) }}">
-            <a href="/admin/positioning">
+        <li class="{{ active_class(if_uri(["admin/positions"])) }}">
+            <a href="/admin/positions">
                 <i class="fas fa-sort fa-fw"></i>Pozicioniranje
             </a>
         </li>

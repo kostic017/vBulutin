@@ -71,6 +71,10 @@
         @endforeach
 
     </div>
+
+    <!-- Localization Helpers -->
+    <span class="hidden" data-lngkey="messages.error">{{ __('messages.error') }}</span>
+    <span class="hidden" data-lngkey="messages.success">{{ __("messages.success") }}</span>
 @stop
 
 @section("more-scripts")

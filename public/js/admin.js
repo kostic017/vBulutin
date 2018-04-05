@@ -118,15 +118,11 @@ $(function () {
             };
         });
 
-        $.post(route("ajax.save.positions"), {data},
-            () => {
-                $("#message").show();
-                setTimeout(function () {
-                    $("#message").hide();
-                }, 3000);
-            }
-        );
-
+        $.post(route("ajax.save.positions"), { data }, function () {
+            toastr.success($(`span[data-lngkey='messages.success']`).text());
+        }).fail(function () {
+            toastr.error($(`span[data-lngkey='messages.error']`).text());
+        });
     });
 
 })

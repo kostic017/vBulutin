@@ -8,7 +8,7 @@ use App\Section;
 class SectionsController extends Controller
 {
 
-    public function positioning() {
+    public function positions() {
         $columns = ["id", "title"];
 
         $sections = Section::orderBy("position")
@@ -32,7 +32,7 @@ class SectionsController extends Controller
 
         }
 
-        return view("admin.positioning", ["sections" => $sections]);
+        return view("admin.positions", ["sections" => $sections]);
     }
 
     /**
