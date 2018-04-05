@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Forum;
+use App\Section;
 use Edujugon\Log\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -27,19 +29,23 @@ class AjaxController extends Controller
     }
 
     public function savePositions() {
-        foreach ($_POST["data"] ?? [] as $sectionId => $sectionData) {
-            qUpdateCell("sections", $sectionId, "position", $sectionData["position"]);
-            foreach ($sectionData["forums"] ?? [] as $rootIndex => $rootForum) {
-                qUpdateCell("forums", $rootForum["id"], "parentId", "NULL");
-                qUpdateCell("forums", $rootForum["id"], "sectionId", $sectionId);
-                qUpdateCell("forums", $rootForum["id"], "position", $rootIndex + 1);
-                foreach ($rootForum["children"] ?? [] as $childIndex => $childForum) {
-                    qUpdateCell("forums", $childForum["id"], "parentId", $rootForum["id"]);
-                    qUpdateCell("forums", $childForum["id"], "sectionId", $sectionId);
-                    qUpdateCell("forums", $childForum["id"], "position", $childIndex + 1);
+        $data = request("data");
+        foreach ($data as $sectionId => $section) {
+            Section::get($sectionId)->update(["position" => $section["position"]]);
+            foreach ($section["forums"] ?? [] as $parentIndex => $parentForum) {
+                Forum::get($parentForum["id"])->update([
+                    "parentId" => null,
+                    "sectionId" => $sectionId,
+                    "position" => $parentIndex + 1
+                ]);
+                foreach ($parentForum["children"] ?? [] as $childIndex => $childForum) {
+                    Forum::get($childForum["id"])->update([
+                        "parentId" => $parentForum["id"],
+                        "sectionId" => $sectionId,
+                        "position" => $childIndex + 1
+                    ]);
                 }
             }
         }
-        // TODO redirect to error page
     }
 }

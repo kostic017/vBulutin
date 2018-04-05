@@ -2,11 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Forum;
+use App\Section;
 
 class SectionsController extends Controller
 {
+
+    public function positioning() {
+        $columns = ["id", "title"];
+
+        $sections = Section::orderBy("position")
+                        ->get($columns)
+                        ->toArray();
+
+        foreach ($sections as &$section) {
+
+            $section["forums"] = Forum::where("section_id", $section["id"])
+                                    ->whereNull("parent_id")
+                                    ->orderBy("position")
+                                    ->get($columns)
+                                    ->toArray();
+
+            foreach ($section["forums"] as &$forum) {
+                $forum["children"] = Forum::where("parent_id", $forum["id"])
+                                        ->orderBy("position")
+                                        ->get($columns)
+                                        ->toArray();
+            }
+
+        }
+
+        return view("admin.positioning", ["sections" => $sections]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +43,7 @@ class SectionsController extends Controller
     public function index()
     {
         return view("admin.table")
-            ->with("rows", DB::table("sections")->get())
+            ->with("rows", Section::all()->toArray())
             ->with("table", "sections")
             ->with("sortColumn", "id")
             ->with("sortOrder", "asc");

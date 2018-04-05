@@ -21,15 +21,13 @@
 
     <div class="sortable-sections collapse-buttons">
 
-        <?php foreach ($sections ?? [] as $section): ?>
-            <?php $rootForums = qGetForumsBySectionId($section["id"], true, SORT::POSITION_ASCENDING); ?>
-
+        @foreach ($sections as $section)
             <div class="sortable-section">
 
                 <div class="section-header">
                     <div>
                         <button class="section-tree-control" data-action="collapse"></button>
-                        (<?=$section["id"]?>) <?=$section["title"]?>
+                        ({{ $section["id"] }}) {{ $section["title"] }}
                     </div>
                     <div class="forums-tree-controls">
                         <button type="button">-</button>
@@ -37,44 +35,40 @@
                     </div>
                 </div>
 
-
-                <div class="dd" data-sectionid="<?=$section["id"]?>">
+                <div class="dd" data-sectionid="{{ $section["id"] }}">
 
                     <ol class="dd-list">
 
-                        <?php foreach ($rootForums ?? [] as $rootForum): ?>
-                            <?php $childForums =
-                                qGetForumsByParentId($rootForum["id"], SORT::POSITION_ASCENDING); ?>
+                        @foreach ($section["forums"] as $parentForum)
 
-                            <li class="dd-item" data-id="<?=$rootForum["id"]?>">
+                           <li class="dd-item" data-id="{{ $parentForum["id"] }}">
 
                                 <div class="dd-handle">
-                                    (<?=$rootForum["id"]?>) <?=$rootForum["title"]?>
+                                    ({{ $parentForum["id"] }}) {{ $parentForum["title"] }}
                                 </div>
 
-                                <?php if (count($childForums) > 0): ?>
+                                @if (count($parentForum["children"]) > 0)
                                     <ol class="dd-list">
-                                        <?php foreach ($childForums as $childForum): ?>
-                                            <li class="dd-item" data-id="<?=$childForum["id"]?>">
+                                        @foreach ($parentForum["children"] as $childForum)
+                                            <li class="dd-item" data-id="{{ $childForum["id"] }}">
                                                 <div class="dd-handle">
-                                                    (<?=$childForum["id"]?>) <?=$childForum["title"]?>
+                                                    ({{ $childForum["id"] }}) {{ $childForum["title"] }}
                                                 </div>
                                             </li>
-                                        <?php endforeach; ?>
+                                        @endforeach
                                     </ol>
-                                <?php endif; ?>
+                                @endif
 
                             </li>
 
-                        <?php endforeach; ?>
+                        @endforeach
 
                     </ol>
 
                 </div>
 
             </div>
-
-        <?php endforeach; ?>
+        @endforeach
 
     </div>
 @stop

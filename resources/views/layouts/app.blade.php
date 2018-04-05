@@ -80,6 +80,7 @@
             </main>
         </div>
 
+        <script src="{{ asset("js/functions.js") }}"></script>
         @yield("scripts")
     </body>
 

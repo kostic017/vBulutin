@@ -25,9 +25,9 @@ Route::group(["prefix" => "/admin", "middleware" => "auth"], function () {
         return view("admin.index");
     });
 
-    Route::get("positioning/", function() {
-        return view("admin.positioning");
-    });
+    Route::get("positioning/", [
+        "uses" => "SectionsController@positioning"
+    ]);
 
     Route::resource("forums", "ForumsController");
     Route::resource("sections", "SectionsController");

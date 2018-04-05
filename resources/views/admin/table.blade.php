@@ -27,12 +27,12 @@
                     </tr>
                 </thead>
                 @foreach ($rows as $row)
-                    <tr id="row-{{ $row->id }}">
+                    <tr id="row-{{ $row["id"] }}">
                         <td class="nowrap">
-                            <a href="{{ route("{$table}.edit", [0 => $row->id]) }}">
+                            <a href="{{ route("{$table}.edit", [0 => $row["id"]]) }}">
                                 <span class="icon ic_b_edit" title="Izmeni"></span>
                             </a>
-                            <a href="{{ route("{$table}.destroy", [0 => $row->id]) }}">
+                            <a href="{{ route("{$table}.destroy", [0 => $row["id"]]) }}">
                                 <span class="icon ic_b_drop" title="Obriši"></span>
                             </a>
                         </td>
@@ -46,10 +46,10 @@
 
         <section class="vertical">
             @foreach ($rows as $row)
-                <a href="{{ route("{$table}.edit", [0 => $row->id]) }}">
+                <a href="{{ route("{$table}.edit", [0 => $row["id"]]) }}">
                     <span class="icon ic_b_edit"></span>Izmeni
                 </a>
-                <a href="{{ route("{$table}.destroy", [0 => $row->id]) }}">
+                <a href="{{ route("{$table}.destroy", [0 => $row["id"]]) }}">
                     <span class="icon ic_b_drop"></span>Obriši
                 </a>
                 <table class="table table-striped">
