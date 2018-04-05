@@ -4,7 +4,7 @@
     {{ $table }}
 @stop
 
-@section("real-content")
+@section("more-content")
     @if (empty($rows))
         <p>
             Tabela je prazna.<br>

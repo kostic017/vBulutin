@@ -22,6 +22,24 @@ class AjaxController extends Controller
                 ->line("Colum name: `{$column}`")
                 ->line("Order by: {$order}")
                 ->write();
+            // TODO redirect to error page
         }
+    }
+
+    public function savePositions() {
+        foreach ($_POST["data"] ?? [] as $sectionId => $sectionData) {
+            qUpdateCell("sections", $sectionId, "position", $sectionData["position"]);
+            foreach ($sectionData["forums"] ?? [] as $rootIndex => $rootForum) {
+                qUpdateCell("forums", $rootForum["id"], "parentId", "NULL");
+                qUpdateCell("forums", $rootForum["id"], "sectionId", $sectionId);
+                qUpdateCell("forums", $rootForum["id"], "position", $rootIndex + 1);
+                foreach ($rootForum["children"] ?? [] as $childIndex => $childForum) {
+                    qUpdateCell("forums", $childForum["id"], "parentId", $rootForum["id"]);
+                    qUpdateCell("forums", $childForum["id"], "sectionId", $sectionId);
+                    qUpdateCell("forums", $childForum["id"], "position", $childIndex + 1);
+                }
+            }
+        }
+        // TODO redirect to error page
     }
 }

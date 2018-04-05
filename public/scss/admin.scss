@@ -2,7 +2,12 @@
 @import "admin/variables";
 
 @import "admin/base";
+@import "admin/content";
+
 @import "admin/sidebar";
 @import "admin/navbar";
-@import "admin/content";
+
+@import "admin/table";
+@import "admin/positioning";
+
 @import "admin/media";
