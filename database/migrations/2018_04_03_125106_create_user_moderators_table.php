@@ -15,8 +15,8 @@ class CreateUserModeratorsTable extends Migration
     {
         Schema::create('user_moderators', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("user_id");
-            $table->integer("forum_id");
+            $table->integer('user_id');
+            $table->integer('forum_id');
         });
     }
 

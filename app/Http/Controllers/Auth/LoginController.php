@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Lang;
+use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -36,4 +39,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+       $login = request()->input('email');
+       $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+       request()->merge([$field => $login]);
+       return $field;
+    }
+
 }

@@ -15,8 +15,8 @@ class CreateTopicWatchersTable extends Migration
     {
         Schema::create('topic_watchers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("topic_id");
-            $table->integer("user_id");
+            $table->integer('topic_id');
+            $table->integer('user_id');
         });
     }
 

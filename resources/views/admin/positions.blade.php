@@ -1,12 +1,14 @@
 @extends("admin.base")
 
+@section("more-styles")
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+@stop
+
 @section("title")
     Pozicioniranje
 @stop
 
 @section("more-content")
-    <p id="message">Snimanje uspešno izvršeno.</p>
-
     <div class="positioning-buttons">
         <div>
             <form action="" method="post">
@@ -20,7 +22,6 @@
     </div>
 
     <div class="sortable-sections collapse-buttons">
-
         @foreach ($sections as $section)
             <div class="sortable-section">
 
@@ -36,17 +37,12 @@
                 </div>
 
                 <div class="dd" data-sectionid="{{ $section["id"] }}">
-
                     <ol class="dd-list">
-
                         @foreach ($section["forums"] as $parentForum)
-
                            <li class="dd-item" data-id="{{ $parentForum["id"] }}">
-
                                 <div class="dd-handle">
                                     ({{ $parentForum["id"] }}) {{ $parentForum["title"] }}
                                 </div>
-
                                 @if (count($parentForum["children"]) > 0)
                                     <ol class="dd-list">
                                         @foreach ($parentForum["children"] as $childForum)
@@ -58,26 +54,18 @@
                                         @endforeach
                                     </ol>
                                 @endif
-
                             </li>
-
                         @endforeach
-
                     </ol>
-
                 </div>
 
             </div>
         @endforeach
-
     </div>
-
-    <!-- Localization Helpers -->
-    <span class="hidden" data-lngkey="messages.error">{{ __('messages.error') }}</span>
-    <span class="hidden" data-lngkey="messages.success">{{ __("messages.success") }}</span>
 @stop
 
 @section("more-scripts")
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-nestable@0.8.0/jquery.nestable.min.js"></script>
+    <script src="{{ asset("js/admin/positions.js") }}"></script>
 @stop

@@ -15,12 +15,9 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->text("content");
-
-            $table->integer("topic_id");
-            $table->integer("user_id");
-
+            $table->text('content');
+            $table->integer('topic_id');
+            $table->integer('user_id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,17 +15,13 @@ class CreateForumsTable extends Migration
     {
         Schema::create('forums', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string("slug");
-            $table->string("title");
-            $table->text("description")->nullable();
-
-            $table->integer("position");
-            $table->boolean("is_locked")->default(false);
-
-            $table->integer("section_id");
-            $table->integer("parent_id")->nullable();
-
+            $table->string('slug');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->integer('position');
+            $table->boolean('is_locked')->default(false);
+            $table->integer('section_id');
+            $table->integer('parent_id')->nullable();
             $table->softDeletes();
         });
     }

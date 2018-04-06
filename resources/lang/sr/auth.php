@@ -13,6 +13,7 @@ return [
     |
     */
 
+    "name_or_mail" => "Korisničko ime ili mejl",
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 

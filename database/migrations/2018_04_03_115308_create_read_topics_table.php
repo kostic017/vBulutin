@@ -15,9 +15,9 @@ class CreateReadTopicsTable extends Migration
     {
         Schema::create('read_topics', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("topic_id");
-            $table->integer("user_id");
-            $table->integer("recorded_at")->useCurrent();
+            $table->integer('topic_id');
+            $table->integer('user_id');
+            $table->integer('recorded_at')->useCurrent();
         });
     }
 

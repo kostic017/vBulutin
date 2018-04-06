@@ -15,8 +15,8 @@ class CreateSectionWatchersTable extends Migration
     {
         Schema::create('section_watchers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("user_id");
-            $table->integer("section_id");
+            $table->integer('user_id');
+            $table->integer('section_id');
         });
     }
 

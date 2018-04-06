@@ -15,8 +15,8 @@ class CreateForumWatchersTable extends Migration
     {
         Schema::create('forum_watchers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("forum_id");
-            $table->integer("user_id");
+            $table->integer('forum_id');
+            $table->integer('user_id');
         });
     }
 

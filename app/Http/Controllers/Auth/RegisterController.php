@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -49,7 +50,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -63,10 +64,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'username' => $data['username'],
             'email' => $data['email'],
+            "email_token" => str_random(30),
             'password' => Hash::make($data['password']),
         ]);
+        Session::flash("success", "email_confirmation");
+        $user->notify(new ConfirmEmail($user->email_token));
+        return $user;
+    }
+
+    public function confirm(string $token) {
+        if (User::where("email_token", $token)->first()) {
+            Session::flash("success", "email_confirmed");
+            return view("auth.login");
+        }
+        $message = "RegisterController@confirm: ";
+        $message .= "No user associated with provided token ('{$token}').";
+        $this->$logger->addRecord("error", $message);
+        return redirect()->back();
     }
 }

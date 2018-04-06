@@ -15,8 +15,8 @@ class CreatePollAnswersTable extends Migration
     {
         Schema::create('poll_answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("answer");
-            $table->integer("poll_id");
+            $table->string('answer');
+            $table->integer('poll_id');
         });
     }
 

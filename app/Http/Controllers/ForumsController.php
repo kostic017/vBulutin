@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Forum;
+use App\Section;
 
 class ForumsController extends Controller
 {
@@ -13,11 +14,11 @@ class ForumsController extends Controller
      */
     public function index()
     {
-        return view("admin.table")
-            ->with("rows", Forum::all()->toArray())
-            ->with("table", "forums")
-            ->with("sortColumn", "id")
-            ->with("sortOrder", "asc");
+        return view('admin.table')
+                ->with('table', 'forums')
+                ->with('rows', Forum::all(['id', 'title', 'position']))
+                ->with('sortColumn', 'id')
+                ->with('sortOrder', 'asc');
     }
 
     /**
@@ -27,7 +28,11 @@ class ForumsController extends Controller
      */
     public function create()
     {
-        //
+        $sections = Section::all(['id', 'title']);
+        $rootForums = Forum::whereNull('parent_id')->get(['id', 'title']);
+        return view('admin.forums.create')
+                ->with('sections', $sections)
+                ->with('rootForums', $rootForums);
     }
 
     /**

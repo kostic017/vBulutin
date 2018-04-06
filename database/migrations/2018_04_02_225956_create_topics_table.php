@@ -15,16 +15,12 @@ class CreateTopicsTable extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string("slug");
-            $table->string("title");
-
-            $table->boolean("is_locked")->default(false);
-
-            $table->integer("forum_id");
-            $table->integer("solution_id")->nullable();
-            $table->integer("poll_id")->nullable();
-
+            $table->string('slug');
+            $table->string('title');
+            $table->boolean('is_locked')->default(false);
+            $table->integer('forum_id');
+            $table->integer('solution_id')->nullable();
+            $table->integer('poll_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

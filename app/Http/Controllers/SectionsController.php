@@ -8,31 +8,26 @@ use App\Section;
 class SectionsController extends Controller
 {
 
-    public function positions() {
-        $columns = ["id", "title"];
-
-        $sections = Section::orderBy("position")
-                        ->get($columns)
-                        ->toArray();
-
+    public function positions()
+    {
+        $columns = ['id', 'title'];
+        $sections = Section::orderBy('position')
+                           ->get($columns)
+                           ->toArray();
         foreach ($sections as &$section) {
-
-            $section["forums"] = Forum::where("section_id", $section["id"])
-                                    ->whereNull("parent_id")
-                                    ->orderBy("position")
-                                    ->get($columns)
-                                    ->toArray();
-
-            foreach ($section["forums"] as &$forum) {
-                $forum["children"] = Forum::where("parent_id", $forum["id"])
-                                        ->orderBy("position")
-                                        ->get($columns)
-                                        ->toArray();
+            $section['forums'] = Forum::where('section_id', $section['id'])
+                                      ->whereNull('parent_id')
+                                      ->orderBy('position')
+                                      ->get($columns)
+                                      ->toArray();
+            foreach ($section['forums'] as &$forum) {
+                $forum['children'] = Forum::where('parent_id', $forum['id'])
+                                          ->orderBy('position')
+                                          ->get($columns)
+                                          ->toArray();
             }
-
         }
-
-        return view("admin.positions", ["sections" => $sections]);
+        return view('admin.positions', ['sections' => $sections]);
     }
 
     /**
@@ -42,11 +37,11 @@ class SectionsController extends Controller
      */
     public function index()
     {
-        return view("admin.table")
-            ->with("rows", Section::all()->toArray())
-            ->with("table", "sections")
-            ->with("sortColumn", "id")
-            ->with("sortOrder", "asc");
+        return view('admin.table')
+            ->with('table', 'sections')
+            ->with('rows', Section::all(["id", "title", "position"]))
+            ->with('sortColumn', 'id')
+            ->with('sortOrder', 'asc');
     }
 
     /**
@@ -56,7 +51,7 @@ class SectionsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.sections.create');
     }
 
     /**

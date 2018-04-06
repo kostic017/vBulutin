@@ -20,22 +20,22 @@ $factory->define(App\User::class, function (Faker $faker) {
         'username' => $faker->unique()->username,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
 
-        "email" => $faker->unique()->safeEmail,
-        "email_token" => $confirmed ? null : str_random(10),
-        "is_confirmed" => $confirmed,
+        'email' => $faker->unique()->safeEmail,
+        'email_token' => $confirmed ? null : str_random(10),
+        'is_confirmed' => $confirmed,
 
-        "about" => $faker->optional()->paragraph(),
-        "birthday_on" => $faker->optional()->date(),
-        "sex" => $faker->optional()->randomElement(["m", "f", "s"]),
+        'about' => $faker->optional()->paragraph(),
+        'birthday_on' => $faker->optional()->date(),
+        'sex' => $faker->optional()->randomElement(['m', 'f', 's']),
 
-        "job" => $faker->optional()->jobTitle,
+        'job' => $faker->optional()->jobTitle,
         'name' => $faker->optional()->name,
-        "residence" => $faker->optional()->city,
-        "birthplace" => $faker->optional()->city,
-        "avatar" => $faker->optional()->imageUrl(100, 100),
+        'residence' => $faker->optional()->city,
+        'birthplace' => $faker->optional()->city,
+        'avatar' => $faker->optional()->imageUrl(100, 100),
 
-        "is_admin" => $faker->randomElement([true, false]),
-        "is_invisible" => $faker->randomElement([true, false]),
+        'is_admin' => $faker->randomElement([true, false]),
+        'is_invisible' => $faker->randomElement([true, false]),
 
         'remember_token' => str_random(10)
     ];

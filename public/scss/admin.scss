@@ -1,13 +1,24 @@
-@import "admin/fonts";
-@import "admin/variables";
+@import "imports/import";
 
-@import "admin/base";
-@import "admin/content";
+table {
+    margin-top: 10px;
+}
 
-@import "admin/sidebar";
-@import "admin/navbar";
+nav {
+    .list-group {
+        @include margins-but(first, top, 10px);
+    }
 
-@import "admin/table";
-@import "admin/positioning";
+    .list-group-item {
+        padding: 0;
 
-@import "admin/media";
+        a {
+            @include full-block;
+            padding: .75rem 1.25rem;
+        }
+
+        &.active a {
+            color: #fff;
+        }
+    }
+}

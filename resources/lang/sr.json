@@ -1,0 +1,14 @@
+{
+    "Username": "Korisničko ime",
+    "E-Mail Address": "Mejl adresa",
+    "Password": "Lozinka",
+    "Confirm Password": "Potvrdite lozinku",
+    "Register": "Registruj se",
+    "Login": "Prijavi se",
+    "Remember Me": "Zapamti me",
+    "Forgot Your Password?": "Zaboravili ste lozinku?",
+    "Reset Password": "Resetuj lozinku",
+    "Send Password Reset Link": "Pošalji link za reset",
+    "You are logged in": "Sada ste prijavljeni",
+    "Dashboard": "Dashboard"
+}

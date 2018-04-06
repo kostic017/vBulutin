@@ -15,8 +15,8 @@ class CreatePollsTable extends Migration
     {
         Schema::create('polls', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("question");
-            $table->boolean("is_multi")->default(false);
+            $table->string('question');
+            $table->boolean('is_multi')->default(false);
         });
     }
 

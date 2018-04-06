@@ -15,13 +15,10 @@ class CreateUserReportsTable extends Migration
     {
         Schema::create('user_reports', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->text("reason");
-
-            $table->integer("user_id");
-            $table->integer("post_id");
-
-            $table->timestamp("recorded_at")->useCurrent();
+            $table->text('reason');
+            $table->integer('user_id');
+            $table->integer('post_id');
+            $table->timestamp('recorded_at')->useCurrent();
         });
     }
 

@@ -1,0 +1,23 @@
+/// @output Gives a margin on one side to all elements, except one child.
+/// @param {string} $child - first/last/both
+/// @param {string} $side - top/right/bottom/left
+/// @param {number} $ammout
+@mixin margins-but($child, $side, $ammout) {
+    margin-#{$side}: $ammout;
+    @if $child == "last" or $child == "both" {
+        &:last-child {
+            margin-#{$side}: 0;
+        }
+    }
+    @if $child == "first" or $child == "both" {
+        &:first-child {
+            margin-#{$side}: 0;
+        }
+    }
+}
+
+@mixin full-block {
+    width   : 100%;
+    height  : 100%;
+    display : block;
+}

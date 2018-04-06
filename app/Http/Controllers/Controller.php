@@ -14,12 +14,14 @@ class Controller extends BaseController
 
     protected $logger;
 
-    public function __construct() {
-        $this->logger = new FileLogger("forum41");
+    public function __construct()
+    {
+        $this->logger = new FileLogger('forum41');
     }
 
-    protected function isEqualToAnyWord(string $haystack, string $needle, bool $ignoreCase = true): bool {
-        $words = explode(" ", $haystack);
+    protected function isEqualToAnyWord(string $haystack, string $needle, bool $ignoreCase = true): bool
+    {
+        $words = explode(' ', $haystack);
 
         if ($ignoreCase) {
             $needle = strtolower($needle);
