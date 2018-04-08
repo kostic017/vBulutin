@@ -1,14 +1,14 @@
 @extends('admin.base')
 
 @section('more-styles')
-    <link rel="stylesheed" href="{{ asset('css/summernote.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/summernote/summernote-bs4.css') }}">
 @stop
 
 @section('more-content')
     <div class="card">
 
         <div class="card-header">
-            <strong>Napravi novu sekciju</strong>
+            <strong>{{ __('Create New Section') }}</strong>
         </div>
 
         <div class="card-body">
@@ -16,19 +16,19 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="title">Naslov</label>
+                    <label for="title">{{ __('Title') }}</label>
                     <input type="text" id="title" name="title" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="description">Opis</label>
-                    <textarea name="description" id="description" cols="5" rows="5" class="form-control"></textarea>
+                    <label for="description">{{ __('Description') }}</label>
+                    <textarea name="description" id="description" cols="5" rows="5"></textarea>
                 </div>
 
                 <div class="form-group">
                     <div class="text-center">
                         <button class="btn btn-success" type="submit">
-                            Napravi sekciju
+                            {{ __('Create New Section') }}
                         </button>
                     </div>
                 </div>
@@ -40,5 +40,9 @@
 @stop
 
 @section('more-scripts')
-    <script src="{{ asset('js/summernote.min.js') }}"></script>
+    <script src="{{ asset('lib/summernote/summernote-bs4.min.js') }}"></script>
+
+    <script>
+        $('textarea').summernote();
+    </script>
 @stop

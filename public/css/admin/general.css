@@ -1,0 +1,60 @@
+.icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url(/img/sprites/phpMyAdmin.png);
+}
+
+.icon.ic_b_edit {
+  background-position: 0 -224px;
+}
+
+.icon.ic_b_drop {
+  background-position: 0 -208px;
+}
+
+.icon.ic_s_asc {
+  background-position: 0 -2032px;
+}
+
+.icon.ic_s_desc {
+  background-position: 0 -2144px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+nav .list-group {
+  margin-top: 10px;
+}
+
+nav .list-group:first-child {
+  margin-top: 0;
+}
+
+nav .list-group-item {
+  padding: 0;
+}
+
+nav .list-group-item a {
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: .75rem 1.25rem;
+}
+
+nav .list-group-item.active a {
+  color: #fff;
+}
+

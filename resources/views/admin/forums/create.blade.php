@@ -8,23 +8,23 @@
     <div class="card">
 
         <div class="card-header">
-            <strong>Napravi novi forum</strong>
+            <strong>{{ __('Create New Forum') }}</strong>
         </div>
 
         <div class="card-body">
             @if (empty($sections))
-                <p>Morate napraviti bar jednu sekciju.</p>
+                <p>{{ __('You have to create at least one section') }}.</p>
             @else
                 <form action="{{ route('forums.store') }}" method="post">
                     @csrf
 
                     <div class="form-group">
-                        <label for="title">Naslov <span class="text-danger font-weight-bold">*</span></label>
+                        <label for="title">{{ __('Title') }} <span class="text-danger font-weight-bold">*</span></label>
                         <input type="text" id="title" name="title" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="section_id">Sekcija <span class="text-danger font-weight-bold">*</span></label>
+                        <label for="section_id">{{ __('Section') }} <span class="text-danger font-weight-bold">*</span></label>
                         <select name="sectiond_id" id="section_id" class="form-control">
                             @foreach ($sections as $section)
                                 <option value="{{ $section->id }}">{{ $section->title }}</option>
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="parent_id">Natforum</label>
+                        <label for="parent_id">{{ __('Parent Forum') }}</label>
                         <select name="parent_id" id="parent_id" class="form-control">
                             <option value="" selected></option>
                             @foreach ($rootForums as $rootForum)
@@ -43,14 +43,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Opis</label>
+                        <label for="description">{{ __('Description') }}</label>
                         <textarea name="description" id="description" cols="5" rows="5" class="form-control"></textarea>
                     </div>
 
                     <div class="form-group">
                         <div class="text-center">
                             <button class="btn btn-success" type="submit">
-                                Napravi forum
+                                {{ __('Create New Forum') }}
                             </button>
                         </div>
                     </div>

@@ -1,0 +1,17 @@
+@import '../common/import';
+
+nav {
+    .list-group {
+        @include margins-but(first, top, 10px);
+    }
+    .list-group-item {
+        padding: 0;
+        a {
+            @include full-block;
+            padding: .75rem 1.25rem;
+        }
+        &.active a {
+            color: #fff;
+        }
+    }
+}

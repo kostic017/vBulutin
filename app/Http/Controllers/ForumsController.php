@@ -14,9 +14,11 @@ class ForumsController extends Controller
      */
     public function index()
     {
+        $perPage = request()->query('perPage', 10);
+        $forums = Forum::select(['id', 'title', 'position'])->paginate($perPage);
         return view('admin.table')
                 ->with('table', 'forums')
-                ->with('rows', Forum::all(['id', 'title', 'position']))
+                ->with('rows', $forums)
                 ->with('sortColumn', 'id')
                 ->with('sortOrder', 'asc');
     }

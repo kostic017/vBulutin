@@ -1,3 +1,81 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 42:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(43);
+
+
+/***/ }),
+
+/***/ 43:
+/***/ (function(module, exports) {
+
 $(function () {
     $(".dd").nestable({
         maxDepth: 2,
@@ -11,10 +89,10 @@ $(function () {
     });
 
     $(".forums-tree-controls").on("click", function (e) {
-        const action = $(e.target).text();
+        var action = $(e.target).text();
         if (isEqualToAnyWord("- +", action)) {
             // we are interested in a particular section
-            const dd = $(this).parents(".section-header").siblings(".dd");
+            var dd = $(this).parents(".section-header").siblings(".dd");
             if (action === "+") {
                 dd.nestable("expandAll");
             } else if (action === "-") {
@@ -24,11 +102,11 @@ $(function () {
     });
 
     $(".sections-tree-controls").on("click", function (e) {
-        const action = $(e.target).text();
+        var action = $(e.target).text();
         if (isEqualToAnyWord("- +", action)) {
             // we are interested in all sections
-            const dds = $(".dd");
-            const btns = $(".section-tree-control");
+            var dds = $(".dd");
+            var btns = $(".section-tree-control");
             if (action === "-") {
                 dds.hide();
                 btns.attr("data-action", "");
@@ -40,7 +118,7 @@ $(function () {
     });
 
     $(".section-tree-control").on("click", function () {
-        const dds = $(this).parents(".section-header").siblings(".dd");
+        var dds = $(this).parents(".section-header").siblings(".dd");
         if ($(this).attr("data-action") === "collapse") {
             dds.hide();
             $(this).attr("data-action", "");
@@ -51,9 +129,9 @@ $(function () {
     });
 
     $("button[name=save]").on("click", function () {
-        const data = {};
+        var data = {};
 
-        let position = 1;
+        var position = 1;
         $(".dd").each(function () {
             data[$(this).data("sectionid")] = {
                 position: position++,
@@ -61,10 +139,14 @@ $(function () {
             };
         });
 
-        $.post(route("ajax.save.positions"), { data }, function () {
+        $.post(route("ajax.positions"), { data: data }, function () {
             toastr.success(i18n.toastr.success);
         }).fail(function () {
             toastr.error(i18n.toastr.error);
         });
     });
 });
+
+/***/ })
+
+/******/ });

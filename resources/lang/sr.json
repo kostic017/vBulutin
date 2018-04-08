@@ -10,5 +10,20 @@
     "Reset Password": "Resetuj lozinku",
     "Send Password Reset Link": "Pošalji link za reset",
     "You Are Now Logged In": "Uspešno ste se prijavili",
-    "Dashboard": "Komandni panel"
+    "Dashboard": "Komandni panel",
+    "Logout": "Odjavi se",
+    "Create New Section": "Napravi novu sekciju",
+    "Create New Forum": "Napravi novi forum",
+    "Title": "Naslov",
+    "View": "Pregledaj",
+    "Edit": "Izmeni",
+    "Delete": "Obriši",
+    "Home": "Početna",
+    "Sections": "Sekcije",
+    "Forums": "Forumi",
+    "Positioning": "Pozicioniranje",
+    "Save": "Sačuvaj",
+    "Description": "Opis",
+    "Parent Forum": "Natforum",
+    "You have to create at least one section": "Morate napraviti bar jednu sekciju"
 }

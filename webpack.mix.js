@@ -1,4 +1,11 @@
+let fs = require('fs');
 let mix = require('laravel-mix');
+
+let getFiles = function (dir) {
+    return fs.readdirSync(dir).filter(file => {
+        return fs.statSync(`${dir}/${file}`).isFile();
+    });
+};
 
 /*
  |--------------------------------------------------------------------------
@@ -12,4 +19,18 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+    .js('resources/assets/js/admin/table.js', 'public/js/admin')
+    .js('resources/assets/js/admin/positions.js', 'public/js/admin');
+
+mix.copy('node_modules/froala-editor/js/froala_editor.min.js', 'public/js/froala-editor.min.js');
+
+mix.scripts([
+    'resources/assets/js/functions.js',
+], 'public/js/common.js');
+
+mix.sass('resources/assets/sass/app.scss', 'public/css');
+
+getFiles('resources/assets/sass/admin').forEach(function (filepath) {
+    mix.sass('resources/assets/sass/admin/' + filepath, 'public/css/admin');
+});
+

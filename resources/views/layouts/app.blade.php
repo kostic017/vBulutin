@@ -18,7 +18,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <link rel="stylesheet" href="{{ asset('lib/toastr/toastr.min.css') }}">
 
         @yield("styles")
         @routes
@@ -49,14 +49,12 @@
                             @else
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                        {{ Auth::user()->name ?? Auth::user()->username }} <span class="caret"></span>
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">{{ __('Logout') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -74,18 +72,22 @@
             </main>
         </div>
 
-        <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/common.js') }} "></script>
         <script src="{{ route('assets.lang') }}"></script>
-        <script src="{{ asset('js/functions.js') }}"></script>
+        <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 
-        <script>
-            @if (Session::has('error'))
-                toastr.error({{ __(Session::get('error')) }})
-            @elseif (Session::has('success'))
-                toastr.success({{ __(Session::get('success')) }})
-            @endif
-        </script>
+        @if (Session::has('error') || Session::has('success'))
+            <script>
+                $(function() {
+                    @if (Session::has('error'))
+                        toastr.error({{ __(Session::get('error')) }})
+                    @elseif (Session::has('success'))
+                        toastr.success({{ __(Session::get('success')) }})
+                    @endif
+                });
+            </script>
+        @endif
 
         @yield('scripts')
 

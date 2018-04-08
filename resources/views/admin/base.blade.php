@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/general.css') }}">
     @yield('more-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 @stop
 
 @section('content')
@@ -12,18 +12,18 @@
                 <nav>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri(['admin'])) }}">
-                            <a href="/admin/">Početna</a>
+                            <a href="/admin/">{{ __('Home') }}</a>
                         </li>
                     </ul>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_route('sections.index')) }}">
-                            <a href="{{ route('sections.index') }}">Sekcije</a>
+                            <a href="{{ route('sections.index') }}">{{ __('Sections') }}</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_route('forums.index')) }}">
-                            <a href="{{ route('forums.index') }}">Forumi</a>
+                            <a href="{{ route('forums.index') }}">{{ __('Forums') }}</a>
                         </li>
                         <li class="list-group-item  {{ active_class(if_route('admin.positions')) }}">
-                            <a href="{{ route('admin.positions') }}">Pozicioniranje</a>
+                            <a href="{{ route('admin.positions') }}">{{ __('Positioning') }}</a>
                         </li>
                     </ul>
                 </nav>
@@ -36,6 +36,5 @@
 @stop
 
 @section('scripts')
-    <script src="{{ asset('js/admin/general.js') }}"></script>
     @yield('more-scripts')
 @stop

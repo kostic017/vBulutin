@@ -15,9 +15,11 @@ class SectionsController extends Controller
      */
     public function index()
     {
+        $perPage = request()->query('perPage', 10);
+        $sections = Section::select(['id', 'title', 'position'])->paginate($perPage);
         return view('admin.table')
             ->with('table', 'sections')
-            ->with('rows', Section::all(["id", "title", "position"]))
+            ->with('rows', $sections)
             ->with('sortColumn', 'id')
             ->with('sortOrder', 'asc');
     }

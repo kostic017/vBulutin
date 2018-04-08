@@ -1,18 +1,15 @@
 @extends("admin.base")
 
 @section("more-styles")
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-@stop
-
-@section("title")
-    Pozicioniranje
+    <link rel="stylesheet" href="{{ asset('css/admin/positions.css') }}">
+    <link rel="stylesheet" href="{{ asset('lib/jquery-ui/jquery-ui.min.css') }}">
 @stop
 
 @section("more-content")
     <div class="positioning-buttons">
         <div>
             <form action="" method="post">
-                <button type="button" name="save">Sačuvaj</button>
+                <button type="button" name="save">{{ __('Save') }}</button>
             </form>
         </div>
         <div class="sections-tree-controls collapse-buttons">
@@ -65,7 +62,7 @@
 @stop
 
 @section("more-scripts")
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-nestable@0.8.0/jquery.nestable.min.js"></script>
+    <script src="{{ asset('lib/jquery-ui/jquery.min.js"></script>
+    <script src="{{ asset('lib/jquery-nestable/jquery.nestable.js') }}"></script>
     <script src="{{ asset("js/admin/positions.js") }}"></script>
 @stop
