@@ -8,28 +8,6 @@ use App\Section;
 class SectionsController extends Controller
 {
 
-    public function positions()
-    {
-        $columns = ['id', 'title'];
-        $sections = Section::orderBy('position')
-                           ->get($columns)
-                           ->toArray();
-        foreach ($sections as &$section) {
-            $section['forums'] = Forum::where('section_id', $section['id'])
-                                      ->whereNull('parent_id')
-                                      ->orderBy('position')
-                                      ->get($columns)
-                                      ->toArray();
-            foreach ($section['forums'] as &$forum) {
-                $forum['children'] = Forum::where('parent_id', $forum['id'])
-                                          ->orderBy('position')
-                                          ->get($columns)
-                                          ->toArray();
-            }
-        }
-        return view('admin.positions', ['sections' => $sections]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -108,5 +86,27 @@ class SectionsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function positions()
+    {
+        $columns = ['id', 'title'];
+        $sections = Section::orderBy('position')
+                           ->get($columns)
+                           ->toArray();
+        foreach ($sections as &$section) {
+            $section['forums'] = Forum::where('section_id', $section['id'])
+                                      ->whereNull('parent_id')
+                                      ->orderBy('position')
+                                      ->get($columns)
+                                      ->toArray();
+            foreach ($section['forums'] as &$forum) {
+                $forum['children'] = Forum::where('parent_id', $forum['id'])
+                                          ->orderBy('position')
+                                          ->get($columns)
+                                          ->toArray();
+            }
+        }
+        return view('admin.positions', ['sections' => $sections]);
     }
 }
