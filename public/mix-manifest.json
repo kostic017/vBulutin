@@ -6,5 +6,5 @@
     "/css/app.css": "/css/app.css",
     "/js/admin/table.js": "/js/admin/table.js",
     "/js/admin/positions.js": "/js/admin/positions.js",
-    "/js/common.js": "/js/common.js"
+    "/js/admin/force-section.js": "/js/admin/force-section.js"
 }

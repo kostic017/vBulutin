@@ -43,9 +43,15 @@ Route::group(['prefix' => '/ajax'], function () {
         'as' => 'ajax.sort',
         'uses' => 'AjaxController@sort'
     ]);
+
     Route::post('/positions/save', [
         'as' => 'ajax.positions',
         'uses' => 'AjaxController@positions'
+    ]);
+
+    Route::post('/getParentSection', [
+        'as' => 'ajax.getParentSection',
+        'uses' => 'AjaxController@getParentSection'
     ]);
 });
 

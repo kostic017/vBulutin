@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Session;
+use Exception;
 use App\Forum;
 use App\Section;
 use Illuminate\Support\Facades\DB;
@@ -47,13 +48,28 @@ class AjaxController extends Controller
                     }
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $message = 'AJAXController@positions: ';
             $message .= $e->getMessage();
             $this->logger->addRecord('error', $message);
             return response()->json([
                 'status' => 'error',
                 'message' => 'An error occurred!'
+            ], 500);
+        }
+    }
+
+    public function getParentSection() {
+        $id = request()->id;
+        if ($forum = Forum::where('id', $id)->first()) {
+            return response()->json(['section_id' => $forum->section_id]);
+        } else {
+            $message = 'AJAXController@parentSection: ';
+            $message .= "Forum with id {$id} does not exists.";
+            $this->logger->addRecord('error', $message);
+            return response()->json([
+                'status' => 'error',
+                'message' => "Forum with id {$id} does not exists."
             ], 500);
         }
     }

@@ -25,7 +25,7 @@
 
                     <div class="form-group">
                         <label for="section_id">{{ __('Section') }} <span class="text-danger font-weight-bold">*</span></label>
-                        <select name="sectiond_id" id="section_id" class="form-control">
+                        <select name="section_id" id="section_id" class="form-control">
                             @foreach ($sections as $section)
                                 <option value="{{ $section->id }}">{{ $section->title }}</option>
                             @endforeach
@@ -64,5 +64,6 @@
 @stop
 
 @section('more-scripts')
-    <script src="{{ asset('js/summernote.min.js') }}"></script>
+    <script src="{{ asset('lib/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/admin/force-section.js') }}"></script>
 @stop

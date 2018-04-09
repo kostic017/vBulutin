@@ -19,13 +19,9 @@ let getFiles = function (dir) {
  */
 
 mix.js('resources/assets/js/app.js', 'public/js/app.js')
+    .js('resources/assets/js/admin/force-section.js', 'public/js/admin')
     .js('resources/assets/js/admin/table.js', 'public/js/admin')
     .js('resources/assets/js/admin/positions.js', 'public/js/admin');
-
-mix.scripts([
-    'resources/assets/js/general.js',
-    'resources/assets/js/functions.js',
-], 'public/js/common.js');
 
 getFiles('resources/assets/sass/admin').forEach(function (filepath) {
     mix.sass('resources/assets/sass/admin/' + filepath, 'public/css/admin');
