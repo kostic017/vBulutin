@@ -62,7 +62,7 @@
 @stop
 
 @section("more-scripts")
-    <script src="{{ asset('lib/jquery-ui/jquery.min.js"></script>
-    <script src="{{ asset('lib/jquery-nestable/jquery.nestable.js') }}"></script>
+    <script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('lib/jquery-nestable/jquery.nestable.min.js') }}"></script>
     <script src="{{ asset("js/admin/positions.js") }}"></script>
 @stop

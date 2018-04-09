@@ -1,9 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
     "/css/admin/general.css": "/css/admin/general.css",
     "/css/admin/positions.css": "/css/admin/positions.css",
     "/css/admin/table.css": "/css/admin/table.css",
+    "/css/app.css": "/css/app.css",
     "/js/admin/table.js": "/js/admin/table.js",
     "/js/admin/positions.js": "/js/admin/positions.js",
     "/js/common.js": "/js/common.js"
