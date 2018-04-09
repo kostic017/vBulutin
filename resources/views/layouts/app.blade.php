@@ -77,6 +77,8 @@
         <script src="{{ route('assets.lang') }}"></script>
         <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 
+        @yield('scripts')
+
         @if (Session::has('error') || Session::has('success'))
             <script>
                 $(function() {
@@ -84,14 +86,12 @@
                         toastr.error({{ __(Session::get('error')) }})
                     @elseif (Session::has('success'))
                         toastr.success({{ __(Session::get('success')) }})
+                    @elseif (Session::has('info'))
+                        toastr.info({{ __(Session::get('success')) }})
                     @endif
                 });
             </script>
         @endif
-
-        <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('js/common.js') }}"></script>
-        @yield('scripts')
 
     </body>
 

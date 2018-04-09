@@ -16,10 +16,10 @@
                         </li>
                     </ul>
                     <ul class="list-group">
-                        <li class="list-group-item {{ active_class(if_route('sections.index')) }}">
+                        <li class="list-group-item {{ active_class(if_uri_pattern('admin/sections*')) }}">
                             <a href="{{ route('sections.index') }}">{{ __('Sections') }}</a>
                         </li>
-                        <li class="list-group-item {{ active_class(if_route('forums.index')) }}">
+                        <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*')) }}">
                             <a href="{{ route('forums.index') }}">{{ __('Forums') }}</a>
                         </li>
                         <li class="list-group-item  {{ active_class(if_route('admin.positions')) }}">

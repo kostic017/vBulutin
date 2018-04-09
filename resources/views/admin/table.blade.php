@@ -12,20 +12,20 @@
                 {{ $table === 'sections' ? __('Create New Section') : __('Create New Forum') }}
             </a>
         </div>
-        <div class="col-2 justify-content-right">
+        <div class="col-3 col-lg-2 justify-content-right">
             <form action="{{ route("{$table}.index") }}" method="get">
                 <select name="perPage" class="form-control">
-                    <option value="0">INF</option>
-                    <option value="10" selected>10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="40">40</option>
-                    <option value="50">50</option>
-                    <option value="60">60</option>
-                    <option value="70">70</option>
-                    <option value="80">80</option>
-                    <option value="90">90</option>
-                    <option value="100">100</option>
+                    <option value="0" {{ $perPage === 0 ? 'selected' : '' }}>&infin;</option>
+                    <option value="10" {{ $perPage === 10 ? 'selected' : '' }}>10</option>
+                    <option value="20" {{ $perPage === 20 ? 'selected' : '' }}>20</option>
+                    <option value="30" {{ $perPage === 30 ? 'selected' : '' }}>30</option>
+                    <option value="40" {{ $perPage === 40 ? 'selected' : '' }}>40</option>
+                    <option value="50" {{ $perPage === 50 ? 'selected' : '' }}>50</option>
+                    <option value="60" {{ $perPage === 60 ? 'selected' : '' }}>60</option>
+                    <option value="70" {{ $perPage === 70 ? 'selected' : '' }}>70</option>
+                    <option value="80" {{ $perPage === 80 ? 'selected' : '' }}>80</option>
+                    <option value="90" {{ $perPage === 90 ? 'selected' : '' }}>90</option>
+                    <option value="100" {{ $perPage === 100 ? 'selected' : '' }}>100</option>
                 <select>
             </form>
         </div>
@@ -74,9 +74,11 @@
         </tbody>
     </table>
 
-    <div class="row justify-content-center">
-        {{ $rows->links() }}
-    </div>
+    @if ($perPage > 0)
+        <div class="row justify-content-center">
+            {{ $rows->appends('perPage', $perPage)->links() }}
+        </div>
+    @endif
 
     <div id="overlay"></div>
 @stop

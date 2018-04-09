@@ -1,9 +1,5 @@
 @extends('admin.base')
 
-@section('more-styles')
-    <link rel="stylesheed" href="{{ asset('css/summernote.css') }}">
-@stop
-
 @section('more-content')
     <div class="card">
 
@@ -64,6 +60,5 @@
 @stop
 
 @section('more-scripts')
-    <script src="{{ asset('lib/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/admin/force-section.js') }}"></script>
 @stop

@@ -1,8 +1,6 @@
 @extends('admin.base')
 
-@section('more-styles')
-    <link rel="stylesheet" href="{{ asset('lib/summernote/summernote-bs4.css') }}">
-@stop
+@include('admin.includes.sceditor')
 
 @section('more-content')
     <div class="card">
@@ -17,12 +15,18 @@
 
                 <div class="form-group">
                     <label for="title">{{ __('Title') }}</label>
-                    <input type="text" id="title" name="title" class="form-control" required>
+                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}" required>
+
+                    @if ($errors->has('title'))
+                        <span class="invalid-feedback" style="display:block">
+                            <strong>{{ $errors->first('title') }}</strong>
+                        </span>
+                    @endif
                 </div>
 
                 <div class="form-group">
                     <label for="description">{{ __('Description') }}</label>
-                    <textarea name="description" id="description" cols="5" rows="5"></textarea>
+                    <textarea class="sceditor" name="description" id="description" value="{{ old('description') }}"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -37,12 +41,4 @@
         </div>
 
     </div>
-@stop
-
-@section('more-scripts')
-    <script src="{{ asset('lib/summernote/summernote-bs4.min.js') }}"></script>
-
-    <script>
-        $('textarea').summernote();
-    </script>
 @stop

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Forum;
 use App\Section;
 
@@ -14,13 +15,19 @@ class ForumsController extends Controller
      */
     public function index()
     {
-        $perPage = request()->query('perPage', 10);
-        $forums = Forum::select(['id', 'title', 'position'])->paginate($perPage);
+        $perPage = (int)request()->query('perPage', 10);
+        $forums = Forum::select(['id', 'title', 'position']);
+        if ($perPage > 0) {
+            $forums = $forums->paginate($perPage);
+        } else {
+            $forums = $forums->get();
+        }
         return view('admin.table')
-                ->with('table', 'forums')
-                ->with('rows', $forums)
-                ->with('sortColumn', 'id')
-                ->with('sortOrder', 'asc');
+            ->with('table', 'forums')
+            ->with('rows', $forums)
+            ->with('sortColumn', 'id')
+            ->with('sortOrder', 'asc')
+            ->with('perPage', $perPage);
     }
 
     /**
@@ -56,7 +63,11 @@ class ForumsController extends Controller
      */
     public function show($id)
     {
-        //
+        if ($forum = Forum::where('id', $id)->first()) {
+            return view('admin.forums.show')->with('section', $forum);
+        }
+        Session::flush('info', "Data you're searching for doesn't exist");
+        return view('admin.forum.index');
     }
 
     /**

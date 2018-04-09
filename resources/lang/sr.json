@@ -26,5 +26,6 @@
     "Save": "Sačuvaj",
     "Description": "Opis",
     "Parent Forum": "Natforum",
-    "You have to create at least one section": "Morate napraviti bar jednu sekciju"
+    "You have to create at least one section": "Morate napraviti bar jednu sekciju",
+    "Data you're searching for doesn't exist": "Ne postoji traženi podatak"
 }

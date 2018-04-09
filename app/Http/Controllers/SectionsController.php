@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+use Validator;
 use App\Forum;
 use App\Section;
+use Illuminate\Http\Request;
 
 class SectionsController extends Controller
 {
@@ -15,13 +18,19 @@ class SectionsController extends Controller
      */
     public function index()
     {
-        $perPage = request()->query('perPage', 10);
-        $sections = Section::select(['id', 'title', 'position'])->paginate($perPage);
+        $perPage = (int)request()->query('perPage', 10);
+        $sections = Section::select(['id', 'title', 'position']);
+        if ($perPage > 0) {
+            $sections = $sections->paginate($perPage);
+        } else {
+            $sections = $sections->get();
+        }
         return view('admin.table')
             ->with('table', 'sections')
             ->with('rows', $sections)
             ->with('sortColumn', 'id')
-            ->with('sortOrder', 'asc');
+            ->with('sortOrder', 'asc')
+            ->with('perPage', $perPage);
     }
 
     /**
@@ -42,7 +51,22 @@ class SectionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255|unique:sections'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $section = new Section;
+        $section->title = $request->title;
+        $section->description = $request->description;
+        $section->position = Section::max('position') + 1;
+        $section->save();
+
+        Session::flush("Section successfully created.");
+        return redirect(route('sections.index'));
     }
 
     /**
@@ -53,7 +77,11 @@ class SectionsController extends Controller
      */
     public function show($id)
     {
-        //
+        if ($section = Section::where('id', $id)->first()) {
+            return view('admin.sections.show')->with('section', $section);
+        }
+        Session::flush('info', "Data you're searching for doesn't exist");
+        return view('admin.sections.index');
     }
 
     /**
