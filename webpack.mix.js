@@ -23,6 +23,7 @@ mix.js('resources/assets/js/app.js', 'public/js/app.js')
     .js('resources/assets/js/admin/positions.js', 'public/js/admin');
 
 mix.scripts([
+    'resources/assets/js/general.js',
     'resources/assets/js/functions.js',
 ], 'public/js/common.js');
 
