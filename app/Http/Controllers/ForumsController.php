@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Session;
+use Validator;
 use App\Forum;
 use App\Section;
+use Illuminate\Http\Request;
 
 class ForumsController extends Controller
 {
@@ -52,7 +54,40 @@ class ForumsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        if (isset($request->parent_id)) {
+            $request->section_id = Forum::where('id', $request->parent_id)->pluck('section_id')->first();
+        }
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255|unique:forums',
+            'section_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $forum = new Forum;
+        $forum->title = $request->title;
+        $forum->description = e($request->description);
+        $forum->section_id = $request->section_id;
+        $forum->parent_id = $request->parent_id ?? null;
+
+        if ($forum->parent_id) {
+            $where = ['parent_id' => $forum->parent_id];
+        } else {
+            $where = [
+                ['section_id' => $forum->section_id],
+                ['parent_id' => null]
+            ];
+        }
+
+        $forum->position = Forum::where($where)->max('position') + 1;
+        $forum->save();
+
+        Session::flush("Forum successfully created.");
+        return redirect(route('forums.index'));
     }
 
     /**
@@ -64,7 +99,7 @@ class ForumsController extends Controller
     public function show($id)
     {
         if ($forum = Forum::where('id', $id)->first()) {
-            return view('admin.forums.show')->with('section', $forum);
+            return view('admin.forums.show')->with('forum', $forum);
         }
         Session::flush('info', "Data you're searching for doesn't exist");
         return view('admin.forum.index');

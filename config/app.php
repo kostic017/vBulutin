@@ -152,6 +152,7 @@ return [
         /*
          * Package Service Providers...
          */
+        \Genert\BBCode\BBCodeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,6 +179,7 @@ return [
     'aliases' => [
 
         'Active' => HieuLe\Active\Facades\Active::class,
+        'BBCode' => \Genert\BBCode\Facades\BBCode::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

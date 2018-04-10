@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Session;
 use App\User;
+use Illuminate\Http\Request;
 use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -57,6 +60,25 @@ class RegisterController extends Controller
     }
 
     /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+
+        Session::flash('success', 'emails.email_confirmation');
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
+    }
+
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -64,25 +86,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            "email_token" => str_random(30),
-            'password' => Hash::make($data['password']),
-        ]);
-        Session::flash("success", "email_confirmation");
+        $user = new User;
+        $user->username = $data['username'];
+        $user->email = $data['email'];
+        $user->email_token = str_random(30);
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
         $user->notify(new ConfirmEmail($user->email_token));
         return $user;
     }
 
     public function confirm(string $token) {
         if (User::where("email_token", $token)->first()) {
-            Session::flash("success", "email_confirmed");
-            return view("auth.login");
+            Session::flash("success", __('You have successfully confirmed your email.'));
+            $this->guard()->login($user);
+            return redirect($this->redirectPath());
         }
-        $message = "RegisterController@confirm: ";
+        $message = 'RegisterController@confirm: ';
         $message .= "No user associated with provided token ('{$token}').";
         $this->$logger->addRecord("error", $message);
-        return redirect()->back();
+        Session::flash(__('Token is wrong or expired! You may need to register again.'));
+        return redirect(route('login'));
     }
 }

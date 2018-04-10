@@ -61,7 +61,7 @@ class SectionsController extends Controller
 
         $section = new Section;
         $section->title = $request->title;
-        $section->description = $request->description;
+        $section->description = e($request->description);
         $section->position = Section::max('position') + 1;
         $section->save();
 

@@ -5,7 +5,7 @@ namespace App\Notifications;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ConfirmEmail extends Notification
+class ResetPassword extends Notification
 {
     /**
      * The email confirmation token.
@@ -44,9 +44,9 @@ class ConfirmEmail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line(__('emails.email_confirm_line1'))
-            ->action(__('emails.email_confirm_action'), url('confirm', $this->token, false))
-            ->line(__('emails.email_confirm_line2'));
+            ->line(__('emails.password_reset_line1'))
+            ->action(__('emails.password_reset_action'), url('password/reset', $this->token) . '?email=' . urlencode($notifiable->email))
+            ->line(__('emails.password_reset_line2'));
     }
 
 }

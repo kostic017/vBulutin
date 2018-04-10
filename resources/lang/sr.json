@@ -27,5 +27,9 @@
     "Description": "Opis",
     "Parent Forum": "Natforum",
     "You have to create at least one section": "Morate napraviti bar jednu sekciju",
-    "Data you're searching for doesn't exist": "Ne postoji traženi podatak"
+    "Data you're searching for doesn't exist": "Ne postoji traženi podatak",
+    "Token is wrong or expired! You may need to register again.": "Token je pogrešan ili je istekao! Možda ćete morati da se registrujete opet.",
+    "You have successfully confirmed your email.": "Uspešno ste potvrdili svoj mejl.",
+    "Hello!": "Zdravo!",
+    "Whoops!": "Upsić!"
 }

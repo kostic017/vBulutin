@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            @if (empty($sections))
+            @if ($sections->isEmpty())
                 <p>{{ __('You have to create at least one section') }}.</p>
             @else
                 <form action="{{ route('forums.store') }}" method="post">
