@@ -73,9 +73,23 @@ class RegisterController extends Controller
 
         // $this->guard()->login($user);
 
-        Session::flash('success', 'emails.email_confirmation');
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        return redirect(route('login'))->with([
+            'alert-type' => 'info',
+            'message' => 'We have sent you a confirmation link. Please check your mail.'
+        ]);
     }
 
     /**
@@ -99,14 +113,18 @@ class RegisterController extends Controller
 
     public function confirm(string $token) {
         if (User::where("email_token", $token)->first()) {
-            Session::flash("success", __('You have successfully confirmed your email.'));
             $this->guard()->login($user);
-            return redirect($this->redirectPath());
+            return redirect($this->redirectPath())->with([
+                'alert-type' => 'success',
+                'message' => 'You have successfully confirmed your email.'
+            ]);
         }
         $message = 'RegisterController@confirm: ';
         $message .= "No user associated with provided token ('{$token}').";
         $this->$logger->addRecord("error", $message);
-        Session::flash(__('Token is wrong or expired! You may need to register again.'));
-        return redirect(route('login'));
+        return redirect(route('login'))->with([
+            'alert-type' => 'error',
+            'message' => 'Token is wrong or expired! You may need to register again.'
+        ]);
     }
 }

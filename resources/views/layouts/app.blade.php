@@ -79,17 +79,15 @@
 
         @yield('scripts')
 
-        @if (Session::has('error') || Session::has('success'))
+        @if (Session::has('message'))
             <script>
-                $(function() {
-                    @if (Session::has('error'))
-                        toastr.error({{ __(Session::get('error')) }})
-                    @elseif (Session::has('success'))
-                        toastr.success({{ __(Session::get('success')) }})
-                    @elseif (Session::has('info'))
-                        toastr.info({{ __(Session::get('success')) }})
-                    @endif
-                });
+                let type = "{{ Session::get('alert-type', 'info') }}";
+                switch (type) {
+                    case 'info': toastr.info("{{ Session::get('message') }}"); break;
+                    case 'warning': toastr.warning("{{ Session::get('message') }}"); break;
+                    case 'success': toastr.success("{{ Session::get('message') }}"); break;
+                    case 'error': toastr.error("{{ Session::get('message') }}"); break;
+                }
             </script>
         @endif
 

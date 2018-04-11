@@ -24,7 +24,11 @@
                                 <input id="password" type="password" class="form-control" name="password" required>
                                 @if ($errors->any())
                                     <span class="invalid-feedback" style="display:block">
-                                        <strong>{{ __("auth.failed") }}</strong>
+                                        <ul class="m-0 list-unstyled">
+                                            @foreach ($errors->all() as $error)
+                                                <li><strong>{{ $error }}</strong></li>
+                                            @endforeach
+                                        </ul>
                                     </span>
                                 @endif
                             </div>

@@ -31,5 +31,7 @@
     "Token is wrong or expired! You may need to register again.": "Token je pogrešan ili je istekao! Možda ćete morati da se registrujete opet.",
     "You have successfully confirmed your email.": "Uspešno ste potvrdili svoj mejl.",
     "Hello!": "Zdravo!",
-    "Whoops!": "Upsić!"
+    "Whoops!": "Upsić!",
+    "You have not confirmed your email address.": "Niste potvrdili svoj mejl.",
+    "We have sent you a confirmation link. Please check your mail.": "Poslali smo Vam link za potvrdu. Proverite svoj mejl."
 }
