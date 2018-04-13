@@ -15,6 +15,7 @@
             @if ($sections->isEmpty())
                 <p>{{ __('You have to create at least one section') }}.</p>
             @else
+                <p>Automatski zauzima poslednju poziciju, koju kasnije možete promeniti preko stranice za <a href="{{ route('admin.positions') }}">pozicioniranje</a>.</p>
                 <form action="{{ route('forums.store') }}" method="post">
                     @csrf
 

@@ -101,7 +101,7 @@ class ForumsController extends Controller
                                             ->with('parentForum', $parentForum);
         }
         Session::flush('info', "Data you're searching for doesn't exist");
-        return view('admin.forum.index');
+        return redirect(route('forums.index'));
     }
 
     /**
@@ -112,7 +112,11 @@ class ForumsController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ($forum = Forum::find($id)) {
+            return view('admin.forums.edit')->with('forum', $forum);
+        }
+        Session::flush('info', "Data you're searching for doesn't exist");
+        return redirect(route('forums.index'));
     }
 
     /**
@@ -124,7 +128,25 @@ class ForumsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => "required|max:255|unique:forums,title,{$id}",
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        if ($forum = Forum::find($id)) {
+            $forum->title = $request->title;
+            $forum->description = e($request->description);
+            $forum->save();
+
+            Session::flush("Forum successfully updated.");
+        } else {
+            Session::flush('info', "Data you're searching for doesn't exist");
+        }
+
+        return redirect(route('forums.show', ['forum' => $id]));
     }
 
     /**
@@ -135,6 +157,11 @@ class ForumsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($forum = Forum::find($id)) {
+            $forum->delete();
+            return redirect(route('forums.index'));
+        }
+        Session::flush('info', "Data you're searching for doesn't exist");
+        return redirect(route('forums.index'));
     }
 }

@@ -8,8 +8,6 @@
         </div>
 
         <div class="card-body">
-            <p>{!! $section->description ? BBCode::convertToHtml($section->description) : 'Nema opisa.' !!}</p>
-
             <table class="table table-striped info">
                 <tr>
                     <td>ID</td>
@@ -18,6 +16,12 @@
                 <tr>
                     <td>Slug</td>
                     <td>{{ $section->slug }}</td>
+                </tr>
+                <tr>
+                    <td>Opis</td>
+                    <td>
+                        <div>{!! $section->description ? BBCode::convertToHtml($section->description) : 'Nema opisa.' !!}</div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Pozicija</td>

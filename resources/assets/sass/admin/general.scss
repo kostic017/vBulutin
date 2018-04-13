@@ -18,6 +18,11 @@ nav {
 
 table.info {
     td {
+        div {
+            overflow-y: auto;
+            max-height: 150px;
+        }
+
         &:first-child {
             font-weight: bold;
             white-space: nowrap;

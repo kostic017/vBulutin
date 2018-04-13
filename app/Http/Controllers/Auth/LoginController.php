@@ -77,7 +77,9 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if (User::where($this->username(), $request[$this->username()])->pluck('is_confirmed')->first()) {
+        $user = User::where($this->username(), $request[$this->username()])->first();
+
+        if ($user->is_confirmed) {
             if ($this->attemptLogin($request)) {
                 return $this->sendLoginResponse($request);
             }

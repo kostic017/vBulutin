@@ -81,7 +81,7 @@ class SectionsController extends Controller
             return view('admin.sections.show')->with('section', $section);
         }
         Session::flush('info', "Data you're searching for doesn't exist");
-        return view('admin.sections.index');
+        return redirect(route('sections.index'));
     }
 
     /**
@@ -92,7 +92,11 @@ class SectionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ($section = Section::find($id)) {
+            return view('admin.sections.edit')->with('section', $section);
+        }
+        Session::flush('info', "Data you're searching for doesn't exist");
+        return redirect(route('sections.index'));
     }
 
     /**
@@ -104,7 +108,25 @@ class SectionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => "required|max:255|unique:forums,title,{$id}",
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        if ($section = Section::find($id)) {
+            $section->title = $request->title;
+            $section->description = e($request->description);
+            $section->save();
+
+            Session::flush("Section successfully updated.");
+        } else {
+            Session::flush('info', "Data you're searching for doesn't exist");
+        }
+
+        return redirect(route('sections.show', ['section' => $id]));
     }
 
     /**
@@ -115,7 +137,12 @@ class SectionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if ($section = Section::find($id)) {
+            $section->delete();
+            return redirect(route('sections.index'));
+        }
+        Session::flush('info', "Data you're searching for doesn't exist");
+        return redirect(route('sections.index'));
     }
 
     public function positions()

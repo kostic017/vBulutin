@@ -8,17 +8,17 @@
     <div class="card">
 
         <div class="card-header">
-            <strong>{{ __('Create New Section') }}</strong>
+            <strong>{{ __('Edit section') }}</strong>
         </div>
 
         <div class="card-body">
-            <p>Automatski zauzima poslednju poziciju, koju kasnije možete promeniti preko stranice za <a href="{{ route('admin.positions') }}">pozicioniranje</a>.</p>
-            <form action="{{ route('sections.store') }}" method="post">
+            <form action="{{ route('sections.update', ['sections' => $section->id]) }}" method="post">
                 @csrf
+                {{ method_field('PUT') }}
 
                 <div class="form-group">
-                    <label for="title">{{ __('Title') }}</label>
-                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}" required>
+                    <label for="title">{{ __('Title') }} <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') ?? $section->title }}" required>
 
                     @if ($errors->has('title'))
                         <span class="invalid-feedback" style="display:block">
@@ -29,13 +29,13 @@
 
                 <div class="form-group">
                     <label for="description">{{ __('Description') }}</label>
-                    <textarea class="sceditor" name="description" id="description">{{ old('description') }}</textarea>
+                    <textarea class="sceditor" name="description" id="description">{{ old('description') ?? $section->description }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <div class="text-center">
                         <button class="btn btn-success" type="submit">
-                            {{ __('Create New Section') }}
+                            {{ __('Edit section') }}
                         </button>
                     </div>
                 </div>
@@ -47,5 +47,6 @@
 @stop
 
 @section('more-scripts')
+    <script src="{{ asset('js/admin/force-section.js') }}"></script>
     @include('admin.includes.sceditor')
 @stop
