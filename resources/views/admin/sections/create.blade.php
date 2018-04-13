@@ -1,6 +1,8 @@
 @extends('admin.base')
 
-@include('admin.includes.sceditor')
+@section('more-styles')
+    <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
+@stop
 
 @section('more-content')
     <div class="card">
@@ -41,4 +43,8 @@
         </div>
 
     </div>
+@stop
+
+@section('more-scripts')
+    @include('admin.includes.sceditor')
 @stop

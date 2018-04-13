@@ -54,9 +54,8 @@ class ForumsController extends Controller
      */
     public function store(Request $request)
     {
-
         if (isset($request->parent_id)) {
-            $request->section_id = Forum::where('id', $request->parent_id)->pluck('section_id')->first();
+            $request->request->add(['section_id' => Forum::where('id', $request->parent_id)->pluck('section_id')->first()]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -74,16 +73,12 @@ class ForumsController extends Controller
         $forum->section_id = $request->section_id;
         $forum->parent_id = $request->parent_id ?? null;
 
-        if ($forum->parent_id) {
-            $where = ['parent_id' => $forum->parent_id];
-        } else {
-            $where = [
-                ['section_id' => $forum->section_id],
-                ['parent_id' => null]
-            ];
-        }
+        $forum->position = (
+            $forum->parent_id ?
+                Forum::where('parent_id', $forum->parent_id)->max('position') :
+                Forum::where('section_id', $forum->section_id)->where('parent_id', null)->max('position')
+        ) + 1;
 
-        $forum->position = Forum::where($where)->max('position') + 1;
         $forum->save();
 
         Session::flush("Forum successfully created.");
@@ -99,7 +94,11 @@ class ForumsController extends Controller
     public function show($id)
     {
         if ($forum = Forum::where('id', $id)->first()) {
-            return view('admin.forums.show')->with('forum', $forum);
+            $section = Section::where('id', $forum->section_id)->get(['id', 'slug', 'title'])->first();
+            $parentForum = Forum::where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
+            return view('admin.forums.show')->with('forum', $forum)
+                                            ->with('section', $section)
+                                            ->with('parentForum', $parentForum);
         }
         Session::flush('info', "Data you're searching for doesn't exist");
         return view('admin.forum.index');
