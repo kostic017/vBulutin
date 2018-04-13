@@ -1,7 +1,7 @@
 $(function () {
     const table = $("table").data("name");
 
-    $("select[name=perPage]").on("change", function () {
+    $("select[name=perPage], input[name=filter]").on("change", function () {
         $(this).parents("form").submit();
     });
 

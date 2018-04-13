@@ -18,13 +18,21 @@ class SectionsController extends Controller
      */
     public function index()
     {
+        $filter = request()->query('filter', 'active');
         $perPage = (int)request()->query('perPage', 10);
-        $sections = Section::select(['id', 'title', 'position']);
-        if ($perPage > 0) {
-            $sections = $sections->paginate($perPage);
-        } else {
-            $sections = $sections->get();
+
+        if ($perPage % 10) {
+            $perPage = 10; // moze da ima samo jednu od ponudjenih vrednosti
         }
+
+        if ($filter === 'all') {
+            $sections = $perPage ? Section::withTrashed()->paginate($perPage) : Section::withTrashed()->get();
+        } elseif ($filter === 'active') {
+            $sections = $perPage ? Section::paginate($perPage) : Section::get();
+        } elseif ($filter === 'deleted') {
+            $sections = $perPage ? Section::onlyTrashed()->paginate($perPage) : Section::onlyTrashed()->get();
+        }
+
         return view('admin.table')
             ->with('table', 'sections')
             ->with('rows', $sections)

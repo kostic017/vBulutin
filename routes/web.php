@@ -36,6 +36,15 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
 
     Route::resource('forums', 'ForumsController');
     Route::resource('sections', 'SectionsController');
+
+    Route::post('forums/restore/{forum}', [
+        'as' => 'forums.restore',
+        'uses' => 'ForumsController@restore'
+    ]);
+    Route::post('sections/restore/{section}', [
+        'as' => 'sections.restore',
+        'uses' => 'SectionsController@restore'
+    ]);
 });
 
 Route::group(['prefix' => '/ajax'], function () {

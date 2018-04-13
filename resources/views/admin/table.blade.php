@@ -6,14 +6,28 @@
 
 @section("more-content")
 
-    <div class="row">
-        <div class="col">
-            <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
-                {{ $table === 'sections' ? __('Create New Section') : __('Create New Forum') }}
-            </a>
-        </div>
-        <div class="col-3 col-lg-2 justify-content-right">
-            <form action="{{ route("{$table}.index") }}" method="get">
+    <form action="{{ route("{$table}.index") }}" method="get">
+        <div class="actions row">
+            <div class="buttons col text-nowrap">
+                <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
+                    {{ $table === 'sections' ? __('Create New Section') : __('Create New Forum') }}
+                </a>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    @php ($all = if_query('filter', 'all'))
+                    @php ($active = if_query('filter', 'active') || if_query('filter', null))
+                    @php ($deleted = if_query('filter', 'deleted'))
+                    <label class="btn btn-secondary {{ active_class($all) }}">
+                        <input type="radio" name="filter" autocomplete="off" {{ active_class($all, 'checked') }} value="all"> Svi
+                    </label>
+                    <label class="btn btn-secondary {{ active_class($active) }}">
+                        <input type="radio" name="filter" autocomplete="off" {{ active_class($active, 'checked') }} value="active"> Aktivni
+                    </label>
+                    <label class="btn btn-secondary {{ active_class($deleted) }}">
+                        <input type="radio" name="filter" autocomplete="off" {{ active_class($deleted, 'checked') }} value="deleted"> Obrisani
+                    </label>
+                </div>
+            </div>
+            <div class="pagination justify-content-right">
                 <select name="perPage" class="form-control">
                     <option value="0" {{ $perPage === 0 ? 'selected' : '' }}>&infin;</option>
                     <option value="10" {{ $perPage === 10 ? 'selected' : '' }}>10</option>
@@ -27,9 +41,9 @@
                     <option value="90" {{ $perPage === 90 ? 'selected' : '' }}>90</option>
                     <option value="100" {{ $perPage === 100 ? 'selected' : '' }}>100</option>
                 <select>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 
     <table class="table table-striped" data-name="{{ $table }}">
         <thead>
@@ -63,11 +77,18 @@
                         </a>
                     </td>
                     <td>
-                        <form action="{{ route("{$table}.destroy", ["{$table}" => $row->id]) }}" method="post">
-                            @csrf
-                            {{ method_field('DELETE') }}
-                            <button class="btn btn-xs btn-danger" type="submit">{{ __('Delete') }}</button>
-                        </form>
+                        @if ($row->trashed())
+                            <form action="{{ route("{$table}.restore", ["{$table}" => $row->id]) }}" method="post">
+                                @csrf
+                                <button class="btn btn-xs btn-danger" type="submit">{{ __('Restore') }}</button>
+                            </form>
+                        @else
+                            <form action="{{ route("{$table}.destroy", ["{$table}" => $row->id]) }}" method="post">
+                                @csrf
+                                {{ method_field('DELETE') }}
+                                <button class="btn btn-xs btn-danger" type="submit">{{ __('Delete') }}</button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach

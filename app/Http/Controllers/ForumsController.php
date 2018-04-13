@@ -17,13 +17,22 @@ class ForumsController extends Controller
      */
     public function index()
     {
+
+        $filter = request()->query('filter', 'active');
         $perPage = (int)request()->query('perPage', 10);
-        $forums = Forum::select(['id', 'title', 'position']);
-        if ($perPage > 0) {
-            $forums = $forums->paginate($perPage);
-        } else {
-            $forums = $forums->get();
+
+        if ($perPage % 10) {
+            $perPage = 10; // moze da ima samo jednu od ponudjenih vrednosti
         }
+
+        if ($filter === 'all') {
+            $forums = $perPage ? Forum::withTrashed()->paginate($perPage) : Forum::withTrashed()->get();
+        } elseif ($filter === 'active') {
+            $forums = $perPage ? Forum::paginate($perPage) : Forum::get();
+        } elseif ($filter === 'deleted') {
+            $forums = $perPage ? Forum::onlyTrashed()->paginate($perPage) : Forum::onlyTrashed()->get();
+        }
+
         return view('admin.table')
             ->with('table', 'forums')
             ->with('rows', $forums)
