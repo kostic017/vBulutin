@@ -28,7 +28,7 @@
 
                 <div class="form-group">
                     <label for="description">{{ __('Description') }}</label>
-                    <textarea class="sceditor" name="description" id="description" value="{{ old('description') }}"></textarea>
+                    <textarea class="sceditor" name="description" id="description">{{ old('description') }}</textarea>
                 </div>
 
                 <div class="form-group">
