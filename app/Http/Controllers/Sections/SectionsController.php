@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sections;
 use Session;
 use Validator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 abstract class SectionsController extends Controller
 {
