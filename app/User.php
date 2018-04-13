@@ -60,9 +60,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\PollAnswer', 'user_answers');
     }
 
-    public function watchedSections()
+    public function watchedCategories()
     {
-        return $this->belongsToMany('App\Section', 'section_watchers');
+        return $this->belongsToMany('App\Category', 'category_watchers');
     }
 
     public function watchedForums()

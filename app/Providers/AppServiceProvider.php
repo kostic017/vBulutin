@@ -16,7 +16,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(255);
         Blade::directive('sort_icon', function ($key) {
             return '<span class="icon sort-icon {{ active_class($sortColumn == ' . $key . ', "ic_s_{$sortOrder}") }}"></span>';
         });

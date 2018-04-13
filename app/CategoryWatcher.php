@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SectionWatcher extends Model
+class CategoryWatcher extends Model
 {
     /**
      * Indicates if the model should be timestamped.

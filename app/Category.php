@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Section extends Model
+class Category extends Model
 {
     use Sluggable;
     use SoftDeletes;
@@ -25,7 +25,7 @@ class Section extends Model
 
     public function watchers()
     {
-        return $this->belongsToMany('App\User', 'section_watchers');
+        return $this->belongsToMany('App\User', 'category_watchers');
     }
 
     public function sluggable()

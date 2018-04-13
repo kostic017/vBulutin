@@ -4,17 +4,17 @@ $(function () {
         scroll: false
     });
 
-    $(".sortable-sections").sortable({
+    $(".sortable-categories").sortable({
         scroll: false,
-        handle: ".section-header",
-        connectWith: ".sortable-sections"
+        handle: ".category-header",
+        connectWith: ".sortable-categories"
     });
 
     $(".forums-tree-controls").on("click", function (e) {
         const action = $(e.target).text();
         if (isEqualToAnyWord("- +", action)) {
-            // we are interested in a particular section
-            const dd = $(this).parents(".section-header").siblings(".dd");
+            // we are interested in a particular category
+            const dd = $(this).parents(".category-header").siblings(".dd");
             if (action === "+") {
                 dd.nestable("expandAll");
             } else if (action === "-") {
@@ -23,12 +23,12 @@ $(function () {
         }
     });
 
-    $(".sections-tree-controls").on("click", function (e) {
+    $(".categories-tree-controls").on("click", function (e) {
         const action = $(e.target).text();
         if (isEqualToAnyWord("- +", action)) {
-            // we are interested in all sections
+            // we are interested in all categories
             const dds = $(".dd");
-            const btns = $(".section-tree-control");
+            const btns = $(".category-tree-control");
             if (action === "-") {
                 dds.hide();
                 btns.attr("data-action", "");
@@ -39,8 +39,8 @@ $(function () {
         }
     });
 
-    $(".section-tree-control").on("click", function () {
-        const dds = $(this).parents(".section-header").siblings(".dd");
+    $(".category-tree-control").on("click", function () {
+        const dds = $(this).parents(".category-header").siblings(".dd");
         if ($(this).attr("data-action") === "collapse") {
             dds.hide();
             $(this).attr("data-action", "");
@@ -55,7 +55,7 @@ $(function () {
 
         let position = 1;
         $(".dd").each(function () {
-            data[$(this).data("sectionid")] = {
+            data[$(this).data("categoryid")] = {
                 position: position++,
                 forums: $(this).nestable("serialize")
             };

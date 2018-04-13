@@ -1,6 +1,6 @@
 $(function() {
     const cParentId = $("select[name=parent_id]");
-    const cSectionsId = $("select[name=section_id]");
+    const cSectionsId = $("select[name=category_id]");
 
     const r = route("ajax.getParentSection");
 
@@ -11,8 +11,8 @@ $(function() {
         } else {
             $.post(r, { id: $(this).val() },
                 function (data) {
-                    console.log(data.section_id);
-                    cSectionsId.val(data.section_id);
+                    console.log(data.category_id);
+                    cSectionsId.val(data.category_id);
                     cSectionsId.attr("disabled", "");
                 }
             ).fail(function (err) {

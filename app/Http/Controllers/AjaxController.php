@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use Exception;
 use App\Forum;
-use App\Section;
+use App\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -31,18 +31,18 @@ class AjaxController extends Controller
     {
         try {
             $data = request('data');
-            foreach ($data as $sectionId => $section) {
-                Section::where('id', $sectionId)->update(['position' => $section['position']]);
-                foreach ($section['forums'] ?? [] as $parentIndex => $parentForum) {
+            foreach ($data as $categoryId => $category) {
+                Category::where('id', $categoryId)->update(['position' => $category['position']]);
+                foreach ($category['forums'] ?? [] as $parentIndex => $parentForum) {
                     Forum::where('id', $parentForum['id'])->update([
                         'parent_id' => null,
-                        'section_id' => $sectionId,
+                        'category_id' => $categoryId,
                         'position' => $parentIndex + 1
                     ]);
                     foreach ($parentForum['children'] ?? [] as $childIndex => $childForum) {
                         Forum::where('id', $childForum['id'])->update([
                             'parent_id' => $parentForum['id'],
-                            'section_id' => $sectionId,
+                            'category_id' => $categoryId,
                             'position' => $childIndex + 1
                         ]);
                     }
@@ -59,12 +59,12 @@ class AjaxController extends Controller
         }
     }
 
-    public function getParentSection() {
+    public function getParentCategory() {
         $id = request()->id;
         if ($forum = Forum::where('id', $id)->first()) {
-            return response()->json(['section_id' => $forum->section_id]);
+            return response()->json(['category_id' => $forum->category_id]);
         } else {
-            $message = 'AJAXController@parentSection: ';
+            $message = 'AJAXController@parentCategory: ';
             $message .= "Forum with id {$id} does not exists.";
             $this->logger->addRecord('error', $message);
             return response()->json([

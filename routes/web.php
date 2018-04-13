@@ -31,20 +31,21 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
 
     Route::get('positions/', [
         'as' => 'admin.positions',
-        'uses' => 'SectionsController@positions'
+        'uses' => 'Sections\SectionsController@positions'
     ]);
 
-    Route::resource('forums', 'ForumsController');
-    Route::resource('sections', 'SectionsController');
-
-    Route::post('forums/restore/{forum}', [
+    Route::post('forums/{forum}/restore', [
         'as' => 'forums.restore',
-        'uses' => 'ForumsController@restore'
+        'uses' => 'Sections\ForumsController@restore'
     ]);
-    Route::post('sections/restore/{section}', [
-        'as' => 'sections.restore',
-        'uses' => 'SectionsController@restore'
+
+    Route::post('categories/{category}/restore', [
+        'as' => 'categories.restore',
+        'uses' => 'Sections\CategoriesController@restore'
     ]);
+
+    Route::resource('forums', 'Sections\ForumsController');
+    Route::resource('categories', 'Sections\CategoriesController');
 });
 
 Route::group(['prefix' => '/ajax'], function () {

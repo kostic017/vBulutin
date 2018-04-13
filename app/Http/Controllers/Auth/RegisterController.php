@@ -112,7 +112,7 @@ class RegisterController extends Controller
     }
 
     public function confirm(string $token) {
-        if (User::where("email_token", $token)->first()) {
+        if ($user = User::where("email_token", $token)->first()) {
             $this->guard()->login($user);
             return redirect($this->redirectPath())->with([
                 'alert-type' => 'success',

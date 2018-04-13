@@ -20,7 +20,7 @@ class CreateForumsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('position');
             $table->boolean('is_locked')->default(false);
-            $table->integer('section_id');
+            $table->integer('category_id');
             $table->integer('parent_id')->nullable();
             $table->softDeletes();
         });

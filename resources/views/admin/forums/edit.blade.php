@@ -48,6 +48,6 @@
 @stop
 
 @section('more-scripts')
-    <script src="{{ asset('js/admin/force-section.js') }}"></script>
+    <script src="{{ asset('js/admin/force-category.js') }}"></script>
     @include('admin.includes.sceditor')
 @stop

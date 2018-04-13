@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td>Sekcija</td>
-                    <td><a href="{{ route('sections.show', ['section' => $section->id]) }}">{{ $section->title }}</a></td>
+                    <td><a href="{{ route('categories.show', ['category' => $category->id]) }}">{{ $category->title }}</a></td>
                 </tr>
                 <tr>
                     <td>Natforum</td>

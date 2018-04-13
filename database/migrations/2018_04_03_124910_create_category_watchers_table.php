@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSectionWatchersTable extends Migration
+class CreateCategoryWatchersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSectionWatchersTable extends Migration
      */
     public function up()
     {
-        Schema::create('section_watchers', function (Blueprint $table) {
+        Schema::create('category_watchers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('section_id');
+            $table->integer('category_id');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateSectionWatchersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('section_watchers');
+        Schema::dropIfExists('category_watchers');
     }
 }

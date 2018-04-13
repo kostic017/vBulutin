@@ -18,9 +18,9 @@ class Forum extends Model
      */
     public $timestamps = false;
 
-    public function section()
+    public function category()
     {
-        return $this->belongsTo('App\Section');
+        return $this->belongsTo('App\Category');
     }
 
     public function children()

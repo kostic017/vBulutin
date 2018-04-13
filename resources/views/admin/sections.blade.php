@@ -10,7 +10,7 @@
         <div class="actions row">
             <div class="buttons col text-nowrap">
                 <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
-                    {{ $table === 'sections' ? __('Create New Section') : __('Create New Forum') }}
+                    {{ $table === 'categories' ? __('Create New Section') : __('Create New Forum') }}
                 </a>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     @php ($all = if_query('filter', 'all'))

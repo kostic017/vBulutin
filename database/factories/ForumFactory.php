@@ -5,17 +5,17 @@ use Faker\Generator as Faker;
 $factory->define(App\Forum::class, function (Faker $faker, $args) {
     static $positions = [
         'parent_id' => [],
-        'section_id' => []
+        'category_id' => []
     ];
 
     $parentId = $args['parent_id'];
-    $sectionId = $args['section_id'];
+    $categoryId = $args['category_id'];
 
     return [
         'title' => $faker->sentence(6),
         'description' => $faker->optional()->paragraph(),
 
-        'position' => function() use (&$positions, $sectionId, $parentId) {
+        'position' => function() use (&$positions, $categoryId, $parentId) {
             if ($parentId) {
                 if (!array_key_exists($parentId, $positions['parent_id'])) {
                     $positions['parent_id'][$parentId] = 1;
@@ -23,10 +23,10 @@ $factory->define(App\Forum::class, function (Faker $faker, $args) {
                 return $positions['parent_id'][$parentId]++;
             }
 
-            if (!array_key_exists($sectionId, $positions['section_id'])) {
-                $positions['section_id'][$sectionId] = 1;
+            if (!array_key_exists($categoryId, $positions['category_id'])) {
+                $positions['category_id'][$categoryId] = 1;
             }
-            return $positions['section_id'][$sectionId]++;
+            return $positions['category_id'][$categoryId]++;
         },
 
         'is_locked' => $faker->randomElement([true, false]),

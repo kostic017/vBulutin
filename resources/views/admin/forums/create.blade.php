@@ -12,8 +12,8 @@
         </div>
 
         <div class="card-body">
-            @if ($sections->isEmpty())
-                <p>{{ __('You have to create at least one section') }}.</p>
+            @if ($categories->isEmpty())
+                <p>{{ __('You have to create at least one category') }}.</p>
             @else
                 <p>Automatski zauzima poslednju poziciju, koju kasnije možete promeniti preko stranice za <a href="{{ route('admin.positions') }}">pozicioniranje</a>.</p>
                 <form action="{{ route('forums.store') }}" method="post">
@@ -31,16 +31,16 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="section_id">{{ __('Section') }} <span class="text-danger font-weight-bold">*</span></label>
-                        <select name="section_id" id="section_id" class="form-control{{ $errors->has('section_id') ? ' is-invalid' : '' }}" required>
-                            @foreach ($sections as $section)
-                                <option value="{{ $section->id }}" {{ old('section_id') === $section->id ? 'selected' : '' }}>{{ $section->title }}</option>
+                        <label for="category_id">{{ __('Section') }} <span class="text-danger font-weight-bold">*</span></label>
+                        <select name="category_id" id="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id') === $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
                             @endforeach
                         </select>
 
-                        @if ($errors->has('section_id'))
+                        @if ($errors->has('category_id'))
                             <span class="invalid-feedback" style="display:block">
-                                <strong>{{ $errors->first('section_id') }}</strong>
+                                <strong>{{ $errors->first('category_id') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -77,6 +77,6 @@
 @stop
 
 @section('more-scripts')
-    <script src="{{ asset('js/admin/force-section.js') }}"></script>
+    <script src="{{ asset('js/admin/force-category.js') }}"></script>
     @include('admin.includes.sceditor')
 @stop

@@ -12,20 +12,20 @@
                 <button type="button" name="save">{{ __('Save') }}</button>
             </form>
         </div>
-        <div class="sections-tree-controls collapse-buttons">
+        <div class="categories-tree-controls collapse-buttons">
             <button type="button">-</button>
             <button type="button">+</button>
         </div>
     </div>
 
-    <div class="sortable-sections collapse-buttons">
-        @foreach ($sections as $section)
-            <div class="sortable-section">
+    <div class="sortable-categories collapse-buttons">
+        @foreach ($categories as $category)
+            <div class="sortable-category">
 
-                <div class="section-header">
+                <div class="category-header">
                     <div>
-                        <button class="section-tree-control" data-action="collapse"></button>
-                        ({{ $section["id"] }}) {{ $section["title"] }}
+                        <button class="category-tree-control" data-action="collapse"></button>
+                        ({{ $category["id"] }}) {{ $category["title"] }}
                     </div>
                     <div class="forums-tree-controls">
                         <button type="button">-</button>
@@ -33,9 +33,9 @@
                     </div>
                 </div>
 
-                <div class="dd" data-sectionid="{{ $section["id"] }}">
+                <div class="dd" data-categoryid="{{ $category["id"] }}">
                     <ol class="dd-list">
-                        @foreach ($section["forums"] as $parentForum)
+                        @foreach ($category["forums"] as $parentForum)
                            <li class="dd-item" data-id="{{ $parentForum["id"] }}">
                                 <div class="dd-handle">
                                     ({{ $parentForum["id"] }}) {{ $parentForum["title"] }}
