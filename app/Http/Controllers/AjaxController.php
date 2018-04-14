@@ -16,7 +16,7 @@ class AjaxController extends Controller
         if (
             Schema::hasTable($table) &&
             Schema::hasColumn($table, $column) &&
-            $this->isEqualToAnyWord('ASC DESC', $order)
+            Functions::isEqualToAnyWord('ASC DESC', $order)
         ) {
             return response()->json(DB::table($table)->orderBy($column, $order)->pluck('id'));
         } else {

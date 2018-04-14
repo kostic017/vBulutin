@@ -1,7 +1,10 @@
+@php ($max = (int)config('custom.pagination.max'))
+@php ($step = (int)config('custom.pagination.step'))
+
 @extends('layouts.admin')
 
 @section('scripts')
-    <script src="{{ asset('js/admin/section-table.js') }}"></script>
+    <script src="{{ asset('js/admin/sections-table.js') }}"></script>
 @stop
 
 @section("content")
@@ -30,16 +33,9 @@
             <div class="pagination justify-content-right">
                 <select name="perPage" class="form-control">
                     <option value="0" {{ $perPage === 0 ? 'selected' : '' }}>&infin;</option>
-                    <option value="10" {{ $perPage === 10 ? 'selected' : '' }}>10</option>
-                    <option value="20" {{ $perPage === 20 ? 'selected' : '' }}>20</option>
-                    <option value="30" {{ $perPage === 30 ? 'selected' : '' }}>30</option>
-                    <option value="40" {{ $perPage === 40 ? 'selected' : '' }}>40</option>
-                    <option value="50" {{ $perPage === 50 ? 'selected' : '' }}>50</option>
-                    <option value="60" {{ $perPage === 60 ? 'selected' : '' }}>60</option>
-                    <option value="70" {{ $perPage === 70 ? 'selected' : '' }}>70</option>
-                    <option value="80" {{ $perPage === 80 ? 'selected' : '' }}>80</option>
-                    <option value="90" {{ $perPage === 90 ? 'selected' : '' }}>90</option>
-                    <option value="100" {{ $perPage === 100 ? 'selected' : '' }}>100</option>
+                    @for ($i = $step; $i < $max; $i += $step)
+                        <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
+                    @endfor
                 <select>
             </div>
         </div>

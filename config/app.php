@@ -180,6 +180,7 @@ return [
 
         'Active' => HieuLe\Active\Facades\Active::class,
         'BBCode' => \Genert\BBCode\Facades\BBCode::class,
+        'Functions' => App\Helpers\Common\Functions::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

@@ -21,9 +21,10 @@ abstract class SectionsController extends Controller
     {
         $filter = request()->query('filter', 'active');
         $perPage = (int)request()->query('perPage', 10);
+        $step = (int)config('custom.pagination.step');
 
-        if ($perPage % 10) {
-            $perPage = 10; // moze da ima samo neku od ponudjenih vrednosti
+        if ($perPage % $step) {
+            $perPage = $step;
         }
 
         if ($filter === 'all') {
