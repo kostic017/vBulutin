@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('layouts.admin')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">

@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('layouts.admin')
 
 @section('content')
     <h2>Collapsible Sidebar Using Bootstrap 3</h2>

@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('layouts.admin')
 
 @section('scripts')
     <script src="{{ asset('js/admin/section-table.js') }}"></script>
