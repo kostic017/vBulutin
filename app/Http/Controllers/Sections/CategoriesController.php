@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class CategoriesController extends SectionsController
 {
     protected $table = 'categories';
+    protected $singular = 'category';
     protected $model = 'App\Category';
 
     public function index() {

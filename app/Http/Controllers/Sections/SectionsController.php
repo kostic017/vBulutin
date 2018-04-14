@@ -11,6 +11,7 @@ abstract class SectionsController extends Controller
 {
     protected $model = null;
     protected $table = null;
+    protected $singular = null;
 
     /**
      * Display a listing of the resource.
@@ -52,7 +53,7 @@ abstract class SectionsController extends Controller
     public function edit($id)
     {
         if ($section = $this->model::find($id)) {
-            return view("admin.sections.{$this->table}.edit")->with('section', $section);
+            return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
         }
     }
 
@@ -81,7 +82,7 @@ abstract class SectionsController extends Controller
             Session::flush("Section successfully updated.");
         }
 
-        return redirect(route("{$this->table}.show", ['section' => $id]));
+        return redirect(route("{$this->table}.show", [$this->singular => $id]));
     }
 
     /**

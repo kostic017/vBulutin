@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class ForumsController extends SectionsController
 {
     protected $table = 'forums';
+    protected $singular = 'forum';
     protected $model = 'App\Forum';
 
     public function index() {

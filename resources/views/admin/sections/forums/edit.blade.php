@@ -17,8 +17,7 @@
         </div>
 
         <div class="card-body">
-            <p>Sekcija i natforum se mogu promeniti samo preko stranice za <a href="{{ route('admin.positions') }}">pozicioniranje</a>.</p>
-            <form action="{{ route('forums.update', ['forums' => $forum->id]) }}" method="post">
+            <form action="{{ route('forums.update', ['forum' => $forum->id]) }}" method="post">
                 @csrf
                 {{ method_field('PUT') }}
 
@@ -41,7 +40,7 @@
                 <div class="form-group">
                     <div class="text-center">
                         <button class="btn btn-success" type="submit">
-                            {{ __('Edit Forum') }}
+                            {{ __('buttons.edit_forum') }}
                         </button>
                     </div>
                 </div>
