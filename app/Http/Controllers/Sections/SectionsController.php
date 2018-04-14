@@ -34,7 +34,7 @@ abstract class SectionsController extends Controller
             $rows = $perPage ? $this->model::onlyTrashed()->paginate($perPage) : $this->model::onlyTrashed()->get();
         }
 
-        return view('admin.sections')
+        return view('admin.sections.table')
             ->with('table', $this->table)
             ->with('rows', $rows)
             ->with('sortColumn', 'id')
@@ -51,7 +51,7 @@ abstract class SectionsController extends Controller
     public function edit($id)
     {
         if ($section = $this->model::find($id)) {
-            return view("admin.{$this->table}.edit")->with('section', $section);
+            return view("admin.sections.{$this->table}.edit")->with('section', $section);
         }
     }
 
@@ -80,7 +80,7 @@ abstract class SectionsController extends Controller
             Session::flush("Section successfully updated.");
         }
 
-        return redirect(route("admin.{$this->table}.show", ['section' => $id]));
+        return redirect(route("{$this->table}.show", ['section' => $id]));
     }
 
     /**
@@ -93,7 +93,14 @@ abstract class SectionsController extends Controller
     {
         if ($section = $this->model::find($id)) {
             $section->delete();
-            return redirect(route("admin.{$this->table}.index"));
+            return redirect(route("{$this->table}.index"));
+        }
+    }
+
+    public function restore($id) {
+        if ($section = $this->model::onlyTrashed()->find($id)) {
+            $section->restore();
+            return redirect(route("{$this->table}.index"));
         }
     }
 

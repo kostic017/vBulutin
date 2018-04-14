@@ -29,6 +29,10 @@ class CategoriesController extends SectionsController
         return parent::destroy($id);
     }
 
+    public function restore($id) {
+        return parent::restore($id);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -36,7 +40,7 @@ class CategoriesController extends SectionsController
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.sections.categories.create');
     }
 
     /**
@@ -73,8 +77,8 @@ class CategoriesController extends SectionsController
      */
     public function show($id)
     {
-        if ($category = Category::where('id', $id)->first()) {
-            return view('admin.categories.show')->with('category', $category);
+        if ($category = Category::withTrashed()->where('id', $id)->first()) {
+            return view('admin.sections.categories.show')->with('category', $category);
         }
     }
 
@@ -97,7 +101,7 @@ class CategoriesController extends SectionsController
                                           ->toArray();
             }
         }
-        return view('admin.positions', ['categories' => $categories]);
+        return view('admin.sections.positions', ['categories' => $categories]);
     }
 
 }

@@ -2,12 +2,11 @@
 
 @section('content')
     <div class="card">
-
         <div class="card-header">
             <strong>{{ $forum->title }}</strong>
         </div>
-
         <div class="card-body">
+
             <table class="table table-striped show">
                 <tr>
                     <td>ID</td>
@@ -20,7 +19,7 @@
                 <tr>
                     <td>{{ __('db.description') }}</td>
                     <td>
-                        <div>{!! $forum->description ? BBCode::convertToHtml($forum->description) : 'Nema opisa.' !!}</div>
+                        <div>{!! $forum->description ? BBCode::convertToHtml($forum->description) : '-' !!}</div>
                     </td>
                 </tr>
                 <tr>
@@ -50,7 +49,11 @@
                     <td>{{ $forum->deletedAt ?? '-' }}</td>
                 </tr>
             </table>
-        </div>
 
+            @php ($row = $forum)
+            @php ($table = ['forum', 'forums'])
+            @include ('admin.sections.includes.show-buttons')
+
+        </div>
     </div>
 @stop

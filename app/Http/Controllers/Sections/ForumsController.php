@@ -29,6 +29,10 @@ class ForumsController extends SectionsController
         return parent::destroy($id);
     }
 
+    public function restore($id) {
+        return parent::restore($id);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +42,7 @@ class ForumsController extends SectionsController
     {
         $categories = Category::all(['id', 'title']);
         $rootForums = Forum::whereNull('parent_id')->get(['id', 'title']);
-        return view('admin.forums.create')
+        return view('admin.sections.forums.create')
                 ->with('categories', $categories)
                 ->with('rootForums', $rootForums);
     }
@@ -90,12 +94,13 @@ class ForumsController extends SectionsController
      */
     public function show($id)
     {
-        if ($forum = Forum::where('id', $id)->first()) {
-            $category = Category::where('id', $forum->category_id)->get(['id', 'slug', 'title'])->first();
-            $parentForum = Forum::where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
-            return view('admin.forums.show')->with('forum', $forum)
-                                            ->with('category', $category)
-                                            ->with('parentForum', $parentForum);
+        if ($forum = Forum::withTrashed()->where('id', $id)->first()) {
+            $category = Category::withTrashed()->where('id', $forum->category_id)->get(['id', 'slug', 'title'])->first();
+            $parentForum = Forum::withTrashed()->where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
+            return view('admin.sections.forums.show')
+                ->with('forum', $forum)
+                ->with('category', $category)
+                ->with('parentForum', $parentForum);
         }
     }
 
