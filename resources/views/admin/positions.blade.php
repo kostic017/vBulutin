@@ -1,15 +1,21 @@
-@extends("admin.base")
+@extends('admin.base')
 
-@section("more-styles")
-    <link rel="stylesheet" href="{{ asset('css/admin/positions.css') }}">
+@section('styles')
     <link rel="stylesheet" href="{{ asset('lib/jquery-ui/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/positions.css') }}">
 @stop
 
-@section("more-content")
+@section('scripts')
+    <script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('lib/jquery-nestable/jquery.nestable.min.js') }}"></script>
+    <script src="{{ asset('js/admin/positions.js') }}"></script>
+@stop
+
+@section('content')
     <div class="positioning-buttons">
         <div>
             <form action="" method="post">
-                <button type="button" name="save">{{ __('Save') }}</button>
+                <button type="button" name="save">{{ __('buttons.save') }}</button>
             </form>
         </div>
         <div class="categories-tree-controls collapse-buttons">
@@ -61,8 +67,3 @@
     </div>
 @stop
 
-@section("more-scripts")
-    <script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('lib/jquery-nestable/jquery.nestable.min.js') }}"></script>
-    <script src="{{ asset("js/admin/positions.js") }}"></script>
-@stop

@@ -1,26 +1,30 @@
 @extends('admin.base')
 
-@section('more-styles')
+@section('styles')
     <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
 @stop
 
-@section('more-content')
+@section('scripts')
+    <script src="{{ asset('js/admin/force-category.js') }}"></script>
+    @include('includes.sceditor')
+@stop
+
+@section('content')
     <div class="card">
 
         <div class="card-header">
-            <strong>{{ __('Create New Forum') }}</strong>
+            <strong>{{ __('buttons.create_forum') }}</strong>
         </div>
 
         <div class="card-body">
             @if ($categories->isEmpty())
-                <p>{{ __('You have to create at least one category') }}.</p>
+                <p>{{ __('info.category_needed') }}</p>
             @else
-                <p>Automatski zauzima poslednju poziciju, koju kasnije možete promeniti preko stranice za <a href="{{ route('admin.positions') }}">pozicioniranje</a>.</p>
                 <form action="{{ route('forums.store') }}" method="post">
                     @csrf
 
                     <div class="form-group">
-                        <label for="title">{{ __('Title') }} <span class="text-danger font-weight-bold">*</span></label>
+                        <label for="title">{{ __('db.title') }} <span class="text-danger font-weight-bold">*</span></label>
                         <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}" required>
 
                         @if ($errors->has('title'))
@@ -31,7 +35,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="category_id">{{ __('Section') }} <span class="text-danger font-weight-bold">*</span></label>
+                        <label for="category_id">{{ __('db.category') }} <span class="text-danger font-weight-bold">*</span></label>
                         <select name="category_id" id="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') === $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
@@ -46,7 +50,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="parent_id">{{ __('Parent Forum') }}</label>
+                        <label for="parent_id">{{ __('db.parent_forum') }}</label>
                         <select name="parent_id" id="parent_id" class="form-control">
                             <option value="" selected></option>
                             @foreach ($rootForums as $rootForum)
@@ -56,14 +60,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description">{{ __('Description') }}</label>
+                        <label for="description">{{ __('db.description') }}</label>
                         <textarea class="sceditor" name="description" id="description">{{ old('description') }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <div class="text-center">
                             <button class="btn btn-success" type="submit">
-                                {{ __('Create New Forum') }}
+                                {{ __('buttons.create_forum') }}
                             </button>
                         </div>
                     </div>
@@ -74,9 +78,4 @@
         </div>
 
     </div>
-@stop
-
-@section('more-scripts')
-    <script src="{{ asset('js/admin/force-category.js') }}"></script>
-    @include('admin.includes.sceditor')
 @stop

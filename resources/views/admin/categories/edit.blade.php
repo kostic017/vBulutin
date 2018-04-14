@@ -1,14 +1,18 @@
 @extends('admin.base')
 
-@category('more-styles')
+@section('styles')
     <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
 @stop
 
-@category('more-content')
+@section('scripts')
+    @include('includes.sceditor')
+@stop
+
+@section('content')
     <div class="card">
 
         <div class="card-header">
-            <strong>{{ __('Edit category') }}</strong>
+            <strong>{{ __('buttons.edit_category') }}</strong>
         </div>
 
         <div class="card-body">
@@ -17,7 +21,7 @@
                 {{ method_field('PUT') }}
 
                 <div class="form-group">
-                    <label for="title">{{ __('Title') }} <span class="text-danger font-weight-bold">*</span></label>
+                    <label for="title">{{ __('db.title') }} <span class="text-danger font-weight-bold">*</span></label>
                     <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') ?? $category->title }}" required>
 
                     @if ($errors->has('title'))
@@ -28,14 +32,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description">{{ __('Description') }}</label>
+                    <label for="description">{{ __('db.description') }}</label>
                     <textarea class="sceditor" name="description" id="description">{{ old('description') ?? $category->description }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <div class="text-center">
                         <button class="btn btn-success" type="submit">
-                            {{ __('Edit category') }}
+                            {{ __('buttons.edit_category') }}
                         </button>
                     </div>
                 </div>
@@ -46,7 +50,3 @@
     </div>
 @stop
 
-@category('more-scripts')
-    <script src="{{ asset('js/admin/force-category.js') }}"></script>
-    @include('admin.includes.sceditor')
-@stop

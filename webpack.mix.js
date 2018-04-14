@@ -18,13 +18,13 @@ let getFiles = function (dir) {
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js/app.js')
-    .js('resources/assets/js/admin/force-section.js', 'public/js/admin')
-    .js('resources/assets/js/admin/table.js', 'public/js/admin')
-    .js('resources/assets/js/admin/positions.js', 'public/js/admin');
+getFiles('resources/assets/js/admin').forEach(function (filepath) {
+    mix.js('resources/assets/js/admin/' + filepath, 'public/js/admin');
+});
 
 getFiles('resources/assets/sass/admin').forEach(function (filepath) {
     mix.sass('resources/assets/sass/admin/' + filepath, 'public/css/admin');
 });
 
+mix.js('resources/assets/js/app.js', 'public/js/app.js');
 mix.sass('resources/assets/sass/app.scss', 'public/css/app.css');

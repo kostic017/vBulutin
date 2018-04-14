@@ -78,4 +78,26 @@ class CategoriesController extends SectionsController
         }
     }
 
+    public function positions()
+    {
+        $columns = ['id', 'title'];
+        $categories = Category::orderBy('position')
+                           ->get($columns)
+                           ->toArray();
+        foreach ($categories as &$category) {
+            $category['forums'] = Forum::where('category_id', $category['id'])
+                                      ->whereNull('parent_id')
+                                      ->orderBy('position')
+                                      ->get($columns)
+                                      ->toArray();
+            foreach ($category['forums'] as &$forum) {
+                $forum['children'] = Forum::where('parent_id', $forum['id'])
+                                          ->orderBy('position')
+                                          ->get($columns)
+                                          ->toArray();
+            }
+        }
+        return view('admin.positions', ['categories' => $categories]);
+    }
+
 }

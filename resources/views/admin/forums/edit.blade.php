@@ -1,10 +1,15 @@
 @extends('admin.base')
 
-@section('more-styles')
+@section('styles')
     <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
 @stop
 
-@section('more-content')
+@section('scripts')
+    <script src="{{ asset('js/admin/force-category.js') }}"></script>
+    @include('includes.sceditor')
+@stop
+
+@section('content')
     <div class="card">
 
         <div class="card-header">
@@ -45,9 +50,4 @@
         </div>
 
     </div>
-@stop
-
-@section('more-scripts')
-    <script src="{{ asset('js/admin/force-category.js') }}"></script>
-    @include('admin.includes.sceditor')
 @stop

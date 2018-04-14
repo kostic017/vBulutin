@@ -1,6 +1,6 @@
 @extends('admin.base')
 
-@section('more-content')
+@section('content')
     <div class="card">
 
         <div class="card-header">
@@ -8,35 +8,35 @@
         </div>
 
         <div class="card-body">
-            <table class="table table-striped info">
+            <table class="table table-striped show">
                 <tr>
                     <td>ID</td>
                     <td>{{ $forum->id }}</td>
                 </tr>
                 <tr>
-                    <td>Slug</td>
+                    <td>{{ __('db.slug') }}</td>
                     <td>{{ $forum->slug }}</td>
                 </tr>
                 <tr>
-                    <td>Opis</td>
+                    <td>{{ __('db.description') }}</td>
                     <td>
                         <div>{!! $forum->description ? BBCode::convertToHtml($forum->description) : 'Nema opisa.' !!}</div>
                     </td>
                 </tr>
                 <tr>
-                    <td>Pozicija</td>
+                    <td>{{ __('db.position') }}</td>
                     <td>{{ $forum->position }}</td>
                 </tr>
                 <tr>
-                    <td>Zaključan</td>
+                    <td>{{ __('db.locked') }}</td>
                     <td>{{ $forum->is_locked ? 'da' : 'ne' }}</td>
                 </tr>
                 <tr>
-                    <td>Sekcija</td>
+                    <td>{{ __('db.category') }}</td>
                     <td><a href="{{ route('categories.show', ['category' => $category->id]) }}">{{ $category->title }}</a></td>
                 </tr>
                 <tr>
-                    <td>Natforum</td>
+                    <td>{{ __('db.parent_forum') }}</td>
                     <td>
                         @if ($parentForum)
                             <a href="{{ route('forums.show', ['forum' => $parentForum->id]) }}">{{ $parentForum->title }}</a>
@@ -46,7 +46,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Obrisan</td>
+                    <td>{{ __('db.trashed') }}</td>
                     <td>{{ $forum->deletedAt ?? '-' }}</td>
                 </tr>
             </table>

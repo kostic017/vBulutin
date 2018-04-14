@@ -15,7 +15,7 @@
         <link rel="icon" href="{{ asset("favicon.ico") }}">
 
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('lib/toastr/toastr.min.css') }}">
@@ -73,7 +73,6 @@
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('js/common.js') }} "></script>
         <script src="{{ route('assets.lang') }}"></script>
         <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 

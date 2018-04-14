@@ -2,8 +2,12 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/admin/general.css') }}">
-    @yield('more-styles')
-@stop
+    @yield('styles')
+@overwrite
+
+@section('scripts')
+    @yield('scripts')
+@overwrite
 
 @section('content')
     <div class="container-fluid">
@@ -12,29 +16,26 @@
                 <nav>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri(['admin'])) }}">
-                            <a href="/admin/">{{ __('Home') }}</a>
+                            <a href="/admin/">{{ __('nav.home') }}</a>
                         </li>
                     </ul>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/categories*')) }}">
-                            <a href="{{ route('categories.index') }}">{{ __('Sections') }}</a>
+                            <a href="{{ route('categories.index') }}">{{ __('nav.categories') }}</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*')) }}">
-                            <a href="{{ route('forums.index') }}">{{ __('Forums') }}</a>
+                            <a href="{{ route('forums.index') }}">{{ __('nav.forums') }}</a>
                         </li>
                         <li class="list-group-item  {{ active_class(if_route('admin.positions')) }}">
-                            <a href="{{ route('admin.positions') }}">{{ __('Positioning') }}</a>
+                            <a href="{{ route('admin.positions') }}">{{ __('nav.positioning') }}</a>
                         </li>
                     </ul>
                 </nav>
             </div>
             <div class="col-md-8 col-lg-9">
-                @yield('more-content')
+                @yield('content')
             </div>
         </div>
     </div>
-@stop
+@overwrite
 
-@section('scripts')
-    @yield('more-scripts')
-@stop

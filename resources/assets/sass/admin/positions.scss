@@ -1,5 +1,3 @@
-@import '../partials/import';
-
 .positioning-buttons {
     display: flex;
     justify-content: space-between;
@@ -92,7 +90,7 @@
     @extend .dd-item-button;
 }
 
-div.categorys-tree-controls {
+div.categories-tree-controls {
     margin: 5px 0;
 }
 

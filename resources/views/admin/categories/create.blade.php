@@ -1,23 +1,26 @@
 @extends('admin.base')
 
-@section('more-styles')
+@section('styles')
     <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
 @stop
 
-@section('more-content')
+@section('scripts')
+    @include('includes.sceditor')
+@stop
+
+@section('content')
     <div class="card">
 
         <div class="card-header">
-            <strong>{{ __('Create New Section') }}</strong>
+            <strong>{{ __('buttons.create_category') }}</strong>
         </div>
 
         <div class="card-body">
-            <p>Automatski zauzima poslednju poziciju, koju kasnije možete promeniti preko stranice za <a href="{{ route('admin.positions') }}">pozicioniranje</a>.</p>
             <form action="{{ route('categories.store') }}" method="post">
                 @csrf
 
                 <div class="form-group">
-                    <label for="title">{{ __('Title') }}</label>
+                    <label for="title">{{ __('db.title') }}</label>
                     <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}" required>
 
                     @if ($errors->has('title'))
@@ -28,14 +31,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description">{{ __('Description') }}</label>
+                    <label for="description">{{ __('db.description') }}</label>
                     <textarea class="sceditor" name="description" id="description">{{ old('description') }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <div class="text-center">
                         <button class="btn btn-success" type="submit">
-                            {{ __('Create New Section') }}
+                            {{ __('buttons.create_category') }}
                         </button>
                     </div>
                 </div>
@@ -46,6 +49,3 @@
     </div>
 @stop
 
-@section('more-scripts')
-    @include('admin.includes.sceditor')
-@stop

@@ -31,7 +31,7 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
 
     Route::get('positions/', [
         'as' => 'admin.positions',
-        'uses' => 'Sections\SectionsController@positions'
+        'uses' => 'Sections\CategoriesController@positions'
     ]);
 
     Route::post('forums/{forum}/restore', [
