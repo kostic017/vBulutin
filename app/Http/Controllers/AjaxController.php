@@ -12,51 +12,60 @@ use Illuminate\Support\Facades\Schema;
 
 class AjaxController extends Controller
 {
+
+    private function error(string $method, Exception $e, string $message = null) {
+        $log = $method . ' ' . ($message ?? $e->getMessage());
+        $this->logger->addRecord('error', $log);
+        return response()->json([
+            'status' => 'error',
+            'message' => $log
+        ], 500);
+    }
+
     public function sort($table, $column, $order)
     {
-        if (
-            Schema::hasTable($table) &&
-            Schema::hasColumn($table, $column) &&
-            Functions::isEqualToAnyWord('ASC DESC', $order)
-        ) {
-            return response()->json(DB::table($table)->orderBy($column, $order)->pluck('id'));
-        } else {
-            $message = 'AJAXController@sort: ';
-            $message .= '`{$table}.{$column}` ORDER BY {$order}';
-            $this->$logger->addRecord('error', $message);
-            Session::flash('error', __('toastr.error'));
-        }
+       // TODO
     }
 
     public function positions()
     {
         try {
             $data = request('data');
-            foreach ($data as $categoryId => $category) {
-                Category::where('id', $categoryId)->update(['position' => $category['position']]);
-                foreach ($category['forums'] ?? [] as $parentIndex => $parentForum) {
-                    Forum::where('id', $parentForum['id'])->update([
+            foreach ($data as $categoryId => $categoryData) {
+                $category = Category::withTrashed()->find($categoryId);
+                $category->update(['position' => $category['position']]);
+
+                foreach ($category['forums'] ?? [] as $parentIndex => $parentForumData) {
+                    $parentForum = Forum::withTrashed()->find($parentForumData['id']);
+
+                    $parentForum->update([
                         'parent_id' => null,
                         'category_id' => $categoryId,
                         'position' => $parentIndex + 1
                     ]);
-                    foreach ($parentForum['children'] ?? [] as $childIndex => $childForum) {
-                        Forum::where('id', $childForum['id'])->update([
-                            'parent_id' => $parentForum['id'],
+
+                    if ($category->trashed()) {
+                        $parentForum->delete();
+                    }
+
+                    foreach ($parentForum['children'] ?? [] as $childIndex => $childForumData) {
+                        $childForum = Forum::withTrashed()->find($childForumData['id']);
+
+                        $childForum->update([
+                            'parent_id' => $parentForumData['id'],
                             'category_id' => $categoryId,
                             'position' => $childIndex + 1
                         ]);
+
+                        if ($parentForum->trashed()) {
+                            $childForum->delete();
+                        }
                     }
+
                 }
             }
         } catch (Exception $e) {
-            $message = 'AJAXController@positions: ';
-            $message .= $e->getMessage();
-            $this->logger->addRecord('error', $message);
-            return response()->json([
-                'status' => 'error',
-                'message' => __('toastr.error')
-            ], 500);
+            return $this->error(__METHOD__, $e);
         }
     }
 
@@ -65,13 +74,7 @@ class AjaxController extends Controller
         if ($forum = Forum::where('id', $id)->first()) {
             return response()->json(['category_id' => $forum->category_id]);
         } else {
-            $message = 'AJAXController@parentCategory: ';
-            $message .= "Forum with id {$id} does not exists.";
-            $this->logger->addRecord('error', $message);
-            return response()->json([
-                'status' => 'error',
-                'message' => __('toastr.not_found', ['table' => 'forums', 'id' => $id])
-            ], 500);
+            return $this->error(__METHOD__, $e, "Forum with id {$id} does not exists.");
         }
     }
 }

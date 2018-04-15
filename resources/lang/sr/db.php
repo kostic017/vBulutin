@@ -8,5 +8,5 @@ return [
     'parent_forum' => 'Natforum',
     'category' => 'Kategorija',
     'deleted' => 'Obrisan',
-    'locked' => 'Zaključan'
+    'locked' => 'Zaključan',
 ];

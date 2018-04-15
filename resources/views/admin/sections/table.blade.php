@@ -42,7 +42,7 @@
     </form>
 
     <table class="table table-striped sections" data-name="{{ $table }}">
-        <thead>
+        <thead class="text-nowrap">
             <tr>
                 <th>
                     <a href="javascript:void(0)" class="sort-link" data-column="id">
@@ -54,6 +54,15 @@
                         {{ __('db.title') }} @sort_icon('title')
                     </a>
                 </th>
+
+                @if ($table === 'forums')
+                    <th>
+                        <a href="javascript:void(0)" class="sort-link" data-column="category">
+                            {{ __('db.category') }} @sort_icon('category_id')
+                        </a>
+                    </th>
+                @endif
+
                 <th colspan="3">&nbsp;</th>
             </tr>
         </thead>
@@ -62,6 +71,11 @@
                 <tr id="row-{{ $row->id }}">
                     <td>{{ $row->id }}</td>
                     <td>{{ $row->title }}</td>
+
+                    @if ($table === 'forums')
+                        <td>{{ $row->category_name }}</td>
+                    @endif
+
                     <td>
                         <a href="{{ route("{$table}.show", ["{$table}" => $row->id]) }}" class="btn btn-xs btn-success">
                             {{ __('buttons.view') }}
@@ -93,7 +107,7 @@
 
     @if ($perPage > 0)
         <div class="row justify-content-center">
-            {{ $rows->appends('perPage', $perPage)->links() }}
+            {{ $rows->appends('perPage', $perPage)->appends('filter', $filter)->links() }}
         </div>
     @endif
 @stop

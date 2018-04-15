@@ -49,7 +49,7 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
 });
 
 Route::group(['prefix' => '/ajax'], function () {
-    Route::get('/sort/{table}/{column}/{order}', [
+    Route::get('/{table}/{column}/{order}/sort', [
         'as' => 'ajax.sort',
         'uses' => 'AjaxController@sort'
     ]);

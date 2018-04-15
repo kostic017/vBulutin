@@ -11,4 +11,6 @@ return [
     'email_confirmation' => 'Check your email address for a confirmation link.',
     'email_confirmed' => 'Your email is successfully confirmed.',
     'confirmation_send' => 'We have send you a confirmation link. Please check your email.',
+    'category_deleted' => 'You cannot restore this forum because its category is deleted.',
+    'parent_deleted' => 'You cannot restore this forum because its supforum is deleted.',
 ];

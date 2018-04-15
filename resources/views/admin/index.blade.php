@@ -1,7 +1,20 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2>Collapsible Sidebar Using Bootstrap 3</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <h2>{{ __('info.admin_panel') }}</h2>
+    <p>
+        Novokreiranim forumima i kategorijama se automatski dodeljuje poslednja pozicija u tabeli.
+        Mogu se repozicionirati samo preko stranice 'Pozicioniranje'.
+    </p>
+    <p>
+        Ništa se ne može u potpunosti obrisati već odlazi u kantu za smeće, iz koje se može vratiti
+        u bilo kom trenutku. Ono što je obrisano vidljivo je samo preko ovog panela, a od svih koji
+        mu ne mogu pristupiti je sakriveno. Ako se obriše kategorija, automatski se brišu i svi forumi
+        koji pripadaju toj kategoriji. Nakon vraćanja kategorije, forume je neophodno ručno vratiti.
+    </p>
+    <p>
+        Jedini način da se forum prebaci u drugu kategoriju je preko stranice 'Pozicioniranje'.
+        Ukoliko se premesti u obrisanu kategoriju, onda i on postaje obrisan. Analogno važi i za
+        potforume.
+    </p>
 @stop

@@ -18,6 +18,10 @@ class Category extends Model
      */
     public $timestamps = false;
 
+    protected $fillable = [
+        'position',
+    ];
+
     public function forums()
     {
         return $this->hasMany('App\Forum');

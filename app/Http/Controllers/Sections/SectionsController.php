@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sections;
 
 use Session;
 use Validator;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Exceptions\DataNotFoundException;
@@ -38,11 +39,18 @@ abstract class SectionsController extends Controller
             $rows = $perPage ? $this->model::onlyTrashed()->paginate($perPage) : $this->model::onlyTrashed()->get();
         }
 
+        if ($this->table === 'forums') {
+            foreach ($rows as $row) {
+                $row->category_name = Category::withTrashed()->where('id', $row->category_id)->pluck('title')->first();
+            }
+        }
+
         return view('admin.sections.table')
             ->with('table', $this->table)
             ->with('rows', $rows)
             ->with('sortColumn', 'id')
             ->with('sortOrder', 'asc')
+            ->with('filter', $filter)
             ->with('perPage', $perPage);
     }
 

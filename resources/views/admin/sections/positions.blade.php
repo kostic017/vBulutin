@@ -28,10 +28,10 @@
         @foreach ($categories as $category)
             <div class="sortable-category">
 
-                <div class="category-header">
+                <div class="category-header {{ $category->deleted_at ? 'trashed' : '' }}">
                     <div>
                         <button class="category-tree-control" data-action="collapse"></button>
-                        ({{ $category["id"] }}) {{ $category["title"] }}
+                        ({{ $category->id }}) {{ $category->title }}
                     </div>
                     <div class="forums-tree-controls">
                         <button type="button">-</button>
@@ -39,19 +39,19 @@
                     </div>
                 </div>
 
-                <div class="dd" data-categoryid="{{ $category["id"] }}">
+                <div class="dd" data-categoryid="{{ $category->id }}">
                     <ol class="dd-list">
                         @foreach ($category["forums"] as $parentForum)
-                           <li class="dd-item" data-id="{{ $parentForum["id"] }}">
-                                <div class="dd-handle">
-                                    ({{ $parentForum["id"] }}) {{ $parentForum["title"] }}
+                           <li class="dd-item" data-id="{{ $parentForum->id }}">
+                                <div class="dd-handle {{ $parentForum->deleted_at ? 'trashed' : '' }}">
+                                    ({{ $parentForum->id }}) {{ $parentForum->title }}
                                 </div>
                                 @if (count($parentForum["children"]) > 0)
                                     <ol class="dd-list">
                                         @foreach ($parentForum["children"] as $childForum)
-                                            <li class="dd-item" data-id="{{ $childForum["id"] }}">
-                                                <div class="dd-handle">
-                                                    ({{ $childForum["id"] }}) {{ $childForum["title"] }}
+                                            <li class="dd-item" data-id="{{ $childForum->id }}">
+                                                <div class="dd-handle  {{ $childForum->deleted_at ? 'trashed' : '' }}">
+                                                    ({{ $childForum->id }}) {{ $childForum->title }}
                                                 </div>
                                             </li>
                                         @endforeach

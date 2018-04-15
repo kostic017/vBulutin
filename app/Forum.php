@@ -18,6 +18,10 @@ class Forum extends Model
      */
     public $timestamps = false;
 
+    protected $fillable = [
+        'parent_id', 'category_id', 'position',
+    ];
+
     public function category()
     {
         return $this->belongsTo('App\Category');

@@ -28,10 +28,6 @@ class CategoriesController extends SectionsController
         return parent::update($request, $id);
     }
 
-    public function destroy($id) {
-        return parent::destroy($id);
-    }
-
     public function restore($id) {
         return parent::restore($id);
     }
@@ -90,23 +86,49 @@ class CategoriesController extends SectionsController
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $category = $this->model::findOrFail($id);
+
+            $forums = Forum::where('category_id', $id)->get();
+            foreach ($forums as $forum) {
+                $forum->delete();
+            }
+
+            $category->delete();
+            return redirect(route("{$this->table}.index"))->with([
+                'alert-type' => 'success',
+                'message' => __('toastr.deleted')
+            ]);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
+        }
+    }
+
     public function positions()
     {
-        $columns = ['id', 'title'];
-        $categories = Category::orderBy('position')
-                           ->get($columns)
-                           ->toArray();
+        $columns = ['id', 'title', 'deleted_at'];
+        $categories = Category::withTrashed()
+                           ->orderBy('position')
+                           ->get($columns);
         foreach ($categories as &$category) {
-            $category['forums'] = Forum::where('category_id', $category['id'])
-                                      ->whereNull('parent_id')
-                                      ->orderBy('position')
-                                      ->get($columns)
-                                      ->toArray();
+            $category['forums'] = Forum::withTrashed()
+                                    ->where('category_id', $category->id)
+                                    ->whereNull('parent_id')
+                                    ->orderBy('position')
+                                    ->get($columns);
             foreach ($category['forums'] as &$forum) {
-                $forum['children'] = Forum::where('parent_id', $forum['id'])
-                                          ->orderBy('position')
-                                          ->get($columns)
-                                          ->toArray();
+                $forum['children'] = Forum::withTrashed()
+                                        ->where('parent_id', $forum->id)
+                                        ->orderBy('position')
+                                        ->get($columns);
             }
         }
         return view('admin.sections.positions', ['categories' => $categories]);

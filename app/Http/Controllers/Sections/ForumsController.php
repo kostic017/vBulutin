@@ -28,12 +28,63 @@ class ForumsController extends SectionsController
         return parent::update($request, $id);
     }
 
-    public function destroy($id) {
-        return parent::destroy($id);
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $category = $this->model::findOrFail($id);
+
+            $forums = Forum::where('category_id', $id)->get();
+            foreach ($forums as $forum) {
+                $forum->delete();
+            }
+
+            $category->delete();
+            return redirect(route("{$this->table}.index"))->with([
+                'alert-type' => 'success',
+                'message' => __('toastr.deleted')
+            ]);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
+        }
     }
 
     public function restore($id) {
-        return parent::restore($id);
+        try {
+            $forum = Forum::onlyTrashed()->findOrFail($id);
+
+            if ($forum->parent_id) {
+                $parent = Forum::withTrashed()->findOrFail($forum->parent_id);
+                if ($parent->trashed()) {
+                    return redirect(route('forums.index'))->with([
+                        'alert-type' => 'error',
+                        'message' => __('toastr.parent_deleted')
+                    ]);
+                }
+            }
+
+            $category = Category::withTrashed()->findOrFail($forum->category_id);
+            if ($category->trashed()) {
+                return redirect(route('forums.index'))->with([
+                    'alert-type' => 'error',
+                    'message' => __('toastr.category_deleted')
+                ]);
+            }
+
+            $forum->restore();
+            return redirect(route('forums.index'))->with([
+                'alert-type' => 'success',
+                'message' => __('toastr.resored')
+            ]);
+
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
+        }
     }
 
     /**
