@@ -62,9 +62,9 @@ $(function () {
         });
 
         $.post(route("ajax.positions"), { data }, function () {
-            toastr.success(i18n.toastr.success);
+            toastr.success('toastr.success');
         }).fail(function () {
-            toastr.error(i18n.toastr.error);
+            toastr.error('toastr.error');
         });
     });
 });

@@ -13,8 +13,11 @@ return [
     |
     */
 
-    "name_or_mail" => "Korisničko ime ili mejl",
+    'name_or_mail' => 'Korisničko ime ili mejl',
+    'not_confirmed' => 'Niste potvrdili svoj mejl.',
+    'confirmed' => 'Uspešno ste potvrdili svoj mejl.',
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'wrong_token' => 'Token je pogrešan ili je istekao! Možda ćete morati da se registrujete opet.',
 
 ];

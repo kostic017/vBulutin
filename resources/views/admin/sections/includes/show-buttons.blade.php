@@ -1,11 +1,6 @@
 <table class="mt-3">
     <tr>
         <td>
-            <a href="{{ route("{$table[1]}.show", [$table[0] => $row->id]) }}" class="btn btn-xs btn-success">
-                {{ __('buttons.view') }}
-            </a>
-        </td>
-        <td>
             <a href="{{ route("{$table[1]}.edit", [$table[0] => $row->id]) }}" class="btn btn-xs btn-info">
                 {{ __('buttons.edit') }}
             </a>

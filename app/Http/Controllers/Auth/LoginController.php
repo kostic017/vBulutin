@@ -109,7 +109,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponseEmail(Request $request)
     {
         throw ValidationException::withMessages([
-            $this->username() => [trans('You have not confirmed your email address.')],
+            $this->username() => [__('auth.not_confirmed')],
         ]);
     }
 

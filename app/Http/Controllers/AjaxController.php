@@ -6,6 +6,7 @@ use Session;
 use Exception;
 use App\Forum;
 use App\Category;
+use App\Helpers\Common\Functions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -23,7 +24,7 @@ class AjaxController extends Controller
             $message = 'AJAXController@sort: ';
             $message .= '`{$table}.{$column}` ORDER BY {$order}';
             $this->$logger->addRecord('error', $message);
-            Session::flash('error', 'messages.error');
+            Session::flash('error', __('toastr.error'));
         }
     }
 
@@ -54,7 +55,7 @@ class AjaxController extends Controller
             $this->logger->addRecord('error', $message);
             return response()->json([
                 'status' => 'error',
-                'message' => 'An error occurred!'
+                'message' => __('toastr.error')
             ], 500);
         }
     }
@@ -69,7 +70,7 @@ class AjaxController extends Controller
             $this->logger->addRecord('error', $message);
             return response()->json([
                 'status' => 'error',
-                'message' => "Forum with id {$id} does not exists."
+                'message' => __('toastr.not_found', ['table' => 'forums', 'id' => $id])
             ], 500);
         }
     }

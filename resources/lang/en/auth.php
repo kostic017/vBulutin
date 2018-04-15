@@ -13,8 +13,11 @@ return [
     |
     */
 
-    "name_or_mail" => "Username or email",
+    'name_or_mail' => 'Username or email',
     'failed' => 'These credentials do not match our records.',
+    'confirmed' => 'You have successfully confirmed your email.',
+    'not_confirmed' => 'You have not confirmed your email address.',
+    'wrong_token' => 'Token is wrong or expired! You may need to register again.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

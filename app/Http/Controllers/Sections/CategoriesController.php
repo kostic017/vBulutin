@@ -7,6 +7,8 @@ use Validator;
 use App\Forum;
 use App\Category;
 use Illuminate\Http\Request;
+use App\Exceptions\DataNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoriesController extends SectionsController
 {
@@ -66,8 +68,10 @@ class CategoriesController extends SectionsController
         $category->position = Category::max('position') + 1;
         $category->save();
 
-        Session::flush("Category successfully created.");
-        return redirect(route('categories.index'));
+        return redirect(route('categories.index'))->with([
+            'alert-type' => 'success',
+            'message' => __('toastr.stored')
+        ]);;
     }
 
     /**
@@ -78,8 +82,11 @@ class CategoriesController extends SectionsController
      */
     public function show($id)
     {
-        if ($category = Category::withTrashed()->where('id', $id)->first()) {
+        try {
+            $category = Category::withTrashed()->where('id', $id)->firstOrFail();
             return view('admin.sections.categories.show')->with('category', $category);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
         }
     }
 

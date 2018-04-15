@@ -88,7 +88,7 @@ class RegisterController extends Controller
     {
         return redirect(route('login'))->with([
             'alert-type' => 'info',
-            'message' => 'We have sent you a confirmation link. Please check your mail.'
+            'message' => __('toastr.confirmation_send')
         ]);
     }
 
@@ -112,11 +112,11 @@ class RegisterController extends Controller
     }
 
     public function confirm(string $token) {
-        if ($user = User::where("email_token", $token)->first()) {
+        if ($user = User::where('email_token', $token)->first()) {
             $this->guard()->login($user);
             return redirect($this->redirectPath())->with([
                 'alert-type' => 'success',
-                'message' => 'You have successfully confirmed your email.'
+                'message' => __('auth.confirmed')
             ]);
         }
         $message = 'RegisterController@confirm: ';
@@ -124,7 +124,7 @@ class RegisterController extends Controller
         $this->$logger->addRecord("error", $message);
         return redirect(route('login'))->with([
             'alert-type' => 'error',
-            'message' => 'Token is wrong or expired! You may need to register again.'
+            'message' => __('auth.wrong_token')
         ]);
     }
 }

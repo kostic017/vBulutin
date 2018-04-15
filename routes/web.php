@@ -64,19 +64,3 @@ Route::group(['prefix' => '/ajax'], function () {
         'uses' => 'AjaxController@getParentSection'
     ]);
 });
-
-Route::get('/js/lang.js', function () {
-    $minutes = 10;
-    $lang    = App::getLocale();
-    $strings = Cache::remember($lang . '.lang.js', $minutes, function() use ($lang) {
-        $strings = [];
-        $files   = glob(resource_path('lang/' . $lang . '/*.php'));
-        foreach ($files as $file) {
-            $name           = basename($file, '.php');
-            $strings[$name] = require $file;
-        }
-        return $strings;
-    });
-    return response('window.i18n = ' . json_encode($strings) . ';')
-              ->header('Content-Type', 'text/javascript');
-})->name('assets.lang');

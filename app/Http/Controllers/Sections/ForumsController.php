@@ -7,6 +7,8 @@ use Validator;
 use App\Forum;
 use App\Category;
 use Illuminate\Http\Request;
+use App\Exceptions\DataNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ForumsController extends SectionsController
 {
@@ -83,8 +85,10 @@ class ForumsController extends SectionsController
 
         $forum->save();
 
-        Session::flush("Forum successfully created.");
-        return redirect(route('forums.index'));
+        return redirect(route('forums.index'))->with([
+            'alert-type' => 'success',
+            'message' => 'toastr.stored'
+        ]);
     }
 
     /**
@@ -95,13 +99,16 @@ class ForumsController extends SectionsController
      */
     public function show($id)
     {
-        if ($forum = Forum::withTrashed()->where('id', $id)->first()) {
+        try {
+            $forum = Forum::withTrashed()->where('id', $id)->firstOrFail();
             $category = Category::withTrashed()->where('id', $forum->category_id)->get(['id', 'slug', 'title'])->first();
             $parentForum = Forum::withTrashed()->where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
             return view('admin.sections.forums.show')
                 ->with('forum', $forum)
                 ->with('category', $category)
                 ->with('parentForum', $parentForum);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
         }
     }
 

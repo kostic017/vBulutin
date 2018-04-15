@@ -6,6 +6,8 @@ use Session;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Exceptions\DataNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class SectionsController extends Controller
 {
@@ -52,8 +54,11 @@ abstract class SectionsController extends Controller
      */
     public function edit($id)
     {
-        if ($section = $this->model::find($id)) {
+        try {
+            $section = $this->model::findOrFail($id);
             return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
         }
     }
 
@@ -74,15 +79,19 @@ abstract class SectionsController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        if ($section = $this->model::find($id)) {
+        try {
+            $section = $this->model::findOrFail($id);
             $section->title = $request->title;
             $section->description = e($request->description);
             $section->save();
 
-            Session::flush("Section successfully updated.");
+            return redirect(route("{$this->table}.show", [$this->singular => $id]))->with([
+                'alert-type' => 'success',
+                'message' => __('toastr.updated')
+            ]);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
         }
-
-        return redirect(route("{$this->table}.show", [$this->singular => $id]));
     }
 
     /**
@@ -93,16 +102,28 @@ abstract class SectionsController extends Controller
      */
     public function destroy($id)
     {
-        if ($section = $this->model::find($id)) {
+        try {
+            $section = $this->model::findOrFail($id);
             $section->delete();
-            return redirect(route("{$this->table}.index"));
+            return redirect(route("{$this->table}.index"))->with([
+                'alert-type' => 'success',
+                'message' => __('toastr.deleted')
+            ]);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
         }
     }
 
     public function restore($id) {
-        if ($section = $this->model::onlyTrashed()->find($id)) {
+        try {
+            $section = $this->model::onlyTrashed()->findOrFail($id);
             $section->restore();
-            return redirect(route("{$this->table}.index"));
+            return redirect(route("{$this->table}.index"))->with([
+                'alert-type' => 'success',
+                'message' => __('toastr.resored')
+            ]);
+        } catch (ModelNotFoundException $e) {
+            throw new DataNotFoundException($this->table, $id);
         }
     }
 

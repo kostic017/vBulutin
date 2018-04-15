@@ -73,7 +73,6 @@
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ route('assets.lang') }}"></script>
         <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 
         @yield('scripts')
@@ -81,11 +80,12 @@
         @if (Session::has('message'))
             <script>
                 let type = "{{ Session::get('alert-type', 'info') }}";
+                let message = "{{ Session::get('message') }}";
                 switch (type) {
-                    case 'info': toastr.info("{{ Session::get('message') }}"); break;
-                    case 'warning': toastr.warning("{{ Session::get('message') }}"); break;
-                    case 'success': toastr.success("{{ Session::get('message') }}"); break;
-                    case 'error': toastr.error("{{ Session::get('message') }}"); break;
+                    case 'info': toastr.info(message); break;
+                    case 'warning': toastr.warning(message); break;
+                    case 'success': toastr.success(message); break;
+                    case 'error': toastr.error(message); break;
                 }
             </script>
         @endif
