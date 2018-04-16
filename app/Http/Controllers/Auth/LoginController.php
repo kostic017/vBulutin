@@ -77,24 +77,21 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        $user = User::where($this->username(), $request[$this->username()])->first();
-
-        if ($user->is_confirmed) {
-            if ($this->attemptLogin($request)) {
-                return $this->sendLoginResponse($request);
+        if ($user = User::where($this->username(), $request[$this->username()])->first()) {
+            if ($user->is_confirmed) {
+                if ($this->attemptLogin($request)) {
+                    return $this->sendLoginResponse($request);
+                }
             }
-
-            // If the login attempt was unsuccessful we will increment the number of attempts
-            // to login and redirect the user back to the login form. Of course, when this
-            // user surpasses their maximum number of attempts they will get locked out.
-            $this->incrementLoginAttempts($request);
-
-            return $this->sendFailedLoginResponse($request);
-        } else {
-            $this->incrementLoginAttempts($request);
-            return $this->sendFailedLoginResponseEmail($request);
         }
 
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return ($user && !$user->is_confirmed) ? $this->sendFailedLoginResponseEmail($request) :
+            $this->sendFailedLoginResponse($request);
     }
 
     /**
@@ -109,7 +106,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponseEmail(Request $request)
     {
         throw ValidationException::withMessages([
-            $this->username() => [__('auth.not_confirmed')],
+            $this->username() => [__('auth.not-confirmed')],
         ]);
     }
 

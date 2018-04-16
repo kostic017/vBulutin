@@ -47,7 +47,7 @@ class ForumsController extends SectionsController
             $forum->delete();
             return back()->with([
                 'alert-type' => 'success',
-                'message' => __('toastr.deleted')
+                'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
             throw new DataNotFoundException($this->table, $id);
@@ -63,7 +63,7 @@ class ForumsController extends SectionsController
                 if ($parent->trashed()) {
                     return back()->with([
                         'alert-type' => 'error',
-                        'message' => __('toastr.parent_deleted')
+                        'message' => __('admin.parent-deleted')
                     ]);
                 }
             }
@@ -72,14 +72,14 @@ class ForumsController extends SectionsController
             if ($category->trashed()) {
                 return back()->with([
                     'alert-type' => 'error',
-                    'message' => __('toastr.category_deleted')
+                    'message' => __('admin.category-deleted')
                 ]);
             }
 
             $forum->restore();
             return back()->with([
                 'alert-type' => 'success',
-                'message' => __('toastr.resored')
+                'message' => __('db.restored')
             ]);
 
         } catch (ModelNotFoundException $e) {
@@ -138,7 +138,7 @@ class ForumsController extends SectionsController
 
         return redirect(route('forums.index'))->with([
             'alert-type' => 'success',
-            'message' => 'toastr.stored'
+            'message' => 'db.stored'
         ]);
     }
 

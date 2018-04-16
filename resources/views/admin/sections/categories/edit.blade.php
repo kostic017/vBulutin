@@ -12,7 +12,7 @@
     <div class="card">
 
         <div class="card-header">
-            <strong>{{ __('buttons.edit_category') }}</strong>
+            <strong>{{ __('admin.edit-category') }}</strong>
         </div>
 
         <div class="card-body">
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <div class="text-center">
                         <button class="btn btn-success" type="submit">
-                            {{ __('buttons.edit_category') }}
+                            {{ __('admin.edit-category') }}
                         </button>
                     </div>
                 </div>

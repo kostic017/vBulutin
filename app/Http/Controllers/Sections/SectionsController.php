@@ -95,7 +95,7 @@ abstract class SectionsController extends Controller
 
             return redirect(route("{$this->table}.show", [$this->singular => $id]))->with([
                 'alert-type' => 'success',
-                'message' => __('toastr.updated')
+                'message' => __('db.updated')
             ]);
         } catch (ModelNotFoundException $e) {
             throw new DataNotFoundException($this->table, $id);
@@ -115,7 +115,7 @@ abstract class SectionsController extends Controller
             $section->delete();
             return redirect(route("{$this->table}.index"))->with([
                 'alert-type' => 'success',
-                'message' => __('toastr.deleted')
+                'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
             throw new DataNotFoundException($this->table, $id);
@@ -128,7 +128,7 @@ abstract class SectionsController extends Controller
             $section->restore();
             return redirect(route("{$this->table}.index"))->with([
                 'alert-type' => 'success',
-                'message' => __('toastr.resored')
+                'message' => __('db.resored')
             ]);
         } catch (ModelNotFoundException $e) {
             throw new DataNotFoundException($this->table, $id);

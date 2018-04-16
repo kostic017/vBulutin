@@ -13,11 +13,27 @@ return [
     |
     */
 
-    'name_or_mail' => 'Korisničko ime ili mejl',
-    'not_confirmed' => 'Niste potvrdili svoj mejl.',
-    'confirmed' => 'Uspešno ste potvrdili svoj mejl.',
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'wrong_token' => 'Token je pogrešan ili je istekao! Možda ćete morati da se registrujete opet.',
+    'username' => 'Korisničko ime',
+    'password' => 'Lozinka',
+    'password2' => 'Potvrdi lozinku',
+    'email' => 'Mejl adresa',
+    'name-or-mail' => 'Korisničko ime ili mejl',
 
+    'login' => 'Prijavi se',
+    'logout' => 'Odjavi se',
+    'register' => 'Registruj se',
+    'remember' => 'Upamti me',
+    'forgot' => 'Zaboravili ste lozinku?',
+    'reset-password' => 'Resetuj lozinku',
+    'send-reset-link' => 'Pošalji link za resetovanje lozinke',
+
+    'logged-in' => 'Sada ste prijavljeni!',
+
+    'confirmed' => 'Potvrdili ste svoj mejl.',
+    'not-confirmed' => 'Niste potvrdili svoju mejl adresu.',
+    'confirmation-sent' => 'Link za potvrdu mejl adrese smo Vam poslali za mejl.',
+    'wrong-token' => 'Token je pogrešan ili je istekao! Možda ćete morati da se registrujete opet.',
+
+    'failed' => 'Pogrešno korisničko ime/mejl ili lozinka.',
+    'throttle' => 'Previše puta ste pokušali da se prijavite. Probajte opet za :seconds sekundi.',
 ];

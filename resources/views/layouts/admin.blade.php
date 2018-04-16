@@ -16,18 +16,18 @@
                 <nav>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri(['admin'])) }}">
-                            <a href="/admin/">{{ __('nav.home') }}</a>
+                            <a href="/admin/">{{ __('admin.home') }}</a>
                         </li>
                     </ul>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/categories*')) }}">
-                            <a href="{{ route('categories.index') }}">{{ __('nav.categories') }}</a>
+                            <a href="{{ route('categories.index') }}">{{ __('admin.categories') }}</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*')) }}">
-                            <a href="{{ route('forums.index') }}">{{ __('nav.forums') }}</a>
+                            <a href="{{ route('forums.index') }}">{{ __('admin.forums') }}</a>
                         </li>
                         <li class="list-group-item  {{ active_class(if_route('admin.positions')) }}">
-                            <a href="{{ route('admin.positions') }}">{{ __('nav.positioning') }}</a>
+                            <a href="{{ route('admin.positions') }}">{{ __('admin.positioning') }}</a>
                         </li>
                     </ul>
                 </nav>

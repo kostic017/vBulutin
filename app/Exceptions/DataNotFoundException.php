@@ -24,7 +24,7 @@ class DataNotFoundException extends Exception {
     {
          return redirect(route("{$this->table}.index"))->with([
             'alert-type' => 'info',
-            'message' => __('toastr.not_found', [
+            'message' => __('db.not-found', [
                 'table' => $this->table,
                 'id' => $this->id
             ])

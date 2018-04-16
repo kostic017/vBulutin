@@ -66,7 +66,7 @@ class CategoriesController extends SectionsController
 
         return redirect(route('categories.index'))->with([
             'alert-type' => 'success',
-            'message' => __('toastr.stored')
+            'message' => __('db.stored')
         ]);;
     }
 
@@ -105,7 +105,7 @@ class CategoriesController extends SectionsController
             $category->delete();
             return redirect(route("{$this->table}.index"))->with([
                 'alert-type' => 'success',
-                'message' => __('toastr.deleted')
+                'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
             throw new DataNotFoundException($this->table, $id);

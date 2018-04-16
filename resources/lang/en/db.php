@@ -1,12 +1,19 @@
 <?php
 
 return [
-    'title' => 'Title',
-    'description' => 'Description',
     'slug' => 'Slug',
-    'position' => 'Position',
-    'parent_forum' => 'Parent forum',
-    'category' => 'Category',
+    'title' => 'Title',
+    'locked' => 'Locked',
     'trashed' => 'Trashed',
-    'locked' => 'Locked'
+    'position' => 'Position',
+    'category' => 'Category',
+    'description' => 'Description',
+    'parent-forum' => 'Parent forum',
+
+    'updated' => 'Data has been successfully updated.',
+    'deleted' => 'Data has been successfully deleted.',
+    'restored' => 'Data has been successfully resored.',
+    'stored' => 'Data has been successfully stored into the database.',
+
+    'not-found' => 'Row inside ":table" with id ":id" does not exist.',
 ];

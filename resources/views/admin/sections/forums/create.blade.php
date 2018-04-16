@@ -13,12 +13,12 @@
     <div class="card">
 
         <div class="card-header">
-            <strong>{{ __('buttons.create_forum') }}</strong>
+            <strong>{{ __('admin.create-forum') }}</strong>
         </div>
 
         <div class="card-body">
             @if ($categories->isEmpty())
-                <p>{{ __('info.category_needed') }}</p>
+                <p>{{ __('admin.category-needed') }}</p>
             @else
                 <form action="{{ route('forums.store') }}" method="post">
                     @csrf
@@ -67,7 +67,7 @@
                     <div class="form-group">
                         <div class="text-center">
                             <button class="btn btn-success" type="submit">
-                                {{ __('buttons.create_forum') }}
+                                {{ __('admin.create-forum') }}
                             </button>
                         </div>
                     </div>

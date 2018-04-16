@@ -4,13 +4,13 @@ return [
     'hello' => 'Zdravo!',
     'whoops' => 'Upsić!',
     'regards' => 'Pozdrav',
-    'subcopy' => 'Ako ":actionText" dugme ne radi, prekopirajte sledeći URL: [:actionUrl](:actionUrl)',
+    'subcopy' => 'Ako ":actionText" dugme ne radi, idite na sledeći URL: [:actionUrl](:actionUrl)',
 
-    'password_reset_line1' => 'Primili ste ovaj mejl jer smo dobili zahtev za resetovanje lozinke na Vašem nalogu.',
-    'password_reset_action' => 'Resetuj lozinku',
-    'password_reset_line2' => 'Ako niste tražili resetovanje lozinke, ignorišite ovu poruku.',
+    'password-reset_line1' => 'Dobili ste ovaj mejl jer smo primili zahtev za resetovanje lozinke na Vašem nalogu.',
+    'password-reset_action' => 'Resetuj lozinku',
+    'password-reset_line2' => 'Ako niste Vi posali zahtev, slobodno ignorišite poruku.',
 
-    'email_confirm_line1' => 'Pre nego što možete da se prijavite, neophodno je da potvrdite svoju mejl adresu.',
-    'email_confirm_action' => 'Potvrdi mejl',
-    'email_confirm_line2' => 'Ako se niste registrovali na naš sajt, ignorišite ovu poruku.',
+    'email-confirm_line1' => 'Pre nego što se možete prijaviti, morate potvrditi svoj mejl.',
+    'email-confirm_action' => 'Potvrdi mejl',
+    'email-confirm_line2' => 'Ako se niste Vi registrovali, slobodno ignorišite poruku.',
 ];

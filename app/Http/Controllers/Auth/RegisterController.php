@@ -88,7 +88,7 @@ class RegisterController extends Controller
     {
         return redirect(route('login'))->with([
             'alert-type' => 'info',
-            'message' => __('toastr.confirmation_send')
+            'message' => __('auth.confirmation-sent')
         ]);
     }
 
@@ -124,7 +124,7 @@ class RegisterController extends Controller
         $this->$logger->addRecord("error", $message);
         return redirect(route('login'))->with([
             'alert-type' => 'error',
-            'message' => __('auth.wrong_token')
+            'message' => __('auth.wrong-token')
         ]);
     }
 }

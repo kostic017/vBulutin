@@ -17,7 +17,7 @@
     <div class="positioning-buttons">
         <div>
             <form action="" method="post">
-                <button type="button" name="save">{{ __('buttons.save') }}</button>
+                <button type="button" name="save">{{ __('admin.save') }}</button>
             </form>
         </div>
         <div class="categories-tree-controls collapse-buttons">
@@ -68,7 +68,7 @@
         @endforeach
     </div>
 
-    <span class="d-none" data-key="toastr.error">{{ __('toastr.error') }}</span>
-    <span class="d-none" data-key="toastr.positions_success">{{ __('toastr.positions_success') }}</span>
+    <span class="d-none" data-key="generic.error">{{ __('generic.error') }}</span>
+    <span class="d-none" data-key="admin.positions-success">{{ __('admin.positions-success') }}</span>
 @stop
 

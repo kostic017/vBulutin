@@ -13,7 +13,7 @@
     <div class="card">
 
         <div class="card-header">
-            <strong>{{ __('Edit Forum') }}</strong>
+            <strong>{{ __('admin.edit-forum') }}</strong>
         </div>
 
         <div class="card-body">
@@ -22,7 +22,7 @@
                 {{ method_field('PUT') }}
 
                 <div class="form-group">
-                    <label for="title">{{ __('Title') }} <span class="text-danger font-weight-bold">*</span></label>
+                    <label for="title">{{ __('db.title') }} <span class="text-danger font-weight-bold">*</span></label>
                     <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') ?? $forum->title }}" required>
 
                     @if ($errors->has('title'))
@@ -33,14 +33,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description">{{ __('Description') }}</label>
+                    <label for="description">{{ __('db.description') }}</label>
                     <textarea class="sceditor" name="description" id="description">{{ old('description') ?? $forum->description }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <div class="text-center">
                         <button class="btn btn-success" type="submit">
-                            {{ __('buttons.edit_forum') }}
+                            {{ __('admin.edit-forum') }}
                         </button>
                     </div>
                 </div>

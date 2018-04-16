@@ -1,12 +1,19 @@
 <?php
 
 return [
-    'title' => 'Naslov',
-    'description' => 'Opis',
     'slug' => 'Slug',
+    'title' => 'Naslov',
+    'locked' => 'Zaključano',
+    'trashed' => 'Obrisano',
     'position' => 'Pozicija',
-    'parent_forum' => 'Natforum',
     'category' => 'Kategorija',
-    'deleted' => 'Obrisan',
-    'locked' => 'Zaključan',
+    'description' => 'Opis',
+    'parent-forum' => 'Natforum',
+
+    'updated' => 'Podaci su uspešno ažurirani.',
+    'deleted' => 'Podaci su uspešno obrisani.',
+    'restored' => 'Podaci su uspešno vraćeni.',
+    'stored' => 'Podaci su uspešno dodati u bazu.',
+
+    'not-found' => 'Red unutar ":table" sa ID-om ":id" ne postoji.',
 ];

@@ -67,10 +67,10 @@ $(function () {
         overlay.fitText();
 
         $.post(route("ajax.positions"), { data }, function () {
-            toastr.success($("span[data-key='toastr.positions_success']").text());
+            toastr.success($("span[data-key='admin.positions-success']").text());
             overlay.addClass('d-none');
         }).fail(function () {
-            toastr.error($("span[data-key='toastr.error']").text());
+            toastr.error($("span[data-key='generic.error']").text());
             overlay.addClass('d-none');
         });
 
