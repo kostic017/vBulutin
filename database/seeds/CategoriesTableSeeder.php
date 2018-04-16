@@ -28,18 +28,30 @@ class CategoriesTableSeeder extends Seeder
         $categories = factory(App\Category::class, self::CATEGORY_COUNT)->create();
 
         $categories->each(function ($category) use (&$users) {
-            $forums = factory(App\Forum::class, self::FORUM_COUNT)->create([
+            $data = [
                 "parent_id" => null,
                 "category_id" => $category->id
-            ]);
+            ];
+
+            if ($category->deleted_at) {
+                $data['deleted_at'] = $category->deleted_at;
+            }
+
+            $forums = factory(App\Forum::class, self::FORUM_COUNT)->create($data);
 
             $forums->each(function ($forum) use (&$category) {
                 $this->createTopics($forum);
 
-                $children = factory(App\Forum::class, self::CHILD_COUNT)->create([
-                    "category_id" => $category->id,
-                    "parent_id" => $forum->id
-                ]);
+                $data = [
+                    "parent_id" => $forum->id,
+                    "category_id" => $category->id
+                ];
+
+                if ($forum->deleted_at) {
+                    $data['deleted_at'] = $forum->deleted_at;
+                }
+
+                $children = factory(App\Forum::class, self::CHILD_COUNT)->create($data);
 
                 $children->each(function ($child) {
                     $this->createTopics($child);

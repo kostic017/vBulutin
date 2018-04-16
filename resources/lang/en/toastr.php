@@ -1,12 +1,13 @@
 <?php
 
 return [
-    'success' => 'All ok.',
-    'error' => 'An error occured!',
-    'updated' => 'Data successfully updated.',
-    'deleted' => 'Data sucessfully deleted.',
-    'resored' => 'Data sucessfully resored.',
-    'stored' => 'Data successfully stored into the database.',
+    'success' => 'All ok!',
+    'error' => 'An error has occured!',
+    'updated' => 'Data has been successfully updated.',
+    'deleted' => 'Data has been successfully deleted.',
+    'resored' => 'Data has been successfully resored.',
+    'stored' => 'Data has been successfully stored into the database.',
+    'positions_success' => 'Positions have been successfuly updated. Refresh the page.',
     'not_found' => 'Row inside ":table" with id ":id" does not exist.',
     'email_confirmation' => 'Check your email address for a confirmation link.',
     'email_confirmed' => 'Your email is successfully confirmed.',

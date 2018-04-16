@@ -19,7 +19,7 @@ class Category extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'position',
+        'position'
     ];
 
     public function forums()

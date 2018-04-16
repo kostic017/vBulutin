@@ -12,6 +12,8 @@
 @stop
 
 @section('content')
+    @include('admin.includes.overlay')
+
     <div class="positioning-buttons">
         <div>
             <form action="" method="post">
@@ -65,5 +67,8 @@
             </div>
         @endforeach
     </div>
+
+    <span class="d-none" data-key="toastr.error">{{ __('toastr.error') }}</span>
+    <span class="d-none" data-key="toastr.positions_success">{{ __('toastr.positions_success') }}</span>
 @stop
 

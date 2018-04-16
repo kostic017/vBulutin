@@ -47,11 +47,14 @@ table.show {
     top: 0;
     left: 0;
     width: 100%;
+    color: #fff;
     height: 100%;
     opacity: 0.3;
-    display: none;
+    display: flex;
     z-index: 10000;
     position: fixed;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -61,4 +64,8 @@ table.show {
     .pagination {
         margin-right: 10px;
     }
+}
+
+.card p:last-child {
+    margin-bottom: 0;
 }

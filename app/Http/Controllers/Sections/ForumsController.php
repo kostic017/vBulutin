@@ -37,15 +37,15 @@ class ForumsController extends SectionsController
     public function destroy($id)
     {
         try {
-            $category = $this->model::findOrFail($id);
+            $forum = Forum::findOrFail($id);
 
-            $forums = Forum::where('category_id', $id)->get();
-            foreach ($forums as $forum) {
-                $forum->delete();
+            $children = Forum::where('parent_id', $id)->get();
+            foreach ($children as $child) {
+                $child->delete();
             }
 
-            $category->delete();
-            return redirect(route("{$this->table}.index"))->with([
+            $forum->delete();
+            return back()->with([
                 'alert-type' => 'success',
                 'message' => __('toastr.deleted')
             ]);
@@ -61,7 +61,7 @@ class ForumsController extends SectionsController
             if ($forum->parent_id) {
                 $parent = Forum::withTrashed()->findOrFail($forum->parent_id);
                 if ($parent->trashed()) {
-                    return redirect(route('forums.index'))->with([
+                    return back()->with([
                         'alert-type' => 'error',
                         'message' => __('toastr.parent_deleted')
                     ]);
@@ -70,14 +70,14 @@ class ForumsController extends SectionsController
 
             $category = Category::withTrashed()->findOrFail($forum->category_id);
             if ($category->trashed()) {
-                return redirect(route('forums.index'))->with([
+                return back()->with([
                     'alert-type' => 'error',
                     'message' => __('toastr.category_deleted')
                 ]);
             }
 
             $forum->restore();
-            return redirect(route('forums.index'))->with([
+            return back()->with([
                 'alert-type' => 'success',
                 'message' => __('toastr.resored')
             ]);
@@ -110,7 +110,7 @@ class ForumsController extends SectionsController
     public function store(Request $request)
     {
         if (isset($request->parent_id)) {
-            $request->request->add(['category_id' => Forum::where('id', $request->parent_id)->pluck('category_id')->first()]);
+            $request->request->add(['category_id' => Forum::find($request->parent_id)->pluck('category_id')->first()]);
         }
 
         $validator = Validator::make($request->all(), [

@@ -31,11 +31,12 @@ class AjaxController extends Controller
     {
         try {
             $data = request('data');
+
             foreach ($data as $categoryId => $categoryData) {
                 $category = Category::withTrashed()->find($categoryId);
                 $category->update(['position' => $category['position']]);
 
-                foreach ($category['forums'] ?? [] as $parentIndex => $parentForumData) {
+                foreach ($categoryData['forums'] ?? [] as $parentIndex => $parentForumData) {
                     $parentForum = Forum::withTrashed()->find($parentForumData['id']);
 
                     $parentForum->update([
@@ -48,9 +49,8 @@ class AjaxController extends Controller
                         $parentForum->delete();
                     }
 
-                    foreach ($parentForum['children'] ?? [] as $childIndex => $childForumData) {
+                    foreach ($parentForumData['children'] ?? [] as $childIndex => $childForumData) {
                         $childForum = Forum::withTrashed()->find($childForumData['id']);
-
                         $childForum->update([
                             'parent_id' => $parentForumData['id'],
                             'category_id' => $categoryId,

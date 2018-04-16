@@ -52,6 +52,7 @@ $(function () {
 
     $("button[name=save]").on("click", function () {
         const data = {};
+        const message = $("#message");
 
         let position = 1;
         $(".dd").each(function () {
@@ -61,10 +62,17 @@ $(function () {
             };
         });
 
+        const overlay = $("#overlay");
+        overlay.removeClass('d-none');
+        overlay.fitText();
+
         $.post(route("ajax.positions"), { data }, function () {
-            toastr.success('toastr.success');
+            toastr.success($("span[data-key='toastr.positions_success']").text());
+            overlay.addClass('d-none');
         }).fail(function () {
-            toastr.error('toastr.error');
+            toastr.error($("span[data-key='toastr.error']").text());
+            overlay.addClass('d-none');
         });
+
     });
 });

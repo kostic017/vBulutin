@@ -8,7 +8,8 @@
 @stop
 
 @section("content")
-    <div id="overlay"></div>
+    @include('admin.includes.overlay')
+
     <form action="{{ route("{$table}.index") }}" method="get">
         <div class="actions row">
             <div class="buttons col text-nowrap">

@@ -22,7 +22,8 @@ $(function () {
         });
 
         const overlay = $("#overlay");
-        overlay.show(); // prevent user from spamming sort buttons
+        overlay.removeClass('d-none');
+        overlay.fitText();
 
         $.get(r, function (data) {
             const table = $("table");
@@ -31,7 +32,7 @@ $(function () {
                 // exists it just moves to a new location
                 table.append($(`#row-${this}`));
             });
-            overlay.hide();
+            overlay.addClass('d-none');
         });
 
     });
