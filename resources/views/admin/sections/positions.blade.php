@@ -17,12 +17,12 @@
     <div class="positioning-buttons">
         <div>
             <form action="" method="post">
-                <button type="button" name="save">{{ __('admin.save') }}</button>
+                <button type="button" class="btn btn-primary" name="save">{{ __('admin.save') }}</button>
             </form>
         </div>
         <div class="categories-tree-controls collapse-buttons">
-            <button type="button">-</button>
-            <button type="button">+</button>
+            <button type="button" class="btn">-</button>
+            <button type="button" class="btn">+</button>
         </div>
     </div>
 
@@ -36,8 +36,8 @@
                         ({{ $category->id }}) {{ $category->title }}
                     </div>
                     <div class="forums-tree-controls">
-                        <button type="button">-</button>
-                        <button type="button">+</button>
+                        <button type="button" class="btn">-</button>
+                        <button type="button" class="btn">+</button>
                     </div>
                 </div>
 

@@ -23,6 +23,7 @@
         @yield("styles")
 
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/functions.js') }}"></script>
         <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 
         @yield('scripts')

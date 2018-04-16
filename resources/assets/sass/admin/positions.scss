@@ -1,5 +1,17 @@
+.forums-tree-controls,
+.categories-tree-controls {
+    .btn {
+        padding: 0;
+    }
+}
+
+.forums-tree-controls .btn:first-child {
+    margin-right: 4px;
+}
+
 .positioning-buttons {
     display: flex;
+    margin: 5px 0;
     justify-content: space-between;
 }
 
