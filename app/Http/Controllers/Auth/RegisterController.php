@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class RegisterController extends Controller
 {
@@ -112,19 +113,19 @@ class RegisterController extends Controller
     }
 
     public function confirm(string $token) {
-        if ($user = User::where('email_token', $token)->first()) {
+        try {
+            $user = User::where('email_token', $token)->firstOrFail();
+            $user->is_confirmed = true;
+            $user->email_token = null;
+            $user->save();
             $this->guard()->login($user);
-            return redirect($this->redirectPath())->with([
-                'alert-type' => 'success',
-                'message' => __('auth.confirmed')
+        } catch (ModelNotFoundException $e) {
+            $message = __METHOD__ . ': ' . "No user associated with provided token ('{$token}').";
+            $this->logger->addRecord("error", $message);
+            return redirect(route('login'))->with([
+                'alert-type' => 'error',
+                'message' => __('auth.wrong-token')
             ]);
         }
-        $message = 'RegisterController@confirm: ';
-        $message .= "No user associated with provided token ('{$token}').";
-        $this->$logger->addRecord("error", $message);
-        return redirect(route('login'))->with([
-            'alert-type' => 'error',
-            'message' => __('auth.wrong-token')
-        ]);
     }
 }

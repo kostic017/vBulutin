@@ -34,7 +34,7 @@ return [
 
     'info1' => 'Novokreiranim forumima i kategorijama se automatski dodeljuje poslednja pozicija u tabeli. '
              . 'Mogu se repozicionirati samo preko stranice "Pozicioniranje".',
-    'info2' => 'Ništa se ne može u potpunosti obrisati već odlazi u kantu za smeće, iz koje se može vratiti '
+    'info2' => 'Ništa se ne može u potpunosti obrisati već odlazi u kantu, iz koje se može vratiti '
              . 'u bilo kom trenutku. Ono što je obrisano vidljivo je samo preko ovog panela.',
     'info3' => 'Ako se obriše kategorija, automatski se brišu i svi forumi koji pripadaju toj kategoriji. Nakon vraćanja '
              . 'kategorije, forume je neophodno ručno vratiti. Analogno važi i za brisanje natforuma.',

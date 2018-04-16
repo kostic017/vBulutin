@@ -12,7 +12,7 @@ return [
 
     'updated' => 'Data has been successfully updated.',
     'deleted' => 'Data has been successfully deleted.',
-    'restored' => 'Data has been successfully resored.',
+    'restored' => 'Data has been successfully restored.',
     'stored' => 'Data has been successfully stored into the database.',
 
     'not-found' => 'Row inside ":table" with id ":id" does not exist.',

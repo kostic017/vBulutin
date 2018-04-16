@@ -22,7 +22,7 @@ class DataNotFoundException extends Exception {
      */
     public function render($request)
     {
-         return redirect(route("{$this->table}.index"))->with([
+        return redirect(route("{$this->table}.index"))->with([
             'alert-type' => 'info',
             'message' => __('db.not-found', [
                 'table' => $this->table,

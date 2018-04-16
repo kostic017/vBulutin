@@ -128,7 +128,7 @@ abstract class SectionsController extends Controller
             $section->restore();
             return redirect(route("{$this->table}.index"))->with([
                 'alert-type' => 'success',
-                'message' => __('db.resored')
+                'message' => __('db.restored')
             ]);
         } catch (ModelNotFoundException $e) {
             throw new DataNotFoundException($this->table, $id);
