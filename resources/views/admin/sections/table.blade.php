@@ -10,57 +10,57 @@
 @section("content")
     @include('admin.includes.overlay')
 
-    <form action="{{ route("{$table}.index") }}" method="get">
-        <div class="actions row">
-            <div class="buttons col">
-                <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
-                    {{ $table === 'categories' ? __('admin.create-category') : __('admin.create-forum') }}
-                </a>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    @php ($all = if_query('filter', 'all'))
-                    @php ($active = if_query('filter', 'active') || if_query('filter', null))
-                    @php ($deleted = if_query('filter', 'deleted'))
-                    <label class="btn btn-secondary {{ active_class($all) }}">
-                        <input type="radio" name="filter" autocomplete="off" {{ active_class($all, 'checked') }} value="all"> {{ __('admin.all') }}
-                    </label>
-                    <label class="btn btn-secondary {{ active_class($active) }}">
-                        <input type="radio" name="filter" autocomplete="off" {{ active_class($active, 'checked') }} value="active"> {{ __('admin.active') }}
-                    </label>
-                    <label class="btn btn-secondary {{ active_class($deleted) }}">
-                        <input type="radio" name="filter" autocomplete="off" {{ active_class($deleted, 'checked') }} value="deleted"> {{ __('admin.deleted') }}
-                    </label>
-                </div>
-            </div>
-            <div class="menu col">
-                <select name="perPage" class="form-control">
-                    <option value="0" {{ $perPage === 0 ? 'selected' : '' }}>&infin;</option>
-                    @for ($i = $step; $i < $max; $i += $step)
-                        <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
-                    @endfor
-                <select>
+    <form id="index" action="{{ route("{$table}.index") }}" method="get"></form>
+
+    <div class="actions row">
+        <div class="buttons col">
+            <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
+                {{ $table === 'categories' ? __('admin.create-category') : __('admin.create-forum') }}
+            </a>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                @php ($all = if_query('filter', 'all'))
+                @php ($active = if_query('filter', 'active') || if_query('filter', null))
+                @php ($deleted = if_query('filter', 'trashed'))
+                <label class="btn btn-secondary {{ active_class($all) }}">
+                    <input type="radio" name="filter" autocomplete="off" {{ active_class($all, 'checked') }} value="all"> {{ __('admin.all') }}
+                </label>
+                <label class="btn btn-secondary {{ active_class($active) }}">
+                    <input type="radio" name="filter" autocomplete="off" {{ active_class($active, 'checked') }} value="active"> {{ __('admin.active') }}
+                </label>
+                <label class="btn btn-secondary {{ active_class($deleted) }}">
+                    <input type="radio" name="filter" autocomplete="off" {{ active_class($deleted, 'checked') }} value="trashed"> {{ __('admin.trashed') }}
+                </label>
             </div>
         </div>
-    </form>
+        <div class="menu col">
+            <select name="perPage" class="form-control">
+                <option value="0" {{ $perPage === 0 ? 'selected' : '' }}>&infin;</option>
+                @for ($i = $step; $i < $max; $i += $step)
+                    <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
+                @endfor
+            <select>
+        </div>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-striped sections" data-name="{{ $table }}">
             <thead class="text-nowrap">
                 <tr>
                     <th>
-                        <a href="javascript:void(0)" class="sort-link" data-column="id">
-                            ID @sort_icon('id')
+                        <a href="#" class="sort-link" data-column="id" {!! active_class($sortColumn === 'id', "data-order='{$sortOrder}'") !!}>
+                            ID <span class="icon"></span>
                         </a>
                     </th>
                     <th>
-                        <a href="javascript:void(0)" class="sort-link" data-column="title">
-                            {{ __('db.title') }} @sort_icon('title')
+                        <a href="#" class="sort-link" data-column="title" {!! active_class($sortColumn === 'title', "data-order='{$sortOrder}'") !!}>
+                            {{ __('db.title') }}  <span class="icon"></span>
                         </a>
                     </th>
 
                     @if ($table === 'forums')
                         <th>
-                            <a href="javascript:void(0)" class="sort-link" data-column="category">
-                                {{ __('db.category') }} @sort_icon('category_id')
+                            <a href="#" class="sort-link" data-column="category" {!! active_class($sortColumn === 'category', "data-order='{$sortOrder}'") !!}>
+                                {{ __('db.category') }} <span class="icon"></span>
                             </a>
                         </th>
                     @endif
@@ -75,7 +75,7 @@
                         <td>{{ $row->title }}</td>
 
                         @if ($table === 'forums')
-                            <td>{{ $row->category_name }}</td>
+                            <td>{{ $row->category_title }}</td>
                         @endif
 
                         <td>

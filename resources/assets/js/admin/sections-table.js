@@ -1,39 +1,47 @@
 $(function () {
-    const table = $("table").data("name");
+    const table = $('table').data('name');
 
-    $("select[name=perPage], input[name=filter]").on("change", function () {
-        $(this).parents("form").submit();
-    });
+    const form = $('form#index');
+    const cPerPage = $('select[name=perPage]');
+    const cFilters = $('input[name=filter]');
+    const cSortLinks = $('.sort-link');
 
-    $(".sort-link").on("click", function () {
-
-        const icon = $(this).children(".sort-icon");
-        if (icon.hasClass("ic_s_asc") || icon.hasClass("ic_s_desc")) {
-            icon.toggleClass("ic_s_asc").toggleClass("ic_s_desc");
+    cSortLinks.on('click', function (event) {
+        event.preventDefault();
+        if ($(this).is('[data-order]')) {
+            toggleOrder($(this));
         } else {
-            $(".sort-icon").removeClass("ic_s_asc ic_s_desc");
-            icon.addClass("ic_s_asc");
+            $('.sort-link').removeAttr('data-order');
+            $(this).attr('data-order', 'asc');
         }
-
-        const r = route("ajax.sort", {
-            table,
-            column: $(this).data("column"),
-            order: icon.hasClass("ic_s_asc") ? "asc" : "desc"
-        });
-
-        const overlay = $("#overlay");
-        overlay.removeClass('d-none');
-        overlay.fitText();
-
-        $.get(r, function (data) {
-            const table = $("table");
-            $.each(data, function () {
-                // when you append element that already
-                // exists it just moves to a new location
-                table.append($(`#row-${this}`));
-            });
-            overlay.addClass('d-none');
-        });
-
     });
+
+    bindSubmit([cSortLinks], 'click');
+    bindSubmit([cPerPage, cFilters], 'change');
+
+    form.on('submit', function () {
+        const sortLink = $('.sort-link[data-order]');
+        $(this).append(input('perPage', cPerPage.val()));
+        $(this).append(input('filter', cFilters.filter(':checked').val()));
+        $(this).append(input('sort_column', sortLink.data('column')));
+        $(this).append(input('sort_order', sortLink.data('order')));
+    });
+
+    function input(name, value) {
+        return $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', name)
+            .val(value);
+    }
+
+    function bindSubmit(elements, event) {
+        elements.forEach(function (e) {
+            e.on(event, () => { form.submit(); });
+        });
+    }
+
+    function toggleOrder(link) {
+        link.data('order', link.data('order') === 'asc' ? 'desc' : 'asc');
+    }
+
 });

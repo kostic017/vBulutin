@@ -10,7 +10,7 @@ return [
 
     'all' => 'Svi',
     'active' => 'Aktivni',
-    'deleted' => 'Obrisani',
+    'trashed' => 'Obrisani',
 
     'create-forum' => 'Napravi forum',
     'create-category' => 'Napravi kategoriju',
@@ -39,5 +39,5 @@ return [
     'info3' => 'Ako se obriše kategorija, automatski se brišu i svi forumi koji pripadaju toj kategoriji. Nakon vraćanja '
              . 'kategorije, forume je neophodno ručno vratiti. Analogno važi i za brisanje natforuma.',
     'info4' => 'Jedini način da se forum prebaci u drugu kategoriju je preko stranice "Pozicioniranje". Ukoliko '
-             . 'se premesti u obrisanu kategoriju, onda i on postaje obrisan. Analogno važi i za potforume.'
+             . 'se premesti u obrisanu kategoriju, onda i on postaje obrisan. Analogno važi i za premeštanje u obrisani natforum.'
 ];

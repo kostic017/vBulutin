@@ -10,7 +10,7 @@ return [
 
     'all' => 'All',
     'active' => 'Active',
-    'deleted' => 'Deleted',
+    'trashed' => 'Trashed',
 
     'create-forum' => 'Create Forum',
     'create-category' => 'Create Category',

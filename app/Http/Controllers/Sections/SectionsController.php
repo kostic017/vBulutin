@@ -6,6 +6,7 @@ use Session;
 use Validator;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Exceptions\DataNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,35 +24,78 @@ abstract class SectionsController extends Controller
      */
     public function index()
     {
-        $filter = request()->query('filter', 'active');
-        $perPage = (int)request()->query('perPage', 10);
+        /*
+        |--------------------------------------------------------------------------
+        | Get Valid Input
+        |--------------------------------------------------------------------------
+        */
+
         $step = (int)config('custom.pagination.step');
 
-        if ($perPage % $step) {
-            $perPage = $step;
-        }
+        $perPage = request('perPage', $step);
+        $filter = request('filter', 'active');
+        $sortColumn = request('sort_column', 'id');
+        $sortOrder = request('sort_order', 'asc');
+
+        $validate = compact('perPage', 'filter', 'sortColumn', 'sortOrder');
+        $validator = Validator::make($validate, [
+            'perPage' => 'numeric',
+            'filter' => Rule::in(['all', 'active', 'trashed']),
+            'sortColumn' => Rule::in(['id', 'title', 'category']),
+            'sortOrder' => Rule::in(['asc', 'desc']),
+        ]);
+
+        $errors = $validator->errors();
+
+        $perPage = (int)($errors->has('perPage') ? $step : $perPage);
+        $filter = $errors->has('filter') ? 'active' : $filter;
+        $sortColumn = $errors->has('sortColumn') ? 'id' : $sortColumn;
+        $sortOrder = $errors->has('sortOrder') ? 'asc' : $sortOrder;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Build Query And Fetch Data
+        |--------------------------------------------------------------------------
+        */
+
+        $query = $this->model::query();
 
         if ($filter === 'all') {
-            $rows = $perPage ? $this->model::withTrashed()->paginate($perPage) : $this->model::withTrashed()->get();
-        } elseif ($filter === 'active') {
-            $rows = $perPage ? $this->model::paginate($perPage) : $this->model::get();
-        } elseif ($filter === 'deleted') {
-            $rows = $perPage ? $this->model::onlyTrashed()->paginate($perPage) : $this->model::onlyTrashed()->get();
+            $query = $query->withTrashed();
+        } elseif ($filter === 'trashed') {
+            $query = $query->onlyTrashed();
         }
 
         if ($this->table === 'forums') {
-            foreach ($rows as $row) {
-                $row->category_name = Category::withTrashed()->where('id', $row->category_id)->pluck('title')->first();
-            }
+            $query = $query->join('categories', 'forums.category_id', 'categories.id')
+                        ->select('forums.id as id', 'forums.title as title', 'categories.title as category_title');
         }
+
+        if ($sortColumn === 'category') {
+            $query->orderBy('category_title', $sortOrder);
+        } else {
+            $query = $query->orderBy("{$this->table}.{$sortColumn}", $sortOrder);
+        }
+
+        if ($perPage) {
+            $rows = $query->paginate($perPage);
+        } else {
+            $rows = $query->get();
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Return Response
+        |--------------------------------------------------------------------------
+        */
 
         return view('admin.sections.table')
             ->with('table', $this->table)
             ->with('rows', $rows)
-            ->with('sortColumn', 'id')
-            ->with('sortOrder', 'asc')
+            ->with('perPage', $perPage)
             ->with('filter', $filter)
-            ->with('perPage', $perPage);
+            ->with('sortColumn', $sortColumn)
+            ->with('sortOrder', $sortOrder);
     }
 
     /**

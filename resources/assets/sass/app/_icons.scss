@@ -21,3 +21,11 @@
         background-position: 0 -2144px;
     }
 }
+
+a[data-order=asc] .icon {
+    background-position: 0 -2032px;
+}
+
+a[data-order=desc] .icon {
+    background-position: 0 -2144px;
+}

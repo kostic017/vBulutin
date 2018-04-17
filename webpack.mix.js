@@ -19,7 +19,7 @@ let getFiles = function (dir) {
  */
 
 getFiles('resources/assets/js/admin').forEach(function (fileName) {
-    mix.js('resources/assets/js/admin/' + fileName, 'public/js/admin');
+    mix.copy('resources/assets/js/admin/' + fileName, 'public/js/admin');
 });
 
 getFiles('resources/assets/sass/admin').forEach(function (fileName) {
