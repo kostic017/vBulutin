@@ -61,11 +61,44 @@ table.show {
 .actions {
     margin-bottom: 10px;
 
-    .pagination {
-        margin-right: 10px;
+    .buttons {
+        white-space: nowrap;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: flex-end;
+
+        select {
+            width: auto;
+        }
     }
 }
 
+
 .card p:last-child {
     margin-bottom: 0;
+}
+
+
+@media (max-width: 576px) {
+    .actions {
+        display: block;
+
+        .buttons {
+            white-space: normal;
+        }
+
+        .btn-group {
+            margin: 5px 0;
+        }
+
+        .menu {
+            display: block;
+
+            select {
+                width: 100%;
+            }
+        }
+    }
 }
