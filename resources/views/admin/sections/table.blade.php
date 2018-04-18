@@ -8,8 +8,6 @@
 @stop
 
 @section("content")
-    @include('admin.includes.overlay')
-
     <form id="index" action="{{ route("{$table}.index") }}" method="get"></form>
 
     <div class="actions row">
@@ -18,23 +16,20 @@
                 {{ $table === 'categories' ? __('admin.create-category') : __('admin.create-forum') }}
             </a>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                @php ($all = if_query('filter', 'all'))
-                @php ($active = if_query('filter', 'active') || if_query('filter', null))
-                @php ($deleted = if_query('filter', 'trashed'))
-                <label class="btn btn-secondary {{ active_class($all) }}">
-                    <input type="radio" name="filter" autocomplete="off" {{ active_class($all, 'checked') }} value="all"> {{ __('admin.all') }}
+                <label class="btn btn-secondary {{ active_class($filter === 'all') }}">
+                    <input type="radio" name="filter" autocomplete="off" {{ active_class($filter === 'all', 'checked') }} value="all"> {{ __('admin.all') }}
                 </label>
-                <label class="btn btn-secondary {{ active_class($active) }}">
-                    <input type="radio" name="filter" autocomplete="off" {{ active_class($active, 'checked') }} value="active"> {{ __('admin.active') }}
+                <label class="btn btn-secondary {{ active_class($filter === 'active') }}">
+                    <input type="radio" name="filter" autocomplete="off" {{ active_class($filter === 'active', 'checked') }} value="active"> {{ __('admin.active') }}
                 </label>
-                <label class="btn btn-secondary {{ active_class($deleted) }}">
-                    <input type="radio" name="filter" autocomplete="off" {{ active_class($deleted, 'checked') }} value="trashed"> {{ __('admin.trashed') }}
+                <label class="btn btn-secondary {{ active_class($filter === 'trashed') }}">
+                    <input type="radio" name="filter" autocomplete="off" {{ active_class($filter === 'trashed', 'checked') }} value="trashed"> {{ __('admin.trashed') }}
                 </label>
             </div>
         </div>
         <div class="menu col">
             <select name="perPage" class="form-control">
-                <option value="0" {{ $perPage === 0 ? 'selected' : '' }}>&infin;</option>
+                <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
                 @for ($i = $step; $i < $max; $i += $step)
                     <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
                 @endfor
