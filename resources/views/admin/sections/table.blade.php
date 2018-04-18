@@ -30,7 +30,7 @@
         <div class="menu col">
             <select name="perPage" class="form-control">
                 <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
-                @for ($i = $step; $i < $max; $i += $step)
+                @for ($i = $step; $i <= $max; $i += $step)
                     <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
                 @endfor
             <select>

@@ -26,31 +26,41 @@ abstract class SectionsController extends Controller
     {
         /*
         |--------------------------------------------------------------------------
-        | Get Valid Input
+        | Get Valid or Correct Bad Input
         |--------------------------------------------------------------------------
         */
 
+        $request = request();
+        $max = (int)config('custom.pagination.max');
         $step = (int)config('custom.pagination.step');
 
-        $perPage = request('perPage', $step);
-        $filter = request('filter', 'active');
-        $sortColumn = request('sort_column', 'id');
-        $sortOrder = request('sort_order', 'asc');
-
-        $validate = compact('perPage', 'filter', 'sortColumn', 'sortOrder');
-        $validator = Validator::make($validate, [
-            'perPage' => 'numeric',
+        $validator = Validator::make($request->all(), [
+            'perPage' => "integer|between:0,{$max}",
             'filter' => Rule::in(['all', 'active', 'trashed']),
-            'sortColumn' => Rule::in(['id', 'title', 'category']),
-            'sortOrder' => Rule::in(['asc', 'desc']),
+            'sort_column' => Rule::in(['id', 'title', 'category']),
+            'sort_order' => Rule::in(['asc', 'desc']),
         ]);
 
         $errors = $validator->errors();
 
-        $perPage = (int)($errors->has('perPage') ? $step : $perPage);
-        $filter = $errors->has('filter') ? 'active' : $filter;
-        $sortColumn = $errors->has('sortColumn') ? 'id' : $sortColumn;
-        $sortOrder = $errors->has('sortOrder') ? 'asc' : $sortOrder;
+        $perPage =  $request->has('perPage') && !$errors->has('perPage') ? (int)$request->perPage : $step;
+        $filter = $request->has('filter') && !$errors->has('filter') ? $request->filter : 'active';
+        $sortColumn = $request->has('sort_column') && !$errors->has('sort_column') ? $request->sort_column : 'id';
+        $sortOrder = $request->has('sort_order') && !$errors->has('sort_order') ? $request->sort_order : 'asc';
+
+        if ($remainder = $perPage % $step) {
+            $perPage = ($perPage - $remainder) ?: $step;
+            $errors->add('perPage', '');
+        }
+
+        if ($errors->any()) {
+            return redirect(request()->fullUrlWithQuery([
+                'perPage' => $perPage,
+                'filter' => $filter,
+                'sort_column' => $sortColumn,
+                'sort_order' => $sortOrder
+            ]));
+        }
 
         /*
         |--------------------------------------------------------------------------
