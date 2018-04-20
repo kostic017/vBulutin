@@ -22,7 +22,7 @@ return [
     'edit' => 'Izmeni',
     'delete' => 'Obriši',
     'search' => 'Pretraži',
-    'restore' => 'Povrati',
+    'restore' => 'Vrati',
 
     'admin-panel' => 'Administratorski panel',
 

@@ -26,8 +26,9 @@
 
         <div class="filter-search">
             <div class="search text-nowrap">
-                <input type="text" name="search_query" class="form-control">
-                <button type="submit" class="btn btn-info">{{ __('admin.search') }}</button>
+                <input type="text" name="search_query" class="form-control" value="{{ $searchQuery }}">
+                <button type="button" name="search_clear" class="btn btn-secondary"><i class="fas fa-fw fa-times"></i></button>
+                <button type="button" name="search_submit" class="btn btn-secondary active"><i class="fas fa-fw fa-search"></i></button>
             </div>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-secondary {{ active_class($filter === 'all') }}">
@@ -63,27 +64,27 @@
                         <td>{{ $row->title }}</td>
 
                         @if ($table === 'forums')
-                            <td>{{ $row->category_title }}</td>
+                            <td>{{ $row->category }}</td>
                         @endif
 
                         <td>
-                            <a href="{{ route("{$table}.show", ["{$table}" => $row->id]) }}" class="btn btn-xs btn-success">
+                            <a href="{{ route("{$table}.show", [$table => $row->id]) }}" class="btn btn-xs btn-success">
                                 {{ __('admin.view') }}
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route("{$table}.edit", ["{$table}" => $row->id]) }}" class="btn btn-xs btn-info">
+                            <a href="{{ route("{$table}.edit", [$table => $row->id]) }}" class="btn btn-xs btn-info">
                                 {{ __('admin.edit') }}
                             </a>
                         </td>
                         <td>
                             @if ($row->trashed())
-                                <form action="{{ route("{$table}.restore", ["{$table}" => $row->id]) }}" method="post">
+                                <form action="{{ route("{$table}.restore", [$table => $row->id]) }}" method="post">
                                     @csrf
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.restore') }}</button>
                                 </form>
                             @else
-                                <form action="{{ route("{$table}.destroy", ["{$table}" => $row->id]) }}" method="post">
+                                <form action="{{ route("{$table}.destroy", [$table => $row->id]) }}" method="post">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.delete') }}</button>

@@ -121,8 +121,6 @@ return [
 
     'providers' => [
 
-        HieuLe\Active\ActiveServiceProvider::class,
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -153,6 +151,8 @@ return [
          * Package Service Providers...
          */
         \Genert\BBCode\BBCodeServiceProvider::class,
+        HieuLe\Active\ActiveServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -162,6 +162,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
 
     ],
 

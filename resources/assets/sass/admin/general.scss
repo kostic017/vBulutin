@@ -117,17 +117,15 @@ th[data-column] {
 }
 
 .filter-search {
-    margin: 8px 0;
     flex-wrap: wrap;
-}
+    margin-bottom: 8px;
 
+    > div {
+        margin-top: 8px;
+    }
+}
 
 .sort-link {
     margin: 0 8px 0 2px;
 }
 
-@media (max-width: 502px) {
-    .search {
-        margin-bottom: 9px;
-    }
-}

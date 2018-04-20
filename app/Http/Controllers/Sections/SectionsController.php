@@ -7,6 +7,7 @@ use Validator;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Helpers\Common\Functions;
 use App\Http\Controllers\Controller;
 use App\Exceptions\DataNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -31,22 +32,26 @@ abstract class SectionsController extends Controller
         */
 
         $request = request();
+        $cols = ['id', 'title', 'category'];
         $max = (int)config('custom.pagination.max');
         $step = (int)config('custom.pagination.step');
 
         $validator = Validator::make($request->all(), [
             'perPage' => "integer|between:0,{$max}",
             'filter' => Rule::in(['all', 'active', 'trashed']),
-            'sort_column' => Rule::in(['id', 'title', 'category']),
+            'sort_column' => Rule::in($cols),
             'sort_order' => Rule::in(['asc', 'desc']),
+            'search_column' => Rule::in($cols),
         ]);
 
         $errors = $validator->errors();
 
+        $searchQuery = mb_strtolower(request('search_query', ''));
         $perPage =  $request->has('perPage') && !$errors->has('perPage') ? (int)$request->perPage : $step;
         $filter = $request->has('filter') && !$errors->has('filter') ? $request->filter : 'active';
         $sortColumn = $request->has('sort_column') && !$errors->has('sort_column') ? $request->sort_column : 'id';
         $sortOrder = $request->has('sort_order') && !$errors->has('sort_order') ? $request->sort_order : 'asc';
+        $searchColumn = $request->has('search_column') && !$errors->has('search_column') ? $request->search_column : 'title';
 
         if ($remainder = $perPage % $step) {
             $perPage = ($perPage - $remainder) ?: $step;
@@ -54,12 +59,19 @@ abstract class SectionsController extends Controller
         }
 
         if ($errors->any()) {
-            return redirect(request()->fullUrlWithQuery([
+            $queries = [
                 'perPage' => $perPage,
                 'filter' => $filter,
                 'sort_column' => $sortColumn,
-                'sort_order' => $sortOrder
-            ]));
+                'sort_order' => $sortOrder,
+                'search_column' => $searchColumn,
+            ];
+
+            if (isNotEmpty($searchQuery)) {
+                $queries['search_query'] = $searchQuery;
+            }
+
+            return redirect(request()->fullUrlWithQuery($queries));
         }
 
         /*
@@ -76,20 +88,20 @@ abstract class SectionsController extends Controller
             $query = $query->onlyTrashed();
         }
 
-        if ($request->has('search')) {
-            $query = $query->select('');
-        }
-
         if ($this->table === 'forums') {
-            $query = $query->join('categories', 'forums.category_id', 'categories.id')
-                        ->select('forums.id as id', 'forums.title as title', 'categories.title as category_title');
+            $query = $query->select(
+                        'forums.id AS id',
+                        'forums.title AS title',
+                        'forums.deleted_at AS deleted_at',
+                        'categories.title AS category'
+                    )->join('categories', 'forums.category_id', 'categories.id');
         }
 
-        if ($sortColumn === 'category') {
-            $query->orderBy('category_title', $sortOrder);
-        } else {
-            $query = $query->orderBy("{$this->table}.{$sortColumn}", $sortOrder);
+        if (isNotEmpty($searchQuery)) {
+            $query->where("{$this->table}.{$searchColumn}", 'LIKE', "%{$searchQuery}%");
         }
+
+        $query = $query->orderBy("{$this->table}.{$sortColumn}", $sortOrder);
 
         if ($perPage) {
             $rows = $query->paginate($perPage);
@@ -105,12 +117,7 @@ abstract class SectionsController extends Controller
 
         return view('admin.sections.table')
             ->with('table', $this->table)
-            ->with('rows', $rows)
-            ->with('perPage', $perPage)
-            ->with('filter', $filter)
-            ->with('sortColumn', $sortColumn)
-            ->with('sortOrder', $sortOrder)
-            ->with('searchColumn', 'id');
+            ->with(compact('rows', 'perPage', 'filter', 'sortColumn', 'sortOrder', 'searchColumn', 'searchQuery'));
     }
 
     /**
