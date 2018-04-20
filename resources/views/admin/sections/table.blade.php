@@ -25,7 +25,7 @@
         </div>
 
         <div class="filter-search">
-            <div class="search">
+            <div class="search text-nowrap">
                 <input type="text" name="search_query" class="form-control">
                 <button type="submit" class="btn btn-info">{{ __('admin.search') }}</button>
             </div>
