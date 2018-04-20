@@ -16,7 +16,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::directive('sections_th', function ($argument) {
+            return
+                  '<th data-column="' . $argument . '"'
+                .   '{!! active_class($sortColumn === \'' . $argument . '\', " data-order=\'{$sortOrder}\'") !!}'
+                .   '{{ active_class($searchColumn === \'' . $argument . '\', \' data-search\') }}'
+                . '>'
+                .   '<i class="fas fa-search"></i>'
+                .   '<a href="#" class="sort-link">{{ __(\'db.' . $argument . '\') }}</a>'
+                .   '<i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i>'
+                . '</th>';
+        });
     }
 
     /**

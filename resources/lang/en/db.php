@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'id' => 'ID',
     'slug' => 'Slug',
     'title' => 'Title',
     'locked' => 'Locked',

@@ -10,11 +10,25 @@
 @section("content")
     <form id="index" action="{{ route("{$table}.index") }}" method="get"></form>
 
-    <div class="actions row">
-        <div class="buttons col">
+    <div class="admin-actions">
+
+        <div class="create-paginate">
             <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
                 {{ $table === 'categories' ? __('admin.create-category') : __('admin.create-forum') }}
             </a>
+            <select name="perPage" class="form-control">
+                <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
+                @for ($i = $step; $i <= $max; $i += $step)
+                    <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
+                @endfor
+            <select>
+        </div>
+
+        <div class="filter-search">
+            <div class="search">
+                <input type="text" name="search_query" class="form-control">
+                <button type="submit" class="btn btn-info">{{ __('admin.search') }}</button>
+            </div>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-secondary {{ active_class($filter === 'all') }}">
                     <input type="radio" name="filter" autocomplete="off" {{ active_class($filter === 'all', 'checked') }} value="all"> {{ __('admin.all') }}
@@ -27,39 +41,18 @@
                 </label>
             </div>
         </div>
-        <div class="menu col">
-            <select name="perPage" class="form-control">
-                <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
-                @for ($i = $step; $i <= $max; $i += $step)
-                    <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
-                @endfor
-            <select>
-        </div>
+
     </div>
 
     <div class="table-responsive">
         <table class="table table-striped sections" data-name="{{ $table }}">
             <thead class="text-nowrap">
                 <tr>
-                    <th>
-                        <a href="#" class="sort-link" data-column="id" {!! active_class($sortColumn === 'id', "data-order='{$sortOrder}'") !!}>
-                            ID <span class="icon"></span>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="#" class="sort-link" data-column="title" {!! active_class($sortColumn === 'title', "data-order='{$sortOrder}'") !!}>
-                            {{ __('db.title') }}  <span class="icon"></span>
-                        </a>
-                    </th>
-
+                    @sections_th(id)
+                    @sections_th(title)
                     @if ($table === 'forums')
-                        <th>
-                            <a href="#" class="sort-link" data-column="category" {!! active_class($sortColumn === 'category', "data-order='{$sortOrder}'") !!}>
-                                {{ __('db.category') }} <span class="icon"></span>
-                            </a>
-                        </th>
+                        @sections_th(category)
                     @endif
-
                     <th colspan="3">&nbsp;</th>
                 </tr>
             </thead>

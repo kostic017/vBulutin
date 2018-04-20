@@ -2,11 +2,12 @@ $(function () {
     const table = $('table').data('name');
 
     const form = $('form#index');
-    const cPerPage = $('select[name=perPage]');
-    const cFilters = $('input[name=filter]');
-    const cSortLinks = $('.sort-link');
+    const sortLinks = $('.sort-link');
+    const searchQuery = $('input[name=search_query]');
+    const perPage = $('select[name=perPage]');
+    const filters = $('input[name=filter]');
 
-    cSortLinks.on('click', function (event) {
+    sortLinks.on('click', function (event) {
         event.preventDefault();
         if ($(this).is('[data-order]')) {
             toggleOrder($(this));
@@ -16,22 +17,28 @@ $(function () {
         }
     });
 
-    bindSubmit([cSortLinks], 'click');
-    bindSubmit([cPerPage, cFilters], 'change');
+    bindSubmit([sortLinks], 'click');
+    bindSubmit([perPage, filters], 'change');
 
     form.on('submit', function () {
         const sortLink = $('.sort-link[data-order]');
-        $(this).append(input('perPage', cPerPage.val()));
-        $(this).append(input('filter', cFilters.filter(':checked').val()));
-        $(this).append(input('sort_column', sortLink.data('column')));
-        $(this).append(input('sort_order', sortLink.data('order')));
+
+        appendData('perPage', perPage.val());
+        appendData('search_query', searchQuery.val());
+        appendData('sort_column', sortLink.data('column'));
+        appendData('sort_order', sortLink.data('order'));
+        appendData('filter', filters.filter(':checked').val());
     });
 
-    function input(name, value) {
-        return $('<input>')
-            .attr('type', 'hidden')
-            .attr('name', name)
-            .val(value);
+    function appendData(name, value) {
+        if (isNotEmpty(value)) {
+            form.append(
+                $('<input>')
+                    .attr('type', 'hidden')
+                    .attr('name', name)
+                    .val(value)
+            );
+        }
     }
 
     function bindSubmit(elements, event) {

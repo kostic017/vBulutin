@@ -76,6 +76,10 @@ abstract class SectionsController extends Controller
             $query = $query->onlyTrashed();
         }
 
+        if ($request->has('search')) {
+            $query = $query->select('');
+        }
+
         if ($this->table === 'forums') {
             $query = $query->join('categories', 'forums.category_id', 'categories.id')
                         ->select('forums.id as id', 'forums.title as title', 'categories.title as category_title');
@@ -105,7 +109,8 @@ abstract class SectionsController extends Controller
             ->with('perPage', $perPage)
             ->with('filter', $filter)
             ->with('sortColumn', $sortColumn)
-            ->with('sortOrder', $sortOrder);
+            ->with('sortOrder', $sortOrder)
+            ->with('searchColumn', 'id');
     }
 
     /**

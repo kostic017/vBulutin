@@ -2,6 +2,10 @@ function ucfirst(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function isNotEmpty(string) {
+    return string.trim().length > 0;
+}
+
 function isEqualToAnyWord(haystack, needle, ignoreCase = true) {
     if (ignoreCase) {
         needle = needle.toLowerCase();

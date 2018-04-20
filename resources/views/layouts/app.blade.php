@@ -19,6 +19,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('lib/toastr/toastr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('lib/fontawesome/css/fontawesome-all.min.css') }}">
 
         @yield("styles")
 

@@ -43,6 +43,43 @@ table.show {
     }
 }
 
+th[data-column] {
+
+    .fa-search {
+        cursor: pointer;
+    }
+
+    &:not([data-search]) {
+        .fa-search {
+            color: silver;
+
+            &:hover {
+                color: darkgray;
+            }
+        }
+    }
+
+    &:not([data-order]) {
+        .fa-caret-up,
+        .fa-caret-down {
+            display: none;
+        }
+    }
+
+    &[data-order=asc] {
+        .fa-caret-down {
+            display: none;
+        }
+    }
+
+    &[data-order=desc] {
+        .fa-caret-up {
+            display: none;
+        }
+    }
+
+}
+
 #overlay {
     top: 0;
     left: 0;
@@ -58,47 +95,32 @@ table.show {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.actions {
-    margin-bottom: 10px;
-
-    .buttons {
-        white-space: nowrap;
-    }
-
-    .menu {
-        display: flex;
-        justify-content: flex-end;
-
-        select {
-            width: auto;
-        }
-    }
-}
-
-
 .card p:last-child {
     margin-bottom: 0;
 }
 
-
-@media (max-width: 576px) {
-    .actions {
-        display: block;
-
-        .buttons {
-            white-space: normal;
-        }
-
-        .btn-group {
-            margin: 5px 0;
-        }
-
-        .menu {
-            display: block;
-
-            select {
-                width: 100%;
-            }
-        }
+.admin-actions {
+    .form-control {
+        width: auto;
+        display: inline-block;
     }
+
+    .btn,
+    .btn-group {
+        vertical-align: inherit;
+    }
+
+    > div {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.filter-search {
+    margin: 8px 0;
+}
+
+
+.sort-link {
+    margin: 0 8px 0 2px;
 }

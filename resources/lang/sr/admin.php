@@ -21,6 +21,7 @@ return [
     'view' => 'Pregledaj',
     'edit' => 'Izmeni',
     'delete' => 'Obriši',
+    'search' => 'Pretraži',
     'restore' => 'Povrati',
 
     'admin-panel' => 'Administratorski panel',
@@ -31,13 +32,4 @@ return [
 
     'parent-deleted' => 'Ne možete vratiti ovaj forum jer je njegov natforum obrisan.',
     'category-deleted' => 'Ne možete vratiti ovaj forum jer je njegova kategorija obrisana.',
-
-    'info1' => 'Novokreiranim forumima i kategorijama se automatski dodeljuje poslednja pozicija u tabeli. '
-             . 'Mogu se repozicionirati samo preko stranice "Pozicioniranje".',
-    'info2' => 'Ništa se ne može u potpunosti obrisati već odlazi u kantu, iz koje se može vratiti '
-             . 'u bilo kom trenutku. Ono što je obrisano vidljivo je samo preko ovog panela.',
-    'info3' => 'Ako se obriše kategorija, automatski se brišu i svi forumi koji pripadaju toj kategoriji. Nakon vraćanja '
-             . 'kategorije, forume je neophodno ručno vratiti. Analogno važi i za brisanje natforuma.',
-    'info4' => 'Jedini način da se forum prebaci u drugu kategoriju je preko stranice "Pozicioniranje". Ukoliko '
-             . 'se premesti u obrisanu kategoriju, onda i on postaje obrisan. Analogno važi i za premeštanje u obrisani natforum.'
 ];
