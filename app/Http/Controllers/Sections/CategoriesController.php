@@ -7,7 +7,7 @@ use Validator;
 use App\Forum;
 use App\Category;
 use Illuminate\Http\Request;
-use App\Exceptions\DataNotFoundException;
+use App\Exceptions\IdNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoriesController extends SectionsController
@@ -82,7 +82,7 @@ class CategoriesController extends SectionsController
             $category = Category::withTrashed()->where('id', $id)->firstOrFail();
             return view('admin.sections.categories.show')->with('category', $category);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 
@@ -108,7 +108,7 @@ class CategoriesController extends SectionsController
                 'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 

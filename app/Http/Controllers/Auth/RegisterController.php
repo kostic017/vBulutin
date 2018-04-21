@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use Session;
+
 use App\User;
-use Illuminate\Http\Request;
 use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
+use App\Exceptions\InvalidEmailTokenException;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
@@ -120,12 +123,7 @@ class RegisterController extends Controller
             $user->save();
             $this->guard()->login($user);
         } catch (ModelNotFoundException $e) {
-            $message = __METHOD__ . ': ' . "No user associated with provided token ('{$token}').";
-            $this->logger->addRecord("error", $message);
-            return redirect(route('login'))->with([
-                'alert-type' => 'error',
-                'message' => __('auth.wrong-token')
-            ]);
+            throw new InvalidEmailTokenException($token);
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Common;
+namespace App\Helpers;
 
 use Carbon\Carbon;
 use Monolog\Logger;

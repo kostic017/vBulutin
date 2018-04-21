@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Helpers\Common\Functions;
 use App\Http\Controllers\Controller;
-use App\Exceptions\DataNotFoundException;
+use App\Exceptions\IdNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class SectionsController extends Controller
@@ -83,25 +83,31 @@ abstract class SectionsController extends Controller
         $query = $this->model::query();
 
         if ($filter === 'all') {
-            $query = $query->withTrashed();
+            $query->withTrashed();
         } elseif ($filter === 'trashed') {
-            $query = $query->onlyTrashed();
+            $query->onlyTrashed();
         }
 
         if ($this->table === 'forums') {
-            $query = $query->select(
-                        'forums.id AS id',
-                        'forums.title AS title',
-                        'forums.deleted_at AS deleted_at',
-                        'categories.title AS category'
-                    )->join('categories', 'forums.category_id', 'categories.id');
+            $query->select(
+                    'forums.id AS id',
+                    'forums.title AS title',
+                    'forums.deleted_at AS deleted_at',
+                    'categories.title AS category'
+                )->join('categories', 'forums.category_id', 'categories.id');
         }
 
         if (isNotEmpty($searchQuery)) {
-            $query->where("{$this->table}.{$searchColumn}", 'LIKE', "%{$searchQuery}%");
+            $query->where(
+                $searchColumn === 'category' ? 'categories.title' : "{$this->table}.{$searchColumn}",
+                'LIKE', "%{$searchQuery}%"
+            );
         }
 
-        $query = $query->orderBy("{$this->table}.{$sortColumn}", $sortOrder);
+        $query->orderBy(
+            $sortColumn === 'category' ? 'categories.title' : "{$this->table}.{$sortColumn}",
+            $sortOrder
+        );
 
         if ($perPage) {
             $rows = $query->paginate($perPage);
@@ -132,7 +138,7 @@ abstract class SectionsController extends Controller
             $section = $this->model::findOrFail($id);
             return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 
@@ -164,7 +170,7 @@ abstract class SectionsController extends Controller
                 'message' => __('db.updated')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 
@@ -184,7 +190,7 @@ abstract class SectionsController extends Controller
                 'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 
@@ -197,7 +203,7 @@ abstract class SectionsController extends Controller
                 'message' => __('db.restored')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 

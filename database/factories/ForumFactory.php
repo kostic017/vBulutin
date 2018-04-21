@@ -12,7 +12,7 @@ $factory->define(App\Forum::class, function (Faker $faker, $args) {
     $categoryId = $args['category_id'];
 
     return [
-        'title' => $faker->sentence(6),
+        'title' => rtrim($faker->sentence(6), '.'),
         'description' => $faker->optional()->paragraph(),
 
         'position' => function() use (&$positions, $categoryId, $parentId) {

@@ -16,5 +16,8 @@ return [
     'restored' => 'Podaci su uspešno vraćeni.',
     'stored' => 'Podaci su uspešno dodati u bazu.',
 
-    'not-found' => 'Red unutar ":table" sa ID-om ":id" ne postoji.',
+    'not-found' => [
+        'id' => 'U tabeli ":table" ne postoji red sa ID-om ":id".',
+        'email-token' => 'Token ":token" za potvrdu email adrese je nevažeći.',
+    ],
 ];

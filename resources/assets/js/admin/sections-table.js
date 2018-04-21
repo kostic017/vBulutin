@@ -11,6 +11,17 @@ $(function () {
     const searchClear = $('button[name=search_clear]');
     const searchSubmit = $('button[name=search_submit]');
 
+    sortLinks.on('click', function (event) {
+        event.preventDefault();
+        const th = $(this).parent();
+        if (th.is('[data-order]')) {
+            th.data('order', th.data('order') === 'asc' ? 'desc' : 'asc');
+        } else {
+            $('th').removeAttr('data-order');
+            th.attr('data-order', 'asc');
+        }
+    });
+
     searchTogglers.on('click', function () {
         const th = $(this).parent();
         $('th').removeAttr('data-search');
@@ -18,8 +29,11 @@ $(function () {
     });
 
     searchClear.on('click', function () {
-        searchQuery.val('');
-        form.submit();
+        const searchParams = new URLSearchParams(location.search);
+        if (searchParams.has('search_query')) {
+            searchQuery.val('');
+            form.submit();
+        }
     });
 
     searchQuery.on('keypress', function (event) {
@@ -33,21 +47,22 @@ $(function () {
         $(this).select();
     });
 
-    sortLinks.on('click', function (event) {
-        event.preventDefault();
-        const th = $(this).parent();
-        if (th.is('[data-order]')) {
-            th.data('order', th.data('order') === 'asc' ? 'desc' : 'asc');
-        } else {
-            $('th').removeAttr('data-order');
-            th.attr('data-order', 'asc');
+    searchSubmit.on('click', function () {
+        if (isNotEmpty(searchQuery.val())) {
+            form.submit();
         }
     });
 
+    bindSubmit('click', [sortLinks]);
     bindSubmit('change', [perPage, filters]);
-    bindSubmit('click', [sortLinks, searchSubmit]);
 
     form.on('submit', function () {
+        const appendData = function (name, value) {
+            if (isNotEmpty(value)) {
+                form.append($('<input>').attr('type', 'hidden').attr('name', name).val(value));
+            }
+        }
+
         const thSort = $('th[data-order]');
         const thSearch = $('th[data-search]');
 
@@ -58,11 +73,6 @@ $(function () {
         appendData('search_query', searchQuery.val());
         appendData('filter', filters.filter(':checked').val());
 
-        function appendData(name, value) {
-            if (isNotEmpty(value)) {
-                form.append($('<input>').attr('type', 'hidden').attr('name', name).val(value));
-            }
-        }
     });
 
     function bindSubmit(event, elements) {

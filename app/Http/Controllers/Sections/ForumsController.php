@@ -7,7 +7,7 @@ use Validator;
 use App\Forum;
 use App\Category;
 use Illuminate\Http\Request;
-use App\Exceptions\DataNotFoundException;
+use App\Exceptions\IdNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ForumsController extends SectionsController
@@ -50,7 +50,7 @@ class ForumsController extends SectionsController
                 'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 
@@ -83,7 +83,7 @@ class ForumsController extends SectionsController
             ]);
 
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 
@@ -159,7 +159,7 @@ class ForumsController extends SectionsController
                 ->with('category', $category)
                 ->with('parentForum', $parentForum);
         } catch (ModelNotFoundException $e) {
-            throw new DataNotFoundException($this->table, $id);
+            throw new IdNotFoundException($id, $this->table);
         }
     }
 

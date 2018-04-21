@@ -31,14 +31,16 @@
 
         @if (Session::has('message'))
             <script>
-                let type = "{{ Session::get('alert-type', 'info') }}";
-                let message = "{{ Session::get('message') }}";
-                switch (type) {
-                    case 'info': toastr.info(message); break;
-                    case 'warning': toastr.warning(message); break;
-                    case 'success': toastr.success(message); break;
-                    case 'error': toastr.error(message); break;
-                }
+                $(function() {
+                    let type = "{{ Session::get('alert-type') }}";
+                    let message = "{{ Session::get('message') }}";
+                    switch (type) {
+                        case 'info': toastr.info(message); break;
+                        case 'warning': toastr.warning(message); break;
+                        case 'success': toastr.success(message); break;
+                        case 'error': toastr.error(message); break;
+                    }
+                });
             </script>
         @endif
 

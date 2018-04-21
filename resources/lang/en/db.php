@@ -16,5 +16,8 @@ return [
     'restored' => 'Data has been successfully restored.',
     'stored' => 'Data has been successfully stored into the database.',
 
-    'not-found' => 'Row inside ":table" with id ":id" does not exist.',
+    'not-found' => [
+        'id' => 'There is no row with ID ":id" inside table ":table".',
+        'email-token' => 'Confirmation token ":token" is invalid.',
+    ],
 ];
