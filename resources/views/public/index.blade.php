@@ -1,1 +1,1 @@
-<a href="admin/">Admin Panel</a>
+@extends('layouts.public')

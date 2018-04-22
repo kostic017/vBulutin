@@ -1,0 +1,58 @@
+.fa-header-2 {
+    // fa-h1, fa-h2, fa-h3 su PRO
+    font-size : 0.85em !important;
+}
+
+.fa-header-3 {
+    font-size : 0.7em !important;
+}
+
+.emojionearea {
+    width : 32px !important;
+}
+
+.post-container {
+    padding : 6px;
+}
+
+.post-box {
+    padding : 6px;
+    @include margins-but(first, top, 10px);
+}
+
+.post-body {
+    display    : flex;
+    min-height : 200px;
+}
+
+.post-user,
+.post-main {
+    padding : 10px;
+}
+
+.post-user {
+    width      : 15%;
+    text-align : center;
+
+    p {
+        margin : 2px 0;
+    }
+
+}
+
+.post-main {
+    width           : 85%;
+    display         : flex;
+    flex-flow       : column;
+    justify-content : space-between;
+
+    .buttons {
+        display         : flex;
+        justify-content : flex-end;
+
+        li {
+            margin-left : 10px;
+        }
+    }
+
+}

@@ -1,0 +1,30 @@
+.search-form {
+    display : flex;
+    padding: 10px 12px;
+    background: $bgc-searchform;
+
+    .searchquery {
+        border     : 0;
+        height     : 35px;
+        width      : 190px;
+        display    : block;
+        padding    : 0 0 0 5px;
+        box-sizing : border-box;
+    }
+
+    .searchbtn {
+        border: 0;
+        width: 35px;
+        height: 35px;
+
+        &.-submitsearch {
+            color: $c-submitsearch;
+            background: $bgc-submitsearch;
+        }
+
+        &.-advancedsearch {
+            color: $c-advancedsearch;
+            background: $bgc-advancedsearch;
+        }
+    }
+}

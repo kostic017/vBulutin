@@ -72,7 +72,6 @@ $(function () {
         appendData('search_column', thSearch.data('column'));
         appendData('search_query', searchQuery.val());
         appendData('filter', filters.filter(':checked').val());
-
     });
 
     function bindSubmit(event, elements) {

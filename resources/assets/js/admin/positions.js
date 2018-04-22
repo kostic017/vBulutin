@@ -66,7 +66,7 @@ $(function () {
         overlay.removeClass('d-none');
         overlay.fitText();
 
-        $.post(route("ajax.positions"), { data }, function () {
+        $.post('/ajax/positions', { data }, function () {
             toastr.success($("span[data-key='admin.positions-success']").text());
             overlay.addClass('d-none');
         }).fail(function () {

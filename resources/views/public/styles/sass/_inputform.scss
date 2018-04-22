@@ -1,0 +1,26 @@
+.rules {
+    padding          : 5px;
+    color            : black;
+    overflow-y       : auto;
+    max-height       : 300px;
+    background-color : white;
+    border           : 1px solid black;
+
+    p:first-child {
+        margin-top : 0;
+    }
+
+    p:last-child {
+        margin-bottom : 0;
+    }
+}
+
+.inputform {
+    margin-top : 10px;
+
+    input:not([type=checkbox]):not([type=radio]) {
+        width      : 150px;
+        box-sizing : border-box;
+    }
+}
+

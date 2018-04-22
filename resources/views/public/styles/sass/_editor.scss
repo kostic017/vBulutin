@@ -1,0 +1,53 @@
+div[aria-describedby="sheditor"] {
+    // ceo dijalog
+    z-index   : 200;
+    position  : fixed;
+    font-size : 14px;
+}
+
+.fieldset-toggle {
+    cursor: pointer;
+}
+
+#sheditor {
+    // sadrzaj dijaloga
+    padding    : 10px;
+    overflow-y : auto;
+
+    h4 {
+        margin : 0.5em 0;
+    }
+
+    .jui-accordion {
+        margin-top : 15px;
+    }
+
+}
+
+#target-select {
+    margin      : 5px 0;
+    display     : flex;
+    flex-wrap   : wrap;
+    align-items : center;
+
+    .pseudo {
+        margin-left: 10px;
+    }
+}
+
+.evo-cp-wrap {
+    width   : 100% !important;
+    display : flex;
+}
+
+.evo-colorind {
+    margin-left : 10px;
+}
+
+div[data-property] {
+    @include margins-but(first, top, 10px);
+}
+
+.ui-widget-overlay {
+    z-index : 100 !important;
+}

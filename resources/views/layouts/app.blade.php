@@ -28,12 +28,11 @@
         <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 
         @yield('scripts')
-
         @if (Session::has('message'))
             <script>
                 $(function() {
-                    let type = "{{ Session::get('alert-type') }}";
-                    let message = "{{ Session::get('message') }}";
+                    const type = "{{ Session::get('alert-type') }}";
+                    const message = "{{ Session::get('message') }}";
                     switch (type) {
                         case 'info': toastr.info(message); break;
                         case 'warning': toastr.warning(message); break;
@@ -43,8 +42,6 @@
                 });
             </script>
         @endif
-
-        @routes
 
     </head>
 
@@ -70,14 +67,20 @@
                                 <li><a class="nav-link" href="{{ route('login') }}">{{ __('auth.login') }}</a></li>
                                 <li><a class="nav-link" href="{{ route('register') }}">{{ __('auth.register') }}</a></li>
                             @else
+                                @yield('navigation')
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name ?? Auth::user()->username }} <span class="caret"></span>
                                     </a>
-
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">{{ __('auth.logout') }}
+                                        <a class="dropdown-item" href="profile.php?id={{ Auth::id() }}">
+                                            <i class="fas fa-user"></i> Profil
+                                        </a>
+                                        <a class="dropdown-item" href="#" id="btn-messages" data-newmessages="0">
+                                            <i class="fas fa-envelope"></i> Nema novih poruka
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fas fa-sign-out-alt"></i> {{ __('auth.logout') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -91,10 +94,13 @@
                 </div>
             </nav>
             <main class="py-4">
+
                 @yield('content')
+
             </main>
+
+            @yield('footer')
+
         </div>
-
     </body>
-
 </html>

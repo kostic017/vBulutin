@@ -1,0 +1,272 @@
+{
+  "main-container": {
+    "color": "#262c2f",
+    "font-size": "14px",
+    "font-family": "'Lato',sans-serif",
+    "background-attachment": "fixed",
+    "Link": {
+      "a": {
+        "color": "#06065a"
+      },
+      "a:hover": {
+        "color": "#48484e"
+      }
+    },
+    "Background": {
+      "style": "radial-gradient",
+      "start-color": "#ececec",
+      "end-color": "#9ba8af"
+    }
+  },
+  "search-form": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#88969c"
+    }
+  },
+  "searchquery": {
+    "color": "#555a62",
+    "Background": {
+      "style": "linear-gradient",
+      "start-color": "#abb6bc",
+      "end-color": "#f2f4f5"
+    }
+  },
+  "status-updates": {
+    "text-align": "center",
+    "text-transform": "capitalize"
+  },
+  "searchbtn-customsearch": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#33383b"
+    }
+  },
+  "searchbtn-submitsearch": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#748187"
+    }
+  },
+  "main-navigation": {
+    "Link": {
+      "a": {
+        "color": "#b4bcbe"
+      }
+    },
+    "Background": {
+      "style": "linear-gradient",
+      "start-color": "#3f4649",
+      "end-color": "#1c1f21"
+    }
+  },
+  "nav-profile": {
+    "Link": {
+      "a:hover": {
+        "color": "#f9f9f9",
+        "Background": {
+          "style": "linear-gradient",
+          "start-color": "#737e85",
+          "end-color": "#4c5256"
+        }
+      }
+    },
+    "Background": {
+      "style": "linear-gradient",
+      "start-color": "#5b646a",
+      "end-color": "#34383b"
+    }
+  },
+  "nav-forum-nonactive": {
+    "Link": {
+      "a:hover": {
+        "color": "#f9f9f9",
+        "Background": {
+          "style": "linear-gradient",
+          "start-color": "#576064",
+          "end-color": "#33393d"
+        }
+      }
+    }
+  },
+  "nav-forum-active": {
+    "Link": {
+      "a": {
+        "color": "#555a5c",
+        "Background": {
+          "style": "linear-gradient",
+          "start-color": "#e3e9ec",
+          "end-color": "#d5dbdf"
+        }
+      }
+    }
+  },
+  "forum-stats": {
+    "Link": {
+      "a": {
+        "color": "#262c2f"
+      },
+      "a:hover": {
+        "color": "#5c6569"
+      }
+    }
+  },
+  "stats-data": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#e6edf0"
+    }
+  },
+  "online-users": {
+    "border-style": "solid",
+    "border-color": "#839197",
+    "Background": {
+      "style": "solid",
+      "start-color": "#e6edf0"
+    }
+  },
+  "online-users-list": {
+    "font-weight": "bold"
+  },
+  "user-admin": {
+    "Link": {
+      "a": {
+        "color": "#ff0000"
+      }
+    }
+  },
+  "permissions": {
+    "font-size": "0.9em",
+    "border-width": "15px",
+    "border-color": "#cdd6d9",
+    "border-style": "solid",
+    "Background": {
+      "style": "solid",
+      "start-color": "#f4f4f4"
+    }
+  },
+  "usersbrowsing": {
+    "border-bottom-style": "solid",
+    "border-bottom-width": "1px",
+    "border-bottom-color": "#dedede"
+  },
+  "main-table": {
+    "border-style": "solid",
+    "border-width": "15px",
+    "border-color": "#cdd6d9",
+    "border-collapse": "collapse"
+  },
+  "caption": {
+    "text-transform": "uppercase"
+  },
+  "captionbar": {
+    "color": "#fff",
+    "text-align": "left",
+    "Link": {
+      "a": {
+        "color": "#fff"
+      },
+      "a:hover": {
+        "color": "#d9d9d9"
+      },
+      "a:active": {
+        "color": "silver"
+      }
+    },
+    "Background": {
+      "style": "linear-gradient",
+      "start-color": "#3f4649",
+      "end-color": "#272a2c"
+    }
+  },
+  "table-row": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#e6edf0"
+    },
+    "border-style": "solid",
+    "border-width": "1px",
+    "border-color": "#c8d1d4"
+  },
+  "subforums": {
+    "color": "#0b0b0c"
+  },
+  "row-name": {
+    "font-size": "1.05em"
+  },
+  "btn-back2top": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#9ba5a9"
+    }
+  },
+  "post-container": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#cdd6d9"
+    }
+  },
+  "user-title": {
+    "Link": {
+      "a": {
+        "font-weight": "bold"
+      }
+    }
+  },
+  "post-box": {
+    "Background": {
+      "style": "linear-gradient",
+      "start-color": "#e6edf0",
+      "end-color": "#adb0b3"
+    }
+  },
+  "post-body": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#e6edf0"
+    }
+  },
+  "btn-reply": {
+    "color": "#fff",
+    "Background": {
+      "style": "linear-gradient",
+      "start-color": "#3f4649",
+      "end-color": "#272a2c"
+    },
+    "border-style": "none"
+  },
+  "active-page": {
+    "Link": {
+      "a": {
+        "Background": {
+          "style": "solid",
+          "start-color": "#d5dbdf"
+        }
+      }
+    }
+  },
+  "page-title": {
+    "color": "#313638"
+  },
+  "post-user": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#d2d8da"
+    }
+  },
+  "sidebar-title": {
+    "color": "#383e40",
+    "font-size": "1em",
+    "Background": {
+      "style": "linear-gradient",
+      "start-color": "#abb9c1",
+      "end-color": "#97a3a8"
+    }
+  },
+  "sidebar-content": {
+    "Background": {
+      "style": "solid",
+      "start-color": "#d8e1e4"
+    }
+  }
+}

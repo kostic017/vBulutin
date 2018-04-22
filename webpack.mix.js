@@ -26,6 +26,10 @@ getFiles('resources/assets/sass/admin').forEach(function (fileName) {
     mix.sass('resources/assets/sass/admin/' + fileName, 'public/css/admin');
 });
 
+getFiles('resources/assets/sass/public').forEach(function (fileName) {
+    mix.sass('resources/assets/sass/public/' + fileName, 'public/css/public');
+});
+
 mix.scripts([
     'resources/assets/js/constants.js',
     'resources/assets/js/functions.js'

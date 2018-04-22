@@ -4,6 +4,24 @@
     display: block;
 }
 
+@mixin comma-separated-list {
+    display: flex;
+    li {
+        &:after {
+            content: ",#{$NBSP} ";
+        }
+        &:last-child:after {
+            content: "";
+        }
+    }
+}
+
+@mixin hide-text {
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+}
+
 /// @output Gives a margin on one side to all elements, except one child.
 /// @param {string} $child - first/last/both
 /// @param {string} $side - top/right/bottom/left

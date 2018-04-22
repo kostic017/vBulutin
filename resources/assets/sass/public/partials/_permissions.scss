@@ -1,0 +1,26 @@
+.permissions {
+    padding    : 10px;
+    margin-top : 80px;
+
+    .usersbrowsing {
+        display         : flex;
+        margin-bottom   : 10px;
+        padding-bottom  : 10px;
+        justify-content : space-between;
+
+        div {
+            display : flex;
+        }
+
+        ul {
+            margin-left : 3px;
+            @include comma-separated-list;
+        }
+    }
+
+    .list {
+        li {
+            margin-top : 5px;
+        }
+    }
+}
