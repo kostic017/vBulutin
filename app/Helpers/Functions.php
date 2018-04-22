@@ -1,5 +1,13 @@
 <?php
 
+function extractTime($datetime) {
+    return $datetime->format('H:i:s');
+}
+
+function extractDate($datetime) {
+    return $datetime->format('d.m.Y');
+}
+
 function isNotEmpty(string $str)
 {
     return strlen(trim($str)) > 0;

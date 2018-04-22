@@ -10,6 +10,17 @@ class Topic extends Model
 {
     use Sluggable;
 
+    public function lastPost() {
+        return $this->posts()->orderBy('updated_at', 'desc')->first();
+    }
+
+    public function readStatus(): boolean
+    {
+        if (!Auth::check()) return false; // za sada, posle i za goste da se napravi
+        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc.read_status')
+            || ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->count();
+    }
+
     public function poll()
     {
         return $this->hasOne('App\Poll');

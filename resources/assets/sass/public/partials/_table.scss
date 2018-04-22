@@ -1,68 +1,98 @@
 .main-table {
-    width : 100%;
+    width: 100%;
     @include margins-but(last, bottom, 20px);
 
-    td {
-        width       : 30%;
-        padding     : 15px 30px;
-        white-space : nowrap;
+    caption {
+        caption-side: top;
+    }
 
-        &:first-child {
-            width         : 100%;
-            padding-right : 0;
-            position      : relative;
-            &:not(.post-none) {
-                padding-left  : 50px;
+    border: 1px solid black; // temp
+    td {
+        border: 1px solid black;
+    }
+
+    td {
+        padding: 15px 30px;
+        white-space: nowrap;
+        &.icon {
+            padding: 0;
+        }
+        &.main-info {
+            width: 100%;
+            padding-right: 0;
+            position: relative;
+            .name {
+                white-space: pre-line;
+                display: inline-block;
             }
+        }
+        &.side-info {
+            width: 30%;
         }
     }
 
-}
-
-.table-row {
-
-    .icon {
-        top               : 50%;
-        left              : -28px;
-        width             : 71px;
-        height            : 47px;
-        display           : block;
-        position          : absolute;
-        transform         : translateY(-(41px / 2));
-        background-repeat : no-repeat;
+    .iconpost {
+        vertical-align: baseline;
     }
 
-    .name {
-        margin-bottom: 12px;
-        white-space: pre-line;
-        display: inline-block;
-    }
-}
-
-.subforum-list {
-    margin-top: 5px;
-    list-style-type : none;
-    padding-left    : 15px;
-
-    li {
-        margin-top : 3px;
-    }
-}
-
-.sort-bar {
-    margin-bottom : 0;
-
-    ul {
-        display : flex;
+    .subforums {
+        display: flex;
     }
 
-    li {
-        margin-right : 10px;
+    .subforum-list {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
     }
 
-    a {
-        display : block;
-        padding : 0 5px;
+    .sort-bar {
+        margin-bottom: 0;
+
+        ul {
+            display: flex;
+        }
+
+        li {
+            margin-right: 10px;
+        }
+
+        a {
+            display: block;
+            padding: 0 5px;
+        }
     }
 
+    .post-info {
+        display: flex;
+        margin: 10px 0;
+        align-items: center;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        img {
+            padding-right: 8px;
+        }
+    }
+
+    .post-list {
+        list-style-type: none;
+        li {
+            padding-left: 8px;
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
+    }
 }

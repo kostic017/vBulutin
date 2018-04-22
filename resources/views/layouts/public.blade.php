@@ -14,14 +14,14 @@
 
 @section('content')
     <div class="d-flex justify-content-end">
-        <form class="search-form mr-4" name="search" action="search.php">
+        <form class="search-form mr-2" name="search" action="search.php">
             <input class="searchquery" type="text" placeholder="Pretraga...">
             <button class="searchbtn -submitsearch" type="submit"><i class="fas fa-search"></i></button>
             <button class="searchbtn -advancedsearch" type="button"><i class="fas fa-cog"></i></button>
         </form>
     </div>
 
-    <div class="content">
+    <div class="content mx-2 mt-2">
        @yield('content')
     </div>
 @overwrite

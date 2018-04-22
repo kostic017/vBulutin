@@ -13,9 +13,10 @@
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('public.index');
-});
+Route::get('/', [
+    'as' => 'public.index',
+    'uses' => 'DashboardController@index',
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
