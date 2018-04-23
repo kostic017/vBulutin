@@ -2,7 +2,6 @@
 
 @import "partials/buttons";
 @import "partials/base";
-@import "partials/search";
 @import "partials/footer";
 @import "partials/table";
 @import "partials/topbox";
@@ -22,6 +21,10 @@ footer,
     ul {
         // @extend .no-bullets;
     }
+}
+
+.main-container {
+    margin: 10px;
 }
 
 ul.buttons {

@@ -51,12 +51,12 @@
                         </td>
 
                         <td class="side-info">
-                            @if ($lastPost = $parent->lastPost()):
+                            @if ($lastPost = $parent->lastPost())
                                 @php ($user = $lastPost->user()->first())
 
                                 <div class="post-info">
                                     <a href="profile.php?id={{ $user->id }}">
-                                        {{-- displayAvatar($lastPost["user"], "avatar-small") --}}
+                                        @avatar(medium)
                                     </a>
                                     <ul>
                                         <li><a href="">{{ limit_words($lastPost->topic()->first()->title) }}</a></li>

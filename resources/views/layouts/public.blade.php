@@ -13,16 +13,20 @@
 @stop
 
 @section('content')
-    <div class="d-flex justify-content-end">
-        <form class="search-form mr-2" name="search" action="search.php">
-            <input class="searchquery" type="text" placeholder="Pretraga...">
-            <button class="searchbtn -submitsearch" type="submit"><i class="fas fa-search"></i></button>
-            <button class="searchbtn -advancedsearch" type="button"><i class="fas fa-cog"></i></button>
+    <div class="main-container">
+        <form name="search" action="search.php">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Pretraga..." aria-label="Pretraga">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary submitsearch" type="button"><i class="fas fa-search"></i></button>
+                    <button class="btn btn-outline-secondary advancedsearch" type="button"><i class="fas fa-cog"></i></button>
+                </div>
+            </div>
         </form>
-    </div>
 
-    <div class="content mx-2 mt-2">
-       @yield('content')
+        <div class="content">
+           @yield('content')
+        </div>
     </div>
 @overwrite
 

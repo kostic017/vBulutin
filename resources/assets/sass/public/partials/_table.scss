@@ -1,31 +1,62 @@
 .main-table {
     width: 100%;
+    margin-top: 10px;
+    border: 1px solid $bc-maintable;
+    background-color: $bgc-maintable;
     @include margins-but(last, bottom, 20px);
 
+    a {
+        color: $c-maintablelink;
+
+        &:hover {
+            color: $c-maintablelink-hover;
+        }
+    }
+
     caption {
+        font-size: 1.05em;
         caption-side: top;
+        background-color: $bgc-caption;
+
+        a {
+            color: $c-captionlink;
+
+            &:hover {
+                color: $c-captionlink-hover;
+            }
+        }
     }
 
-    border: 1px solid black; // temp
-    td {
-        border: 1px solid black;
+    tr {
+        border: 1px solid $bc-maintable;
     }
 
     td {
-        padding: 15px 30px;
+        padding: 5px 10px;
         white-space: nowrap;
+
         &.icon {
             padding: 0;
+            text-align: center;
+
+            img {
+                width: 64px;
+            }
         }
+
         &.main-info {
             width: 100%;
             padding-right: 0;
             position: relative;
+
             .name {
+                font-size: 1.05em;
+                font-weight: bold;
                 white-space: pre-line;
                 display: inline-block;
             }
         }
+
         &.side-info {
             width: 30%;
         }

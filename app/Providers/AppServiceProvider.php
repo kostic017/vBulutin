@@ -16,14 +16,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('sections_th', function ($argument) {
+        Blade::directive('avatar', function ($size) {
+            return '<img class="avatar avatar-' . $size . '" src="{{ $user->avatar ?? asset(\'img/avatar.png\') }}" alt="{{ $user->username }}">';
+        });
+
+        Blade::directive('sections_th', function ($column) {
             return
-                  '<th data-column="' . $argument . '"'
-                .   '{!! active_class($sortColumn === \'' . $argument . '\', " data-order=\'{$sortOrder}\'") !!}'
-                .   '{{ active_class($searchColumn === \'' . $argument . '\', \' data-search\') }}'
+                  '<th data-column="' . $column . '"'
+                .   '{!! active_class($sortColumn === \'' . $column . '\', " data-order=\'{$sortOrder}\'") !!}'
+                .   '{{ active_class($searchColumn === \'' . $column . '\', \' data-search\') }}'
                 . '>'
                 .   '<i class="fas fa-search"></i>'
-                .   '<a href="#" class="sort-link">{{ __(\'db.' . $argument . '\') }}</a>'
+                .   '<a href="#" class="sort-link">{{ __(\'db.' . $column . '\') }}</a>'
                 .   '<i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i>'
                 . '</th>';
         });
