@@ -52,12 +52,15 @@
 
                         <td class="side-info">
                             @if ($lastPost = $parent->lastPost()):
+                                @php ($user = $lastPost->user()->first())
+
                                 <div class="post-info">
-                                    <a href="profile.php?id={{ $lastPost->user()->id }}">
+                                    <a href="profile.php?id={{ $user->id }}">
                                         {{-- displayAvatar($lastPost["user"], "avatar-small") --}}
                                     </a>
                                     <ul>
-                                        <li><a href="">{{ $lastPost->user()->username() }}</a></li>
+                                        <li><a href="">{{ limit_words($lastPost->topic()->first()->title) }}</a></li>
+                                        <li><a href="">{{ $user->username }}</a></li>
                                         <li>{{ extractTime($lastPost->created_at) }}</li>
                                         <li>{{ extractDate($lastPost->created_at) }}</li>
                                     </ul>

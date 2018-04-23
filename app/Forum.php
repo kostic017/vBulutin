@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,30 +31,31 @@ class Forum extends Model
     }
 
     /**
-     * Za svaku temu u forumu proverava da li je procitana.
-     * Ako bar jedna tema nije procitana onda forum nije procitan.
-     * Ako je forum procitan vraca 'old', ako nije vraca 'new'.
+     * Za svaku temu u forumu koja je azurirana u poslednjih
+     * GC_READ_STATUS dana proverava da li je procitana. Vraca
+     * 'new' ako ima neprocitanih tema, a 'old' ako su sve procitane.
      */
     public function readStatus(): string
     {
-        $children = $this->children();
-
+        $children = $this->children()->get();
         foreach ($children as $child) {
-            $topics = $child->topics();
-            if (!$this->readStatusHelper($topics)) {
+            if (!$this->readStatusHelper($this->readStatusTopics($child))) {
                 return 'new';
             }
         }
-
-        $topics = $this->topics();
-        if (!$this->readStatusHelper($topics)) {
+        if (!$this->readStatusHelper($this->readStatusTopics($this))) {
             return 'new';
         }
-
         return 'old';
     }
 
-    private function readStatusHelper($topics): bool
+    private function readStatusTopics(Forum $forum): Collection
+    {
+        $expDate = Carbon::now()->subDays((int)config('custom.gc.read_status'));
+        return $forum->topics()->where('updated_at', '<', $expDate)->get();
+    }
+
+    private function readStatusHelper(Collection $topics): bool
     {
         foreach ($topics as $topic) {
             if (!$topic->readStatus()) {
@@ -65,28 +68,23 @@ class Forum extends Model
     /**
      * Poredi poslednje poruke u svakoj temi u forumu i vraca najnoviju.
      */
-    public function lastPost()
+    public function lastPost(): Post
     {
         $lastPost = null;
-        $children = $this->children();
-
+        $children = $this->children()->get();
         foreach ($children as $child) {
-            $topics = $child->topics();
-            $this->lastPostHelper($topics, $lastPost);
+            $this->lastPostHelper($child, $lastPost);
         }
-
-        $topics = $this->topics();
-        $this->lastPostHelper($topics, $lastPost);
-
+        $this->lastPostHelper($this, $lastPost);
         return $lastPost;
     }
 
-    private function lastPostHelper($topics, &$lastPost)
+    private function lastPostHelper(Forum $forum, ?Post &$lastPost)
     {
-        foreach ($topics as $topic) {
-            $topicLastPost = $topic->lastPost();
+        if ($lastTopic = $forum->topics()->orderBy('updated_at', 'desc')->first()) {
+            $topicLastPost = $lastTopic->lastPost();
             if ($lastPost) {
-                $lastPost = ($lastPost->updated_at->lt($topicLastPost)) ? $topicLastPost : $lastPost;
+                $lastPost = ($lastPost->updated_at->lt($topicLastPost->updated_at)) ? $topicLastPost : $lastPost;
             } else {
                 $lastPost = $topicLastPost;
             }

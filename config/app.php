@@ -183,6 +183,7 @@ return [
         'BBCode' => \Genert\BBCode\Facades\BBCode::class,
         'Functions' => App\Helpers\Common\Functions::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Carbon' => Carbon\Carbon::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

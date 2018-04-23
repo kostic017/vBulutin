@@ -1,10 +1,17 @@
 <?php
 
-function extractTime($datetime) {
+function limit_words($value, $words = 3, $end = '...')
+{
+    return \Illuminate\Support\Str::words($value, $words, $end);
+}
+
+function extractTime($datetime)
+{
     return $datetime->format('H:i:s');
 }
 
-function extractDate($datetime) {
+function extractDate($datetime)
+{
     return $datetime->format('d.m.Y');
 }
 
