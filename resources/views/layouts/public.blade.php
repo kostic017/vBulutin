@@ -13,7 +13,6 @@
 @stop
 
 @section('content')
-    <div class="main-container">
         <form name="search" action="search.php">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Pretraga..." aria-label="Pretraga">
@@ -24,63 +23,39 @@
             </div>
         </form>
 
-        <div class="content">
+        <section class="content">
            @yield('content')
-        </div>
-    </div>
-@overwrite
-
-@section('footer')
-    <footer>
-
-        {{-- samo na pocetnoj --}}
-        <section class="forum-stats">
-            <ul>
-                <li><strong>-</strong> poruka/e</li>
-                <li><strong>-</strong> član(ova)</li>
-                <li><strong>-</strong> najnoviji član</li>
-                <li><strong>2</strong> najviše osoba na mreži</li>
-            </ul>
         </section>
 
-
-        <section class="online-users">
-
-            <div class="info">
-                <div>
-                    <strong>2 korisnika su na mreži (ne ažurira se istog trena)</strong><br>
-                    <small>55 član, 1 gost, 0 anonimnih korisnika <a href="">(Pogledaj celu listu)</a></small>
+        <section class="forum-info">
+            <div class="card online-users">
+                <div class="card-header">
+                    Ko je na mreži
                 </div>
-                <ul>
-                    <li><a href="">Moderatorski tim</a></li>
-                </ul>
+                <div class="card-body">
+                    <p>Trenutno su 2 korisnika na mreži: <b>0</b> registrovanih, <b>0</b> sakrivenih i <b>2</b> gosta (ažurira se na svakih 5 minuta).</p>
+                    <p>Na mreži je najviše bilo <b>233</b> korisnika 24. aprila 2017.</p>
+                    <div class="list">
+                        <p>Registrovani korisnici:</p>
+                        <ul>
+                            <li><a href="">Kostić</a></li>
+                            <li><a href="">Kostić</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <ul class="list">
-                <li><a href="">Kostić</a></li>
-            </ul>
-
-            <div class="chat">
-                <strong>Članovi aktivni na četu</strong><br>
-                <small>Trenutno niko nije aktivan.</small>
+            <div class="card statistics">
+                <div class="card-header">
+                    Statistika
+                </div>
+                <div class="card-body">
+                    <p>
+                        Ukupno poruka <b>200</b> &bull;
+                        Ukupno tema <b>15</b> &bull;
+                        Ukupno članova <b>17</b> &bull;
+                        Naš najnoviji član <a href="">Marina</a>
+                    </p>
             </div>
-
         </section>
-
-        <section class="footer-links">
-            <div>
-                <a href=""><img src="/public/images/icon-rss.png" alt="RSS" style="width:14px;height:14px;"></a>
-                <ul>
-                    <li><a href="">Označi sve kao pročitano</a></li>
-                    <li><a href="">Pomoć</a></li>
-                </ul>
-            </div>
-            <div>Copyright &copy; Nikola Kostić 2017.</div>
-        </section>
-
-    </footer>
-
-    <div id="btn-back2top">
-        <span>Povratak na vrh</span>
-    </div>
-@stop
+@overwrite

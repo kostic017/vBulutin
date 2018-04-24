@@ -45,12 +45,12 @@
                             @endif
                         </td>
 
-                        <td class="side-info">
+                        <td class="side-info count">
                             <strong>{{ $parent->topics()->get()->count() }}</strong> tema/e<br>
                             <strong>{{ $parent->postCount() }}</strong> poruka/e
                         </td>
 
-                        <td class="side-info">
+                        <td class="side-info lastpost">
                             @if ($lastPost = $parent->lastPost())
                                 @php ($user = $lastPost->user()->first())
 
@@ -61,8 +61,8 @@
                                     <ul>
                                         <li><a href="">{{ limit_words($lastPost->topic()->first()->title) }}</a></li>
                                         <li><a href="">{{ $user->username }}</a></li>
-                                        <li>{{ extractTime($lastPost->created_at) }}</li>
                                         <li>{{ extractDate($lastPost->created_at) }}</li>
+                                        <li>{{ extractTime($lastPost->created_at) }}</li>
                                     </ul>
                                 </div>
                             @endif

@@ -93,14 +93,17 @@
                     </div>
                 </div>
             </nav>
-            <main class="py-4">
 
+            <main class="py-4 main-container">
                 @yield('content')
-
             </main>
 
-            @yield('footer')
-
         </div>
+
+        <div id="btn-back2top">
+            <span>Povratak na vrh</span>
+        </div>
+
     </body>
+
 </html>

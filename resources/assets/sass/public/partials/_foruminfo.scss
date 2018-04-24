@@ -1,0 +1,30 @@
+.forum-info {
+    .card {
+        margin-top: $margin;
+
+        p {
+            margin: 0;
+        }
+
+        .card-header {
+            border: 0;
+            color: $c-cardheader;
+            background-color: $bgc-cardheader;
+        }
+    }
+}
+
+.online-users {
+
+    .list {
+        display: flex;
+        margin-top: 15px;
+
+        ul {
+            display: flex;
+            margin-left: 5px;
+            @include list-unstyled;
+            @include comma-separated-list;
+        }
+    }
+}

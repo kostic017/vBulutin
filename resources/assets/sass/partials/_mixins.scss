@@ -16,18 +16,12 @@
     }
 }
 
-@mixin hide-text {
-    overflow: hidden;
-    text-indent: 100%;
-    white-space: nowrap;
-}
-
 /// @output Gives a margin on one side to all elements, except one child.
 /// @param {string} $child - first/last/both
 /// @param {string} $side - top/right/bottom/left
-/// @param {number} $ammout
-@mixin margins-but($child, $side, $ammout) {
-    margin-#{$side}: $ammout;
+/// @param {number} $amount
+@mixin margins-but($child, $side, $amount) {
+    margin-#{$side}: $amount;
     @if $child == "last" or $child == "both" {
         &:last-child {
             margin-#{$side}: 0;

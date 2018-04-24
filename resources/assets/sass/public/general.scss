@@ -10,46 +10,23 @@
 @import "partials/inputform";
 @import "partials/textarea";
 @import "partials/profile";
-
-aside,
-header,
-footer,
-.top-box,
-.post-info,
-.captionbar,
-.usersbrowsing {
-    ul {
-        // @extend .no-bullets;
-    }
-}
-
-.main-container {
-    margin: 10px;
-}
-
-ul.buttons {
-    // @extend .no-bullets;
-}
+@import "partials/foruminfo";
 
 .required-star {
-    color       : red;
-    font-weight : bold;
-}
-
-.captionbar {
-    line-height  : 38px;
-    padding-left : 15px;
+    color: red;
+    font-weight: bold;
 }
 
 .focused,
 tr.focused td {
-    z-index  : 150;
-    position : relative;
+    z-index: 150;
+    position: relative;
 }
 
-#center-page-container {
-    width     : 100%;
-    margin    : 0 auto;
-    padding   : 20px;
-    max-width : 1100px;
+.main-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1100px;
 }
+

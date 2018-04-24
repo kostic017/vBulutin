@@ -1,9 +1,10 @@
 .main-table {
     width: 100%;
-    margin-top: 10px;
+    font-size: 0.95em;
+    margin-top: $margin;
     border: 1px solid $bc-maintable;
     background-color: $bgc-maintable;
-    @include margins-but(last, bottom, 20px);
+    @include margins-but(last, bottom, $margin);
 
     a {
         color: $c-maintablelink;
@@ -16,6 +17,7 @@
     caption {
         font-size: 1.05em;
         caption-side: top;
+        padding-left: 0.75rem;
         background-color: $bgc-caption;
 
         a {
@@ -36,11 +38,11 @@
         white-space: nowrap;
 
         &.icon {
-            padding: 0;
+            padding: 0 0 0 5px;
             text-align: center;
 
             img {
-                width: 64px;
+                width: 60px;
             }
         }
 
@@ -115,6 +117,10 @@
 
         img {
             padding-right: 8px;
+        }
+
+        ul {
+            @include list-unstyled;
         }
     }
 
