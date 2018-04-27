@@ -13,6 +13,7 @@
 @stop
 
 @section('content')
+        {{--
         <form name="search" action="search.php">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Pretraga..." aria-label="Pretraga">
@@ -22,6 +23,7 @@
                 </div>
             </div>
         </form>
+        --}}
 
         <section class="content">
            @yield('content')
@@ -51,10 +53,10 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        Ukupno poruka <b>200</b> &bull;
-                        Ukupno tema <b>15</b> &bull;
-                        Ukupno članova <b>17</b> &bull;
-                        Naš najnoviji član <a href="">Marina</a>
+                        Ukupno poruka <b>{{ $postCount }}</b> &bull;
+                        Ukupno tema <b>{{ $topicCount }}</b> &bull;
+                        Ukupno članova <b>{{ $userCount }}</b> &bull;
+                        Naš najnoviji član <a href="{{ route('public.user', ['user' => $newestUser->username]) }}">{{ $newestUser->username }}</a>
                     </p>
             </div>
         </section>

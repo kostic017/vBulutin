@@ -13,55 +13,34 @@
 
 Auth::routes();
 
-Route::get('/', [
-    'as' => 'public.index',
-    'uses' => 'DashboardController@index',
-]);
+Route::group(['prefix' => '/'], function () {
+    Route::get('home', 'HomeController@index')->name('home');
+    Route::get('confirm/{token}', 'Auth\RegisterController@confirm')->name('register.confirm');
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/confirm/{token}', [
-    'as' => 'register.confirm',
-    'uses' => 'Auth\RegisterController@confirm'
-]);
+    Route::get('', 'DashboardController@index')->name('public.index');
+    Route::get('user/{user}', 'DashboardController@user')->name('public.user');
+    Route::get('topic/{topic}', 'DashboardController@topic')->name('public.topic');
+    Route::get('forum/{forum}', 'DashboardController@forum')->name('public.forum');
+    Route::get('category/{category}', 'DashboardController@category')->name('public.category');
+});
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
     Route::get('/', function () {
         return view('admin.index');
     });
 
-    Route::get('positions/', [
-        'as' => 'admin.positions',
-        'uses' => 'Sections\CategoriesController@positions'
-    ]);
+    Route::get('positions/', 'Admin\CategoriesController@positions')->name('admin.positions');
 
-    Route::post('forums/{forum}/restore', [
-        'as' => 'forums.restore',
-        'uses' => 'Sections\ForumsController@restore'
-    ]);
+    Route::post('forums/{forum}/restore', 'Admin\ForumsController@restore')->name('forums.restore');
+    Route::post('categories/{category}/restore', 'Admin\CategoriesController@restore')->name('categories.restore');
 
-    Route::post('categories/{category}/restore', [
-        'as' => 'categories.restore',
-        'uses' => 'Sections\CategoriesController@restore'
-    ]);
-
-    Route::resource('forums', 'Sections\ForumsController');
-    Route::resource('categories', 'Sections\CategoriesController');
+    Route::resource('forums', 'Admin\ForumsController');
+    Route::resource('categories', 'Admin\CategoriesController');
 });
 
 Route::group(['prefix' => '/ajax'], function () {
-    Route::get('/{table}/{column}/{order}/sort', [
-        'as' => 'ajax.sort',
-        'uses' => 'AjaxController@sort'
-    ]);
+    Route::get('/{table}/{column}/{order}/sort', 'AjaxController@sort')->name('ajax.sort');
 
-    Route::post('/positions/save', [
-        'as' => 'ajax.positions',
-        'uses' => 'AjaxController@positions'
-    ]);
-
-    Route::post('/getParentSection', [
-        'as' => 'ajax.getParentSection',
-        'uses' => 'AjaxController@getParentSection'
-    ]);
+    Route::post('/positions/save', 'AjaxController@positions')->name('ajax.positions');
+    Route::post('/getParentSection', 'AjaxController@getParentSection')->name('ajax.getParentSection');
 });

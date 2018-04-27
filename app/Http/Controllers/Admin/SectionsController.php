@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Sections;
+namespace App\Http\Controllers\Admin;
 
 use Session;
 use Validator;

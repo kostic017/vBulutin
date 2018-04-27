@@ -9,6 +9,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public static function newestUser(): User
+    {
+        return self::select('username')->orderBy('registered_at', 'desc')->first();
+    }
+
     /**
      * Route notifications for the mail channel.
      *

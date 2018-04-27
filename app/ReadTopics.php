@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ReadTopic extends Model
+class ReadTopics extends Model
 {
     /**
      * Indicates if the model should be timestamped.

@@ -22,7 +22,8 @@
 
         ul {
             display: flex;
-            margin-left: 5px;
+            margin-left: $ml-inlinelist;
+
             @include list-unstyled;
             @include comma-separated-list;
         }

@@ -4,27 +4,29 @@ namespace App\Http\Controllers;
 
 use Session;
 use Exception;
+
 use App\Forum;
 use App\Category;
 use App\Helpers\Common\Functions;
+use App\Exceptions\SomeException;
+use App\Exceptions\IdNotFoundException;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class AjaxController extends Controller
 {
 
-    private function error(string $method, Exception $e, string $message = null) {
+    private function error(string $method, Exception $e, string $message = null)
+    {
         $log = $method . ' ' . ($message ?? $e->getMessage());
         $this->logger->addRecord('error', $log);
         return response()->json([
             'status' => 'error',
             'message' => $log
         ], 500);
-    }
-
-    public function sort($table, $column, $order)
-    {
-       // TODO
     }
 
     public function positions()
@@ -65,16 +67,18 @@ class AjaxController extends Controller
                 }
             }
         } catch (Exception $e) {
-            return $this->error(__METHOD__, $e);
+            throw new SomeException($e);
         }
     }
 
-    public function getParentCategory() {
+    public function getParentCategory()
+    {
         $id = request()->id;
-        if ($forum = Forum::where('id', $id)->first()) {
+        try {
+            $forum = Forum::findOrFail($id);
             return response()->json(['category_id' => $forum->category_id]);
-        } else {
-            return $this->error(__METHOD__, $e, "Forum with id {$id} does not exists.");
+        } catch (ModelNotFoundException $e) {
+            throw new IdNotFoundException($id, 'forums');
         }
     }
 }

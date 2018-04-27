@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Auth;
+use Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -13,10 +15,11 @@ class Topic extends Model
         return $this->posts()->orderBy('updated_at', 'desc')->first();
     }
 
-    public function readStatus(): boolean
+    public function readStatus(): string
     {
-        if (!Auth::check()) return false; // za sada, posle i za goste da se napravi
-        return ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->count();
+        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc.read_status') ||
+            ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->get()->count() ?
+            'old' : 'new';
     }
 
     public function poll()

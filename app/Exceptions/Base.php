@@ -14,19 +14,19 @@ class Base extends Exception {
 
     private static $logger;
 
-    public function __construct($level, $toastr, $route, $message)
+    public function __construct($loglevel, $toastrlevel, $route, $message)
     {
-        $this->level = $level;
         $this->route = $route;
-        $this->toastr = $toastr;
         $this->message = $message;
+        $this->loglevel = $loglevel;
+        $this->toastrlevel = $toastrlevel;
     }
 
-    private static function log($level, $trace, $message) {
+    private static function log($loglevel, $trace, $message) {
         if (!self::$logger) {
             self::$logger = new FileLogger('forum41');
         }
-        self::$logger->addRecord($level, "{$trace['class']}@{$trace['function']}: {$message}");
+        self::$logger->addRecord($loglevel, "{$trace['class']}@{$trace['function']}: {$message}");
     }
 
     /**
@@ -37,9 +37,9 @@ class Base extends Exception {
      */
     public function render($request)
     {
-        self::log($this->level, $this->getTrace()[0], $this->message);
+        self::log($this->loglevel, $this->getTrace()[0], $this->message);
         return redirect(route($this->route))->with([
-            'alert-type' => $this->toastr,
+            'alert-type' => $this->toastrlevel,
             'message' => $this->message,
         ]);
     }

@@ -23,9 +23,9 @@ class Forum extends Model
     public function postCount()
     {
         $count = 0;
-        $topics = $this->topics();
+        $topics = $this->topics()->get();
         foreach ($topics as $topic) {
-            $count += $topic->posts()->count();
+            $count += $topic->posts()->get()->count();
         }
         return $count;
     }
@@ -52,13 +52,13 @@ class Forum extends Model
     private function readStatusTopics(Forum $forum): Collection
     {
         $expDate = Carbon::now()->subDays((int)config('custom.gc.read_status'));
-        return $forum->topics()->where('updated_at', '<', $expDate)->get();
+        return $forum->topics()->where('updated_at', '>', $expDate)->get();
     }
 
     private function readStatusHelper(Collection $topics): bool
     {
         foreach ($topics as $topic) {
-            if (!$topic->readStatus()) {
+            if ($topic->readStatus() === 'new') {
                 return false;
             }
         }
