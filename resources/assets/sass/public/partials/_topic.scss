@@ -1,58 +1,52 @@
-.fa-header-2 {
-    // fa-h1, fa-h2, fa-h3 su PRO
-    font-size : 0.85em !important;
-}
+.post {
+    padding: 12px;
+    border: 1px solid $bc-post;
+    background-color: $bgc-post;
+    @include margins-but(last, bottom, $margin);
 
-.fa-header-3 {
-    font-size : 0.7em !important;
-}
+    .profile {
+        padding-right: 20px;
+        white-space: nowrap;
+        @include unstyle-list;
+    }
 
-.emojionearea {
-    width : 32px !important;
-}
+    .body {
+        color: $c-post;
+        word-break: break-all;
+    }
 
-.post-container {
-    padding : 6px;
-}
+    .content {
+        margin-top: 6px;
+        padding-top: 12px;
+        border-top: 1px solid $bc-post;
+    }
 
-.post-box {
-    padding : 6px;
-    @include margins-but(first, top, 10px);
-}
+    .author {
+        padding: 0 0 5px 0;
+        line-height: 1.2em;
+        font-size: 0.846em;
+        margin: 0 15em 0.6em 0;
+    }
 
-.post-body {
-    display    : flex;
-    min-height : 200px;
-}
+    .signature {
+        margin-top: 24px;
+        padding-top: 12px;
+        border-top: 1px solid $bc-post;
+    }
 
-.post-user,
-.post-main {
-    padding : 10px;
-}
+    .back2top {
+        display: flex;
+        justify-content: flex-end;
+    }
 
-.post-user {
-    width      : 15%;
-    text-align : center;
-
-    p {
-        margin : 2px 0;
+    .top {
+        width: 11px;
+        height: 11px;
+        display: block;
+        background-image: url(/img/icon_back_top.gif);
+        @include text-hide;
     }
 
 }
 
-.post-main {
-    width           : 85%;
-    display         : flex;
-    flex-flow       : column;
-    justify-content : space-between;
 
-    .buttons {
-        display         : flex;
-        justify-content : flex-end;
-
-        li {
-            margin-left : 10px;
-        }
-    }
-
-}

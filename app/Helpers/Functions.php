@@ -7,12 +7,12 @@ function limit_words($value, $words = 3, $end = '...')
 
 function extractTime($datetime)
 {
-    return $datetime->format('H:i:s');
+    return Carbon::parse($datetime)->format('H:i:s');
 }
 
 function extractDate($datetime)
 {
-    return $datetime->format('d.m.Y');
+    return Carbon::parse($datetime)->format('d.m.Y');
 }
 
 function isNotEmpty(string $str)
