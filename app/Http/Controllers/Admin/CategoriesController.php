@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Session;
 use Validator;
+
 use App\Forum;
 use App\Category;
-use Illuminate\Http\Request;
 use App\Exceptions\IdNotFoundException;
+
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoriesController extends SectionsController
@@ -67,7 +69,7 @@ class CategoriesController extends SectionsController
         return redirect(route('categories.index'))->with([
             'alert-type' => 'success',
             'message' => __('db.stored')
-        ]);;
+        ]);
     }
 
     /**

@@ -18,6 +18,8 @@ let getFiles = function (dir) {
  |
  */
 
+mix.browserSync('forum41.local');
+
 getFiles('resources/assets/js/admin').forEach(function (fileName) {
     mix.copy('resources/assets/js/admin/' + fileName, 'public/js/admin');
 });

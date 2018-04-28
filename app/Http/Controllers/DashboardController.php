@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Validator;
+
 use App\User;
 use App\Post;
 use App\Forum;
 use App\Topic;
 use App\Category;
+
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DashboardController extends Controller
@@ -35,7 +40,7 @@ class DashboardController extends Controller
                 ->with('self', $category)
                 ->with('category', $category);
         } catch (ModelNotFoundException $e) {
-            error('404');
+            abort('404');
         }
     }
 
@@ -48,9 +53,9 @@ class DashboardController extends Controller
                 'topbox' => 'forum',
                 'self' => $forum,
                 'forum' => $forum,
-                'topics' => $forum->topics()->get(),
                 'children' => $forum->children()->get(),
                 'category' => Category::findOrFail($forum->category_id),
+                'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
             ];
 
             if ($forum->parent_id) {
@@ -59,7 +64,7 @@ class DashboardController extends Controller
 
             return view('public.forum')->with($vars);
         } catch (ModelNotFoundException $e) {
-            error('404');
+            abort('404');
         }
     }
 
@@ -82,7 +87,7 @@ class DashboardController extends Controller
 
             return view('public.topic')->with($vars);
         } catch (ModelNotFoundException $e) {
-            error('404');
+            abort('404');
         }
     }
 
@@ -90,8 +95,38 @@ class DashboardController extends Controller
         try {
             return view('public.user')->with('user', User::where('username', $username)->firstOrFail());
         } catch (ModelNotFoundException $e) {
-            error('404');
+            abort('404');
         }
+    }
+
+    public function createTopic(Request $request, string $forum)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'content' => 'required|min:5',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $uId = Auth::id();
+
+        $topic = new Topic;
+        $topic->title = $request->title;
+        $topic->forum_id = $forum;
+        $topic->save();
+
+        $post = new Post;
+        $post->content = e($request->content);
+        $post->topic_id = $topic->id;
+        $post->user_id = $uId;
+        $post->save();
+
+        return redirect(route('public.topic', ['topic' => $topic->slug]))->with([
+            'alert-type' => 'success',
+            'message' => __('db.stored')
+        ]);
     }
 
 }

@@ -1,7 +1,11 @@
 @php ($locale = App::getLocale())
+
+<link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
+
 <script src="{{ asset('lib/sceditor/jquery.sceditor.min.js') }}"></script>
 <script src="{{ asset("lib/sceditor/languages/{$locale}.js") }}"></script>
 <script src="{{ asset('lib/sceditor/jquery.sceditor.bbcode.min.js') }}"></script>
+
 <script>
     $(function() {
         const textarea = $('.sceditor');

@@ -1,13 +1,9 @@
 @extends('layouts.admin')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
-@stop
-
 @section('scripts')
     <script src="{{ asset('js/admin/force-category.js') }}"></script>
     @include('includes.sceditor')
-@stop
+@overwrite
 
 @section('content')
     <div class="card">
@@ -25,7 +21,7 @@
 
                     <div class="form-group">
                         <label for="title">{{ __('db.title') }} <span class="text-danger font-weight-bold">*</span></label>
-                        <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}" required>
+                        <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
 
                         @if ($errors->has('title'))
                             <span class="invalid-feedback" style="display:block">
@@ -36,7 +32,7 @@
 
                     <div class="form-group">
                         <label for="category_id">{{ __('db.category') }} <span class="text-danger font-weight-bold">*</span></label>
-                        <select name="category_id" id="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
+                        <select name="category_id" id="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') === $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
                             @endforeach
@@ -50,7 +46,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="parent_id">{{ __('db.parent_forum') }}</label>
+                        <label for="parent_id">{{ __('db.parent-forum') }}</label>
                         <select name="parent_id" id="parent_id" class="form-control">
                             <option value="" selected></option>
                             @foreach ($rootForums as $rootForum)

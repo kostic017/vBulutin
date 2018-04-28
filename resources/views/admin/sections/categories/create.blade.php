@@ -1,13 +1,5 @@
 @extends('layouts.admin')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
-@stop
-
-@section('scripts')
-    @include('includes.sceditor')
-@stop
-
 @section('content')
     <div class="card">
 
@@ -21,7 +13,7 @@
 
                 <div class="form-group">
                     <label for="title">{{ __('db.title') }}</label>
-                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}" required>
+                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
 
                     @if ($errors->has('title'))
                         <span class="invalid-feedback" style="display:block">
@@ -47,5 +39,7 @@
         </div>
 
     </div>
+
+    @include('includes.sceditor')
 @stop
 
