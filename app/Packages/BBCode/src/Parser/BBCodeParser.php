@@ -178,6 +178,12 @@ final class BBCodeParser extends Parser
         ],
     ];
 
+    /**
+     * Remove all BBCode
+     *
+     * @param  string $source
+     * @return string Parsed text
+     */
     public function stripTags(string $source): string
     {
         foreach ($this->parsers as $name => $parser) {
@@ -187,6 +193,13 @@ final class BBCodeParser extends Parser
         return $source;
     }
 
+    /**
+     * Parses the BBCode string
+     *
+     * @param      $source
+     * @param bool $caseInsensitive
+     * @return string
+     */
     public function parse(string $source, $caseInsensitive = null): string
     {
         $caseInsensitive = $caseInsensitive === self::CASE_INSENSITIVE ? true : false;
