@@ -1,11 +1,4 @@
-let fs = require('fs');
 let mix = require('laravel-mix');
-
-let getFiles = function (dir) {
-    return fs.readdirSync(dir).filter(file => {
-        return fs.statSync(`${dir}/${file}`).isFile();
-    });
-};
 
 /*
  |--------------------------------------------------------------------------
@@ -18,25 +11,22 @@ let getFiles = function (dir) {
  |
  */
 
-mix.browserSync('forum41.local');
+// mix.browserSync('forum41.local');
 
-getFiles('resources/assets/js/admin').forEach(function (fileName) {
-    mix.copy('resources/assets/js/admin/' + fileName, 'public/js/admin');
-});
-
-getFiles('resources/assets/sass/admin').forEach(function (fileName) {
-    mix.sass('resources/assets/sass/admin/' + fileName, 'public/css/admin');
-});
-
-getFiles('resources/assets/sass/public').forEach(function (fileName) {
-    mix.sass('resources/assets/sass/public/' + fileName, 'public/css/public');
-});
+mix.sass('resources/assets/sass/app.scss', 'public/css/app.css');
+mix.sass('resources/assets/sass/admin/style.scss', 'public/css/admin.css');
+mix.sass('resources/assets/sass/public/style.scss', 'public/css/public.css');
 
 mix.scripts([
     'resources/assets/js/constants.js',
-    'resources/assets/js/functions.js'
+    'resources/assets/js/functions.js',
+    'resources/assets/js/sceditor.js'
 ], 'public/js/script.js');
 
-mix.js('resources/assets/js/app.js', 'public/js/app.js');
+mix.scripts([
+    'resources/assets/js/admin/positions.js',
+    'resources/assets/js/admin/section-table.js',
+    'resources/assets/js/admin/force-category.js'
+], 'public/js/admin.js');
 
-mix.sass('resources/assets/sass/app.scss', 'public/css/app.css');
+mix.js('resources/assets/js/app.js', 'public/js/app.js');

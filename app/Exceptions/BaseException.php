@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use App\Helpers\FileLogger;
 
-class Base extends Exception {
+class BaseException extends Exception {
     private $level;
     private $route;
     private $alertType;

@@ -151,7 +151,6 @@ return [
          * Package Service Providers...
          */
         HieuLe\Active\ActiveServiceProvider::class,
-        \Genert\BBCode\BBCodeServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
          /*
@@ -179,11 +178,9 @@ return [
 
     'aliases' => [
 
+        'BBCode' => App\Helpers\BBCode::class,
         'Active' => HieuLe\Active\Facades\Active::class,
-        'BBCode' => \Genert\BBCode\Facades\BBCode::class,
-        'Functions' => App\Helpers\Common\Functions::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Carbon' => Carbon\Carbon::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

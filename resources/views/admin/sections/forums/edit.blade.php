@@ -1,12 +1,7 @@
 @extends('layouts.admin')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('lib/sceditor/themes/default.min.css') }}">
-@stop
-
 @section('scripts')
-    <script src="{{ asset('js/admin/force-category.js') }}"></script>
-    @include('includes.sceditor')
+    <script>$(() => { forceCategory(); });</script>
 @stop
 
 @section('content')
@@ -49,4 +44,6 @@
         </div>
 
     </div>
+
+    @include('includes.sceditor')
 @stop

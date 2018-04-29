@@ -4,7 +4,7 @@
 @extends('layouts.admin')
 
 @section('scripts')
-    <script src="{{ asset('js/admin/sections-table.js') }}"></script>
+    <script>$(() => { sectionTable(); });</script>
 @stop
 
 @section("content")

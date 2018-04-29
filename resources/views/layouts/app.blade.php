@@ -100,10 +100,6 @@
 
         </div>
 
-        <div id="btn-back2top">
-            <span>Povratak na vrh</span>
-        </div>
-
     </body>
 
 </html>

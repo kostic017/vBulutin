@@ -24,7 +24,7 @@
                             napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ $post->created_at }}
                         </p>
                         <div class="content">
-                            {!! BBCode::convertToHtml($post->content) !!}
+                            {!! BBCode::parse($post->content) !!}
                         </div>
                         <div class="signature">
                             Some signature text

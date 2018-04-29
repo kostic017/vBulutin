@@ -28,6 +28,7 @@
     font-weight: bold;
     cursor: ns-resize;
     justify-content: space-between;
+
     div {
         display: flex;
         align-items: center;
@@ -62,6 +63,7 @@
     background: #fafafa;
     border: 1px solid #ccc;
     background: linear-gradient(to bottom, #fafafa 0%, #eee 100%);
+
     &:hover {
         color: #2ea8e5;
         background: #fff;

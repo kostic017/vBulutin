@@ -2,13 +2,12 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('lib/jquery-ui/jquery-ui.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/positions.css') }}">
 @stop
 
 @section('scripts')
     <script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('lib/jquery-nestable/jquery.nestable.min.js') }}"></script>
-    <script src="{{ asset('js/admin/positions.js') }}"></script>
+    <script>$(() => { positions(); });</script>
 @stop
 
 @section('content')

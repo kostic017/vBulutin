@@ -3,7 +3,7 @@
 namespace App;
 
 use Auth;
-use Carbon;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 

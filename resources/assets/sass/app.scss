@@ -1,36 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 @import "partials/variables";
-@import "partials/helpers";
-
 @import '~bootstrap/scss/bootstrap';
 
 button,
 select {
   cursor: pointer;
-}
-
-#btn-back2top {
-    left: 50%;
-    width: 25px;
-    height: 25px;
-    bottom: 20px;
-    display: none;
-    z-index: 9999;
-    position: fixed;
-    transform: translateX(-50%);
-    border-radius: 30%;
-
-    span {
-        width: 100%;
-        height: 100%;
-        display: block;
-        cursor: pointer;
-        background-size: 50%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        @include text-hide;
-    }
 }
 
 .navbar-laravel {

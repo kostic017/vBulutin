@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/public/general.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public.css') }}">
     @yield('styles')
 @overwrite
 

@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 function limit_words($value, $words = 3, $end = '...')
 {
     return \Illuminate\Support\Str::words($value, $words, $end);

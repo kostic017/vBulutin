@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 
 @section('scripts')
-    <script src="{{ asset('js/admin/force-category.js') }}"></script>
-    @include('includes.sceditor')
+    <script>$(() => { forceCategory(); });</script>
 @overwrite
 
 @section('content')
@@ -74,4 +73,6 @@
         </div>
 
     </div>
+
+    @include('includes.sceditor')
 @stop

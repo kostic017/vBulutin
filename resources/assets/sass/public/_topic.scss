@@ -5,14 +5,16 @@
     @include margins-but(last, bottom, $margin);
 
     .profile {
+        width: 20%;
         padding-right: 20px;
         white-space: nowrap;
         @include unstyle-list;
     }
 
     .body {
+        width: 80%;
         color: $c-post;
-        word-break: break-all;
+        word-wrap: break-word;
     }
 
     .content {

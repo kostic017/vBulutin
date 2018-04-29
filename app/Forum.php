@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;

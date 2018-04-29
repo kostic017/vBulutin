@@ -1,4 +1,4 @@
-$(function () {
+function positions() {
     $(".dd").nestable({
         maxDepth: 2,
         scroll: false
@@ -75,4 +75,4 @@ $(function () {
         });
 
     });
-});
+}

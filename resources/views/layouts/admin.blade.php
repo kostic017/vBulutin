@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/general.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     @yield('styles')
 @overwrite
 

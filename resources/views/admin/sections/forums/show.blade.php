@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ __('db.description') }}</td>
                     <td>
-                        <div>{!! $forum->description ? BBCode::convertToHtml($forum->description) : '-' !!}</div>
+                        <div>{!! $forum->description ? BBCode::parse($forum->description) : '-' !!}</div>
                     </td>
                 </tr>
                 <tr>

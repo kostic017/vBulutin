@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-class InvalidEmailTokenException extends Base {
+class InvalidEmailTokenException extends BaseException {
 
     public function __construct($token)
     {

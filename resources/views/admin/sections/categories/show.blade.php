@@ -20,7 +20,7 @@
                 <tr>
                     <td>{{ __('db.description') }}</td>
                     <td>
-                        <div>{!! $category->description ? BBCode::convertToHtml($category->description) : '-' !!}</div>
+                        <div>{!! $category->description ? BBCode::parse($category->description) : '-' !!}</div>
                     </td>
                 </tr>
                 <tr>

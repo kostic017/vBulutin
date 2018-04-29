@@ -1,17 +1,14 @@
-$(function () {
+function sectionsTable() {
     const form = $('form#index');
-    const table = $('table').data('name');
-
-    const sortLinks = $('.sort-link');
     const filters = $('input[name=filter]');
     const perPage = $('select[name=perPage]');
-
-    const searchTogglers = $('th .fa-search');
     const searchQuery = $('input[name=search_query]');
-    const searchClear = $('button[name=search_clear]');
     const searchSubmit = $('button[name=search_submit]');
 
-    sortLinks.on('click', function (event) {
+    bindSubmit('click', [sortLinks]);
+    bindSubmit('change', [perPage, filters]);
+
+    $('.sort-link').on('click', function (event) {
         event.preventDefault();
         const th = $(this).parent();
         if (th.is('[data-order]')) {
@@ -20,15 +17,16 @@ $(function () {
             $('th').removeAttr('data-order');
             th.attr('data-order', 'asc');
         }
+        form.submit();
     });
 
-    searchTogglers.on('click', function () {
+    $('th .fa-search').on('click', function () {
         const th = $(this).parent();
         $('th').removeAttr('data-search');
         th.attr('data-search', '');
     });
 
-    searchClear.on('click', function () {
+    $('button[name=search_clear]').on('click', function () {
         const searchParams = new URLSearchParams(location.search);
         if (searchParams.has('search_query')) {
             searchQuery.val('');
@@ -36,15 +34,16 @@ $(function () {
         }
     });
 
-    searchQuery.on('keypress', function (event) {
-        if (event.which === VK_ENTER) {
-            form.submit();
-            return false;
+    searchQuery.on({
+        focus() {
+            $(this).select();
+        },
+        keypress(event) {
+            if (event.which === VK_ENTER) {
+                searchSubmit.click();
+                return false;
+            }
         }
-    });
-
-    searchQuery.on('focus', function () {
-        $(this).select();
     });
 
     searchSubmit.on('click', function () {
@@ -52,9 +51,6 @@ $(function () {
             form.submit();
         }
     });
-
-    bindSubmit('click', [sortLinks]);
-    bindSubmit('change', [perPage, filters]);
 
     form.on('submit', function () {
         const appendData = function (name, value) {
@@ -79,5 +75,4 @@ $(function () {
             e.on(event, () => { form.submit(); });
         });
     }
-
-});
+}

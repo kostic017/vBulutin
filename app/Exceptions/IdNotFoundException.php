@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-class IdNotFoundException extends Base {
+class IdNotFoundException extends BaseException {
 
     public function __construct($id, $table)
     {
