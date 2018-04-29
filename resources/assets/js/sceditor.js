@@ -1,5 +1,5 @@
 function initSceditor() {
-    $(".sceditor").sceditor({
+    sceditor.create(document.querySelector('.sceditor'), {
         width: "100%",
         height: "300px",
         format: "bbcode",
