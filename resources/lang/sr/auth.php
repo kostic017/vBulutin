@@ -27,11 +27,11 @@ return [
     'reset-password' => 'Resetuj lozinku',
     'send-reset-link' => 'Pošalji link za resetovanje lozinke',
 
-    'logged-in' => 'Sada ste prijavljeni!',
+    'logged-in' => 'Uspešno ste se prijavili!',
 
     'confirmed' => 'Potvrdili ste svoj mejl.',
     'not-confirmed' => 'Niste potvrdili svoju mejl adresu.',
-    'confirmation-sent' => 'Link za potvrdu mejl adrese smo Vam poslali za mejl.',
+    'confirmation-sent' => 'Poslali smo Vam link za potvrdu na mejl.',
     'wrong-token' => 'Token je pogrešan ili je istekao! Možda ćete morati da se registrujete opet.',
 
     'failed' => 'Pogrešno korisničko ime/mejl ili lozinka.',

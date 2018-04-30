@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Session;
 
 use App\User;
+use App\Profile;
 use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
 use App\Exceptions\InvalidEmailTokenException;
