@@ -144,6 +144,8 @@ class DashboardController extends Controller
             $post->user_id = Auth::id();
             $post->save();
 
+            $topic->touch();
+
             return redirect(route('public.topic', ['topic' => $topic->slug]) . '#post-' . $post->id);
         } catch (ModelNotFoundException $e) {
             throw new SomeException($e);
