@@ -6,12 +6,20 @@
 
 button,
 select {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+    .navbar-toggler {
+        padding: 0.25rem 0.45rem;
+    }
+
+    .navbar-toggler-icon {
+        width: 1.24em;
+    }
 }
 
 .sceditor-button-bbcodetag div {

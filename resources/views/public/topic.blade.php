@@ -8,7 +8,7 @@
 
         <div class="post" id="post-{{ $post->id }}">
 
-            <div class="d-flex">
+            <div class="d-flex flex-wrap">
                 <ul class="profile">
                     <li><a href="">@avatar(medium)</a></li>
                     <li><a href="" class="username-coloured">{{ $user->username }}</a></li>

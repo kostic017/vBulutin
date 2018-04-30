@@ -15,13 +15,13 @@ function initSceditor() {
 
     sceditor.create(document.querySelector(".sceditor"), {
         width: "100%",
-        height: "300px",
+        height: "400px",
         format: "bbcode",
         bbcodeTrim: true,
         spellcheck: false,
         resizeWidth: false,
         toolbarExclude: "email",
-        resizeMinHeight: "120px",
+        resizeMinHeight: "200px",
         resizeMaxHeight: "1000px",
         locale: $("html").attr("lang"),
         emoticonsRoot: "/lib/sceditor/",

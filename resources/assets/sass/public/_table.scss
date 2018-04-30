@@ -110,3 +110,21 @@
         }
     }
 }
+
+@media screen and (max-width: 970px) {
+    .main-table .side-info.count {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 870px) {
+    .main-table {
+        .main-info {
+            white-space: normal;
+        }
+
+        .side-info.lastpost {
+            display: none;
+        }
+    }
+}

@@ -79,7 +79,6 @@ class DashboardController extends Controller
                 'self' => $topic,
                 'category' => $category,
                 'forum' => $forum,
-                'topic' => $topic,
                 'posts' => $topic->posts()->orderBy('created_at', 'asc')->get()
             ];
 

@@ -10,9 +10,6 @@
             @if (isset($forum))
                 <li><a href="{{ route('public.forum', ['forum' => $forum->slug]) }}">{{ $forum->title }}</a></li>
             @endif
-            @if (isset($topic))
-                <li><a href="{{ route('public.topic', ['topic' => $topic->slug]) }}">{{ $topic->title }}</a></li>
-            @endif
         </ul>
 
         <div class="page-info">
