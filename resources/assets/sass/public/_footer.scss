@@ -1,17 +1,8 @@
-.footer-links {
-    display: flex;
-    justify-content: space-between;
+.footer {
+    margin-top: $margin;
+    border-top: 1px solid $border-color;
 
-    div:first-child {
-        display: flex;
-    }
-
-    ul {
-        display: flex;
-        margin-left: 15px;
-    }
-
-    li {
-        margin-right: 15px;
+    .copyright {
+        text-align: center;
     }
 }

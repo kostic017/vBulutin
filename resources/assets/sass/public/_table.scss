@@ -2,7 +2,7 @@
     width: 100%;
     font-size: 0.95em;
     margin-top: $margin;
-    border: 1px solid $bc-maintable;
+    border: 1px solid $border-color;
     background-color: $bgc-maintable;
     @include margins-but(last, bottom, $margin);
 
@@ -31,7 +31,7 @@
     }
 
     tr {
-        border: 1px solid $bc-maintable;
+        border: 1px solid $border-color;
     }
 
     td {

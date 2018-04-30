@@ -179,6 +179,7 @@ return [
     'aliases' => [
 
         'BBCode' => App\Helpers\BBCode::class,
+        'Carbon' => Carbon\Carbon::class, // for views
         'Active' => HieuLe\Active\Facades\Active::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 

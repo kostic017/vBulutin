@@ -1,6 +1,6 @@
 .post {
     padding: 12px;
-    border: 1px solid $bc-post;
+    border: 1px solid $border-color;
     background-color: $bgc-post;
     @include margins-but(last, bottom, $margin);
 
@@ -20,7 +20,7 @@
     .content {
         margin-top: 6px;
         padding-top: 12px;
-        border-top: 1px solid $bc-post;
+        border-top: 1px solid $border-color;
 
         hr {
             color: $c-posthr;
@@ -38,7 +38,7 @@
     .signature {
         margin-top: 24px;
         padding-top: 12px;
-        border-top: 1px solid $bc-post;
+        border-top: 1px solid $border-color;
     }
 
     .back2top {

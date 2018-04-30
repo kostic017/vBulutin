@@ -60,4 +60,10 @@
                     </p>
             </div>
         </section>
+
+        <section class="footer">
+            <div class="copyright">
+               Copyright &copy; {{ date('Y') }} Nikola Kostić
+            </div>
+        </section>
 @overwrite
