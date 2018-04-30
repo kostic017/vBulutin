@@ -14,14 +14,15 @@
 
     .body {
         flex-grow: 1;
+        min-width: 0;
         color: $c-post;
         flex-basis: 80%;
-        word-wrap: break-word;
     }
 
     .content {
         margin-top: 6px;
         padding-top: 12px;
+        word-wrap: break-word;
         border-top: 1px solid $border-color;
 
         hr {
