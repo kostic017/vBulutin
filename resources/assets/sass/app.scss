@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 @import "partials/variables";
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
+@import "partials/sceditor";
 
 button,
 select {
@@ -14,5 +15,5 @@ select {
 }
 
 .sceditor-button-bbcodetag div {
-    background: url('/img/icon_bbcode.png');
+    background: url("/img/icon_bbcode.png");
 }

@@ -1,4 +1,18 @@
 function initSceditor() {
+    sceditor.command.set("undobtn", {
+        exec: "undo",
+        txtExec: function () {
+            document.execCommand("undo", false, null);
+        }
+    });
+
+    sceditor.command.set("redobtn", {
+        exec: "redo",
+        txtExec: function () {
+            document.execCommand("redo", false, null)
+        }
+    });
+
     sceditor.create(document.querySelector(".sceditor"), {
         width: "100%",
         height: "300px",
@@ -16,7 +30,7 @@ function initSceditor() {
             "left,center,right,justify|font,size,color,removeformat|" +
             "cut,copy,pastetext|bulletlist,orderedlist,indent,outdent|" +
             "table|bbcodetag,code,quote|horizontalrule,image,email,link,unlink|" +
-            "emoticon,youtube,date,time|ltr,rtl|print,maximize,source",
+            "emoticon,youtube,date,time|ltr,rtl|undobtn,redobtn|print,maximize,source",
         pastetext: {
             enabled: true,
             addButton: true
