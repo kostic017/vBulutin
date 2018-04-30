@@ -157,7 +157,7 @@
                         '[li]' + val + '[/li]';
                 });
 
-                this.insertText('[list]\n' + content + '\n[/list]');
+                this.insertText('[list=1]\n' + content + '\n[/list]');
             }
         },
         table: {
