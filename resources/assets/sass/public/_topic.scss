@@ -2,7 +2,7 @@
     padding: 12px;
     border: 1px solid $border-color;
     background-color: $bgc-post;
-    @include margins-but(last, bottom, $margin);
+    @include margins-but(last, bottom, $main-margin);
 
     .profile {
         flex-basis: 20%;
@@ -25,9 +25,60 @@
         word-wrap: break-word;
         border-top: 1px solid $border-color;
 
+        ul,
+        ol,
+        table {
+            margin: 6px 0;
+        }
+
         hr {
             color: $c-posthr;
             background-color: $c-posthr;
+        }
+
+        code {
+            padding: 1em;
+            display: block;
+            direction: ltr;
+            overflow: auto;
+            margin: .25em 0;
+            white-space: pre;
+            text-align: left;
+            background: #f1f1f1;
+            background-color: $bgc-code;
+        }
+
+        ul,
+        ol {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        table,
+        td {
+            empty-cells: show;
+            border: 1px solid #000;
+        }
+
+        td {
+            padding: 5px;
+            min-width: 5px;
+        }
+
+        blockquote {
+            background: #fff7d9;
+            margin: .25em 0;
+            border-left: .3em solid #f4e59f;
+            padding: .5em .5em .5em .75em;
+
+            cite {
+                font-weight: bold;
+                display: block;
+                font-size: 1em;
+                margin: 0 -.5em .25em -.75em;
+                padding: 0 .5em .15em .75em;
+                border-bottom: 1px solid #f4e59f;
+            }
         }
     }
 

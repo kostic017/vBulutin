@@ -1,5 +1,5 @@
 .top-box {
-    margin-top: $margin;
+    margin-top: $main-margin;
 
     ul {
         display: flex;
@@ -19,7 +19,7 @@
     }
 
     .page-info {
-        margin-top: $margin;
+        margin-top: $main-margin;
 
         .title {
             width: 100%;

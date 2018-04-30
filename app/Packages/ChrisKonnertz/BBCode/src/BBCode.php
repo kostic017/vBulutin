@@ -159,7 +159,7 @@ class BBCode
         for ($i = 0; $i < $len; $i++) {
             $char = mb_substr($text, $i, 1);
 
-            if ($keepLines) {
+            if ($keepLines && !array_key_exists('list', $openTags)) {
                 if ($char == "\n") {
                     $html .= '<br/>';
                 }
@@ -339,9 +339,9 @@ class BBCode
                 break;
             case self::TAG_NAME_CODE:
                 if ($tag->opening) {
-                    $code = '<pre><code>';
+                    $code = '<code>'; // '<pre><code>';
                 } else {
-                    $code = '</code></pre>';
+                    $code = '</code>'; // '</code></pre>';
                 }
                 break;
             case self::TAG_NAME_EMAIL:
@@ -477,7 +477,9 @@ class BBCode
             case self::TAG_NAME_SIZE:
                 if ($tag->opening) {
                     if ($tag->property) {
-                        $code = '<span style="font-size: '.$tag->property.'%">';
+                        $tag->property = min((int)$tag->property, 48) . 'px';
+                        $tag->property = max((int)$tag->property, 10) . 'px';
+                        $code = '<span style="font-size: '.$tag->property.'">';
                     }
                 } else {
                     $code = '</span>';
@@ -494,23 +496,23 @@ class BBCode
                 break;
             case self::TAG_NAME_LEFT:
                 if ($tag->opening) {
-                    $code = '<div style="text-align: left">';
+                    $code = '<p style="text-align: left">'; // '<div style="text-align: left">';
                 } else {
-                    $code = '</div>';
+                    $code = '</p>'; // '</div>';
                 }
                 break;
             case self::TAG_NAME_CENTER:
                 if ($tag->opening) {
-                    $code = '<div style="text-align: center">';
+                    $code = '<p style="text-align: center">'; // '<div style="text-align: center">';
                 } else {
-                    $code = '</div>';
+                    $code = '</p>'; // '</div>';
                 }
                 break;
             case self::TAG_NAME_RIGHT:
                 if ($tag->opening) {
-                    $code = '<div style="text-align: right">';
+                    $code = '<p style="text-align: right">'; // '<div style="text-align: right">';
                 } else {
-                    $code = '</div>';
+                    $code = '</p>'; // '</div>';
                 }
                 break;
             case self::TAG_NAME_SPOILER:

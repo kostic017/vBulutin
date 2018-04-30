@@ -111,6 +111,15 @@
                     editor,
                     caller,
                     function (fontSize) {
+                        switch (fontSize) {
+                            case '1': fontSize = '10px'; break;
+                            case '2': fontSize = '13px'; break;
+                            case '3': fontSize = '16px'; break;
+                            case '4': fontSize = '18px'; break;
+                            case '5': fontSize = '24px'; break;
+                            case '6': fontSize = '32px'; break;
+                            case '7': fontSize = '48px'; break;
+                        }
                         editor.insertText(
                             '[size=' + fontSize + ']',
                             '[/size]'
@@ -366,43 +375,45 @@
                 'font-size': null
             },
             format: function (element, content) {
-                var fontSize = attr(element, 'size'),
-                    size = 2;
+                // var fontSize = attr(element, 'size'),
+                //     size = 2;
 
-                if (!fontSize) {
-                    fontSize = css(element, 'fontSize');
-                }
+                // if (!fontSize) {
+                //     fontSize = css(element, 'fontSize');
+                // }
 
-                // Most browsers return px value but IE returns 1-7
-                if (fontSize.indexOf('px') > -1) {
-                    // convert size to an int
-                    fontSize = fontSize.replace('px', '') - 0;
+                // // Most browsers return px value but IE returns 1-7
+                // if (fontSize.indexOf('px') > -1) {
+                //     // convert size to an int
+                //     fontSize = fontSize.replace('px', '') - 0;
 
-                    if (fontSize < 12) {
-                        size = 1;
-                    }
-                    if (fontSize > 15) {
-                        size = 3;
-                    }
-                    if (fontSize > 17) {
-                        size = 4;
-                    }
-                    if (fontSize > 23) {
-                        size = 5;
-                    }
-                    if (fontSize > 31) {
-                        size = 6;
-                    }
-                    if (fontSize > 47) {
-                        size = 7;
-                    }
-                } else {
-                    size = fontSize;
-                }
+                //     if (fontSize < 12) {
+                //         size = 1;
+                //     }
+                //     if (fontSize > 15) {
+                //         size = 3;
+                //     }
+                //     if (fontSize > 17) {
+                //         size = 4;
+                //     }
+                //     if (fontSize > 23) {
+                //         size = 5;
+                //     }
+                //     if (fontSize > 31) {
+                //         size = 6;
+                //     }
+                //     if (fontSize > 47) {
+                //         size = 7;
+                //     }
+                // } else {
+                //     size = fontSize;
+                // }
 
+                const size = css(element, 'fontSize');
                 return '[size=' + size + ']' + content + '[/size]';
             },
-            html: '<font size="{defaultattr}">{!0}</font>'
+            // html: '<font size="{defaultattr}">{!0}</font>'
+            html: '<span style="font-size: {defaultattr}">{!0}</span>'
         },
         // END_COMMAND
 

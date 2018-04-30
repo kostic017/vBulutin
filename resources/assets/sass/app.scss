@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
-@import "partials/constants";
-@import "partials/variables";
+@import "partials/import";
 @import "~bootstrap/scss/bootstrap";
-@import "partials/sceditor";
 
 button,
 select {
