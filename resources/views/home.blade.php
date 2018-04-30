@@ -15,6 +15,12 @@
                             </div>
                         @endif
                         {{ __('auth.logged-in') }}
+                        <ul class="home-links">
+                            <li><a href="{{ route('public.index') }}">Početna stranica</a></li>
+                            @if (Auth::user()->is_admin)
+                                <li><a href="{{ route('admin.index') }}">Administratorski panel</a></li>
+                            @endif
+                        </ul>
                     </div>
                 </div>
             </div>

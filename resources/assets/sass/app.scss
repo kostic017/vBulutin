@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
+@import "partials/constants";
 @import "partials/variables";
 @import "~bootstrap/scss/bootstrap";
 @import "partials/sceditor";
@@ -22,6 +23,11 @@ select {
     }
 }
 
-.sceditor-button-bbcodetag div {
-    background: url("/img/icon_bbcode.png");
+.home-links {
+    margin-top: 10px;
+    list-style-type: none;
+
+    li:before {
+        content: "#{$RDQUOTE}#{$SPACE}";
+    }
 }
