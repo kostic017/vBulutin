@@ -4,6 +4,9 @@ namespace App\Helpers;
 
 class BBCode {
     private static $parser = null;
+    private static $emoticons = null;
+
+    private const EMOTICONS_FOLDER = 'lib/sceditor/emoticons/';
 
     public static function parse(string $bbcode): string
     {
@@ -42,11 +45,34 @@ class BBCode {
                 return $tag->opening ? '<p style="direction: rtl;">' : '</p>';
             });
         }
-        return self::$parser->render($bbcode);
+
+        $code = self::$parser->render($bbcode);
+        $code = self::parseSmiles($code);
+
+        return $code;
     }
 
-    private static function smiles(string $code): string
+    private static function parseSmiles(string $code): string
     {
+        if (!self::$emoticons) {
+            self::$emoticons = [];
+            $files = \File::allFiles(self::EMOTICONS_FOLDER);
+            foreach ($files as $file) {
+                self::$emoticons[] = [
+                    'path' => '/' . self::EMOTICONS_FOLDER . $file->getFilename(),
+                    'name' => $file->getBasename('.' . $file->getExtension()),
+                ];
+            }
+        }
+
+        foreach (self::$emoticons as $emoticon) {
+            $pattern = "/:{$emoticon['name']}:/";
+            $replace = "<img src=\"{$emoticon['path']}\" alt=\"{$emoticon['name']}\">";
+            while (preg_match($pattern, $code)) {
+                $code = preg_replace($pattern, $replace, $code);
+            }
+        }
+
         return $code;
     }
 }
