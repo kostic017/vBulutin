@@ -54,8 +54,8 @@ class DashboardController extends Controller
                 'self' => $forum,
                 'forum' => $forum,
                 'children' => $forum->children()->get(),
-                'category' => Category::findOrFail($forum->category_id),
                 'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
+                'category' => Category::findOrFail($forum->category_id),
             ];
 
             if ($forum->parent_id) {
@@ -79,6 +79,7 @@ class DashboardController extends Controller
                 'self' => $topic,
                 'category' => $category,
                 'forum' => $forum,
+                'topic' => $topic,
                 'posts' => $topic->posts()->orderBy('created_at', 'desc')->get()
             ];
 
