@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Topic::class, function (Faker $faker, $args) {
+$factory->define(App\Topic::class, function (Faker $faker, array $args) {
     return [
         'title' => rtrim($faker->sentence(6), '.'),
         'is_locked' => $faker->randomElement([true, false]),

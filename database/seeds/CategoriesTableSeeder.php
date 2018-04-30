@@ -25,12 +25,16 @@ class CategoriesTableSeeder extends Seeder
         // biram jednog od ponudjenih korisnika.
 
         $users = factory(App\User::class, self::USER_COUNT)->create();
+        $users->each(function ($user) {
+            factory(App\Profile::class, 1)->create(['user_id' => $user->id]);
+        });
+
         $categories = factory(App\Category::class, self::CATEGORY_COUNT)->create();
 
         $categories->each(function ($category) use (&$users) {
             $data = [
-                "parent_id" => null,
-                "category_id" => $category->id
+                'parent_id' => null,
+                'category_id' => $category->id
             ];
 
             if ($category->deleted_at) {
@@ -43,8 +47,8 @@ class CategoriesTableSeeder extends Seeder
                 $this->createTopics($forum);
 
                 $data = [
-                    "parent_id" => $forum->id,
-                    "category_id" => $category->id
+                    'parent_id' => $forum->id,
+                    'category_id' => $category->id
                 ];
 
                 if ($forum->deleted_at) {
@@ -63,12 +67,12 @@ class CategoriesTableSeeder extends Seeder
 
     private function createTopics($forum) {
         $topics = factory(App\Topic::class, self::TOPIC_COUNT)->create([
-            "forum_id" => $forum->id
+            'forum_id' => $forum->id
         ]);
 
         $topics->each(function ($topic) {
             $posts = factory(App\Post::class, self::POST_COUNT)->create([
-                "topic_id" => $topic->id
+                'topic_id' => $topic->id
             ]);
         });
     }

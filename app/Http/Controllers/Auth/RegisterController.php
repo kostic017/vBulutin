@@ -111,6 +111,10 @@ class RegisterController extends Controller
         $user->password = Hash::make($data['password']);
         $user->save();
 
+        $profile = new Profile;
+        $profile->user_id = $user->id;
+        $profile->save();
+
         $user->notify(new ConfirmEmail($user->email_token));
         return $user;
     }

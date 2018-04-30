@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Forum::class, function (Faker $faker, $args) {
+$factory->define(App\Forum::class, function (Faker $faker, array $args) {
     static $positions = [
         'parent_id' => [],
         'category_id' => []

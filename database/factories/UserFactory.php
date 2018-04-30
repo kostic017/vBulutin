@@ -24,16 +24,6 @@ $factory->define(App\User::class, function (Faker $faker) {
         'email_token' => $confirmed ? null : str_random(10),
         'is_confirmed' => $confirmed,
 
-        'about' => $faker->optional()->paragraph(),
-        'birthday_on' => $faker->optional()->date(),
-        'sex' => $faker->optional()->randomElement(['m', 'f', 's']),
-
-        'job' => $faker->optional()->jobTitle,
-        'name' => $faker->optional()->name,
-        'residence' => $faker->optional()->city,
-        'birthplace' => $faker->optional()->city,
-        'avatar' => $faker->optional()->imageUrl(100, 100),
-
         'is_admin' => $faker->randomElement([true, false]),
         'is_invisible' => $faker->randomElement([true, false]),
 

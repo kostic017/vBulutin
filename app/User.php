@@ -45,6 +45,11 @@ class User extends Authenticatable
         'password', 'email_token', 'remember_token',
     ];
 
+    public function profile()
+    {
+        return $this->hasOne('App\Profile');
+    }
+
     public function posts()
     {
         return $this->hasMany('App\Post');

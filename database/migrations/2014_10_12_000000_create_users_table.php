@@ -20,14 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('email_token')->nullable();
             $table->boolean('is_confirmed')->default(false);
-            $table->text('about')->nullable();
-            $table->date('birthday_on')->nullable();
-            $table->enum('sex', ['m', 'f', 's'])->nullable();
-            $table->string('job')->nullable();
-            $table->string('name')->nullable();
-            $table->string('residence')->nullable();
-            $table->string('birthplace')->nullable();
-            $table->string('avatar')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_logged_in')->default(false);
             $table->boolean('is_invisible')->default(false);
