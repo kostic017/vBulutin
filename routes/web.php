@@ -26,6 +26,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('category/{category}', 'DashboardController@category')->name('public.category');
 
     // create
+    Route::post('create/post/{topic}', 'DashboardController@createPost')->name('public.post.create');
     Route::post('create/topic/{forum}', 'DashboardController@createTopic')->name('public.topic.create');
 });
 

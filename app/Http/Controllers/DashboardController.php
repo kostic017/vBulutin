@@ -80,7 +80,7 @@ class DashboardController extends Controller
                 'category' => $category,
                 'forum' => $forum,
                 'topic' => $topic,
-                'posts' => $topic->posts()->orderBy('created_at', 'desc')->get()
+                'posts' => $topic->posts()->orderBy('created_at', 'asc')->get()
             ];
 
             if ($forum->parent_id) {
@@ -112,8 +112,6 @@ class DashboardController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $uId = Auth::id();
-
         $topic = new Topic;
         $topic->title = $request->title;
         $topic->forum_id = $forum;
@@ -122,13 +120,36 @@ class DashboardController extends Controller
         $post = new Post;
         $post->content = e($request->content);
         $post->topic_id = $topic->id;
-        $post->user_id = $uId;
+        $post->user_id = Auth::id();
         $post->save();
 
-        return redirect(route('public.topic', ['topic' => $topic->slug]))->with([
-            'alert-type' => 'success',
-            'message' => __('db.stored')
+        return redirect(route('public.topic', ['topic' => $topic->slug]));
+    }
+
+    public function createPost(Request $request, string $topic)
+    {
+        $validator = Validator::make($request->all(), [
+            'content' => 'required|min:5',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            $topic = Topic::findOrFail($topic);
+
+            $post = new Post;
+            $post->content = e($request->content);
+            $post->topic_id = $topic->id;
+            $post->user_id = Auth::id();
+            $post->save();
+
+            return redirect(route('public.topic', ['topic' => $topic->slug]) . '#post-' . $post->id);
+        } catch (ModelNotFoundException $e) {
+            throw new SomeException($e);
+        }
+
     }
 
 }
