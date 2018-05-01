@@ -1,8 +1,8 @@
 .post {
     padding: 12px;
-    border: 1px solid $border-color;
-    background-color: $bgc-post;
-    @include margins-but(last, bottom, $main-margin);
+    border: 1px solid $bc-main;
+    background-color: $bgc-main;
+    @include margins-but(last, bottom, $m-main);
 
     .profile {
         flex-basis: 20%;
@@ -23,7 +23,7 @@
         margin-top: 6px;
         padding-top: 12px;
         word-wrap: break-word;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid $bc-main;
 
         ul,
         ol,
@@ -92,7 +92,7 @@
     .signature {
         margin-top: 24px;
         padding-top: 12px;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid $bc-main;
     }
 
     .back2top {

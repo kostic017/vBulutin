@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::directive('avatar', function ($size) {
-            return '<img class="avatar avatar-' . $size . '" src="{{ $user->profile()->first()->avatar ?? asset(\'img/avatar.png\') }}" alt="{{ $user->username }}">';
+            return '<img class="avatar-' . $size . '" src="{{ $user->profile()->first()->avatar ?? asset(\'img/avatar.png\') }}" alt="{{ $user->username }}">';
         });
 
         Blade::directive('sections_th', function ($column) {

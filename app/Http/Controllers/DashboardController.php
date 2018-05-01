@@ -12,7 +12,6 @@ use App\Topic;
 use App\Category;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DashboardController extends Controller
 {
@@ -47,6 +46,18 @@ class DashboardController extends Controller
     |--------------------------------------------------------------------------
     */
 
+    public function showProfile(string $profile)
+    {
+        try {
+            $user = User::where('username', $profile)->firstOrFail();
+            return view('public.showprofile')
+                ->with('user', $user)
+                ->with('profile', $user->profile()->firstOrFail());
+        } catch (Exception $e) {
+            abort('404');
+        }
+    }
+
     public function category(string $category)
     {
         try {
@@ -55,7 +66,7 @@ class DashboardController extends Controller
                 ->with('topbox', 'category')
                 ->with('self', $category)
                 ->with('category', $category);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             abort('404');
         }
     }
@@ -79,7 +90,7 @@ class DashboardController extends Controller
             }
 
             return view('public.forum')->with($vars);
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             abort('404');
         }
     }
@@ -103,15 +114,7 @@ class DashboardController extends Controller
             }
 
             return view('public.topic')->with($vars);
-        } catch (ModelNotFoundException $e) {
-            abort('404');
-        }
-    }
-
-    public function user(string $username) {
-        try {
-            return view('public.profile')->with('user', User::where('username', $username)->firstOrFail());
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             abort('404');
         }
     }
@@ -172,6 +175,35 @@ class DashboardController extends Controller
         } catch (ModelNotFoundException $e) {
             throw new SomeException($e);
         }
+
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Edit
+    |--------------------------------------------------------------------------
+    */
+
+    public function editProfile(string $profile)
+    {
+        try {
+            $user = User::where('username', $profile)->firstOrFail();
+            return view('public.editprofile')
+                ->with('user', $user)
+                ->with('profile', $user->profile()->firstOrFail());
+        } catch (Exception $e) {
+            abort('404');
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update
+    |--------------------------------------------------------------------------
+    */
+
+    public function updateProfile(string $profile)
+    {
 
     }
 

@@ -1,9 +1,9 @@
 .footer {
-    margin-top: $main-margin;
-    border-top: 1px solid $border-color;
+    margin-top: $m-main;
+    border-top: 1px solid $bc-main;
 
     .copyright {
         text-align: center;
-        margin-top: ($main-margin / 2);
+        margin-top: ($m-main / 2);
     }
 }

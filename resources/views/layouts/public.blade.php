@@ -57,7 +57,7 @@
                         Ukupno poruka <b>{{ $postCount }}</b> &bull;
                         Ukupno tema <b>{{ $topicCount }}</b> &bull;
                         Ukupno članova <b>{{ $userCount }}</b> &bull;
-                        Naš najnoviji član <a href="{{ route('public.profile', ['user' => $newestUser->username]) }}">{{ $newestUser->username }}</a>
+                        Naš najnoviji član <a href="{{ route('public.profile.show', ['profile' => $newestUser->username]) }}">{{ $newestUser->username }}</a>
                     </p>
             </div>
         </section>

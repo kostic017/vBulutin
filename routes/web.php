@@ -25,12 +25,18 @@ Route::group(['prefix' => '/'], function () {
     // show
     Route::get('topic/{topic}', 'DashboardController@topic')->name('public.topic');
     Route::get('forum/{forum}', 'DashboardController@forum')->name('public.forum');
-    Route::get('profile/{profile}', 'DashboardController@profile')->name('public.profile');
     Route::get('category/{category}', 'DashboardController@category')->name('public.category');
+    Route::get('profile/{profile}/show', 'DashboardController@showProfile')->name('public.profile.show');
 
     // create
     Route::post('create/post/{topic}', 'DashboardController@createPost')->name('public.post.create');
     Route::post('create/topic/{forum}', 'DashboardController@createTopic')->name('public.topic.create');
+
+    // edit
+    Route::get('profile/{profile}/edit', 'DashboardController@editProfile')->name('public.profile.edit');
+
+    // update
+    Route::get('profile/{profile}/update', 'DashboardController@updateProfile')->name('public.profile.update');
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
