@@ -4,7 +4,7 @@
     @include('public.includes.topbox')
 
     @if (!$children->isEmpty())
-        <table class="main-table">
+        <table class="main-table table-hover">
             <caption>Potforumi</caption>
 
             @foreach ($children as $child)

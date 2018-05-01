@@ -28,3 +28,16 @@ tr.focused td {
     max-width: 1100px;
 }
 
+@media screen and (max-width: 630px) {
+    .about {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .users {
+        td {
+            padding: 2px;
+        }
+    }
+}

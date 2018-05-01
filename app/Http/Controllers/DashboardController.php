@@ -25,11 +25,27 @@ class DashboardController extends Controller
         view()->share('topicCount', Topic::count());
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Index
+    |--------------------------------------------------------------------------
+    */
+
     public function index()
     {
-        $categories = Category::all();
-        return view('public.index')->with('categories', $categories);
+        return view('public.index')->with('categories', Category::all());
     }
+
+    public function users()
+    {
+        return view('public.users')->with('users', User::all());
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Show
+    |--------------------------------------------------------------------------
+    */
 
     public function category(string $category)
     {
@@ -99,6 +115,12 @@ class DashboardController extends Controller
             abort('404');
         }
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create
+    |--------------------------------------------------------------------------
+    */
 
     public function createTopic(Request $request, string $forum)
     {

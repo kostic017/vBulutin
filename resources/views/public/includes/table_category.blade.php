@@ -1,6 +1,6 @@
 @php ($parents = $category->forums()->get())
 
-<table class="main-table">
+<table class="main-table table-hover">
 
     <caption class="captionbar">
         @if (isset($topbox))
