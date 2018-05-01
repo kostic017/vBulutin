@@ -13,7 +13,7 @@
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td><a href="{{ route('public.user', ['user' => $user->username]) }}">{{ $user->username }}</a></td>
+                    <td><a href="{{ route('public.profile', ['user' => $user->username]) }}">{{ $user->username }}</a></td>
                     <td class="about">{{ limit_words($user->profile()->first()->about, 10) }}</td>
                     <td>{{ extractDate($user->registered_at) }}</td>
                     <td>{{ $user->posts()->get()->count() }}</td>

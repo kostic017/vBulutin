@@ -110,7 +110,7 @@ class DashboardController extends Controller
 
     public function user(string $username) {
         try {
-            return view('public.user')->with('user', User::where('username', $username)->firstOrFail());
+            return view('public.profile')->with('user', User::where('username', $username)->firstOrFail());
         } catch (ModelNotFoundException $e) {
             abort('404');
         }

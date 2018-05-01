@@ -49,10 +49,10 @@
                         @php ($topic = $lastPost->topic()->first())
 
                         <div class="post-info">
-                            <a href="{{ route('public.user', ['user' => $user->username]) }}">@avatar(medium)</a>
+                            <a href="{{ route('public.profile', ['user' => $user->username]) }}">@avatar(medium)</a>
                             <ul>
                                 <li><a href="{{ route('public.topic', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
-                                <li><a href="{{ route('public.user', ['user' => $user->username]) }}">{{ $user->username }}</a></li>
+                                <li><a href="{{ route('public.profile', ['user' => $user->username]) }}">{{ $user->username }}</a></li>
                                 <li>{{ extractDate($lastPost->created_at) }}</li>
                                 <li>{{ extractTime($lastPost->created_at) }}</li>
                             </ul>

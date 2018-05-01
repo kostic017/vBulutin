@@ -23,9 +23,9 @@ Route::group(['prefix' => '/'], function () {
     Route::get('users/', 'DashboardController@users')->name('public.users');
 
     // show
-    Route::get('user/{user}', 'DashboardController@user')->name('public.user');
     Route::get('topic/{topic}', 'DashboardController@topic')->name('public.topic');
     Route::get('forum/{forum}', 'DashboardController@forum')->name('public.forum');
+    Route::get('profile/{profile}', 'DashboardController@profile')->name('public.profile');
     Route::get('category/{category}', 'DashboardController@category')->name('public.category');
 
     // create
