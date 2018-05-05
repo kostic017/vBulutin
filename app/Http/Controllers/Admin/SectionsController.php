@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use Session;
 use Validator;
+
 use App\Category;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Helpers\Common\Functions;
 use App\Http\Controllers\Controller;
 use App\Exceptions\IdNotFoundException;
+
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class SectionsController extends Controller
@@ -123,7 +125,7 @@ abstract class SectionsController extends Controller
 
         return view('admin.sections.table')
             ->with('table', $this->table)
-            ->with(compact('rows', 'perPage', 'filter', 'sortColumn', 'sortOrder', 'searchColumn', 'searchQuery'));
+            ->with(compact('rows', 'perPage', 'max', 'step', 'filter', 'sortColumn', 'sortOrder', 'searchColumn', 'searchQuery'));
     }
 
     /**

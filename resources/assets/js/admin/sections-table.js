@@ -5,7 +5,6 @@ function sectionsTable() {
     const searchQuery = $('input[name=search_query]');
     const searchSubmit = $('button[name=search_submit]');
 
-    bindSubmit('click', [sortLinks]);
     bindSubmit('change', [perPage, filters]);
 
     $('.sort-link').on('click', function (event) {

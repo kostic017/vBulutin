@@ -1,15 +1,18 @@
+// Text Color
 $c-submitsearch: #000;
 $c-advancedsearch: #000;
 $c-captionlink: #fff;
-$c-captionlink-hover: darken($c-captionlink, 5%);
+$c-captionlink-hover: darken($c-captionlink, 10%);
 $c-maintablelink: #574440;
-$c-maintablelink-hover: lighten($c-maintablelink, 5%);
+$c-maintablelink-hover: lighten($c-maintablelink, 10%);
 $c-cardheader: #fff;
 $c-post: #333;
 $c-posthr: #b1b1b1;
 
+// Border Color
 $bc-main: #e4e4e4;
 
+// Background Color
 $bgc-main: #fff;
 $bgc-code: #e8e8e8;
 $bgc-cardheader: #2e3539;

@@ -25,7 +25,7 @@ mix.scripts([
 
 mix.scripts([
     'resources/assets/js/admin/positions.js',
-    'resources/assets/js/admin/section-table.js',
+    'resources/assets/js/admin/sections-table.js',
     'resources/assets/js/admin/force-category.js'
 ], 'public/js/admin.js');
 

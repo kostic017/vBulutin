@@ -5,9 +5,13 @@ return [
     'slug' => 'Slug',
     'title' => 'Naslov',
     'locked' => 'Zaključano',
+    'about' => 'O meni',
     'trashed' => 'Obrisano',
+    'post_count' => 'Poruke',
     'position' => 'Pozicija',
+    'username' => 'Korisničko ime',
     'category' => 'Kategorija',
+    'registered_at' => 'Pridružio',
     'description' => 'Opis',
     'parent-forum' => 'Natforum',
 

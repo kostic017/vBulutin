@@ -5,9 +5,13 @@ return [
     'slug' => 'Slug',
     'title' => 'Title',
     'locked' => 'Locked',
+    'about' => 'About Me',
     'trashed' => 'Trashed',
+    'post_count' => 'Posts',
     'position' => 'Position',
+    'username' => 'Username',
     'category' => 'Category',
+    'registered_at' => 'Joined',
     'description' => 'Description',
     'parent-forum' => 'Parent forum',
 

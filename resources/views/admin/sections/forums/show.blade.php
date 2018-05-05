@@ -9,34 +9,32 @@
 
             <table class="table table-striped show">
                 <tr>
-                    <td>ID</td>
-                    <td>{{ $forum->id }}</td>
+                    <td class="title">ID</td>
+                    <td class="content">{{ $forum->id }}</td>
                 </tr>
                 <tr>
-                    <td>{{ __('db.slug') }}</td>
-                    <td>{{ $forum->slug }}</td>
+                    <td class="title">{{ __('db.slug') }}</td>
+                    <td class="content">{{ $forum->slug }}</td>
                 </tr>
                 <tr>
-                    <td>{{ __('db.description') }}</td>
-                    <td>
-                        <div>{!! $forum->description ? BBCode::parse($forum->description) : '-' !!}</div>
-                    </td>
+                    <td class="title">{{ __('db.description') }}</td>
+                    <td class="content"><div>{!! $forum->description ? BBCode::parse($forum->description) : '-' !!}</div></td>
                 </tr>
                 <tr>
-                    <td>{{ __('db.position') }}</td>
-                    <td>{{ $forum->position }}</td>
+                    <td class="title">{{ __('db.position') }}</td>
+                    <td class="content">{{ $forum->position }}</td>
                 </tr>
                 <tr>
-                    <td>{{ __('db.locked') }}</td>
-                    <td>{{ $forum->is_locked ? 'da' : 'ne' }}</td>
+                    <td class="title">{{ __('db.locked') }}</td>
+                    <td class="content">{{ $forum->is_locked ? 'da' : 'ne' }}</td>
                 </tr>
                 <tr>
-                    <td>{{ __('db.category') }}</td>
-                    <td><a href="{{ route('categories.show', ['category' => $category->id]) }}">{{ $category->title }}</a></td>
+                    <td class="title">{{ __('db.category') }}</td>
+                    <td class="content"><a href="{{ route('categories.show', ['category' => $category->id]) }}">{{ $category->title }}</a></td>
                 </tr>
                 <tr>
-                    <td>{{ __('db.parent_forum') }}</td>
-                    <td>
+                    <td class="title">{{ __('db.parent_forum') }}</td>
+                    <td class="content">
                         @if ($parentForum)
                             <a href="{{ route('forums.show', ['forum' => $parentForum->id]) }}">{{ $parentForum->title }}</a>
                         @else
@@ -45,8 +43,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ __('db.trashed') }}</td>
-                    <td>{{ $forum->deletedAt ?? '-' }}</td>
+                    <td class="title">{{ __('db.trashed') }}</td>
+                    <td class="content">{{ $forum->deletedAt ?? '-' }}</td>
                 </tr>
             </table>
 

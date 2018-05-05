@@ -8,6 +8,58 @@ select {
     cursor: pointer;
 }
 
+th[data-column] {
+
+    .fa-search {
+        cursor: pointer;
+    }
+
+    &:not([data-search]) {
+        .fa-search {
+            color: silver;
+
+            &:hover {
+                color: darkgray;
+            }
+        }
+    }
+
+    &:not([data-order]) {
+        .fa-caret-up,
+        .fa-caret-down {
+            display: none;
+        }
+    }
+
+    &[data-order=asc] {
+        .fa-caret-down {
+            display: none;
+        }
+    }
+
+    &[data-order=desc] {
+        .fa-caret-up {
+            display: none;
+        }
+    }
+
+}
+
+#overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    height: 100%;
+    opacity: 0.3;
+    display: flex;
+    z-index: 10000;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -27,5 +79,19 @@ select {
 
     li:before {
         content: "#{$RDQUOTE}#{$SPACE}";
+    }
+}
+
+.sort-link {
+    margin: 0 8px 0 2px;
+}
+
+.thead-dark {
+    a {
+        color: $c-captionlink;
+
+        &:hover {
+            color: $c-captionlink-hover;
+        }
     }
 }

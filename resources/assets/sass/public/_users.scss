@@ -6,6 +6,19 @@ form.profile fieldset {
     @include margins-but(last, bottom, $m-main);
 }
 
+select[name=perPage] {
+    width: auto;
+    display: inline-block;
+
+    &:first-child {
+        margin-bottom: 15px;
+    }
+
+    &:nth-child(2) {
+        margin-top: 15px;
+    }
+}
+
 .avatar {
     &-small, &-medium, &-big {
         display: block;
@@ -28,13 +41,13 @@ form.profile fieldset {
 }
 
 @media screen and (max-width: 630px) {
-    .users .about {
+    table.users .about {
         display: none;
     }
 }
 
 @media screen and (max-width: 400px) {
-    .users {
+    table.users {
         td {
             padding: 2px;
         }

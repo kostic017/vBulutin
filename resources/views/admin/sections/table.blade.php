@@ -1,10 +1,7 @@
-@php ($max = (int)config('custom.pagination.max'))
-@php ($step = (int)config('custom.pagination.step'))
-
 @extends('layouts.admin')
 
 @section('scripts')
-    <script>$(() => { sectionTable(); });</script>
+    <script>$(() => { sectionsTable(); });</script>
 @stop
 
 @section("content")
@@ -12,7 +9,7 @@
 
     <div class="admin-actions">
 
-        <div class="create-paginate">
+        <div>
             <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
                 {{ $table === 'categories' ? __('admin.create-category') : __('admin.create-forum') }}
             </a>
@@ -45,14 +42,20 @@
 
     </div>
 
+    @if ($perPage > 0)
+        <div class="row justify-content-center">
+            {{ $rows->appends('perPage', $perPage)->appends('filter', $filter)->links() }}
+        </div>
+    @endif
+
     <div class="table-responsive">
         <table class="table table-striped sections" data-name="{{ $table }}">
             <thead class="text-nowrap">
                 <tr>
-                    @sections_th(id)
-                    @sections_th(title)
+                    @th_sections_sort(id)
+                    @th_sections_sort(title)
                     @if ($table === 'forums')
-                        @sections_th(category)
+                        @th_sections_sort(category)
                     @endif
                     <th colspan="3">&nbsp;</th>
                 </tr>
