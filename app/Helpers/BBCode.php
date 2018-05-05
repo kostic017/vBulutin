@@ -46,7 +46,7 @@ class BBCode {
             });
         }
 
-        $code = self::$parser->render($bbcode);
+        $code = self::$parser->render($bbcode, false);
         $code = self::parseSmiles($code);
 
         return $code;
