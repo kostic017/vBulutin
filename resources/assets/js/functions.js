@@ -23,3 +23,9 @@ function isEqualToAnyWord(haystack, needle, ignoreCase = true) {
 
     return false;
 }
+
+function appendDataToForm(form, name, value) {
+    if (isNotEmpty(value)) {
+        form.append($('<input>').attr('type', 'hidden').attr('name', name).val(value));
+    }
+}

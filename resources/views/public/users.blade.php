@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    <form action="{{ route('public.users') }}" method="get" id="form">
+    <form action="{{ route('public.users') }}" method="get" id="index">
         <select name="perPage" class="form-control" onchange="document.getElementById('form').submit();">
             <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
             @for ($i = $step; $i <= $max; $i += $step)

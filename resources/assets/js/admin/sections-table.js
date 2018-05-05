@@ -7,18 +7,6 @@ function sectionsTable() {
 
     bindSubmit('change', [perPage, filters]);
 
-    $('.sort-link').on('click', function (event) {
-        event.preventDefault();
-        const th = $(this).parent();
-        if (th.is('[data-order]')) {
-            th.data('order', th.data('order') === 'asc' ? 'desc' : 'asc');
-        } else {
-            $('th').removeAttr('data-order');
-            th.attr('data-order', 'asc');
-        }
-        form.submit();
-    });
-
     $('th .fa-search').on('click', function () {
         const th = $(this).parent();
         $('th').removeAttr('data-search');
@@ -52,21 +40,13 @@ function sectionsTable() {
     });
 
     form.on('submit', function () {
-        const appendData = function (name, value) {
-            if (isNotEmpty(value)) {
-                form.append($('<input>').attr('type', 'hidden').attr('name', name).val(value));
-            }
-        }
-
         const thSort = $('th[data-order]');
         const thSearch = $('th[data-search]');
 
-        appendData('perPage', perPage.val());
-        appendData('sort_column', thSort.data('column'));
-        appendData('sort_order', thSort.data('order'));
-        appendData('search_column', thSearch.data('column'));
-        appendData('search_query', searchQuery.val());
-        appendData('filter', filters.filter(':checked').val());
+        appendDataToForm(form, 'perPage', perPage.val());
+        appendDataToForm(form, 'search_column', thSearch.data('column'));
+        appendDataToForm(form, 'search_query', searchQuery.val());
+        appendDataToForm(form, 'filter', filters.filter(':checked').val());
     });
 
     function bindSubmit(event, elements) {

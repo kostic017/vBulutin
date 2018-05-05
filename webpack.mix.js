@@ -20,7 +20,8 @@ mix.sass('resources/assets/sass/public/style.scss', 'public/css/public.css');
 mix.scripts([
     'resources/assets/js/constants.js',
     'resources/assets/js/functions.js',
-    'resources/assets/js/sceditor.js'
+    'resources/assets/js/sceditor.js',
+    'resources/assets/js/events.js',
 ], 'public/js/script.js');
 
 mix.scripts([

@@ -6,6 +6,10 @@ form.profile fieldset {
     @include margins-but(last, bottom, $m-main);
 }
 
+table.users .about {
+    width: 100%;
+}
+
 select[name=perPage] {
     width: auto;
     display: inline-block;

@@ -90,7 +90,7 @@ class DashboardController extends Controller
             ->join('profiles', 'users.id', 'profiles.user_id')
             ->join('posts', 'users.id', 'posts.user_id')
             ->groupBy('username', 'registered_at', 'about')
-            ->orderBy('users.' . $sortColumn, $sortOrder);
+            ->orderBy($sortColumn, $sortOrder);
 
         if ($perPage) {
             $users = $users->paginate($perPage);
