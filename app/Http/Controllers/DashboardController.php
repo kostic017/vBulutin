@@ -64,8 +64,7 @@ class DashboardController extends Controller
             $category = Category::where('slug', $category)->firstOrFail();
             return view('public.category')
                 ->with('topbox', 'category')
-                ->with('self', $category)
-                ->with('category', $category);
+                ->with('self', $category);
         } catch (Exception $e) {
             abort('404');
         }
@@ -79,7 +78,6 @@ class DashboardController extends Controller
             $vars = [
                 'topbox' => 'forum',
                 'self' => $forum,
-                'forum' => $forum,
                 'children' => $forum->children()->get(),
                 'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
                 'category' => Category::findOrFail($forum->category_id),
@@ -175,7 +173,6 @@ class DashboardController extends Controller
         } catch (ModelNotFoundException $e) {
             throw new SomeException($e);
         }
-
     }
 
     /*

@@ -3,7 +3,9 @@
 
         <ul class="path">
             <li><a href="/">{{ config('app.name') }}</a></li>
-            <li><a href="{{ route('public.category', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
+            @if (isset($category))
+                <li><a href="{{ route('public.category', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
+            @endif
             @if (isset($parent))
                 <li><a href="{{ route('public.forum', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
             @endif
