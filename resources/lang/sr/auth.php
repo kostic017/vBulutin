@@ -28,6 +28,7 @@ return [
     'send-reset-link' => 'Pošalji link za resetovanje lozinke',
 
     'logged-in' => 'Uspešno ste se prijavili!',
+    'captcha-failed' => 'Imamo razloga da mislimo da niste ljudsko biće. Pokušajte ponovo.',
 
     'confirmed' => 'Potvrdili ste svoj mejl.',
     'not-confirmed' => 'Niste potvrdili svoju mejl adresu.',

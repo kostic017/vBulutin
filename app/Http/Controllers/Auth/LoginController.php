@@ -77,6 +77,10 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
+        if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
+            throw new \App\Exceptions\CaptchaFailedException('login');
+        }
+
         if ($user = User::where($this->username(), $request[$this->username()])->first()) {
             if ($user->is_confirmed) {
                 if ($this->attemptLogin($request)) {

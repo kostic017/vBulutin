@@ -28,6 +28,7 @@ return [
     'send-reset-link' => 'Send Password Reset Link',
 
     'logged-in' => 'You Are Now Logged In!',
+    'captcha-failed' => 'We have reasons to think that you probably are not human. Please try again.',
 
     'confirmed' => 'You have successfully confirmed your email address.',
     'not-confirmed' => 'You have not confirmed your email address.',

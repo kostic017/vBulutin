@@ -74,8 +74,11 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
+            throw new \App\Exceptions\CaptchaFailedException('register');
+        }
 
+        event(new Registered($user = $this->create($request->all())));
         // $this->guard()->login($user);
 
         return $this->registered($request, $user)

@@ -2,6 +2,16 @@
 
 use Carbon\Carbon;
 
+function validate_captcha($response, $ip)
+{
+    $url = "https://www.google.com/recaptcha/api/siteverify?";
+    $url .= "secret=" . config('custom.captcha.secret_key') . "&";
+    $url .= "response={$response}&";
+    $url .= "remoteip={$ip}";
+    $captchaResult = json_decode(file_get_contents($url));
+    return $captchaResult->success;
+}
+
 function limit_words($value, $words = 3, $end = '...')
 {
     return \Illuminate\Support\Str::words($value, $words, $end);

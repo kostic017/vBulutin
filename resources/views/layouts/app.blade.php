@@ -30,6 +30,7 @@
         <script src="{{ asset('js/script.js') }}"></script>
 
         @yield('scripts')
+
         @if (Session::has('message'))
             <script>
                 $(function() {

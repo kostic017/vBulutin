@@ -2,6 +2,10 @@ function ucfirst(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function captchaOnSubmit(token) {
+    $("#captcha-form").submit();
+}
+
 function isNotEmpty(string) {
     return string.trim().length > 0;
 }
@@ -26,6 +30,6 @@ function isEqualToAnyWord(haystack, needle, ignoreCase = true) {
 
 function appendDataToForm(form, name, value) {
     if (isNotEmpty(value)) {
-        form.append($('<input>').attr('type', 'hidden').attr('name', name).val(value));
+        form.append($("<input>").attr("type", "hidden").attr("name", name).val(value));
     }
 }
