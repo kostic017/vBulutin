@@ -9,22 +9,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public static function newestUser(): User
-    {
-        return self::select('username')->orderBy('registered_at', 'desc')->first();
-    }
-
-    /**
-     * Route notifications for the mail channel.
-     *
-     * @param  \Illuminate\Notifications\Notification  $notification
-     * @return string
-     */
-    public function routeNotificationForMail($notification)
-    {
-        return $this->email;
-    }
-
     /**
      * Indicates if the model should be timestamped.
      *
@@ -44,6 +28,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'email_token', 'remember_token',
     ];
+
+    public static function newestUser(): User
+    {
+        return self::select('username')->orderBy('registered_at', 'desc')->first();
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        return $this->email;
+    }
 
     public function profile()
     {

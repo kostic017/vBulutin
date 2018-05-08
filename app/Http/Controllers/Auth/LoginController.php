@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Session;
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -96,6 +96,19 @@ class LoginController extends Controller
 
         return ($user && !$user->is_confirmed) ? $this->sendFailedLoginResponseEmail($request) :
             $this->sendFailedLoginResponse($request);
+    }
+
+     /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    public function authenticated(Request $request, $user)
+    {
+        $user->last_login_at = \Carbon::now()->toDateTimeString();
+        $user->save();
     }
 
     /**

@@ -150,8 +150,9 @@ return [
         /*
          * Package Service Providers...
          */
-        HieuLe\Active\ActiveServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        HieuLe\Active\ActiveServiceProvider::class,
+        Kim\Activity\ActivityServiceProvider::class,
 
          /*
          * Application Service Providers...
@@ -182,6 +183,7 @@ return [
         'Carbon' => Carbon\Carbon::class, // for views
         'Active' => HieuLe\Active\Facades\Active::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Activity' => Kim\Activity\ActivityFacade::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,

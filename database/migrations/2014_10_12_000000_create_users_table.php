@@ -25,7 +25,6 @@ class CreateUsersTable extends Migration
             $table->boolean('is_invisible')->default(false);
             $table->timestamp('registered_at')->useCurrent();
             $table->timestamp('last_login_at')->nullable();
-            $table->timestamp('last_activity_at')->nullable();
             $table->rememberToken();
         });
     }

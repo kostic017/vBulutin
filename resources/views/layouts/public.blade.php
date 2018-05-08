@@ -36,14 +36,22 @@
                     Ko je na mreži
                 </div>
                 <div class="card-body">
-                    <p>Trenutno su 2 korisnika na mreži: <b>0</b> registrovanih, <b>0</b> sakrivenih i <b>2</b> gosta (ažurira se na svakih 5 minuta).</p>
-                    <p>Na mreži je najviše bilo <b>233</b> korisnika 24. aprila 2017.</p>
+                    <p>
+                        Trenutno su {{ $peopleOnline }} korisnika na mreži: <b>{{ $visibleOnlineUsersCount }}</b> vidljivih,
+                        <b>{{ $invisibleOnlineUsersCount }}</b> sakrivenih i <b>{{ $guestsCount }}</b> gosta
+                        (ažurira se na svakih {{ $onlineUsersMinutes}} minuta).
+                    </p>
                     <div class="list">
-                        <p>Registrovani korisnici:</p>
-                        <ul>
-                            <li><a href="">Kostić</a></li>
-                            <li><a href="">Kostić</a></li>
-                        </ul>
+                        @if ($visibleOnlineUsers->isEmpty())
+                            <p>Nema aktivnih registrovanih korisnika.</p>
+                        @else
+                            <p>Registrovani korisnici:</p>
+                            <ul>
+                                @foreach ($visibleOnlineUsers as $user)
+                                    <li><a href="{{ route('public.profile.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -13,5 +13,7 @@ return [
     'captcha' => [
         'site_key' => env('CAPTCHA_SITE_KEY'),
         'secret_key' => env('CAPTCHA_SECRET_KEY'),
-    ]
+    ],
+
+    'online_users_minutes' => env('ONLINE_USERS_MINUTES', 5),
 ];
