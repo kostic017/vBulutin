@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_logged_in')->default(false);
             $table->boolean('is_invisible')->default(false);
+            $table->boolean('to_logout')->default(false);
             $table->timestamp('registered_at')->useCurrent();
             $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();

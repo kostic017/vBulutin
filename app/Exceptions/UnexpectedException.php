@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-class SomeException extends BaseException {
+class UnexpectedException extends BaseException {
 
     public function __construct(Exception $e)
     {

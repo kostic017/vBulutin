@@ -76,7 +76,7 @@
                                         {{ Auth::user()->name ?? Auth::user()->username }} <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="profile.php?id={{ Auth::id() }}">
+                                        <a class="dropdown-item" href="{{ route('public.profile.show', ['profile' => Auth::user()->username]) }}">
                                             <i class="fas fa-user"></i> Profil
                                         </a>
                                         <a class="dropdown-item" href="#" id="btn-messages" data-newmessages="0">

@@ -6,7 +6,7 @@
     @foreach ($posts as $post)
         @php ($user = $post->user()->first())
 
-        <div class="post" id="post-{{ $post->id }}">
+        <div class="post p-main" id="post-{{ $post->id }}">
 
             <div class="d-flex flex-wrap">
                 <ul class="profile">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Hash;
 use Activity;
 use Validator;
 
@@ -135,13 +136,20 @@ class DashboardController extends Controller
 
     public function showProfile(string $profile)
     {
-        try {
-            $user = User::where('username', $profile)->firstOrFail();
-            return view('public.showprofile')
-                ->with('user', $user)
-                ->with('profile', $user->profile()->firstOrFail());
-        } catch (Exception $e) {
-            abort('404');
+        if (Auth::check()) {
+            try {
+                $user = User::where('username', $profile)->firstOrFail();
+                return view('public.showprofile')
+                    ->with('user', $user)
+                    ->with('profile', $user->profile()->firstOrFail());
+            } catch (Exception $e) {
+                abort('404');
+            }
+        } else {
+            return redirect('/')->with([
+                'alert-type' => 'info',
+                'message' => 'Morate biti prijavljeni da bi videli ovu stranicu'
+            ]);
         }
     }
 
@@ -258,7 +266,7 @@ class DashboardController extends Controller
 
             return redirect(route('public.topic', ['topic' => $topic->slug]) . '#post-' . $post->id);
         } catch (ModelNotFoundException $e) {
-            throw new SomeException($e);
+            throw new UnexpectedException($e);
         }
     }
 
@@ -270,13 +278,21 @@ class DashboardController extends Controller
 
     public function editProfile(string $profile)
     {
-        try {
-            $user = User::where('username', $profile)->firstOrFail();
-            return view('public.editprofile')
-                ->with('user', $user)
-                ->with('profile', $user->profile()->firstOrFail());
-        } catch (Exception $e) {
-            abort('404');
+        if (Auth::check()) {
+            try {
+                $user = User::where('username', $profile)->firstOrFail();
+                $view = Auth::id() == $user->id ? 'public.editprofile' : 'public.showprofile';
+                return view($view)
+                    ->with('user', $user)
+                    ->with('profile', $user->profile()->firstOrFail());
+            } catch (Exception $e) {
+                abort('404');
+            }
+        } else {
+            return redirect('/')->with([
+                'alert-type' => 'info',
+                'message' => 'Morate biti prijavljeni da bi videli ovu stranicu.'
+            ]);
         }
     }
 
@@ -286,9 +302,63 @@ class DashboardController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function updateProfile(string $profile)
+    public function updateProfile(Request $request, string $profile)
     {
+        try {
+            $errors = [];
 
+            $user = Users::where('username', $profile)->firstOrFail();
+            $profile = $user->profile()->get();
+
+            $user->is_invisible = $request->is_invisible;
+
+            if ($user->email !== $request->email || isNotEmpty($request->password) || isNotEmpty($request->password_confirm)) {
+                if (isEmpty($request->password_current)) {
+                    $errors['password_current'] = 'Niste upisali trenutnu šifru.';
+                } elseif (Hash::check($request->password, $user->password)) {
+                    $errors['password_current'] = 'Upisali ste pogrešnu šifru.';
+                }
+
+                if ($user->email !== $request->email) {
+                    $user->is_confirmed = false;
+                    $user->email = $request->email;
+                    $user->email_token = str_random(30);
+                    $user->notify(new ConfirmEmail($user->email_token));
+                    $user->to_logout = true;
+                }
+
+                if (isNotEmpty($request->password) || isNotEmpty($request->password_confirm)) {
+                    if ($request->password !== $request->password_confirm) {
+                        $errors['password_matching'] = 'Lozinke se ne poklapaju.';
+                    } elseif (!isset($errors['password_current'])) {
+                        $user->password = Hash::make($request->password);
+                        $user->to_logout = true;
+                    }
+                }
+            }
+
+            if (!empty($errors)) {
+                return redirect()->back()->with('errors', $errors)->withInput();
+            }
+
+            $profile->about = $request->about;
+            $profile->birthday_on = $request->birthday_on;
+            $profile->sex = $request->sex;
+            $profile->job = $request->job;
+            $profile->name = $request->name;
+            $profile->residence = $request->residence;
+            $profile->birthplace = $request->birthplace;
+            $profile->avatar = $request->avatar;
+
+            $user->save();
+            $profile->save();
+            return redirect(route('public.profile.show', ['profile' => $user->username]))->with([
+                'alert-type' => 'success',
+                'message' => 'Podaci uspešno izmenjeni.'
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return redirect('/');
+        }
     }
 
 }

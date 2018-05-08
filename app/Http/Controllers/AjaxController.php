@@ -8,7 +8,7 @@ use Exception;
 use App\Forum;
 use App\Category;
 use App\Helpers\Common\Functions;
-use App\Exceptions\SomeException;
+use App\Exceptions\UnexpectedException;
 use App\Exceptions\IdNotFoundException;
 
 use Illuminate\Support\Facades\DB;
@@ -67,7 +67,7 @@ class AjaxController extends Controller
                 }
             }
         } catch (Exception $e) {
-            throw new SomeException($e);
+            throw new UnexpectedException($e);
         }
     }
 

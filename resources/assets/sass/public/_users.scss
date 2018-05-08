@@ -23,6 +23,10 @@ select[name=perPage] {
     }
 }
 
+.edit-profile {
+    padding: 10px;
+}
+
 .avatar {
     &-small, &-medium, &-big {
         display: block;

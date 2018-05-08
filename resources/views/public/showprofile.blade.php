@@ -1,9 +1,13 @@
 @extends('layouts.public')
 
 @section('content')
-    <div class="bgc-main">
-        <h2>{{ $user->username }}</h2>
-        <div>@avatar(big)</div>
+    <div class="edit-profile bgc-main p-main">
+        <h2 class="username">{{ $user->username }}</h2>
+
+        <div class="avatar">
+            @avatar(big)
+        </div>
+
         <div class="info">
             <p>
                 <b>Pridružio</b><br>
@@ -19,5 +23,10 @@
                 <a href="">Sve teme u kojima je učestvovao korisnik {{ $user->username }}</a>
             </p>
         </div>
+
+        @if ($user->id == Auth::id() || Auth::user()->is_admin)
+            <a class="btn btn-success" href="{{ route('public.profile.edit', ['profile' => $user->username]) }}">Izmeni profil</a>
+        @endif
+
     </div>
 @stop
