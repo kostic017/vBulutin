@@ -2,27 +2,39 @@
 
 use Carbon\Carbon;
 
-function validate_captcha($response, $ip)
+function validate_captcha(string $response, string $ip): bool
 {
     $url = "https://www.google.com/recaptcha/api/siteverify?";
     $url .= "secret=" . config('custom.captcha.secret_key') . "&";
     $url .= "response={$response}&";
     $url .= "remoteip={$ip}";
-    $captchaResult = json_decode(file_get_contents($url));
-    return $captchaResult->success;
+    $json = file_get_contents_curl($url);
+    $result = json_decode($json);
+    return $result->success;
 }
 
-function limit_words($value, $words = 3, $end = '...')
+function file_get_contents_curl(string $url): string {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return $data;
+}
+
+function limit_words(string $value, int $words = 3, string $end = '...'): string
 {
     return \Illuminate\Support\Str::words($value, $words, $end);
 }
 
-function extractTime($datetime)
+function extractTime(string $datetime): string
 {
     return Carbon::parse($datetime)->format('H:i:s');
 }
 
-function extractDate($datetime)
+function extractDate(string $datetime): string
 {
     return Carbon::parse($datetime)->format('d.m.Y');
 }
