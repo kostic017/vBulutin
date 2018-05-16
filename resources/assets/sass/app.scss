@@ -60,6 +60,19 @@ th[data-column] {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+a.sceditor-button {
+    &-undobtn div {
+        background-size: cover;
+        background-image: url('/img/icon_undo.png');
+    }
+
+    &-redobtn div {
+        background-size: cover;
+        background-image: url('/img/icon_redo.png');
+    }
+}
+
+
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
