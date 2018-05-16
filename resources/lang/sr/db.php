@@ -13,7 +13,7 @@ return [
     'category' => 'Kategorija',
     'registered_at' => 'Pridružio',
     'description' => 'Opis',
-    'parent-forum' => 'Natforum',
+    'parent_forum' => 'Natforum',
 
     'updated' => 'Podaci su uspešno ažurirani.',
     'deleted' => 'Podaci su uspešno obrisani.',

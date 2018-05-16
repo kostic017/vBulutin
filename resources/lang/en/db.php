@@ -13,7 +13,7 @@ return [
     'category' => 'Category',
     'registered_at' => 'Joined',
     'description' => 'Description',
-    'parent-forum' => 'Parent forum',
+    'parent_forum' => 'Parent forum',
 
     'updated' => 'Data has been successfully updated.',
     'deleted' => 'Data has been successfully deleted.',
