@@ -8,10 +8,12 @@ use Validator;
 use App\Category;
 use App\Helpers\Common\Functions;
 use App\Http\Controllers\Controller;
-use App\Exceptions\IdNotFoundException;
+use App\Exceptions\RowNotFoundException;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class SectionsController extends Controller
@@ -23,7 +25,7 @@ abstract class SectionsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
@@ -92,11 +94,11 @@ abstract class SectionsController extends Controller
 
         if ($this->table === 'forums') {
             $query->select(
-                    'forums.id AS id',
-                    'forums.title AS title',
-                    'forums.deleted_at AS deleted_at',
-                    'categories.title AS category'
-                )->join('categories', 'forums.category_id', 'categories.id');
+                'forums.id AS id',
+                'forums.title AS title',
+                'forums.deleted_at AS deleted_at',
+                'categories.title AS category'
+            )->join('categories', 'forums.category_id', 'categories.id');
         }
 
         if (isNotEmpty($searchQuery)) {
@@ -131,16 +133,16 @@ abstract class SectionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $slug
+     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(string $slug): View
     {
         try {
-            $section = $this->model::findOrFail($id);
+            $section = $this->model::where('slug', $slug)->firstOrFail();
             return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, $this->table);
         }
     }
 
@@ -148,65 +150,97 @@ abstract class SectionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $slug): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
-            'title' => "required|max:255|unique:forums,title,{$id}",
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
         try {
-            $section = $this->model::findOrFail($id);
+            $section = $this->model::where('slug', $slug)->firstOrFail();
+
+            $validator = Validator::make($request->all(), [
+                'title' => "required|max:255|unique:{$this->table},title,{$section->id}",
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
             $section->title = $request->title;
+            $section->slug = unique_slug($section->title, $section->id);
             $section->description = e($request->description);
             $section->save();
 
-            return redirect(route("{$this->table}.show", [$this->singular => $id]))->with([
+            return redirect(route("{$this->table}.show", [$this->singular => $section->slug]))->with([
                 'alert-type' => 'success',
                 'message' => __('db.updated')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, $this->table);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(string $slug): RedirectResponse
     {
         try {
-            $section = $this->model::findOrFail($id);
+            $section = $this->model::where('slug', $slug)->firstOrFail();
             $section->delete();
             return redirect(route("{$this->table}.index"))->with([
                 'alert-type' => 'success',
                 'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, $this->table);
         }
     }
 
-    public function restore($id) {
+    /**
+     * Restore a soft-deleted model instance.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(string $slug): RedirectResponse
+    {
         try {
-            $section = $this->model::onlyTrashed()->findOrFail($id);
+            $section = $this->model::onlyTrashed()->where('slug', $slug)->firstOrFail();
             $section->restore();
             return redirect(route("{$this->table}.index"))->with([
                 'alert-type' => 'success',
                 'message' => __('db.restored')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, $this->table);
         }
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\View\View
+     */
+    abstract public function show(string $slug): View;
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    abstract public function create(): View;
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    abstract public function store(Request $request): RedirectResponse;
 
 }

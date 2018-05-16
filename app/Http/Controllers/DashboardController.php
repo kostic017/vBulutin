@@ -134,11 +134,11 @@ class DashboardController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function showProfile(string $profile)
+    public function showProfile(string $username)
     {
         if (Auth::check()) {
             try {
-                $user = User::where('username', $profile)->firstOrFail();
+                $user = User::where('username', $username)->firstOrFail();
                 return view('public.showprofile')
                     ->with('user', $user)
                     ->with('profile', $user->profile()->firstOrFail());
@@ -153,10 +153,10 @@ class DashboardController extends Controller
         }
     }
 
-    public function category(string $category)
+    public function category(string $categorySlug)
     {
         try {
-            $category = Category::where('slug', $category)->firstOrFail();
+            $category = Category::where('slug', $categorySlug)->firstOrFail();
             return view('public.category')
                 ->with('topbox', 'category')
                 ->with('self', $category);
@@ -165,10 +165,10 @@ class DashboardController extends Controller
         }
     }
 
-    public function forum(string $forum)
+    public function forum(string $forumSlug)
     {
         try {
-            $forum = Forum::where('slug', $forum)->firstOrFail();
+            $forum = Forum::where('slug', $forumSlug)->firstOrFail();
 
             $vars = [
                 'topbox' => 'forum',
@@ -188,9 +188,9 @@ class DashboardController extends Controller
         }
     }
 
-    public function topic(string $topic) {
+    public function topic(string $topicSlug) {
         try {
-            $topic = Topic::where('slug', $topic)->firstOrFail();
+            $topic = Topic::where('slug', $topicSlug)->firstOrFail();
             $forum = Forum::findOrFail($topic->forum_id);
             $category = Category::findOrFail($forum->category_id);
 
@@ -218,7 +218,7 @@ class DashboardController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function createTopic(Request $request, string $forum)
+    public function createTopic(Request $request, string $forumId)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
@@ -231,7 +231,11 @@ class DashboardController extends Controller
 
         $topic = new Topic;
         $topic->title = $request->title;
-        $topic->forum_id = $forum;
+        $topic->slug = str_slug($topic->title);
+        $topic->forum_id = $forumId;
+        $topic->save();
+
+        $topic->slug = unique_slug($topic->title, $topic->id);
         $topic->save();
 
         $post = new Post;

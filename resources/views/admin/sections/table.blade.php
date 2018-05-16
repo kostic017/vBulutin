@@ -71,23 +71,23 @@
                         @endif
 
                         <td>
-                            <a href="{{ route("{$table}.show", [$table => $row->id]) }}" class="btn btn-xs btn-success">
+                            <a href="{{ route("{$table}.show", [$table => $row->slug]) }}" class="btn btn-xs btn-success">
                                 {{ __('admin.view') }}
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route("{$table}.edit", [$table => $row->id]) }}" class="btn btn-xs btn-info">
+                            <a href="{{ route("{$table}.edit", [$table => $row->slug]) }}" class="btn btn-xs btn-info">
                                 {{ __('admin.edit') }}
                             </a>
                         </td>
                         <td>
                             @if ($row->trashed())
-                                <form action="{{ route("{$table}.restore", [$table => $row->id]) }}" method="post">
+                                <form action="{{ route("{$table}.restore", [$table => $row->slug]) }}" method="post">
                                     @csrf
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.restore') }}</button>
                                 </form>
                             @else
-                                <form action="{{ route("{$table}.destroy", [$table => $row->id]) }}" method="post">
+                                <form action="{{ route("{$table}.destroy", [$table => $row->slug]) }}" method="post">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.delete') }}</button>

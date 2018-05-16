@@ -5,11 +5,9 @@ namespace App;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class Topic extends Model
 {
-    use Sluggable;
 
     public function lastPost() {
         return $this->posts()->orderBy('updated_at', 'desc')->first();
@@ -51,12 +49,4 @@ class Topic extends Model
     {
         return $this->belongsToMany('App\User', 'read_topics');
     }
-
-    public function sluggable()
-    {
-        return [
-            'slug' => [ 'source' => 'title' ]
-        ];
-    }
-
 }

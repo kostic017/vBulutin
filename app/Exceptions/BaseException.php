@@ -3,7 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+
 use App\Helpers\FileLogger;
+
+use Illuminate\Http\Request;
 
 class BaseException extends Exception {
     private $level;
@@ -14,7 +17,7 @@ class BaseException extends Exception {
 
     private static $logger;
 
-    public function __construct($loglevel, $toastrlevel, $route, $message)
+    public function __construct(string $loglevel, string $toastrlevel, string $route, string $message)
     {
         $this->route = $route;
         $this->message = $message;
@@ -22,7 +25,7 @@ class BaseException extends Exception {
         $this->toastrlevel = $toastrlevel;
     }
 
-    private static function log($loglevel, $trace, $message) {
+    private static function log(string $loglevel, array $trace, string $message) {
         if (!self::$logger) {
             self::$logger = new FileLogger('forum41');
         }
@@ -35,7 +38,7 @@ class BaseException extends Exception {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function render($request)
+    public function render(Request $request)
     {
         self::log($this->loglevel, $this->getTrace()[0], $this->message);
         return redirect(route($this->route))->with([

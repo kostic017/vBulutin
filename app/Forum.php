@@ -5,12 +5,10 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Forum extends Model
 {
-    use Sluggable;
     use SoftDeletes;
 
     /**
@@ -113,12 +111,5 @@ class Forum extends Model
 
     public function watchers() {
         return $this->belongsToMany('App\User', 'forum_watchers');
-    }
-
-    public function sluggable()
-    {
-        return [
-            'slug' => [ 'source' => 'title' ]
-        ];
     }
 }

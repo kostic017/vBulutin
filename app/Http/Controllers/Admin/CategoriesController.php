@@ -7,9 +7,11 @@ use Validator;
 
 use App\Forum;
 use App\Category;
-use App\Exceptions\IdNotFoundException;
+use App\Exceptions\RowNotFoundException;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoriesController extends SectionsController
@@ -18,28 +20,56 @@ class CategoriesController extends SectionsController
     protected $singular = 'category';
     protected $model = 'App\Category';
 
-    public function index() {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function index()
+    {
         return parent::index();
     }
 
-    public function edit($id) {
-        return parent::edit($id);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\View\View
+     */
+    public function edit(string $slug): View
+    {
+        return parent::edit($slug);
     }
 
-    public function update(Request $request, $id) {
-        return parent::update($request, $id);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, string $slug): RedirectResponse
+    {
+        return parent::update($request, $slug);
     }
 
-    public function restore($id) {
-        return parent::restore($id);
+    /**
+     * Restore a soft-deleted model instance.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(string $slug): RedirectResponse
+    {
+        return parent::restore($slug);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.sections.categories.create');
     }
@@ -48,9 +78,9 @@ class CategoriesController extends SectionsController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255|unique:categories'
@@ -62,11 +92,15 @@ class CategoriesController extends SectionsController
 
         $category = new Category;
         $category->title = $request->title;
+        $category->slug = str_slug($category->title);
         $category->description = e($request->description);
         $category->position = Category::max('position') + 1;
         $category->save();
 
-        return redirect(route('categories.index'))->with([
+        $category->slug = unique_slug($category->title, $category->id);
+        $category->save();
+
+        return redirect(route('categories.show', ['category' => $category->slug]))->with([
             'alert-type' => 'success',
             'message' => __('db.stored')
         ]);
@@ -75,46 +109,52 @@ class CategoriesController extends SectionsController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $slug
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(string $slug): view
     {
         try {
-            $category = Category::withTrashed()->where('id', $id)->firstOrFail();
+            $category = Category::withTrashed()->where('slug', $slug)->firstOrFail();
             return view('admin.sections.categories.show')->with('category', $category);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, "categories");
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(string $slug): RedirectResponse
     {
         try {
-            $category = $this->model::findOrFail($id);
+            $category = $this->model::where('slug', $slug)->firstOrFail();
 
-            $forums = Forum::where('category_id', $id)->get();
+            $forums = Forum::where('category_id', $category->id)->get();
             foreach ($forums as $forum) {
                 $forum->delete();
             }
 
             $category->delete();
-            return redirect(route("{$this->table}.index"))->with([
+            return redirect(route("categories.index"))->with([
                 'alert-type' => 'success',
                 'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, "categories");
         }
     }
 
-    public function positions()
+    /**
+     * Generates ordered tree of all forums and categories.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\View\View
+     */
+    public function positions(): View
     {
         $columns = ['id', 'title', 'deleted_at'];
         $categories = Category::withTrashed()

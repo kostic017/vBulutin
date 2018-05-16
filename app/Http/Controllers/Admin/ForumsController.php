@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use Session;
 use Validator;
+
 use App\Forum;
 use App\Category;
+use App\Exceptions\RowNotFoundException;
+
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Exceptions\IdNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ForumsController extends SectionsController
@@ -16,28 +20,49 @@ class ForumsController extends SectionsController
     protected $singular = 'forum';
     protected $model = 'App\Forum';
 
-    public function index() {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function index()
+    {
         return parent::index();
     }
 
-    public function edit($id) {
-        return parent::edit($id);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\View\View
+     */
+    public function edit(string $slug): View
+    {
+        return parent::edit($slug);
     }
 
-    public function update(Request $request, $id) {
-        return parent::update($request, $id);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, string $slug): RedirectResponse
+    {
+        return parent::update($request, $slug);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(string $slug): RedirectResponse
     {
         try {
-            $forum = Forum::findOrFail($id);
+            $forum = Forum::where('slug', $slug)->firstOrFail();
 
             $children = Forum::where('parent_id', $id)->get();
             foreach ($children as $child) {
@@ -50,13 +75,20 @@ class ForumsController extends SectionsController
                 'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, "forums");
         }
     }
 
-    public function restore($id) {
+    /**
+     * Restore a soft-deleted model instance.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(string $slug): RedirectResponse
+    {
         try {
-            $forum = Forum::onlyTrashed()->findOrFail($id);
+            $forum = Forum::onlyTrashed()->where('slug', $slug)->firstOrFail();
 
             if ($forum->parent_id) {
                 $parent = Forum::withTrashed()->findOrFail($forum->parent_id);
@@ -83,16 +115,16 @@ class ForumsController extends SectionsController
             ]);
 
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, "forums");
         }
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         $categories = Category::all(['id', 'title']);
         $rootForums = Forum::whereNull('parent_id')->get(['id', 'title']);
@@ -105,9 +137,9 @@ class ForumsController extends SectionsController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         if (isset($request->parent_id)) {
             $request->request->add(['category_id' => Forum::find($request->parent_id)->pluck('category_id')->first()]);
@@ -124,6 +156,7 @@ class ForumsController extends SectionsController
 
         $forum = new Forum;
         $forum->title = $request->title;
+        $forum->slug = str_slug($forum->title);
         $forum->description = e($request->description);
         $forum->category_id = $request->category_id;
         $forum->parent_id = $request->parent_id ?? null;
@@ -136,7 +169,10 @@ class ForumsController extends SectionsController
 
         $forum->save();
 
-        return redirect(route('forums.index'))->with([
+        $forum->slug = unique_slug($forum->title, $forum->id);
+        $forum->save();
+
+        return redirect(route('forums.show', ['forum' => $forum->slug]))->with([
             'alert-type' => 'success',
             'message' => 'db.stored'
         ]);
@@ -145,10 +181,10 @@ class ForumsController extends SectionsController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $slug
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(string $slug): View
     {
         try {
             $forum = Forum::withTrashed()->where('id', $id)->firstOrFail();
@@ -159,7 +195,7 @@ class ForumsController extends SectionsController
                 ->with('category', $category)
                 ->with('parentForum', $parentForum);
         } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, $this->table);
+            throw new RowNotFoundException($slug, "forums");
         }
     }
 

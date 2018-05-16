@@ -49,7 +49,7 @@
             </table>
 
             @php ($row = $forum)
-            @php ($table = ['forum', 'forums'])
+            @php ($table = ['singular' => 'forum', 'plural' => 'forums'])
             @include ('admin.sections.includes.show-buttons')
 
         </div>

@@ -21,7 +21,7 @@ return [
     'stored' => 'Data has been successfully stored into the database.',
 
     'not-found' => [
-        'id' => 'There is no row with ID ":id" inside table ":table".',
+        'row' => 'There is no row with slug ":slug" inside table ":table".',
         'email-token' => 'Confirmation token ":token" is invalid.',
     ],
 ];

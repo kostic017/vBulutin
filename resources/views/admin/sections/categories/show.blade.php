@@ -34,7 +34,7 @@
             </table>
 
             @php ($row = $category)
-            @php ($table = ['category', 'categories'])
+            @php ($table = ['singular' => 'category', 'plural' => 'categories'])
             @include ('admin.sections.includes.show-buttons')
 
         </div>

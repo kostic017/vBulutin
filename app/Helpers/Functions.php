@@ -24,6 +24,10 @@ function file_get_contents_curl(string $url): string {
     return $data;
 }
 
+function unique_slug(string $title, string $id): string {
+    return str_slug($title) . "." . $id;
+}
+
 function limit_words(string $value, int $words = 3, string $end = '...'): string
 {
     return \Illuminate\Support\Str::words($value, $words, $end);

@@ -3,6 +3,7 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Forum::class, function (Faker $faker, array $args) {
+    static $id = 1;
     static $positions = [
         'parent_id' => [],
         'category_id' => []
@@ -11,8 +12,11 @@ $factory->define(App\Forum::class, function (Faker $faker, array $args) {
     $parentId = $args['parent_id'];
     $categoryId = $args['category_id'];
 
+    $title = rtrim($faker->sentence(6), '.');
+
     return [
-        'title' => rtrim($faker->sentence(6), '.'),
+        'title' => $title,
+        'slug' => unique_slug($title, $id++),
         'description' => $faker->optional()->paragraph(),
 
         'position' => function() use (&$positions, $categoryId, $parentId) {

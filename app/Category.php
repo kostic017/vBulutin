@@ -3,12 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use Sluggable;
     use SoftDeletes;
 
     /**
@@ -26,12 +24,5 @@ class Category extends Model
     public function watchers()
     {
         return $this->belongsToMany('App\User', 'category_watchers');
-    }
-
-    public function sluggable()
-    {
-        return [
-            'slug' => [ 'source' => 'title' ]
-        ];
     }
 }
