@@ -65,6 +65,14 @@
         @endforeach
     @endif
 
+    <tr class="bgc-main">
+        <td colspan="4">
+            <div class="back2top">
+                <a href="#top" class="top" title="Top">Top</a>
+            </div>
+        </td>
+    </tr>
+
 </table>
 
 {{-- <tr class="table-row">

@@ -31,7 +31,7 @@
             </div>
 
             <div class="back2top">
-                <a href="#wrap" class="top" title="Top">Top</a>
+                <a href="#top" class="top" title="Top">Top</a>
             </div>
 
         </div>

@@ -94,19 +94,6 @@
         border-top: 1px solid $bc-main;
     }
 
-    .back2top {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .top {
-        width: 11px;
-        height: 11px;
-        display: block;
-        background-image: url(/img/icon_back_top.gif);
-        @include text-hide;
-    }
-
 }
 
 
