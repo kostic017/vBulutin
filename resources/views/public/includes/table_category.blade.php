@@ -4,7 +4,7 @@
 
     <caption>
         <div>
-            @if ($topbox === 'category')
+            @if (isset($topbox))
                 Forumi
             @else
                 <a href="{{ route('public.category', ['category' => $category->slug]) }}">{{ $category->title }}</a>
