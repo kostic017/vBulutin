@@ -12,6 +12,7 @@ use App\Exceptions\InvalidEmailTokenException;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -123,13 +124,23 @@ class RegisterController extends Controller
         return $user;
     }
 
-    public function confirm(string $token) {
+    /**
+     * Confirms user's email address.
+     *
+     * @param  string  $token
+     * @return \Illuminate\Http\RedirectResponse;
+     */
+    public function confirm(string $token)
+    {
         try {
             $user = User::where('email_token', $token)->firstOrFail();
             $user->is_confirmed = true;
             $user->email_token = null;
             $user->save();
-            $this->guard()->login($user);
+            return redirect(route('login'))->with([
+                'alert-type' => 'success',
+                'message' => 'Sada se možete logovati.'
+            ]);
         } catch (ModelNotFoundException $e) {
             throw new InvalidEmailTokenException($token);
         }

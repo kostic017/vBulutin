@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::group(['prefix' => '/'], function () {
     Route::get('home', 'HomeController@index')->name('home');
-    Route::get('confirm/{token}', 'Auth\RegisterController@confirm')->name('register.confirm');
+    Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
 
     Route::get('', 'DashboardController@index')->name('public.index');
 
