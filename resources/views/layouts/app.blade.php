@@ -34,6 +34,7 @@
         @if (Session::has('message'))
             <script>
                 $(function() {
+                    toastr.options.closeButton = true;
                     const type = "{{ Session::get('alert-type') }}";
                     const message = "{{ Session::get('message') }}";
                     switch (type) {
