@@ -26,11 +26,25 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Napravim gomilu korisnika i za svakog vezem po jedan profil.
-        $users = factory(User::class, self::USER_COUNT)->create();
+        $users = factory(User::class, self::USER_COUNT - 1)->create();
+
+        $users[] = User::create([
+            'username' => 'zoki',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'email' => 'gmail@zoki.com',
+            'email_token' => null,
+            'is_confirmed' => true,
+            'is_admin' => true,
+            'is_invisible' => false,
+            'remember_token' => str_random(10)
+        ]);
+
         $users->each(function ($user) {
             factory(Profile::class, 1)->create(['user_id' => $user->id]);
         });
 
+        // Dodam neke kategorije. Svakoj kategoriji dodam neke forume i potforume.
+        // Svakom forumu dodam gomilu tema sa postovima koje vezem za random korisnike.
         $categories = factory(Category::class, self::CATEGORY_COUNT)->create();
 
         $categories->each(function ($category) use (&$users) {
