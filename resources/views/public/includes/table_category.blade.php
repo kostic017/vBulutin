@@ -2,12 +2,15 @@
 
 <table class="main-table table-hover">
 
-    <caption class="captionbar">
-        @if (isset($topbox))
-            Forumi
-        @else
-            <a href="{{ route('public.category', ['category' => $category->slug]) }}">{{ $category->title }}</a>
-        @endif
+    <caption>
+        <div>
+            @if ($topbox === 'category')
+                Forumi
+            @else
+                <a href="{{ route('public.category', ['category' => $category->slug]) }}">{{ $category->title }}</a>
+            @endif
+            <a href="#top" class="back2top" title="Top">Top</a>
+        </div>
     </caption>
 
     @if ($parents->isEmpty())
@@ -64,15 +67,6 @@
 
         @endforeach
     @endif
-
-    <tr class="bgc-main">
-        <td colspan="4">
-            <div class="back2top">
-                <a href="#top" class="top" title="Top">Top</a>
-            </div>
-        </td>
-    </tr>
-
 </table>
 
 {{-- <tr class="table-row">

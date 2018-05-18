@@ -3,7 +3,7 @@
 
         <ul class="path">
             <li><a href="/">{{ config('app.name') }}</a></li>
-            @if (isset($category))
+            @if (isset($category) && $topbox !== 'category')
                 <li><a href="{{ route('public.category', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
             @endif
             @if (isset($parent))

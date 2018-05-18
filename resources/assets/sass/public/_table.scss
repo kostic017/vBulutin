@@ -18,8 +18,15 @@
         font-size: 1.1em;
         caption-side: top;
         padding-left: 0.75rem;
+        padding-right: 0.75rem;
         color: $c-captionlink;
         background-color: $bgc-caption;
+
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
         a {
             color: $c-captionlink;

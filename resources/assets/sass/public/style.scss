@@ -16,3 +16,12 @@
     padding: 20px;
     max-width: 1100px;
 }
+
+.back2top {
+    width: 11px;
+    height: 11px;
+    border-radius: 100%;
+    display: inline-block;
+    background-image: url(/img/icon_back_top.gif);
+    @include text-hide;
+}

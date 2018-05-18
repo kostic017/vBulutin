@@ -159,6 +159,7 @@ class DashboardController extends Controller
             $category = Category::where('slug', $categorySlug)->firstOrFail();
             return view('public.category')
                 ->with('topbox', 'category')
+                ->with('category', $category)
                 ->with('self', $category);
         } catch (Exception $e) {
             abort('404');

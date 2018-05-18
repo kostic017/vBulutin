@@ -30,8 +30,8 @@
                 </div>
             </div>
 
-            <div class="back2top">
-                <a href="#top" class="top" title="Top">Top</a>
+            <div class="d-flex justify-content-end">
+                <a href="#top" class="back2top" title="Top">Top</a>
             </div>
 
         </div>

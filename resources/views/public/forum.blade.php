@@ -5,7 +5,12 @@
 
     @if (!$children->isEmpty())
         <table class="main-table table-hover">
-            <caption>Potforumi</caption>
+            <caption>
+                <div class="d-flex justify-content-space-beetween">
+                    Potforumi
+                    <a href="#top" class="back2top" title="Top">Top</a>
+                </div>
+            </caption>
 
             @foreach ($children as $child)
 
@@ -45,14 +50,6 @@
 
             @endforeach
 
-            <tr class="bgc-main">
-                <td colspan="4">
-                    <div class="back2top">
-                        <a href="#top" class="top" title="Top">Top</a>
-                    </div>
-                </td>
-            </tr>
-
         </table>
     @endif
 
@@ -60,7 +57,12 @@
         <p>Nema tema u ovom forumu.</p>
     @else
         <table class="main-table">
-            <caption>Teme</caption>
+            <caption>
+                <div>
+                    Teme
+                    <a href="#top" class="back2top" title="Top">Top</a>
+                </div>
+            </caption>
 
             @foreach ($topics as $topic)
 
@@ -97,15 +99,6 @@
                 </tr>
 
             @endforeach
-
-            <tr class="bgc-main">
-                <td colspan="4">
-                    <div class="back2top">
-                        <a href="#top" class="top" title="Top">Top</a>
-                    </div>
-                </td>
-            </tr>
-
         </table>
     @endif
 
