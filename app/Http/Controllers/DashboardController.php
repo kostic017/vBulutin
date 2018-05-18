@@ -286,10 +286,12 @@ class DashboardController extends Controller
         if (Auth::check()) {
             try {
                 $user = User::where('username', $profile)->firstOrFail();
-                $view = Auth::id() == $user->id ? 'public.editprofile' : 'public.showprofile';
-                return view($view)
-                    ->with('user', $user)
-                    ->with('profile', $user->profile()->firstOrFail());
+                if (Auth::id() == $user->id || Auth::user()->is_admin) {
+                    return view('public.editprofile')
+                        ->with('user', $user)
+                        ->with('profile', $user->profile()->firstOrFail());
+                }
+                return redirect(route('public.profile.show', ['profile' => $profile]));
             } catch (Exception $e) {
                 abort('404');
             }
