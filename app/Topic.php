@@ -40,9 +40,10 @@ class Topic extends Model
         return $this->belongsTo('App\Forum');
     }
 
+
     public function watchers()
     {
-        return $this->belongsToMany('App\User', 'topic_watchers');
+        return User::findMany(UserWatches::select('user_id')->where('topic_id', $this->id)->get()->toArray());
     }
 
     public function readers()

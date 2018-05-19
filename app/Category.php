@@ -23,6 +23,11 @@ class Category extends Model
 
     public function watchers()
     {
-        return $this->belongsToMany('App\User', 'category_watchers');
+        return User::findMany(UserWatches::select('user_id')->where('category_id', $this->id)->get()->toArray());
+    }
+
+    public function moderators()
+    {
+        return User::findMany(UserModerates::select('user_id')->where('category_id', $this->id)->get()->toArray());
     }
 }

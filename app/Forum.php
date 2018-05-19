@@ -89,6 +89,12 @@ class Forum extends Model
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
     public function category()
     {
         return $this->belongsTo('App\Category');
@@ -109,7 +115,13 @@ class Forum extends Model
         return $this->hasMany('App\Topic');
     }
 
-    public function watchers() {
-        return $this->belongsToMany('App\User', 'forum_watchers');
+    public function watchers()
+    {
+        return User::findMany(UserWatches::select('user_id')->where('forum_id', $this->id)->get()->toArray());
+    }
+
+    public function moderators()
+    {
+        return User::findMany(UserModerates::select('user_id')->where('forum_id', $this->id)->get()->toArray());
     }
 }

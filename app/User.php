@@ -77,16 +77,16 @@ class User extends Authenticatable
 
     public function watchedCategories()
     {
-        return $this->belongsToMany('App\Category', 'category_watchers');
+        return Category::findMany(UserWatches::select('category_id')->where('user_id', $this->id)->get()->toArray());
     }
 
     public function watchedForums()
     {
-        return $this->belongsToMany('App\Forum', 'forum_watchers');
+        return Forum::findMany(UserWatches::select('forum_id')->where('user_id', $this->id)->get()->toArray());
     }
 
     public function watchedTopics()
     {
-        return $this->belongsToMany('App\Topic', 'topic_watchers');
+        return Topic::findMany(UserWatches::select('topic_id')->where('user_id', $this->id)->get()->toArray());
     }
 }

@@ -13,6 +13,13 @@ class Profile extends Model
      */
     public $timestamps = false;
 
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
+
     public function user()
     {
         return $this->belongsTo('App\User');

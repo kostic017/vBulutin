@@ -15,7 +15,7 @@ class CreateUserRatingsTable extends Migration
     {
         Schema::create('user_ratings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('mark');
+            $table->enum('mark', ['1', '-1']);
             $table->integer('user_id');
             $table->integer('post_id');
             $table->unique(['user_id', 'post_id']);

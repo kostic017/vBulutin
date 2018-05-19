@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForumWatchersTable extends Migration
+class CreateUserWatchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateForumWatchersTable extends Migration
      */
     public function up()
     {
-        Schema::create('forum_watchers', function (Blueprint $table) {
+        Schema::create('user_watches', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('forum_id');
             $table->integer('user_id');
+            $table->integer('category_id');
+            $table->integer('forum_id');
+            $table->integer('topic_id');
         });
     }
 
@@ -27,6 +29,6 @@ class CreateForumWatchersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forum_watches');
+        Schema::dropIfExists('user_watches');
     }
 }
