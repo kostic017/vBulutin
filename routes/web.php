@@ -17,26 +17,25 @@ Route::group(['prefix' => '/'], function () {
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
 
-    Route::get('', 'DashboardController@index')->name('public.index');
-
     // index
-    Route::get('users/', 'DashboardController@users')->name('public.users');
+    Route::get('', 'Frontend\IndexController@index')->name('public.index');
+    Route::get('users/', 'Frontend\IndexController@users')->name('public.users');
 
     // show
-    Route::get('topic/{topic}', 'DashboardController@topic')->name('public.topic');
-    Route::get('forum/{forum}', 'DashboardController@forum')->name('public.forum');
-    Route::get('category/{category}', 'DashboardController@category')->name('public.category');
-    Route::get('profile/{profile}/show', 'DashboardController@showProfile')->name('public.profile.show');
+    Route::get('topic/{topic}', 'Frontend\ShowController@topic')->name('public.topic');
+    Route::get('forum/{forum}', 'Frontend\ShowController@forum')->name('public.forum');
+    Route::get('category/{category}', 'Frontend\ShowController@category')->name('public.category');
+    Route::get('profile/{profile}/show', 'Frontend\ShowController@profile')->name('public.profile.show');
 
-    // create
-    Route::post('create/post/{topic}', 'DashboardController@createPost')->name('public.post.create');
-    Route::post('create/topic/{forum}', 'DashboardController@createTopic')->name('public.topic.create');
+    // create & store
+    Route::post('create/post/{topic}', 'Frontend\CreateController@post')->name('public.post.create');
+    Route::post('create/topic/{forum}', 'Frontend\CreateController@topic')->name('public.topic.create');
 
     // edit
-    Route::get('profile/{profile}/edit', 'DashboardController@editProfile')->name('public.profile.edit');
+    Route::get('profile/{profile}/edit', 'Frontend\EditController@profile')->name('public.profile.edit');
 
     // update
-    Route::get('profile/{profile}/update', 'DashboardController@updateProfile')->name('public.profile.update');
+    Route::get('profile/{profile}/update', 'Frontend\UpdateController@profile')->name('public.profile.update');
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
