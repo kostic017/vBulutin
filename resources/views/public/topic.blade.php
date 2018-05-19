@@ -19,7 +19,7 @@
                 <div class="body">
                     <p class="author">
                         <a href="{{ route('public.topic', ['topic' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
-                        napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ $post->created_at }}
+                        napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ extractDate($post->created_at) }} {{ extractTime($post->created_at) }}
                     </p>
                     <div class="content">
                         {!! BBCode::parse($post->content) !!}
