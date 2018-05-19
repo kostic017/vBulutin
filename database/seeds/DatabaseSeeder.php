@@ -6,17 +6,26 @@ use App\Topic;
 use App\Forum;
 use App\Profile;
 use App\Category;
+use App\UserModerates;
 
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    const CATEGORY_COUNT = 3;
     const FORUM_COUNT = 4;
     const CHILD_COUNT = 2;
     const TOPIC_COUNT = 5;
     const POST_COUNT = 10;
     const USER_COUNT = 30;
+    const CATEGORY_COUNT = 3;
+    const MAX_MODS_PER_CAT_COUNT = 10;
+
+    // Ko moderise kategoriju, moderise i forume i potforume u njoj. Analogno,
+    // ako neko moderise natforum, onda moderise i potforume. Dok npr. neko moze
+    // da moderise samo odredjeni potforum. Posto ja sada hocu da ogranicim broj
+    // kreiranih moderatora, vodim racuna o broju moderatora koje sam vec kreirao.
+    // Polje je vezano za kategoriju kojoj kreiram moderature u datom trenutku!!!
+    private $modCount;
 
     /**
      * Run the database seeds.
@@ -25,7 +34,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Napravim gomilu korisnika i za svakog vezem po jedan profil.
+        $this->createUsers();
+        factory(Category::class, self::CATEGORY_COUNT)
+            ->create()
+            ->each(function ($category) {
+                $this->modCount = 0;
+                $this->addModerators($category->id, 'category');
+                $this->createForums(null, $category->id, $category->deleted_at);
+            });
+    }
+
+    private function createUsers() {
         $users = factory(User::class, self::USER_COUNT - 1)->create();
 
         $users[] = User::create([
@@ -42,42 +61,39 @@ class DatabaseSeeder extends Seeder
         $users->each(function ($user) {
             factory(Profile::class, 1)->create(['user_id' => $user->id]);
         });
+    }
 
-        // Dodam neke kategorije. Svakoj kategoriji dodam neke forume i potforume.
-        // Svakom forumu dodam gomilu tema sa postovima koje vezem za random korisnike.
-        $categories = factory(Category::class, self::CATEGORY_COUNT)->create();
+    private function addModerators($sectionId, $sectionType) {
+        $count = rand(0, self::MAX_MODS_PER_CAT_COUNT - $this->modCount);
+        $this->modCount += $count;
 
-        $categories->each(function ($category) use (&$users) {
-            $data = [
-                'parent_id' => null,
-                'category_id' => $category->id
-            ];
+        for ($i = 0; $i < $count; ++$i) {
+            UserModerates::create([
+                "{$sectionType}_id" => $sectionId,
+                'user_id' => User::inRandomOrder()->first()->id,
+            ]);
+        }
+    }
 
-            if ($category->deleted_at) {
-                $data['deleted_at'] = $category->deleted_at;
+    private function createForums($parentId, $categoryId, $deletedAt) {
+        $forumData = [
+            'parent_id' => $parentId,
+            'category_id' => $categoryId
+        ];
+
+        if ($deletedAt) {
+            $forumData['deleted_at'] = $deletedAt;
+        }
+
+        $forums = factory(Forum::class, self::CHILD_COUNT)->create($forumData);
+
+        $forums->each(function ($forum) use ($parentId, $categoryId, $deletedAt) {
+            $this->createTopics($forum);
+            $this->addModerators($forum->id, 'forum');
+
+            if ($parentId === null) {
+                $this->createForums($forum->id, $categoryId, $forum->deletedAt);
             }
-
-            $forums = factory(Forum::class, self::FORUM_COUNT)->create($data);
-
-            $forums->each(function ($forum) use (&$category) {
-                $this->createTopics($forum);
-
-                $data = [
-                    'parent_id' => $forum->id,
-                    'category_id' => $category->id
-                ];
-
-                if ($forum->deleted_at) {
-                    $data['deleted_at'] = $forum->deleted_at;
-                }
-
-                $children = factory(Forum::class, self::CHILD_COUNT)->create($data);
-
-                $children->each(function ($child) {
-                    $this->createTopics($child);
-                });
-            });
-
         });
     }
 

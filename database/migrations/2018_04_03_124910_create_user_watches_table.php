@@ -16,9 +16,9 @@ class CreateUserWatchesTable extends Migration
         Schema::create('user_watches', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('category_id');
-            $table->integer('forum_id');
-            $table->integer('topic_id');
+            $table->integer('category_id')->nullable();
+            $table->integer('forum_id')->nullable();
+            $table->integer('topic_id')->nullable();
         });
     }
 

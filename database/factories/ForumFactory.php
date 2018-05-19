@@ -4,6 +4,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Forum::class, function (Faker $faker, array $args) {
     static $id = 1;
+
+    // Pozicija koju novokreirani forum treba da zauzme unutar
+    // odredjenog roditeljskog foruma odnosno kategorije.
     static $positions = [
         'parent_id' => [],
         'category_id' => []
