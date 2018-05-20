@@ -1,8 +1,8 @@
 @extends('layouts.public')
 
 @section('content')
-    <form action="{{ route('public.users') }}" method="get" id="index">
-        <select name="perPage" class="form-control" onchange="document.getElementById('form').submit();">
+    <form action="{{ route('public.users') }}" method="get" id="form1">
+        <select name="perPage" class="form-control" onchange="document.getElementById('form1').submit();">
             <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
             @for ($i = $step; $i <= $max; $i += $step)
                 <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
@@ -46,8 +46,8 @@
         </div>
     @endif
 
-    <form action="{{ route('public.users') }}" method="get" id="form">
-        <select name="perPage" class="form-control" onchange="document.getElementById('form').submit();">
+    <form action="{{ route('public.users') }}" method="get" id="form2">
+        <select name="perPage" class="form-control" onchange="document.getElementById('form2').submit();">
             <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
             @for ($i = $step; $i <= $max; $i += $step)
                 <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
