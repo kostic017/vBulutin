@@ -25,10 +25,15 @@
 
                 <div class="mods">
                     Moderatori:
-                    <ul>
-                        <li><a href="">Pera</a></li>
-                        <li><a href="">Zika</a></li>
-                    </ul>
+                    @if ($mods->isEmpty())
+                        nema
+                    @else
+                        <ul>
+                            @foreach ($mods as $mod)
+                                <li><a href="{{ route('public.profile.show', ['profile' => $mod->username]) }}">{{ $mod->username }}</a></li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             @endif
 

@@ -2,6 +2,22 @@
 
 use Carbon\Carbon;
 
+use App\User;
+use App\UserWatches;
+use App\UserModerates;
+
+use Illuminate\Database\Eloquent\Collection;
+
+function getWatchers(string $myTable, int $myId): Collection
+{
+    return User::findMany(UserWatches::select('user_id')->where("{$myTable}_id", $myId)->get()->toArray());
+}
+
+function getModerators(string $myTable, int $myId): Collection
+{
+    return User::findMany(UserModerates::select('user_id')->where("{$myTable}_id", $myId)->get()->toArray());
+}
+
 function validate_captcha(string $response, string $ip): bool
 {
     $url = "https://www.google.com/recaptcha/api/siteverify?";

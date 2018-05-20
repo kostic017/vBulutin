@@ -3,7 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -16,18 +18,18 @@ class Category extends Model
      */
     public $timestamps = false;
 
-    public function forums()
+    public function forums(): HasMany
     {
         return $this->hasMany('App\Forum');
     }
 
-    public function watchers()
+    public function watchers(): Collection
     {
-        return User::findMany(UserWatches::select('user_id')->where('category_id', $this->id)->get()->toArray());
+        return getWatchers('category', $this->id);
     }
 
-    public function moderators()
+    public function moderators(): Collection
     {
-        return User::findMany(UserModerates::select('user_id')->where('category_id', $this->id)->get()->toArray());
+        return getModerators('category', $this->id);
     }
 }

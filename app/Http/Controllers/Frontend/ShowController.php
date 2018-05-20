@@ -43,7 +43,8 @@ class ShowController extends DashboardController
             return view('public.category')
                 ->with('topbox', 'category')
                 ->with('category', $category)
-                ->with('self', $category);
+                ->with('self', $category)
+                ->with('mods', $category->moderators());
         } catch (Exception $e) {
             abort('404');
         }
@@ -66,7 +67,9 @@ class ShowController extends DashboardController
                 $vars['parent'] = Forum::findOrFail($forum->parent_id);
             }
 
-            return view('public.forum')->with($vars);
+            return view('public.forum')
+                ->with($vars)
+                ->with('mods', $forum->moderators());
         } catch (Exception $e) {
             abort('404');
         }
