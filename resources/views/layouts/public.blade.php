@@ -9,10 +9,6 @@
     @yield('scripts')
 @overwrite
 
-@section('navigation')
-    <li><a class="nav-link" href="{{ route('public.users') }}">Korisnici</a></li>
-@stop
-
 @section('content')
         {{--
         <form name="search" action="search.php">
