@@ -19,6 +19,7 @@
     <table class="table table-light table-striped table-hover users">
         <thead class="thead-dark text-nowrap">
             <tr>
+                <th>#</th>
                 @th_users_sort(username)
                 @th_users_sort(about)
                 @th_users_sort(registered_at)
@@ -26,8 +27,10 @@
             </tr>
         </thead>
         <tbody>
+            @php ($i = 0)
             @foreach ($users as $user)
                 <tr>
+                    <td>{{ ++$i }}</td>
                     <td><a href="{{ route('public.profile.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></td>
                     <td class="about">{{ limit_words($user->about ?? '-', 10) }}</td>
                     <td>{{ extractDate($user->registered_at) }}</td>
