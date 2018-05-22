@@ -49,7 +49,8 @@
                         <select name="parent_id" id="parent_id" class="form-control">
                             <option value="" selected></option>
                             @foreach ($rootForums as $rootForum)
-                                <option value="{{ $rootForum->id }}" {{ old('parent_id') === $rootForum->id ? 'selected' : '' }}>{{ $rootForum->title }}</option>
+                                <option value="{{ $rootForum->id }}" {{ old('parent_id') === $rootForum->id ? 'selected' : '' }}
+                                    data-category="{{ $rootForum->category_id }}">{{ $rootForum->title }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -75,5 +76,4 @@
     </div>
 
     @include('includes.sceditor')
-    @include('admin.includes.overlay')
 @stop

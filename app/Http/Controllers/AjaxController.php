@@ -52,15 +52,4 @@ class AjaxController extends Controller
         }
     }
 
-    public function getParentCategory()
-    {
-        $id = request()->id;
-
-        try {
-            $forum = Forum::findOrFail($id);
-            return response()->json(['category_id' => $forum->category_id]);
-        } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($id, 'forums');
-        }
-    }
 }

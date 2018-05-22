@@ -72,7 +72,15 @@ class ForumsController extends SectionsController
     public function create(): View
     {
         $categories = Category::all(['id', 'title']);
-        $rootForums = Forum::whereNull('parent_id')->get(['id', 'title']);
+        $rootForums = Forum::select (
+            'forums.id AS id',
+            'forums.title AS title',
+            'categories.id AS category_id',
+            'categories.deleted_at'
+        )->join('categories', 'forums.category_id', 'categories.id')
+         ->whereNull('parent_id')
+         ->whereNull('categories.deleted_at')
+         ->get();
         return view('admin.sections.forums.create')
                 ->with('categories', $categories)
                 ->with('rootForums', $rootForums);
