@@ -47,10 +47,6 @@ class AjaxController extends Controller
                         'position' => $parentIndex + 1
                     ]);
 
-                    if ($category->trashed()) {
-                        $parentForum->delete();
-                    }
-
                     foreach ($parentForumData['children'] ?? [] as $childIndex => $childForumData) {
                         $childForum = Forum::withTrashed()->find($childForumData['id']);
                         $childForum->update([
@@ -58,12 +54,7 @@ class AjaxController extends Controller
                             'category_id' => $categoryId,
                             'position' => $childIndex + 1
                         ]);
-
-                        if ($parentForum->trashed()) {
-                            $childForum->delete();
-                        }
                     }
-
                 }
             }
         } catch (Exception $e) {
@@ -74,6 +65,7 @@ class AjaxController extends Controller
     public function getParentCategory()
     {
         $id = request()->id;
+
         try {
             $forum = Forum::findOrFail($id);
             return response()->json(['category_id' => $forum->category_id]);

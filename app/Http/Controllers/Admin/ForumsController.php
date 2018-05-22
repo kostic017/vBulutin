@@ -54,32 +54,6 @@ class ForumsController extends SectionsController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(string $slug): RedirectResponse
-    {
-        try {
-            $forum = Forum::where('slug', $slug)->firstOrFail();
-
-            $children = Forum::where('parent_id', $id)->get();
-            foreach ($children as $child) {
-                $child->delete();
-            }
-
-            $forum->delete();
-            return back()->with([
-                'alert-type' => 'success',
-                'message' => __('db.deleted')
-            ]);
-        } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, "forums");
-        }
-    }
-
-    /**
      * Restore a soft-deleted model instance.
      *
      * @param  string  $slug
@@ -87,36 +61,7 @@ class ForumsController extends SectionsController
      */
     public function restore(string $slug): RedirectResponse
     {
-        try {
-            $forum = Forum::onlyTrashed()->where('slug', $slug)->firstOrFail();
-
-            if ($forum->parent_id) {
-                $parent = Forum::withTrashed()->findOrFail($forum->parent_id);
-                if ($parent->trashed()) {
-                    return back()->with([
-                        'alert-type' => 'error',
-                        'message' => __('admin.parent-deleted')
-                    ]);
-                }
-            }
-
-            $category = Category::withTrashed()->findOrFail($forum->category_id);
-            if ($category->trashed()) {
-                return back()->with([
-                    'alert-type' => 'error',
-                    'message' => __('admin.category-deleted')
-                ]);
-            }
-
-            $forum->restore();
-            return back()->with([
-                'alert-type' => 'success',
-                'message' => __('db.restored')
-            ]);
-
-        } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, "forums");
-        }
+        return parent::restore($slug);
     }
 
     /**

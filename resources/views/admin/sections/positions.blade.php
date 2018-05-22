@@ -29,8 +29,8 @@
         @foreach ($categories as $category)
             <div class="sortable-category">
 
-                <div class="category-header {{ $category->deleted_at ? 'trashed' : '' }}">
-                    <div>
+                <div class="category-header">
+                    <div class="{{ $category->deleted_at ? 'trashed' : '' }}">
                         <button class="category-tree-control" data-action="collapse"></button>
                         ({{ $category->id }}) {{ $category->title }}
                     </div>

@@ -123,32 +123,6 @@ class CategoriesController extends SectionsController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(string $slug): RedirectResponse
-    {
-        try {
-            $category = $this->model::where('slug', $slug)->firstOrFail();
-
-            $forums = Forum::where('category_id', $category->id)->get();
-            foreach ($forums as $forum) {
-                $forum->delete();
-            }
-
-            $category->delete();
-            return redirect(route("categories.index"))->with([
-                'alert-type' => 'success',
-                'message' => __('db.deleted')
-            ]);
-        } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, "categories");
-        }
-    }
-
-    /**
      * Generates ordered tree of all forums and categories.
      *
      * @param  string  $slug

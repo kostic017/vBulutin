@@ -40,23 +40,19 @@ class DatabaseSeeder extends Seeder
             ->each(function ($category) {
                 $this->modCount = 0;
                 $this->addModerators($category->id, 'category');
-                $this->createForums(null, $category->id, $category->deleted_at);
+                $this->createForums(null, $category->id);
             });
     }
 
     private function createUsers() {
         $users = factory(User::class, self::USER_COUNT - 1)->create();
 
-        $users[] = User::create([
+        $users[] = factory(User::class, 1)->create([
             'username' => 'zoki',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'email' => 'gmail@zoki.com',
             'email_token' => null,
             'is_confirmed' => true,
             'is_admin' => true,
-            'is_invisible' => false,
-            'remember_token' => str_random(10)
-        ]);
+        ])->first();
 
         $users->each(function ($user) {
             factory(Profile::class, 1)->create(['user_id' => $user->id]);
@@ -75,24 +71,18 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function createForums($parentId, $categoryId, $deletedAt) {
-        $forumData = [
+    private function createForums($parentId, $categoryId) {
+        $forums = factory(Forum::class, self::CHILD_COUNT)->create([
             'parent_id' => $parentId,
             'category_id' => $categoryId
-        ];
+        ]);
 
-        if ($deletedAt) {
-            $forumData['deleted_at'] = $deletedAt;
-        }
-
-        $forums = factory(Forum::class, self::CHILD_COUNT)->create($forumData);
-
-        $forums->each(function ($forum) use ($parentId, $categoryId, $deletedAt) {
+        $forums->each(function ($forum) use ($parentId, $categoryId) {
             $this->createTopics($forum);
             $this->addModerators($forum->id, 'forum');
 
             if ($parentId === null) {
-                $this->createForums($forum->id, $categoryId, $forum->deletedAt);
+                $this->createForums($forum->id, $categoryId);
             }
         });
     }
