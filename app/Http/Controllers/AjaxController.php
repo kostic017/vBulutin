@@ -9,7 +9,7 @@ use App\Forum;
 use App\Category;
 use App\Helpers\Common\Functions;
 use App\Exceptions\UnexpectedException;
-use App\Exceptions\RowNotFoundException;
+use App\Exceptions\SlugNotFoundException;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -70,7 +70,7 @@ class AjaxController extends Controller
             $forum = Forum::findOrFail($id);
             return response()->json(['category_id' => $forum->category_id]);
         } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, 'forums');
+            throw new IdNotFoundException($id, 'forums');
         }
     }
 }

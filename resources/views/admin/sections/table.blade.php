@@ -29,13 +29,13 @@
             </div>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-secondary {{ active_class($filter === 'all') }}">
-                    <input type="radio" name="filter" autocomplete="off" {{ active_class($filter === 'all', 'checked') }} value="all"> {{ __('admin.all') }}
+                    <input type="radio" name="filter" autocomplete="off" {{ $filter === 'all' ? 'checked' : '' }} value="all"> {{ __('admin.all') }}
                 </label>
                 <label class="btn btn-secondary {{ active_class($filter === 'active') }}">
-                    <input type="radio" name="filter" autocomplete="off" {{ active_class($filter === 'active', 'checked') }} value="active"> {{ __('admin.active') }}
+                    <input type="radio" name="filter" autocomplete="off" {{ $filter === 'active' ? 'checked' : '' }} value="active"> {{ __('admin.active') }}
                 </label>
                 <label class="btn btn-secondary {{ active_class($filter === 'trashed') }}">
-                    <input type="radio" name="filter" autocomplete="off" {{ active_class($filter === 'trashed', 'checked') }} value="trashed"> {{ __('admin.trashed') }}
+                    <input type="radio" name="filter" autocomplete="off" {{ $filter === 'trashed' ? 'checked' : '' }} value="trashed"> {{ __('admin.trashed') }}
                 </label>
             </div>
         </div>

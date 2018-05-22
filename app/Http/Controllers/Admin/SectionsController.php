@@ -8,7 +8,7 @@ use Validator;
 use App\Category;
 use App\Helpers\Common\Functions;
 use App\Http\Controllers\Controller;
-use App\Exceptions\RowNotFoundException;
+use App\Exceptions\SlugNotFoundException;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -95,6 +95,7 @@ abstract class SectionsController extends Controller
         if ($this->table === 'forums') {
             $query->select(
                 'forums.id AS id',
+                'forums.slug AS slug',
                 'forums.title AS title',
                 'forums.deleted_at AS deleted_at',
                 'categories.title AS category'
@@ -142,7 +143,7 @@ abstract class SectionsController extends Controller
             $section = $this->model::where('slug', $slug)->firstOrFail();
             return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
         } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, $this->table);
+            throw new SlugNotFoundException($slug, $this->table);
         }
     }
 
@@ -176,7 +177,7 @@ abstract class SectionsController extends Controller
                 'message' => __('db.updated')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, $this->table);
+            throw new SlugNotFoundException($slug, $this->table);
         }
     }
 
@@ -196,7 +197,7 @@ abstract class SectionsController extends Controller
                 'message' => __('db.deleted')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, $this->table);
+            throw new SlugNotFoundException($slug, $this->table);
         }
     }
 
@@ -216,7 +217,7 @@ abstract class SectionsController extends Controller
                 'message' => __('db.restored')
             ]);
         } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, $this->table);
+            throw new SlugNotFoundException($slug, $this->table);
         }
     }
 

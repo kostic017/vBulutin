@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="parent_id">{{ __('db.parent-forum') }}</label>
+                        <label for="parent_id">{{ __('db.parent_forum') }}</label>
                         <select name="parent_id" id="parent_id" class="form-control">
                             <option value="" selected></option>
                             @foreach ($rootForums as $rootForum)

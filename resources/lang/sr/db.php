@@ -21,7 +21,8 @@ return [
     'stored' => 'Podaci su uspešno dodati u bazu.',
 
     'not-found' => [
-        'row' => 'U tabeli ":table" ne postoji red sa slug-om ":slug".',
+        'id' => 'U tabeli ":table" ne postoji red sa ID-om ":id".',
+        'slug' => 'U tabeli ":table" ne postoji red sa slug-om ":slug".',
         'email-token' => 'Token ":token" za potvrdu email adrese je nevažeći.',
     ],
 ];

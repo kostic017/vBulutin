@@ -7,7 +7,7 @@ use Validator;
 
 use App\Forum;
 use App\Category;
-use App\Exceptions\RowNotFoundException;
+use App\Exceptions\SlugNotFoundException;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -132,7 +132,7 @@ class ForumsController extends SectionsController
     public function show(string $slug): View
     {
         try {
-            $forum = Forum::withTrashed()->where('id', $id)->firstOrFail();
+            $forum = Forum::withTrashed()->where('slug', $slug)->firstOrFail();
             $category = Category::withTrashed()->where('id', $forum->category_id)->get(['id', 'slug', 'title'])->first();
             $parentForum = Forum::withTrashed()->where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
             return view('admin.sections.forums.show')
@@ -140,7 +140,7 @@ class ForumsController extends SectionsController
                 ->with('category', $category)
                 ->with('parentForum', $parentForum);
         } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, "forums");
+            throw new SlugNotFoundException($slug, "forums");
         }
     }
 

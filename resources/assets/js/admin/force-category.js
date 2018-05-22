@@ -8,7 +8,7 @@ function forceCategory() {
             cSectionsId.val($("option:first-child", cSectionsId).val());
         } else {
             overlay.show();
-            $.post("/ajax/getParentSection", { id: $(this).val() },
+            $.post("/ajax/getParentCategory", { id: $(this).val() },
                 function (data) {
                     cSectionsId.val(data.category_id);
                     cSectionsId.attr("disabled", "");

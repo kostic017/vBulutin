@@ -7,7 +7,7 @@ use Validator;
 
 use App\Forum;
 use App\Category;
-use App\Exceptions\RowNotFoundException;
+use App\Exceptions\SlugNotFoundException;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -118,7 +118,7 @@ class CategoriesController extends SectionsController
             $category = Category::withTrashed()->where('slug', $slug)->firstOrFail();
             return view('admin.sections.categories.show')->with('category', $category);
         } catch (ModelNotFoundException $e) {
-            throw new RowNotFoundException($slug, "categories");
+            throw new SlugNotFoundException($slug, "categories");
         }
     }
 
