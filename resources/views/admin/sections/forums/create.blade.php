@@ -75,4 +75,5 @@
     </div>
 
     @include('includes.sceditor')
+    @include('admin.includes.overlay')
 @stop
