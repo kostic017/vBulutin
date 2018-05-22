@@ -19,16 +19,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class AjaxController extends Controller
 {
 
-    private function error(string $method, Exception $e, string $message = null)
-    {
-        $log = $method . ' ' . ($message ?? $e->getMessage());
-        $this->logger->addRecord('error', $log);
-        return response()->json([
-            'status' => 'error',
-            'message' => $log
-        ], 500);
-    }
-
     public function positions()
     {
         try {
