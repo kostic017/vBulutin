@@ -1,4 +1,4 @@
-@php ($parents = $category->forums()->get())
+@php ($parents = $category->forums()->whereNull('parent_id')->get())
 
 <table class="main-table table-hover">
 
