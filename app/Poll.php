@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Poll extends Model
 {
@@ -13,12 +15,12 @@ class Poll extends Model
      */
     public $timestamps = false;
 
-    public function topic()
+    public function topic(): BelongsTo
     {
         return $this->belongsTo('App\Topic');
     }
 
-    public function answers()
+    public function answers(): HasMany
     {
         return $this->hasMany('App\PollAnswer');
     }

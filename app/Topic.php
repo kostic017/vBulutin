@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Topic extends Model
@@ -21,14 +22,14 @@ class Topic extends Model
 
     public function lastPost(): Post
     {
-        return $this->posts()->orderBy('updated_at', 'desc')->first();
+        return $this->posts()->orderBy('created_at', 'desc')->first();
     }
 
     public function readStatus(): string
     {
         return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc.read_status') ||
-        ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->get()->count() ?
-        'old' : 'new';
+            ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->get()->count() ?
+                'old' : 'new';
     }
 
     public function forum(): BelongsTo
@@ -51,7 +52,7 @@ class Topic extends Model
         return $this->hasMany('App\Post');
     }
 
-    public function readers()
+    public function readers(): BelongsToMany
     {
         return $this->belongsToMany('App\User', 'read_topics');
     }

@@ -57,15 +57,20 @@ class CreateController extends DashboardController
 
         try {
             $topic = Topic::findOrFail($topic);
+            $post = $topic->lastPost();
 
-            $post = new Post;
-            $post->content = $request->content;
-            $post->topic_id = $topic->id;
-            $post->user_id = Auth::id();
-            $post->save();
+            if (Auth::id() === $post->user()->firstOrFail()->id) {
+                $post->content .= "\n\n[b]========== DOPUNA " . \Carbon::now()->toDateTimeString() . "==========[/b]\n\n" . $request->content;
+                $post->save();
+            } else {
+                $post = new Post;
+                $post->content = $request->content;
+                $post->topic_id = $topic->id;
+                $post->user_id = Auth::id();
+                $post->save();
+            }
 
             $topic->touch();
-
             return redirect(route('public.topic', ['topic' => $topic->slug]) . '#post-' . $post->id);
         } catch (ModelNotFoundException $e) {
             throw new UnexpectedException($e);

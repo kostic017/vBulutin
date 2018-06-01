@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->text('content');
             $table->integer('topic_id');
             $table->integer('user_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
             $table->softDeletes();
         });
     }
