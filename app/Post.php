@@ -16,6 +16,15 @@ class Post extends Model
      */
     public $timestamps = false;
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at'
+    ];
+
     public function topic(): BelongsTo
     {
         return $this->belongsTo('App\Topic');

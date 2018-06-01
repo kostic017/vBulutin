@@ -87,9 +87,9 @@ class Forum extends Model
     {
         if ($lastTopic = $forum->topics()->orderBy('updated_at', 'desc')->first()) {
             $topicLastPost = $lastTopic->lastPost();
-            if ($lastPost) {
-                $lastPost = ($lastPost->updated_at->lt($topicLastPost->updated_at)) ? $topicLastPost : $lastPost;
-            } else {
+            if (!$lastPost) {
+                $lastPost = $topicLastPost;
+            } elseif ($lastPost->created_at->lt($topicLastPost->created_at)) {
                 $lastPost = $topicLastPost;
             }
         }

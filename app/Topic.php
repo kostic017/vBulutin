@@ -3,9 +3,7 @@
 namespace App;
 
 use Auth;
-
 use Carbon\Carbon;
-
 use App\Exceptions\UnexpectedException;
 
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +20,29 @@ class Topic extends Model
 
     public function lastPost(): Post
     {
-        return $this->posts()->orderBy('created_at', 'desc')->first();
+        try {
+            return $this->posts()->orderBy('created_at', 'desc')->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            throw new UnexpectedException($e);
+        }
+    }
+
+    public function firstPost(): Post
+    {
+        try {
+            return $this->posts()->orderBy('created_at', 'asc')->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            throw new UnexpectedException($e);
+        }
+    }
+
+    public function starter(): User
+    {
+        try {
+            return $this->firstPost()->user()->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            throw new UnexpectedException($e);
+        }
     }
 
     public function readStatus(): string

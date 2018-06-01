@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use Auth;
+use Validator;
 
 use App\User;
+use App\Topic;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
 class EditController extends DashboardController
@@ -30,5 +33,23 @@ class EditController extends DashboardController
                 'message' => 'Morate biti prijavljeni da bi videli ovu stranicu.'
             ]);
         }
+    }
+
+    public function topicTitle(Request $request, string $topicSlug): RedirectResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $topic = Topic::where('slug', $topicSlug)->firstOrFail();
+        $topic->title = $request->title;
+        $topic->slug = unique_slug($topic->title, $topic->id);
+        $topic->save();
+
+        return redirect(route('public.topic', ['topic' => $topic->slug]));
     }
 }

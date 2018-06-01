@@ -3,6 +3,18 @@
 @section('content')
     @include('public.includes.topbox')
 
+    @if (Auth::check() && (Auth::user()->id === $self->starter()->id))
+        <a href="#" id="edittitle">Izmeni naslov</a>
+        <form id="edittitle-form" action="{{ route('public.topic.title', ['topic' => $self->slug]) }}" method="post" class="m-2" style="display: none;">
+            {{ csrf_field() }}
+            <div class="form-group d-flex flex-wrap">
+                <label for="title" class="sr-only">Novi naslov</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ old('title') ?? $self->title }}">
+                <button type="submit" class="ml-1 btn btn-success">Izmeni</button>
+            </div>
+        </form>
+    @endif
+
     @foreach ($posts as $post)
         @php ($user = $post->user()->first())
 

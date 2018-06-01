@@ -17,6 +17,11 @@ $(function () {
         form.submit();
     });
 
+    $("#edittitle").on("click", function(event) {
+        event.preventDefault();
+        $("#edittitle-form").toggle();
+    });
+
     $(".editpost").on("click", function (event) {
         event.preventDefault();
 

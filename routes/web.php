@@ -33,6 +33,7 @@ Route::group(['prefix' => '/'], function () {
 
     // edit
     Route::get('profile/{profile}/edit', 'Frontend\EditController@profile')->name('public.profile.edit');
+    Route::post('topic/{topic}/title', 'Frontend\EditController@topicTitle')->name('public.topic.title');
 
     // update
     Route::get('profile/{profile}/update', 'Frontend\UpdateController@profile')->name('public.profile.update');

@@ -29,7 +29,8 @@ function validate_captcha(string $response, string $ip): bool
     return $result->success;
 }
 
-function file_get_contents_curl(string $url): string {
+function file_get_contents_curl(string $url): string
+{
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
@@ -40,7 +41,8 @@ function file_get_contents_curl(string $url): string {
     return $data;
 }
 
-function unique_slug(string $title, string $id): string {
+function unique_slug(string $title, string $id): string
+{
     return str_slug($title) . "." . $id;
 }
 
