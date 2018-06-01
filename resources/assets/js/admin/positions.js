@@ -63,15 +63,15 @@ function positions() {
         });
 
         const overlay = $("#overlay");
-        overlay.removeClass('d-none');
+        overlay.show();
         overlay.fitText();
 
         $.post('/ajax/positions', { data }, function () {
             toastr.success($("span[data-key='admin.positions-success']").text());
-            overlay.addClass('d-none');
+            overlay.hide();
         }).fail(function () {
             toastr.error($("span[data-key='generic.error']").text());
-            overlay.addClass('d-none');
+            overlay.hide();
         });
 
     });

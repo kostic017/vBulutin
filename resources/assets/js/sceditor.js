@@ -13,7 +13,7 @@ function initSceditor() {
         }
     });
 
-    sceditor.create(document.querySelector(".sceditor"), {
+    sceditor.create(document.querySelector("#sceditor"), {
         width: "100%",
         height: "400px",
         format: "bbcode",

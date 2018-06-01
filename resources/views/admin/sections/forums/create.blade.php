@@ -56,8 +56,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description">{{ __('db.description') }}</label>
-                        <textarea class="sceditor" name="description" id="description">{{ old('description') }}</textarea>
+                        <label for="sceditor">{{ __('db.description') }}</label>
+                        <textarea id="sceditor" name="description">{{ old('description') }}</textarea>
                     </div>
 
                     <div class="form-group">

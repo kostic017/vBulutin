@@ -53,8 +53,6 @@ Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
 });
 
 Route::group(['prefix' => '/ajax'], function () {
-    Route::get('/{table}/{column}/{order}/sort', 'AjaxController@sort')->name('ajax.sort');
-
-    Route::post('/positions/save', 'AjaxController@positions')->name('ajax.positions');
-    Route::post('/getParentCategory', 'AjaxController@getParentCategory')->name('ajax.getParentCategory');
+    Route::post('quote', 'AjaxController@quote')->name('ajax.quote');
+    Route::post('positions/save', 'AjaxController@positions')->name('ajax.positions');
 });

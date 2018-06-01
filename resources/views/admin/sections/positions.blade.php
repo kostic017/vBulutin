@@ -11,7 +11,7 @@
 @stop
 
 @section('content')
-    @include('admin.includes.overlay')
+    @include('includes.overlay')
 
     <div class="positioning-buttons">
         <div>

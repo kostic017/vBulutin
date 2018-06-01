@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Session;
 use Exception;
 
+use App\User;
+use App\Post;
 use App\Forum;
 use App\Category;
-use App\Helpers\Common\Functions;
 use App\Exceptions\UnexpectedException;
-use App\Exceptions\SlugNotFoundException;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 
 class AjaxController extends Controller
 {
@@ -49,6 +45,18 @@ class AjaxController extends Controller
             }
         } catch (Exception $e) {
             throw new UnexpectedException($e);
+        }
+    }
+
+    public function quote()
+    {
+        try {
+            $postId = request('postId');
+            $post = Post::select('content', 'user_id')->findOrFail($postId);
+            $user = User::select('username')->findOrFail($post->user_id);
+            return "[quote={$user->username}]{$post->content}[/quote]";
+        } catch (ModelNotFoundException $e) {
+            throw new IdNotFoundException($e);
         }
     }
 

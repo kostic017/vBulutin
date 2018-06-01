@@ -94,6 +94,21 @@
         border-top: 1px solid $bc-main;
     }
 
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+
+        ul {
+            display: flex;
+            @include unstyle-list;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            @include margins-but(last, right, $m-main);
+        }
+    }
 }
 
 

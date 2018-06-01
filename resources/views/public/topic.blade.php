@@ -30,8 +30,17 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end">
-                <a href="#top" class="back2top" title="Top">Top</a>
+            <div class="actions">
+                <ul>
+                    @auth
+                        @if (Auth::id() == $user->id)
+                            <li><a href="#" class="editpost" data-postid="{{ $post->id }}">Izmeni</a></li>
+                            <li><a href="#" class="deletepost" data-postid="{{ $post->id }}">Obriši</a></li>
+                        @endif
+                        <li><a href="#" class="quotepost" data-postid="{{ $post->id }}">Citiraj</a></li>
+                    @endauth
+                    <li><a href="#top" class="back2top" title="Top">Top</a></li>
+                </ul>
             </div>
 
         </div>
@@ -42,8 +51,8 @@
             @csrf
 
             <div class="form-group">
-                <label for="content" class="sr-only">Poruka</label>
-                <textarea class="sceditor" id="content" name="content">{{ old('description') }}</textarea>
+                <label for="sceditor" class="sr-only">Poruka</label>
+                <textarea id="sceditor" name="content">{{ old('content') }}</textarea>
             </div>
 
             <div class="form-group">
@@ -55,6 +64,7 @@
             </div>
         </form>
 
+        @include('includes.overlay')
         @include('includes.sceditor')
     @endauth
 @stop

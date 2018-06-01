@@ -116,8 +116,8 @@
             </div>
 
             <div class="form-group">
-                <label for="content" class="sr-only">Poruka</label>
-                <textarea class="sceditor" id="content" name="content">{{ old('description') }}</textarea>
+                <label for="sceditor" class="sr-only">Poruka</label>
+                <textarea id="sceditor" id="content" name="content">{{ old('description') }}</textarea>
             </div>
 
             <div class="form-group">
