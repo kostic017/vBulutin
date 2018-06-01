@@ -93,7 +93,7 @@ class CategoriesController extends SectionsController
         $category = new Category;
         $category->title = $request->title;
         $category->slug = str_slug($category->title);
-        $category->description = e($request->description);
+        $category->description = $request->description;
         $category->position = Category::max('position') + 1;
         $category->save();
 

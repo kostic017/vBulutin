@@ -169,7 +169,7 @@ abstract class SectionsController extends Controller
 
             $section->title = $request->title;
             $section->slug = unique_slug($section->title, $section->id);
-            $section->description = e($request->description);
+            $section->description = $request->description;
             $section->save();
 
             return redirect(route("{$this->table}.show", [$this->singular => $section->slug]))->with([

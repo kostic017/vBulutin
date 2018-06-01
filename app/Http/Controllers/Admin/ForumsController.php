@@ -110,7 +110,7 @@ class ForumsController extends SectionsController
         $forum = new Forum;
         $forum->title = $request->title;
         $forum->slug = str_slug($forum->title);
-        $forum->description = e($request->description);
+        $forum->description = $request->description;
         $forum->category_id = $request->category_id;
         $forum->parent_id = $request->parent_id ?? null;
 

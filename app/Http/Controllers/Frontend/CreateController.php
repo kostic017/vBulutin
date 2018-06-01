@@ -37,7 +37,7 @@ class CreateController extends DashboardController
         $topic->save();
 
         $post = new Post;
-        $post->content = e($request->content);
+        $post->content = $request->content;
         $post->topic_id = $topic->id;
         $post->user_id = Auth::id();
         $post->save();
@@ -59,7 +59,7 @@ class CreateController extends DashboardController
             $topic = Topic::findOrFail($topic);
 
             $post = new Post;
-            $post->content = e($request->content);
+            $post->content = $request->content;
             $post->topic_id = $topic->id;
             $post->user_id = Auth::id();
             $post->save();
