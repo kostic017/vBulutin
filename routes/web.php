@@ -34,6 +34,7 @@ Route::group(['prefix' => '/'], function () {
     // edit
     Route::get('profile/{profile}/edit', 'Frontend\EditController@profile')->name('public.profile.edit');
     Route::post('topic/{topic}/title', 'Frontend\EditController@topicTitle')->name('public.topic.title');
+    Route::post('topic/{topic}/solution', 'Frontend\EditController@topicSolution')->name('public.topic.solution');
 
     // update
     Route::get('profile/{profile}/update', 'Frontend\UpdateController@profile')->name('public.profile.update');

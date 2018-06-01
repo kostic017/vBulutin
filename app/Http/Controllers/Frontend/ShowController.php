@@ -87,7 +87,10 @@ class ShowController extends DashboardController
                 'self' => $topic,
                 'category' => $category,
                 'forum' => $forum,
-                'posts' => $topic->posts()->orderBy('created_at', 'asc')->get()
+                'lastPost' => $topic->lastPost(),
+                'topicStarter' => $topic->starter(),
+                'solution' => $topic->solution(),
+                'posts' => $topic->posts()->orderBy('created_at', 'asc')->get(),
             ];
 
             if ($forum->parent_id) {

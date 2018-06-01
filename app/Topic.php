@@ -18,31 +18,24 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class Topic extends Model
 {
 
+    public function solution(): ?Post
+    {
+        return Post::find($this->solution_id);
+    }
+
     public function lastPost(): Post
     {
-        try {
-            return $this->posts()->orderBy('created_at', 'desc')->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-            throw new UnexpectedException($e);
-        }
+        return $this->posts()->orderBy('created_at', 'desc')->firstOrFail();
     }
 
     public function firstPost(): Post
     {
-        try {
-            return $this->posts()->orderBy('created_at', 'asc')->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-            throw new UnexpectedException($e);
-        }
+        return $this->posts()->orderBy('created_at', 'asc')->firstOrFail();
     }
 
     public function starter(): User
     {
-        try {
-            return $this->firstPost()->user()->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-            throw new UnexpectedException($e);
-        }
+        return $this->firstPost()->user()->firstOrFail();
     }
 
     public function readStatus(): string
@@ -62,11 +55,6 @@ class Topic extends Model
         return $this->hasOne('App\Poll');
     }
 
-    public function solution(): HasOne
-    {
-        return $this->hasOne('App\Post', 'solution_id');
-    }
-
     public function posts(): HasMany
     {
         return $this->hasMany('App\Post');
@@ -79,14 +67,11 @@ class Topic extends Model
 
     public function watchers(): HasMany
     {
-        try {
-            // Ne mora da mergujemo sa posmatracima kategorije
-            // posto to vec radimo kad trazimo posmatrace foruma.
-            $forum = $this->forum()->firstOrFail();
-            $mine = getWatchers('topic', $this->id);
-            return $mine->merge($forum->getWatchers());
-        } catch (ModelNotFoundException $e) {
-            throw new UnexpectedException($e);
-        }
+        // Ne mora da mergujemo sa posmatracima kategorije
+        // posto to vec radimo kad trazimo posmatrace foruma.
+
+        $forum = $this->forum()->firstOrFail();
+        $mine = getWatchers('topic', $this->id);
+        return $mine->merge($forum->getWatchers());
     }
 }

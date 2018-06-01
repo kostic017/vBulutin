@@ -50,14 +50,10 @@ class AjaxController extends Controller
 
     public function quote()
     {
-        try {
-            $postId = request('postId');
-            $post = Post::select('content', 'user_id')->findOrFail($postId);
-            $user = User::select('username')->findOrFail($post->user_id);
-            return "[quote={$user->username}]{$post->content}[/quote]";
-        } catch (ModelNotFoundException $e) {
-            throw new IdNotFoundException($e);
-        }
+        $postId = request('postId');
+        $post = Post::select('content', 'user_id')->findOrFail($postId);
+        $user = User::select('username')->findOrFail($post->user_id);
+        return "[quote={$user->username}]{$post->content}[/quote]";
     }
 
 }

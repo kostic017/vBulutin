@@ -29,7 +29,6 @@ $(function () {
 
     $(".deletepost").on("click", function(event) {
         event.preventDefault();
-
     });
 
     $(".quotepost").on("click", function(event) {
@@ -51,4 +50,16 @@ $(function () {
         });
 
     });
+
+    $(".marksolution").on("click", function (event) {
+        event.preventDefault();
+        $("input[name=solution_id]").val($(this).attr("data-postId"));
+        $("#solutionform").submit();
+    });
+
+    $(".unmarksolution").on("click", function(event) {
+        event.preventDefault();
+        $("input[name=solution_id]").val("");
+        $("#solutionform").submit();
+    })
 });

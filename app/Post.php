@@ -35,11 +35,6 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function solution(): HasOne
-    {
-        return $this->hasOne('App\Topics', 'solution_id');
-    }
-
     public function reports(): BelongsToMany
     {
         return $this->belongsToMany('App\UserReport', 'user_reports');

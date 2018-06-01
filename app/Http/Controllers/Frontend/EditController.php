@@ -52,4 +52,13 @@ class EditController extends DashboardController
 
         return redirect(route('public.topic', ['topic' => $topic->slug]));
     }
+
+    public function topicSolution(Request $request, string $topicSlug): RedirectResponse
+    {
+        $topic = Topic::where('slug', $topicSlug)->firstOrFail();
+        $topic->solution_id = $request->solution_id;
+        $topic->save();
+
+        return redirect()->back();
+    }
 }

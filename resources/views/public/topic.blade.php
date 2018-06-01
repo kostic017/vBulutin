@@ -3,8 +3,14 @@
 @section('content')
     @include('public.includes.topbox')
 
-    @if (Auth::check() && (Auth::user()->id === $self->starter()->id))
+    @if (Auth::check() && (Auth::id() === $topicStarter->id))
+        <form id="solutionform" method="post" action="{{ route('public.topic.solution', ['topic' => $self->slug]) }}">
+            {{ csrf_field() }}
+            <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
+        </form>
+
         <a href="#" id="edittitle">Izmeni naslov</a>
+
         <form id="edittitle-form" action="{{ route('public.topic.title', ['topic' => $self->slug]) }}" method="post" class="m-2" style="display: none;">
             {{ csrf_field() }}
             <div class="form-group d-flex flex-wrap">
@@ -47,7 +53,16 @@
                     @auth
                         @if (Auth::id() == $user->id)
                             <li><a href="#" class="editpost" data-postid="{{ $post->id }}">Izmeni</a></li>
-                            <li><a href="#" class="deletepost" data-postid="{{ $post->id }}">Obriši</a></li>
+                            @if ($lastPost->id === $post->id)
+                                <li><a href="#" class="deletepost" data-postid="{{ $post->id }}">Obriši</a></li>
+                            @endif
+                        @endif
+                        @if (Auth::id() == $topicStarter->id)
+                            @if ($solution && $solution->id === $post->id)
+                                <li><a href="#" class="unmarksolution">Ipak ovo nije rešenje</a></li>
+                            @else
+                                <li><a href="#" class="marksolution" data-postid="{{ $post->id }}">Označi kao rešenje</a></li>
+                            @endif
                         @endif
                         <li><a href="#" class="quotepost" data-postid="{{ $post->id }}">Citiraj</a></li>
                     @endauth
