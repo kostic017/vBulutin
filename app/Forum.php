@@ -36,7 +36,7 @@ class Forum extends Model
 
     /**
      * Za svaku temu u forumu koja je azurirana u poslednjih
-     * GC_READ_STATUS dana proverava da li je procitana. Vraca
+     * GC_READ_STATUS_DAYS dana proverava da li je procitana. Vraca
      * 'new' ako ima neprocitanih tema, a 'old' ako su sve procitane.
      */
     public function readStatus(): string

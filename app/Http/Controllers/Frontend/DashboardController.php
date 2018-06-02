@@ -19,7 +19,7 @@ class DashboardController extends Controller
         view()->share('newestUser', User::newestUser());
         view()->share('userCount', User::all()->count());
 
-        $onlineUsersMinutes = config('custom.online_users_minutes');
+        $onlineUsersMinutes = config('custom.refresh_online_users_minutes');
 
         $visibleOnlineUsers = Activity::users($onlineUsersMinutes)
             ->join('users', 'sessions.user_id', 'users.id')

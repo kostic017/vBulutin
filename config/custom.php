@@ -6,14 +6,11 @@ return [
         'max' => env('PAGINATION_MAX', 100),
     ],
 
-    'gc' => [
-        'read_status' => env('GC_READ_STATUS', 30),
-    ],
-
     'captcha' => [
         'site_key' => env('CAPTCHA_SITE_KEY'),
         'secret_key' => env('CAPTCHA_SECRET_KEY'),
     ],
 
-    'online_users_minutes' => env('ONLINE_USERS_MINUTES', 5),
+    'gc_read_status_days' => env('GC_READ_STATUS_DAYS', 30),
+    'refresh_online_users_minutes' => env('REFRESH_ONLINE_USERS_MINUTES', 5),
 ];
