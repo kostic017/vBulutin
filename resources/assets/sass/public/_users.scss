@@ -28,6 +28,17 @@ select[name=perPage] {
     padding: 10px;
 }
 
+.show-profile {
+    section {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    dl {
+        margin-left: $m-main;
+    }
+}
+
 .avatar {
     &-small, &-medium, &-big {
         display: block;
