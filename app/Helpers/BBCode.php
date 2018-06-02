@@ -6,7 +6,7 @@ class BBCode {
     private static $parser = null;
     private static $emoticons = null;
 
-    private const EMOTICONS_FOLDER = 'lib/sceditor/emoticons/';
+    private const EMOTICONS_FOLDER = 'vendor/sceditor/emoticons/';
 
     public static function parse(string $bbcode): string
     {

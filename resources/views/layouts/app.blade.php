@@ -17,8 +17,8 @@
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
 
-        <link rel="stylesheet" href="{{ asset('lib/toastr/toastr.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('lib/fontawesome/css/fontawesome-all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/fontawesome-all.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
@@ -27,7 +27,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/script.js') }}"></script>
 
-        <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
+        <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
 
         @yield('scripts')
 

@@ -24,7 +24,7 @@ function initSceditor() {
         resizeMinHeight: "200px",
         resizeMaxHeight: "1000px",
         locale: $("html").attr("lang"),
-        emoticonsRoot: "/lib/sceditor/emoticons/",
+        emoticonsRoot: "/vendor/sceditor/emoticons/",
         emoticons: {
             dropdown: {
                 ":smile:": "smile.png",
@@ -74,6 +74,6 @@ function initSceditor() {
             enabled: true,
             addButton: true
         },
-        style: "/lib/sceditor/themes/content/default.min.css"
+        style: "/vendor/sceditor/themes/content/default.min.css"
     });
 }

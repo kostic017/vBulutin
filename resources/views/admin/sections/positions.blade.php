@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('lib/jquery-ui/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/jquery-ui/jquery-ui.min.css') }}">
 @stop
 
 @section('scripts')
-    <script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('lib/jquery-nestable/jquery.nestable.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-nestable/jquery.nestable.min.js') }}"></script>
     <script>$(() => { positions(); });</script>
 @stop
 
