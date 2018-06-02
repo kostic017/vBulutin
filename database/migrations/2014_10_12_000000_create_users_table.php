@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('email_token')->nullable();
             $table->boolean('is_confirmed')->default(false);
             $table->boolean('is_admin')->default(false);
-            $table->boolean('is_logged_in')->default(false);
             $table->boolean('is_invisible')->default(false);
             $table->boolean('to_logout')->default(false);
             $table->timestamp('registered_at')->useCurrent();
