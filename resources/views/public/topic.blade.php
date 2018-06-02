@@ -5,14 +5,13 @@
 
     @if (Auth::check() && (Auth::id() === $topicStarter->id))
         <form id="solutionform" method="post" action="{{ route('public.topic.solution', ['topic' => $self->slug]) }}">
-            {{ csrf_field() }}
+            @csrf
             <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
         </form>
 
         <a href="#" id="edittitle">Izmeni naslov</a>
-
         <form id="edittitle-form" action="{{ route('public.topic.title', ['topic' => $self->slug]) }}" method="post" class="m-2" style="display: none;">
-            {{ csrf_field() }}
+            @csrf
             <div class="form-group d-flex flex-wrap">
                 <label for="title" class="sr-only">Novi naslov</label>
                 <input type="text" id="title" name="title" class="form-control" value="{{ old('title') ?? $self->title }}">
@@ -20,6 +19,8 @@
             </div>
         </form>
     @endif
+
+    <p><a href="#scform">Pošalji odgovor</a></p>
 
     @foreach ($posts as $post)
         @php ($user = $post->user()->first())
@@ -74,20 +75,22 @@
     @endforeach
 
     @auth
-        <form action="{{ route('public.post.create', ['topic' => $self->id]) }}" method="post">
+        <form action="{{ route('public.post.create', ['topic' => $self->id]) }}" method="post" id="scform">
             @csrf
 
             <div class="form-group">
                 <label for="sceditor" class="sr-only">Poruka</label>
-                <textarea id="sceditor" name="content">{{ old('content') }}</textarea>
+                <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
+
+                @if ($errors->has('content'))
+                    <span class="invalid-feedback">
+                        <strong>{{ $errors->first('content') }}</strong>
+                    </span>
+                @endif
             </div>
 
-            <div class="form-group">
-                <div class="text-center">
-                    <button class="btn btn-success" type="submit">
-                        Pošalji odgovor
-                    </button>
-                </div>
+            <div class="form-group text-center">
+                <button class="btn btn-success" type="submit">Pošalji odgovor</button>
             </div>
         </form>
 

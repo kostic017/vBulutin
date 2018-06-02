@@ -24,7 +24,7 @@ class CreateController extends DashboardController
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->to(app('url')->previous(). '#scform')->withErrors($validator)->withInput();
         }
 
         $topic = new Topic;
@@ -52,7 +52,7 @@ class CreateController extends DashboardController
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->to(app('url')->previous(). '#scform')->withErrors($validator)->withInput();
         }
 
         try {

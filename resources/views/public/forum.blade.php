@@ -2,6 +2,7 @@
 
 @section('content')
     @include('public.includes.topbox')
+    <p><a href="#scform">Otvori temu</a></p>
 
     @if (!$children->isEmpty())
         <table class="main-table table-hover">
@@ -13,7 +14,6 @@
             </caption>
 
             @foreach ($children as $child)
-
                 <tr class="table-row">
 
                     <td class="icon">
@@ -47,9 +47,7 @@
                     </td>
 
                 </tr>
-
             @endforeach
-
         </table>
     @endif
 
@@ -103,7 +101,7 @@
     @endif
 
     @auth
-        <form action="{{ route('public.topic.create', ['forum' => $self->id]) }}" method="post">
+        <form action="{{ route('public.topic.create', ['forum' => $self->id]) }}" method="post" id="scform">
             @csrf
             <div class="form-group">
                 <label for="title">Naslov</label>
@@ -117,15 +115,17 @@
 
             <div class="form-group">
                 <label for="sceditor" class="sr-only">Poruka</label>
-                <textarea id="sceditor" id="content" name="content">{{ old('description') }}</textarea>
+                <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
+
+                @if ($errors->has('content'))
+                    <span class="invalid-feedback">
+                        <strong>{{ $errors->first('content') }}</strong>
+                    </span>
+                @endif
             </div>
 
-            <div class="form-group">
-                <div class="text-center">
-                    <button class="btn btn-success" type="submit">
-                        Otvori temu
-                    </button>
-                </div>
+            <div class="form-group text-center">
+                <button class="btn btn-success" type="submit">Otvori temu</button>
             </div>
         </form>
 
