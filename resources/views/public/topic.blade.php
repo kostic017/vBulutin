@@ -39,11 +39,10 @@
 
             <div class="d-flex flex-wrap">
                 <ul class="profile">
-                    <li><a href="">@avatar(medium)</a></li>
-                    <li><a href="" class="username-coloured">{{ $user->username }}</a></li>
-                    <li>Site Admin</li>
-                    <li><strong>Posts: </strong>{{ $user->posts()->get()->count() }}</li>
-                    <li><strong>Joined: </strong>{{ extractDate($user->registered_at) }}</li>
+                    <li><a href="{{ route('public.profile.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
+                    <li><a href="{{ route('public.profile.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
+                    <li><strong>Broj poruka: </strong>{{ $user->posts()->get()->count() }}</li>
+                    <li><strong>Pridružio: </strong>{{ extractDate($user->registered_at) }}</li>
                 </ul>
                 <div class="body">
                     <p class="author">
