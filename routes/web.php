@@ -43,7 +43,7 @@ Route::group(['prefix' => '/'], function () {
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
     Route::get('/', function () {
-        return view('admin.index');
+        return redirect(route('categories.index'));
     })->name('admin.index');
 
     Route::get('positions/', 'Admin\CategoriesController@positions')->name('admin.positions');

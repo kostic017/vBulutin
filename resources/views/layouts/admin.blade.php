@@ -16,11 +16,6 @@
             <div class="col-md-4 col-lg-3">
                 <nav>
                     <ul class="list-group">
-                        <li class="list-group-item {{ active_class(if_uri(['admin'])) }}">
-                            <a href="/admin/">{{ __('admin.home') }}</a>
-                        </li>
-                    </ul>
-                    <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/categories*')) }}">
                             <a href="{{ route('categories.index') }}">{{ __('admin.categories') }}</a>
                         </li>
