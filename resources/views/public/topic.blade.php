@@ -44,7 +44,7 @@
                         {!! BBCode::parse($post->content) !!}
                     </div>
                     <div class="signature">
-                        Some signature text
+                        {{ $user->profile()->first()->signature() }}
                     </div>
                 </div>
             </div>

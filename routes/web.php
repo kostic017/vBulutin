@@ -25,19 +25,19 @@ Route::group(['prefix' => '/'], function () {
     Route::get('topic/{topic}', 'Frontend\ShowController@topic')->name('public.topic');
     Route::get('forum/{forum}', 'Frontend\ShowController@forum')->name('public.forum');
     Route::get('category/{category}', 'Frontend\ShowController@category')->name('public.category');
-    Route::get('profile/{profile}/show', 'Frontend\ShowController@profile')->name('public.profile.show');
+    Route::get('profile/{username}/show', 'Frontend\ShowController@profile')->name('public.profile.show');
 
     // create & store
     Route::post('create/post/{topic}', 'Frontend\CreateController@post')->name('public.post.create');
     Route::post('create/topic/{forum}', 'Frontend\CreateController@topic')->name('public.topic.create');
 
     // edit
-    Route::get('profile/{profile}/edit', 'Frontend\EditController@profile')->name('public.profile.edit');
+    Route::get('profile/{username}/edit', 'Frontend\EditController@profile')->name('public.profile.edit');
     Route::post('topic/{topic}/title', 'Frontend\EditController@topicTitle')->name('public.topic.title');
     Route::post('topic/{topic}/solution', 'Frontend\EditController@topicSolution')->name('public.topic.solution');
 
     // update
-    Route::get('profile/{profile}/update', 'Frontend\UpdateController@profile')->name('public.profile.update');
+    Route::post('profile/{username}/update', 'Frontend\UpdateController@profile')->name('public.profile.update');
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {

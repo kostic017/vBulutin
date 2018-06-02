@@ -13,11 +13,17 @@ use Illuminate\Http\RedirectResponse;
 
 class EditController extends DashboardController
 {
-    public function profile(string $profile): RedirectResponse
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $username
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function profile(string $username)
     {
         if (Auth::check()) {
             try {
-                $user = User::where('username', $profile)->firstOrFail();
+                $user = User::where('username', $username)->firstOrFail();
                 if (Auth::id() == $user->id || Auth::user()->is_admin) {
                     return view('public.editprofile')
                         ->with('user', $user)

@@ -23,6 +23,7 @@ class ProfilesTable extends Migration
             $table->string('residence')->nullable();
             $table->string('birthplace')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('signature')->nullable();
         });
     }
 

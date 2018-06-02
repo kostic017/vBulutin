@@ -61,12 +61,13 @@ function extractDate(string $datetime): string
     return Carbon::parse($datetime)->format('d.m.Y');
 }
 
-function isNotEmpty(string $str): bool
+function isNotEmpty(?string $str): bool
 {
+    if ($str === null) return false;
     return strlen(trim($str)) > 0;
 }
 
-function isEmpty(string $str): bool {
+function isEmpty(?string $str): bool {
     return !isNotEmpty($str);
 }
 

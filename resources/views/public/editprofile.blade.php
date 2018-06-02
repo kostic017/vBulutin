@@ -1,7 +1,18 @@
 @extends('layouts.public')
 
 @section('content')
-    <form class="profile">
+    @if (!$errors->isEmpty())
+        <div class="alert alert-danger" role="alert">
+            <ul class="m-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form class="profile" action="{{ route('public.profile.update', ['username' => $user->username]) }}" method="post">
+        @csrf
 
         <fieldset>
             <div class="form-group">
@@ -10,9 +21,9 @@
                 <small id="usernameHelp" class="form-text text-muted">Isključivo administrator može da promeni.</small>
             </div>
             <div class="form-group form-check">
-                <input type="hidden" name="invisible" value="0">
-                <input type="checkbox" name="invisible" class="form-check-input" id="invisible" {{ $user->is_invisible ? 'checked' : '' }}>
-                <label class="form-check-label" for="invisible">Hoću da sam nevidljiv.</label>
+                <input type="hidden" name="is_invisible" value="0">
+                <input type="checkbox" name="is_invisible" class="form-check-input" id="is_invisible" {{ $user->is_invisible ? 'checked' : '' }}>
+                <label class="form-check-label" for="is_invisible">Hoću da sam nevidljiv.</label>
             </div>
             <div class="form-group">
                 <label for="email">Email adresa</label>
@@ -24,13 +35,13 @@
                 <small id="passwordCurrentHelp" class="form-text text-muted">Morate da upišete svoju trenutnu šifru ako menjate email ili šifru.</small>
             </div>
             <div class="form-group">
-                <label for="username">Nova šifra</label>
+                <label for="password">Nova šifra</label>
                 <input type="password" id="password" name="password" class="form-control" aria-describedby="passwordHelp">
                 <small id="passwordHelp" class="form-text text-muted">Ako hoćete novu šifru upišite je ovde i u polje ispod.</small>
             </div>
             <div class="form-group">
-                <label for="username">Potvrdi šifru</label>
-                <input type="password" id="password-confirm" name="password_confirmation" class="form-control">
+                <label for="password-confirm">Potvrdi šifru</label>
+                <input type="password" id="password-confirm" name="password_confirm" class="form-control">
             </div>
         </fieldset>
 
@@ -38,26 +49,26 @@
             <div class="form-group">
                 <label for="sex">Pol</label>
                 <select class="form-control" name="sex" id="sex">
-                    <option value="m">Мuški</option>
-                    <option value="f">Ženski</option>
-                    <option value="s">Trandža</option>
+                    <option value="m" {{ $profile->sex === 'm' ? 'selected' : '' }}>Мuški</option>
+                    <option value="f" {{ $profile->sex === 'f' ? 'selected' : '' }}>Ženski</option>
+                    <option value="s" {{ $profile->sex === 's' ? 'selected' : '' }}>Trandža</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="birthday">Datum rođenja</label>
-                <input type="date" id="birthday" name="birthday" class="form-control">
+                <input type="date" id="birthday" name="birthday_on" class="form-control" value="{{ $profile->birthday_on }}">
             </div>
             <div class="form-group">
                 <label for="birthplace">Mesto rođenja</label>
-                <input type="text" id="birthplace" name="birthplace" class="form-control">
+                <input type="text" id="birthplace" name="birthplace" class="form-control" value="{{ $profile->birthplace }}">
             </div>
             <div class="form-group">
                 <label for="residence">Prebivalište</label>
-                <input type="text" id="residence" name="residence" class="form-control">
+                <input type="text" id="residence" name="residence" class="form-control" value="{{ $profile->residence }}">
             </div>
             <div class="form-group">
                 <label for="job">Zanimanje</label>
-                <input type="text" id="job" name="job" class="form-control">
+                <input type="text" id="job" name="job" class="form-control" value="{{ $profile->job }}">
             </div>
             <div class="form-group">
                 <label for="avatar">Profilna slika</label>
@@ -66,17 +77,16 @@
                 @endif
                 <input type="text" id="avatar" name="avatar" class="form-control" value="{{ $profile->avatar }}" placeholder="URL do slike...">
             </div>
-
         </fieldset>
 
         <fieldset>
             <div class="form-group">
                 <label for="about">O meni</label>
-                <textarea class="form-control" id="about" rows="3"></textarea>
+                <textarea class="form-control" name="about" id="about" rows="3">{{ $profile->about }}</textarea>
             </div>
             <div class="form-group">
                 <label for="signature">Potpis</label>
-                <textarea class="form-control" id="signature" rows="3"></textarea>
+                <textarea class="form-control" name="signature" id="signature" rows="3">{{ $profile->signature }}</textarea>
             </div>
         </fieldset>
 
