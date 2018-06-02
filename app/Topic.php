@@ -40,7 +40,7 @@ class Topic extends Model
 
     public function readStatus(): string
     {
-        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc.read_status') ||
+        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days') ||
             ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->get()->count() ?
                 'old' : 'new';
     }

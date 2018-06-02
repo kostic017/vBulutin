@@ -55,7 +55,7 @@ class Forum extends Model
 
     private function readStatusTopics(Forum $forum): Collection
     {
-        $expDate = Carbon::now()->subDays((int)config('custom.gc.read_status'));
+        $expDate = Carbon::now()->subDays((int)config('custom.gc_read_status_days'));
         return $forum->topics()->where('updated_at', '>', $expDate)->get();
     }
 
