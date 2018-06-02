@@ -20,7 +20,17 @@
         </form>
     @endif
 
-    <p><a href="#scform">Pošalji odgovor</a></p>
+    <div class="topbox-actions">
+        <p><a href="#scform">Pošalji odgovor</a></p>
+        @if (Auth::user()->is_admin)
+            <form action="{{ route('public.topic.togglelock', ['slug' => $self->slug]) }}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
+                    {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} temu
+                </button>
+            </form>
+        @endif
+    </div>
 
     @foreach ($posts as $post)
         @php ($user = $post->user()->first())
@@ -44,7 +54,7 @@
                         {!! BBCode::parse($post->content) !!}
                     </div>
                     <div class="signature">
-                        {{ $user->profile()->first()->signature() }}
+                        {{ $user->profile()->first()->signature }}
                     </div>
                 </div>
             </div>
@@ -74,27 +84,29 @@
         </div>
     @endforeach
 
-    @auth
-        <form action="{{ route('public.post.create', ['topic' => $self->id]) }}" method="post" id="scform">
-            @csrf
+    @if (!$self->is_locked)
+        @auth
+            <form action="{{ route('public.post.create', ['topic' => $self->id]) }}" method="post" id="scform">
+                @csrf
 
-            <div class="form-group">
-                <label for="sceditor" class="sr-only">Poruka</label>
-                <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
+                <div class="form-group">
+                    <label for="sceditor" class="sr-only">Poruka</label>
+                    <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
 
-                @if ($errors->has('content'))
-                    <span class="invalid-feedback">
-                        <strong>{{ $errors->first('content') }}</strong>
-                    </span>
-                @endif
-            </div>
+                    @if ($errors->has('content'))
+                        <span class="invalid-feedback">
+                            <strong>{{ $errors->first('content') }}</strong>
+                        </span>
+                    @endif
+                </div>
 
-            <div class="form-group text-center">
-                <button class="btn btn-success" type="submit">Pošalji odgovor</button>
-            </div>
-        </form>
+                <div class="form-group text-center">
+                    <button class="btn btn-success" type="submit">Pošalji odgovor</button>
+                </div>
+            </form>
 
-        @include('includes.overlay')
-        @include('includes.sceditor')
-    @endauth
+            @include('includes.overlay')
+            @include('includes.sceditor')
+        @endauth
+    @endif
 @stop

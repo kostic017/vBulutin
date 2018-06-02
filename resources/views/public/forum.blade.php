@@ -2,7 +2,18 @@
 
 @section('content')
     @include('public.includes.topbox')
-    <p><a href="#scform">Otvori temu</a></p>
+
+    <div class="topbox-actions">
+        <p><a href="#scform">Otvori temu</a></p>
+        @if (Auth::user()->is_admin)
+            <form action="{{ route('public.forum.togglelock', ['slug' => $self->slug]) }}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
+                    {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} forum
+                </button>
+            </form>
+        @endif
+    </div>
 
     @if (!$children->isEmpty())
         <table class="main-table table-hover">
@@ -100,35 +111,37 @@
         </table>
     @endif
 
-    @auth
-        <form action="{{ route('public.topic.create', ['forum' => $self->id]) }}" method="post" id="scform">
-            @csrf
-            <div class="form-group">
-                <label for="title">Naslov</label>
-                <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
-                @if ($errors->has('title'))
-                    <span class="invalid-feedback" style="display:block">
-                        <strong>{{ $errors->first('title') }}</strong>
-                    </span>
-                @endif
-            </div>
+    @if (!$self->is_locked)
+        @auth
+            <form action="{{ route('public.topic.create', ['forum' => $self->id]) }}" method="post" id="scform">
+                @csrf
+                <div class="form-group">
+                    <label for="title">Naslov</label>
+                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
+                    @if ($errors->has('title'))
+                        <span class="invalid-feedback" style="display:block">
+                            <strong>{{ $errors->first('title') }}</strong>
+                        </span>
+                    @endif
+                </div>
 
-            <div class="form-group">
-                <label for="sceditor" class="sr-only">Poruka</label>
-                <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
+                <div class="form-group">
+                    <label for="sceditor" class="sr-only">Poruka</label>
+                    <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
 
-                @if ($errors->has('content'))
-                    <span class="invalid-feedback">
-                        <strong>{{ $errors->first('content') }}</strong>
-                    </span>
-                @endif
-            </div>
+                    @if ($errors->has('content'))
+                        <span class="invalid-feedback">
+                            <strong>{{ $errors->first('content') }}</strong>
+                        </span>
+                    @endif
+                </div>
 
-            <div class="form-group text-center">
-                <button class="btn btn-success" type="submit">Otvori temu</button>
-            </div>
-        </form>
+                <div class="form-group text-center">
+                    <button class="btn btn-success" type="submit">Otvori temu</button>
+                </div>
+            </form>
 
-        @include('includes.sceditor')
-    @endauth
+            @include('includes.sceditor')
+        @endauth
+    @endif
 @stop

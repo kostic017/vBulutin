@@ -39,6 +39,8 @@ Route::group(['prefix' => '/'], function () {
     // update
     Route::post('profile/{username}/update', 'Frontend\UpdateController@profile')->name('public.profile.update');
     Route::post('user/{username}/toggleban', 'Frontend\UpdateController@toggleBan')->name('public.user.toggleban');
+    Route::post('forum/{slug}/togglelock', 'Frontend\UpdateController@toggleLockForum')->name('public.forum.togglelock');
+    Route::post('topic/{slug}/togglelock', 'Frontend\UpdateController@toggleLockTopic')->name('public.topic.togglelock');
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {

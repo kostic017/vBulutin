@@ -6,6 +6,8 @@ use Auth;
 use Hash;
 
 use App\User;
+use App\Topic;
+use App\Forum;
 use App\Notifications\ConfirmEmail;
 
 use Illuminate\Http\Request;
@@ -18,6 +20,22 @@ class UpdateController extends DashboardController
         $user = User::where('username', $username)->firstOrFail();
         $user->is_banned = !$user->is_banned;
         $user->save();
+        return redirect()->back();
+    }
+
+    public function toggleLockTopic(string $slug): RedirectResponse
+    {
+        $topic = Topic::where('slug', $slug)->firstOrFail();
+        $topic->is_locked = !$topic->is_locked;
+        $topic->save();
+        return redirect()->back();
+    }
+
+    public function toggleLockForum(string $slug): RedirectResponse
+    {
+        $forum = Forum::where('slug', $slug)->firstOrFail();
+        $forum->is_locked = !$forum->is_locked;
+        $forum->save();
         return redirect()->back();
     }
 
