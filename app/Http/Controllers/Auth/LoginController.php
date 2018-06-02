@@ -82,7 +82,7 @@ class LoginController extends Controller
         }
 
         if ($user = User::where($this->username(), $request[$this->username()])->first()) {
-            if ($user->is_confirmed) {
+            if (isEmpty($user->email_token)) {
                 if ($this->attemptLogin($request)) {
                     return $this->sendLoginResponse($request);
                 }
@@ -94,7 +94,7 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return ($user && !$user->is_confirmed) ? $this->sendFailedLoginResponseEmail($request) :
+        return ($user && isNotEmpty($user->email_token)) ? $this->sendFailedLoginResponseEmail($request) :
             $this->sendFailedLoginResponse($request);
     }
 

@@ -18,13 +18,24 @@ class LogoutUser
     {
         $user = Auth::user();
 
-        if ($user && $user->to_logout) {
+        if ($user && ($user->to_logout || $user->is_banned)) {
+            $message = "";
+
+            if ($user->to_logout) {
+                $message = "Morate da se ponovo ulogojete.";
+                $user->to_logout = false;
+                $user->save();
+            }
+
+            if ($user->is_banned) {
+                $message = "Banovani ste.";
+            }
+
             Auth::logout();
-
-            $user->to_logout = false;
-            $user->save();
-
-            return redirect(route('login'));
+            return redirect(route('login'))->with([
+                'alert-type' => 'info',
+                'message' => $message,
+            ]);
         }
 
         return $next($request);

@@ -34,7 +34,7 @@ class EditController extends DashboardController
                 abort('404');
             }
         } else {
-            return redirect('/')->with([
+            return redirect()->back()->with([
                 'alert-type' => 'info',
                 'message' => 'Morate biti prijavljeni da bi videli ovu stranicu.'
             ]);

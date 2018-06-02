@@ -22,7 +22,6 @@ $factory->define(App\User::class, function (Faker $faker) {
 
         'email' => $faker->unique()->safeEmail,
         'email_token' => $confirmed ? null : str_random(10),
-        'is_confirmed' => $confirmed,
 
         'is_invisible' => $faker->randomElement([true, false]),
 

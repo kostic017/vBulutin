@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('email');
             $table->string('email_token')->nullable();
-            $table->boolean('is_confirmed')->default(false);
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_invisible')->default(false);
+            $table->boolean('is_banned')->default(false);
             $table->boolean('to_logout')->default(false);
             $table->timestamp('registered_at')->useCurrent();
             $table->timestamp('last_login_at')->nullable();

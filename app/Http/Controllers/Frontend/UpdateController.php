@@ -13,6 +13,14 @@ use Illuminate\Http\RedirectResponse;
 
 class UpdateController extends DashboardController
 {
+    public function toggleBan(string $username): RedirectResponse
+    {
+        $user = User::where('username', $username)->firstOrFail();
+        $user->is_banned = !$user->is_banned;
+        $user->save();
+        return redirect()->back();
+    }
+
     public function profile(Request $request, string $profile): RedirectResponse
     {
         $errors = [];
@@ -30,7 +38,6 @@ class UpdateController extends DashboardController
             } else {
                 if ($user->email !== $request->email) {
                     $user->to_logout = true;
-                    $user->is_confirmed = false;
                     $user->email = $request->email;
                     $user->email_token = str_random(30);
                     $user->notify(new ConfirmEmail($user->email_token));

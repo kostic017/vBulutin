@@ -50,7 +50,6 @@ class DatabaseSeeder extends Seeder
         $users[] = factory(User::class, 1)->create([
             'username' => 'zoki',
             'email_token' => null,
-            'is_confirmed' => true,
             'is_admin' => true,
         ])->first();
 

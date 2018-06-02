@@ -134,7 +134,6 @@ class RegisterController extends Controller
     {
         try {
             $user = User::where('email_token', $token)->firstOrFail();
-            $user->is_confirmed = true;
             $user->email_token = null;
             $user->save();
             return redirect(route('login'))->with([
