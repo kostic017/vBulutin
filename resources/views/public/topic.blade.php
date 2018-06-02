@@ -3,7 +3,7 @@
 @section('content')
     @include('public.includes.topbox')
 
-    @if (Auth::check() && (Auth::id() === $topicStarter->id))
+    @if (Auth::check() && (Auth::user()->is_admin || Auth::id() === $topicStarter->id))
         <form id="solutionform" method="post" action="{{ route('public.topic.solution', ['topic' => $self->slug]) }}">
             @csrf
             <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
@@ -62,13 +62,13 @@
             <div class="actions">
                 <ul>
                     @auth
-                        @if (Auth::id() == $user->id)
+                        {{-- @if (Auth::id() == $user->id)
                             <li><a href="#" class="editpost" data-postid="{{ $post->id }}">Izmeni</a></li>
                             @if ($lastPost->id === $post->id)
                                 <li><a href="#" class="deletepost" data-postid="{{ $post->id }}">Obriši</a></li>
                             @endif
-                        @endif
-                        @if (Auth::id() == $topicStarter->id)
+                        @endif --}}
+                        @if (Auth::user()->is_admin || Auth::id() == $topicStarter->id)
                             @if ($solution && $solution->id === $post->id)
                                 <li><a href="#" class="unmarksolution">Ipak ovo nije rešenje</a></li>
                             @else
