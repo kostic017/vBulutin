@@ -1,20 +1,34 @@
 # SimpleForumSoftware
-
-Projekat iz Web programiranja. Prva Laravel aplikacija. Bez nekih originalnih ideja.
+Projekat iz Web programiranja. Prva Laravel aplikacija. Bez nekih previše originalnih ideja.
 
 | ![publicarea](doc/publicarea.png) | ![adminarea](doc/adminarea.png) |
 |:---:|:---:|
-| Public Area | Admin Area |
+| Javni deo | Administratorski panel |
 
-## Projekat završen
+## O projektu
+Do sada sam implementirao neke najosnovnije funkcionalnosti forum softvera.
 
-Implementirao sam najosnovnije funkcionalnosti forum softvera i pritom ispunio sve uslove projekta.
+Pregled nekih od funkcionalnosti po grupama korisnika:
 
-### Šta je odrađeno
+ * Gosti
+    * Ograničeno kretanje po javnom delu
+    * Registracija i prijavljivanje na forum
+       * Potvrda mejl adrese
+       * Zaboravljena lozinka
+ * Registrovani korisnici
+    * Otvaranje novih tema
+    * Pregled korisničkih profila
+    * Odgovaranje na postojeće teme
+    * Izmena informacija o nalogu/profilu
+ * Administratori
+    * Banovanje korisnika
+    * Generisanje izveštaja
+    * Brisanje odgovora na teme
+    * Zaključavanje tema i foruma
+    * Izmena korisničkih informacija
+    * Administriranje kategorija i foruma
 
-* Puno toga
-
-### Šta je još bilo planirano
+### Šta bi još moglo da se ubaci
 
 * Glasanje ★
 * Ćaskanje
@@ -28,21 +42,43 @@ Implementirao sam najosnovnije funkcionalnosti forum softvera i pritom ispunio s
 * Prikazuj trenutnu aktivnost korisnika
 * Registracija putem društvenih mreža
 * Refaktorizacija
-  * Trenutno je sve zbrda-zdola sklopljeno kako bi projekat što pre bio završen.
+  * Sve je zbrda-zdola sklopljeno kako bi projekat što pre bio završen.
 * Praćenje IP adresa korisnika
   * Da se osiguramo da korisnik nema više od jednog naloga.
 * Moj, centralizovan, hosting
   -  Kao što nudi [Forumotion](https://www.forumotion.com/). Trenutno aplikaciju svako mora da skine i instalira na svom serveru.
 * Izmena poruka ★
-  * Verzije poruka se čuvaju u posebnoj tabeli. Admini imaju opciju da urade undo (posle ne može redo).
+  * Sve verzije poruka se čuvaju u posebnoj tabeli. Te verzije su vidljive samo moderatorima i korisniku koji je poruku poslao. Postoji opcija da se poruka vrati u pređašnje stanje.
 * Lajkovanje/dislajkovanje poruka ★
   * Poruke sa negativnim rejtingom se sakrivaju (korisnik može da prikaže poruku ako želi). Korisnici koji daju loše rejtinge jer nemaju pametnija posla gube mogućnost da ostavljaju rejting. Admin može da poništi rejting ako proceni da nije validan.
 
-★ *Sve je pripremljeno (baza i ostalo), ali ipak nije implementirano.*
+★ *Sve je pripremljeno, ali ipak nije implementirano.*
 
 ## Instalacija
+### Localhost
+1. Instalirati:
+    * [Node JS](https://nodejs.org/en/)
+    * [Composer](https://getcomposer.org/download/)
+    * PHP i bazu podataka
+        * [Laragon Mint](https://laragon.org/download/index.html)
+1. Kreirati novu bazu podataka.
+1. Registrovati [Invisible reCAPTCHA](https://www.google.com/recaptcha/admin).
+    * Dobija se `CAPTCHA_SITE_KEY` i `CAPTCHA_SECRET_KEY`.
+1. Klonirati ili preuzeti ovaj Git repozitorijum.
+1. U komandoj liniji izvršiti slećede naredbe:
+    * `npm install`
+    * `composer install`
+    * `php artisan key:generate`
+        * Dobija se `APP_KEY`.
+1. Preimenovati `.env.example` u `.env` i podesiti sve kako treba.
+1. Izvršiti `php artisan migrate` kako bi se kreirale potrebne tabele u bazi.
+1. Izvršiti `php artisan serve` kako bi sajt bio vidljiv računarima u lokalnoj mreži.
 
-TODO
+## Testiranje
+
+Napravio sam gomilu sidova koji omogućavaju da se baza popuni nasumično generisanim podacima. Pokreću se naredbom `php artisan db:seed`.
+
+Kao mejl server koristio sam [MailTrap](https://mailtrap.io/), lažan SMTP server namenjen upravo testiranju mejl poruka.
 
 ## Vendor
 
@@ -59,3 +95,4 @@ TODO
 
 ## Baza podataka
 ![model](doc/model.png)
+
