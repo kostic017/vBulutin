@@ -4,6 +4,14 @@
     display: block;
 }
 
+@mixin no-text {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+
 @mixin unstyle-list {
     margin: 0;
     @include list-unstyled;

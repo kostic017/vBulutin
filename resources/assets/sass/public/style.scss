@@ -23,5 +23,5 @@
     border-radius: 100%;
     display: inline-block;
     background-image: url(/img/icon_back_top.gif);
-    @include text-hide;
+    @include no-text;
 }
