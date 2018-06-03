@@ -46,6 +46,17 @@ class CategoriesController extends SectionsController
     }
 
     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        return parent::destroy($id);
+    }
+
+    /**
      * Restore a soft-deleted model instance.
      *
      * @param  string  $id

@@ -55,9 +55,12 @@ Route::namespace('Back')
             Route::resource('forums', 'ForumsController');
             Route::resource('categories', 'CategoriesController');
 
+            Route::get('reports/', 'ReportsController@index')->name('reports.index');
             Route::get('positions/', 'CategoriesController@positions')->name('positions');
 
+
             Route::post('forums/{id}/restore', 'ForumsController@restore')->name('forums.restore');
+            Route::post('reports/{table}/generate', 'ReportsController@generate')->name('reports.generate');
             Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
         }
     );

@@ -6,7 +6,7 @@ Projekat iz Web programiranja. Bez nekih originalnih ideja. Prvi Laravel projeka
 |:---:|:---:|
 | Deo za javnost | Deo za administratore |
 
-## Proglašavam završenim
+## Projekat je završen
 
 Implementirao sam najosnovnije funkcionalnosti koje neki forum software treba da ima, a pritom sam ispunio sve uslove projekta.
 
@@ -46,25 +46,22 @@ TODO
 
 ## Vendor
 
-* [Faker](https://github.com/fzaninotto/Faker)
-* [Toastr](https://github.com/CodeSeven/toastr)
-* [FitText.js](https://github.com/davatron5000/FitText.js)
-* [SCEditor](https://github.com/samclarke/SCEditor)
-* [BBCode Parser](https://github.com/chriskonnertz/bbcode)
-* [Active for Laravel](https://github.com/letrunghieu/active)
-* [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
-* [JQueryUI Nestable](https://github.com/dbushell/Nestable)
-* [Laravel Online Users](https://github.com/thomastkim/laravel-online-users)
+* [fzaninotto](https://github.com/fzaninotto)/**[Faker](https://github.com/fzaninotto/Faker)**
+* [letrunghieu](https://github.com/letrunghieu)/**[active](https://github.com/letrunghieu/active)**
+* [CodeSeven](https://github.com/CodeSeven)/**[toastr](https://github.com/CodeSeven/toastr)**
+* [dbushell](https://github.com/dbushell)/**[Nestable](https://github.com/dbushell/Nestable)**
+* [samclarke](https://github.com/samclarke)/**[SCEditor](https://github.com/samclarke/SCEditor)**
+* [chriskonnertz](https://github.com/chriskonnertz)/**[bbcode](https://github.com/chriskonnertz/bbcode)**
+* [davatron5000](https://github.com/davatron5000)/**[FitText.js](https://github.com/davatron5000/FitText.js)**
+* [barryvdh](https://github.com/barryvdh)/**[laravel-debugbar](https://github.com/barryvdh/laravel-debugbar)**
+* [thomastkim](https://github.com/thomastkim)/**[laravel-online-users](https://github.com/thomastkim/laravel-online-users)**
+* [Jimmy-JS](https://github.com/Jimmy-JS)/**[laravel-report-generator](https://github.com/Jimmy-JS/laravel-report-generator)**
 
 ## Baza podataka
 ![model](doc/model.png)
 
 ## Istorijat
 
-1. Radio ne prateći MVC.
+1. Radio bez MVC framework-a.
 2. Pokušao da napravim svoj MVC framework.
 3. Skinuo Laravel i sve odradio ispočeteka.
-
-## TODO
-
-- Generisanje izvestaja (HTML, PDF, DOCX, XSLX, ...)

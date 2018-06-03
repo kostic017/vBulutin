@@ -4,7 +4,7 @@
     <script>$(() => { sectionsTable(); });</script>
 @stop
 
-@section("content")
+@section('content')
     <form id="index" action="{{ route("back.{$table}.index") }}" method="get"></form>
 
     <div class="admin-actions">

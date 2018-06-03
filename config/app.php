@@ -150,9 +150,11 @@ return [
         /*
          * Package Service Providers...
          */
+        Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
         Kim\Activity\ActivityServiceProvider::class,
+        Jimmyjs\ReportGenerator\ServiceProvider::class,
 
          /*
          * Application Service Providers...
