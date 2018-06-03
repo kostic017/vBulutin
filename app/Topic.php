@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Topic extends Model
 {
+    use SoftDeletes;
 
     public function solution(): ?Post
     {

@@ -5,6 +5,7 @@ Projekat iz Web programiranja. Bez nekih originalnih ideja. Prvi Laravel projeka
 | ![publicarea](doc/publicarea.png) | ![adminarea](doc/adminarea.png) |
 |:---:|:---:|
 | Deo za javnost | Deo za administratore |
+
 ## Proglašavam završenim
 
 Implementirao sam najosnovnije funkcionalnosti koje neki forum software treba da ima, a pritom sam ispunio sve uslove projekta.
@@ -13,6 +14,7 @@ Nešto što nije odrađeno, a bilo je planirano na početku:
 
 * *Glasanje*
 * Ćaskanje
+* *Moderatori*
 * *Višejezičnost*
 * Privatne poruke
 * Ko je gledao profil
@@ -21,8 +23,6 @@ Nešto što nije odrađeno, a bilo je planirano na početku:
 * *Praćenje tema, poruka i kategorija*
 * Prikazuj trenutnu aktivnost korisnika
 * Registracija putem društvenih mreža
-* *Moderatori*
-  * Postoje ali nisu funkcionalni. Trenutno su samo admini funkcionalni.
 * Praćenje IP adresa korisnika
   * Da se osiguramo da korisnik nema više od jednog naloga.
 * Moj, centralizovan, hosting
@@ -57,6 +57,3 @@ TODO
 - Logovanje korisnickih akcija i gresaka
 - *Izmena poruka*
   * Verzije poruka se čuvaju u posebnoj tabeli. Admini imaju opciju da urade undo (posle ne može redo).
-- *Brisanje poruka/tema*
-  * Кorisnik može poruku da obriše samo ako je njegova poruka poslednja u temi. Poruka se ne brise stvarno, samo se odradi soft delete. Obrisane poruke ostaju tu gde jesu u toj temi. Samo ih administratori i moderatori vide, a mogu i da ih povrate.
-

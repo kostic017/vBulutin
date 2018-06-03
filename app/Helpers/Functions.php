@@ -8,6 +8,10 @@ use App\UserModerates;
 
 use Illuminate\Database\Eloquent\Collection;
 
+function is_admin(): bool {
+    return Auth::user()->is_admin ?? false;
+}
+
 function getWatchers(string $myTable, int $myId): Collection
 {
     return User::findMany(UserWatches::select('user_id')->where("{$myTable}_id", $myId)->get()->toArray());

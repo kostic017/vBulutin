@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use Auth;
 
+use App\Post;
 use App\User;
 use App\Forum;
 use App\Topic;
@@ -82,6 +83,10 @@ class ShowController extends DashboardController
             $forum = Forum::findOrFail($topic->forum_id);
             $category = Category::findOrFail($forum->category_id);
 
+            $posts = (is_admin() ? Post::withTrashed() : Post::query())
+                    ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
+                    ->get();
+
             $vars = [
                 'topbox' => 'topic',
                 'self' => $topic,
@@ -90,7 +95,7 @@ class ShowController extends DashboardController
                 'lastPost' => $topic->lastPost(),
                 'topicStarter' => $topic->starter(),
                 'solution' => $topic->solution(),
-                'posts' => $topic->posts()->orderBy('created_at', 'asc')->get(),
+                'posts' => $posts,
             ];
 
             if ($forum->parent_id) {

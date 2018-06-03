@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <p>
                         Trenutno su {{ $peopleOnline }} korisnika na mreži: <b>{{ $visibleOnlineUsersCount }}</b> vidljivih,
-                        <b>{{ $invisibleOnlineUsersCount }}</b> sakrivenih i <b>{{ $guestsCount }}</b> gosta
+                        <b>{{ $invisibleOnlineUsersCount }}</b> sakrivenih i <b>{{ $guestCount }}</b> gosta
                         (ažurira se na svakih {{ $onlineUsersMinutes}} minuta).
                     </p>
                     <div class="list">

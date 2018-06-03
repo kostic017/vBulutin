@@ -5,7 +5,7 @@
 
     <div class="topbox-actions">
         <p><a href="#scform">Otvori temu</a></p>
-        @if (Auth::check() && Auth::user()->is_admin)
+        @if ($is_admin)
             <form action="{{ route('public.forum.togglelock', ['slug' => $self->slug]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">

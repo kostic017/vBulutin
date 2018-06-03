@@ -41,6 +41,10 @@ Route::group(['prefix' => '/'], function () {
     Route::post('user/{username}/toggleban', 'Frontend\UpdateController@toggleBan')->name('public.user.toggleban');
     Route::post('forum/{slug}/togglelock', 'Frontend\UpdateController@toggleLockForum')->name('public.forum.togglelock');
     Route::post('topic/{slug}/togglelock', 'Frontend\UpdateController@toggleLockTopic')->name('public.topic.togglelock');
+
+    // delete
+    Route::get('post/{id}/restore', 'Frontend\DeleteController@postRestore')->name('public.post.restore');
+    Route::get('post/{id}/delete', 'Frontend\DeleteController@post')->name('public.post.delete');
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {

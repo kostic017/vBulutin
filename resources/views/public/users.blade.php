@@ -1,8 +1,6 @@
 @extends('layouts.public')
 
 @section('content')
-    @php ($is_admin = Auth::check() && Auth::user()->is_admin)
-
     <form action="{{ route('public.users') }}" method="get" id="form1">
         <select name="perPage" class="form-control" onchange="document.getElementById('form1').submit();">
             <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>

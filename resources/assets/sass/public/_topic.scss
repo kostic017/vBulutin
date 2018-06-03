@@ -3,6 +3,14 @@
     background-color: $bgc-main;
     @include margins-but(last, bottom, $m-main);
 
+    &.deleted {
+        opacity: 0.60;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
     .profile {
         flex-basis: 20%;
         padding-bottom: 5px;

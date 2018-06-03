@@ -3,7 +3,7 @@
 @section('content')
     @include('public.includes.topbox')
 
-    @if (Auth::check() && (Auth::user()->is_admin || Auth::id() === $topicStarter->id))
+    @if ($is_admin || Auth::id() === $topicStarter->id)
         <form id="solutionform" method="post" action="{{ route('public.topic.solution', ['topic' => $self->slug]) }}">
             @csrf
             <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
@@ -22,7 +22,7 @@
 
     <div class="topbox-actions">
         <p><a href="#scform">Pošalji odgovor</a></p>
-        @if (Auth::check() && Auth::user()->is_admin)
+        @if ($is_admin)
             <form action="{{ route('public.topic.togglelock', ['slug' => $self->slug]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
@@ -35,7 +35,7 @@
     @foreach ($posts as $post)
         @php ($user = $post->user()->first())
 
-        <div class="post p-main" id="post-{{ $post->id }}">
+        <div class="post p-main {{ $post->deleted_at ? 'deleted' : '' }}" id="post-{{ $post->id }}">
 
             <div class="d-flex flex-wrap">
                 <ul class="profile">
@@ -61,13 +61,23 @@
             <div class="actions">
                 <ul>
                     @auth
-                        {{-- @if (Auth::id() == $user->id)
+                        @if ($is_admin || Auth::id() == $user->id)
                             <li><a href="#" class="editpost" data-postid="{{ $post->id }}">Izmeni</a></li>
-                            @if ($lastPost->id === $post->id)
-                                <li><a href="#" class="deletepost" data-postid="{{ $post->id }}">Obriši</a></li>
+                            @if ($is_admin || $lastPost->id === $post->id)
+                                <li>
+                                    @if ($post->deleted_at)
+                                        <form method="get" action="{{ route('public.post.restore', ['id' => $post->id]) }}">
+                                            <button type="submit" class="btn btn-link">Vrati</button>
+                                        </form>
+                                    @else
+                                        <form method="get" action="{{ route('public.post.delete', ['id' => $post->id]) }}">
+                                            <button type="submit" class="btn btn-link">Obriši</button>
+                                        </form>
+                                    @endif
+                                </li>
                             @endif
-                        @endif --}}
-                        @if (Auth::user()->is_admin || Auth::id() == $topicStarter->id)
+                        @endif
+                        @if (!$post->deleted_at && ($is_admin || Auth::id() == $topicStarter->id))
                             @if ($solution && $solution->id === $post->id)
                                 <li><a href="#" class="unmarksolution">Ipak ovo nije rešenje</a></li>
                             @else

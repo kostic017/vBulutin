@@ -37,7 +37,7 @@
                 <dd>{{ $profile->signature ?? '-' }}</dd>
             </dl>
         </section>
-        @if ($user->id == Auth::id() || Auth::user()->is_admin)
+        @if ($is_admin || $user->id == Auth::id())
             <a class="btn btn-success" href="{{ route('public.profile.edit', ['profile' => $user->username]) }}">Izmeni profil</a>
         @endif
     </div>
