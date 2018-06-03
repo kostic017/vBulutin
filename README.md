@@ -32,13 +32,13 @@ Implementirao sam najosnovnije funkcionalnosti forum softvera i pritom ispunio s
 * Praćenje IP adresa korisnika
   * Da se osiguramo da korisnik nema više od jednog naloga.
 * Moj, centralizovan, hosting
-  -  Kao što nudi [Forumotion](https://www.forumotion.com/). Trenutno aplikaciju svako mora da skine i instalira na svom serveru. 
+  -  Kao što nudi [Forumotion](https://www.forumotion.com/). Trenutno aplikaciju svako mora da skine i instalira na svom serveru.
 * Izmena poruka ★
   * Verzije poruka se čuvaju u posebnoj tabeli. Admini imaju opciju da urade undo (posle ne može redo).
 * Lajkovanje/dislajkovanje poruka ★
   * Poruke sa negativnim rejtingom se sakrivaju (korisnik može da prikaže poruku ako želi). Korisnici koji daju loše rejtinge jer nemaju pametnija posla gube mogućnost da ostavljaju rejting. Admin može da poništi rejting ako proceni da nije validan.
 
-★ Sve je pripremljeno (npr. u bazi), ali ipak nije implementirano.
+★ *Sve je pripremljeno (baza i ostalo), ali ipak nije implementirano.*
 
 ## Instalacija
 

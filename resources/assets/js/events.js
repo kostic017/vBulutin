@@ -22,15 +22,6 @@ $(function () {
         $("#edittitle-form").toggle();
     });
 
-    $(".editpost").on("click", function (event) {
-        event.preventDefault();
-
-    });
-
-    $(".deletepost").on("click", function(event) {
-        event.preventDefault();
-    });
-
     $(".quotepost").on("click", function(event) {
         event.preventDefault();
 

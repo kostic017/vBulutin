@@ -4,13 +4,13 @@
     @include('public.includes.topbox')
 
     @if ($is_admin || Auth::id() === $topicStarter->id)
-        <form id="solutionform" method="post" action="{{ route('front.topics.solution', ['topic' => $self->slug]) }}">
+        <form id="solutionform" method="post" action="{{ route('front.topics.solution', ['id' => $self->id]) }}">
             @csrf
             <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
         </form>
 
         <a href="#" id="edittitle">Izmeni naslov</a>
-        <form id="edittitle-form" action="{{ route('front.topics.title', ['topic' => $self->slug]) }}" method="post" class="m-2" style="display: none;">
+        <form id="edittitle-form" action="{{ route('front.topics.title', ['id' => $self->id]) }}" method="post" class="m-2" style="display: none;">
             @csrf
             <div class="form-group d-flex flex-wrap">
                 <label for="title" class="sr-only">Novi naslov</label>
@@ -23,7 +23,7 @@
     <div class="topbox-actions">
         <p><a href="#scform">Pošalji odgovor</a></p>
         @if ($is_admin)
-            <form action="{{ route('front.topics.lock', ['slug' => $self->slug]) }}" method="post">
+            <form action="{{ route('front.topics.lock', ['id' => $self->id]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
                     {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} temu
@@ -35,7 +35,7 @@
     @foreach ($posts as $post)
         @php ($user = $post->user()->first())
 
-        <div class="post p-main {{ $post->deleted_at ? 'deleted' : '' }}" id="post-{{ $post->id }}">
+        <div class="post p-main {{ $post->deleted_at ? 'deleted' : '' }} {{ $self->solution_id === $post->id ? 'solution' : ''}}" id="post-{{ $post->id }}">
 
             <div class="d-flex flex-wrap">
                 <ul class="profile">
@@ -46,7 +46,7 @@
                 </ul>
                 <div class="body">
                     <p class="author">
-                        <a href="{{ route('front.topics.show', ['topic' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
+                        <a href="{{ route('front.topics.show', ['slug' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
                         napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ extractDate($post->created_at) }} {{ extractTime($post->created_at) }}
                     </p>
                     <div class="content">

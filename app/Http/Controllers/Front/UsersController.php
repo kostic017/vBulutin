@@ -91,7 +91,7 @@ class UsersController extends FrontController
     /**
      * Display the specified resource.
      *
-     * @param  string  $slug
+     * @param  string  $username
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function show($username)
@@ -130,11 +130,11 @@ class UsersController extends FrontController
     /**
      * Update profile of the specified user.
      *
-     * @param  string  $id
      * @param  \Illuminate\Http\Request  $request
+     * @param  string  $username
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($request, $username)
+    public function update(Request $request, string $username)
     {
         $errors = [];
 
@@ -190,7 +190,7 @@ class UsersController extends FrontController
     /**
      * Toggle ban state for the specified user.
      *
-     * @param  string  $slug
+     * @param  string  $username
      * @return \Illuminate\Http\RedirectResponse
      */
     public function ban($username)

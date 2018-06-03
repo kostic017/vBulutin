@@ -76,18 +76,18 @@
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route("back.{$table}.edit", [$table => $row->slug]) }}" class="btn btn-xs btn-info">
+                            <a href="{{ route("back.{$table}.edit", [$table => $row->id]) }}" class="btn btn-xs btn-info">
                                 {{ __('admin.edit') }}
                             </a>
                         </td>
                         <td>
                             @if ($row->trashed())
-                                <form action="{{ route("back.{$table}.restore", [$table => $row->slug]) }}" method="post">
+                                <form action="{{ route("back.{$table}.restore", [$table => $row->id]) }}" method="post">
                                     @csrf
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.restore') }}</button>
                                 </form>
                             @else
-                                <form action="{{ route("back.{$table}.destroy", [$table => $row->slug]) }}" method="post">
+                                <form action="{{ route("back.{$table}.destroy", [$table => $row->id]) }}" method="post">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.delete') }}</button>

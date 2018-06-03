@@ -11,6 +11,10 @@
         }
     }
 
+    &.solution {
+        outline: 7px dotted green;
+    }
+
     .profile {
         flex-basis: 20%;
         padding-bottom: 5px;

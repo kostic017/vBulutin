@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Front;
 
 use Auth;
 use Validator;
-
 use App\Post;
 use App\Forum;
 use App\Topic;
 use App\Category;
+use Illuminate\Http\Request;
 
 class TopicsController extends FrontController
 {
@@ -68,7 +68,7 @@ class TopicsController extends FrontController
      * @param  string  $forum_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($request, $forum_id)
+    public function store(Request $request, string $forum_id)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
@@ -100,11 +100,11 @@ class TopicsController extends FrontController
     /**
      * Update title of the specified resource.
      *
-     * @param  string  $id
      * @param  \Illuminate\Http\Request  $request
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateTitle($request, $id)
+    public function updateTitle(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255'
@@ -125,11 +125,11 @@ class TopicsController extends FrontController
     /**
      * Update solution of this topic.
      *
-     * @param  string  $id
      * @param  \Illuminate\Http\Request  $request
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function updateSolution($request, $id)
+    public function updateSolution(Request $request, string $id)
     {
         $topic = Topic::findOrFail($id);
         $topic->solution_id = $request->solution_id;

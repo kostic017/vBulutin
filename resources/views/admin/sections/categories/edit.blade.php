@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('back.categories.update', ['category' => $category->slug]) }}" method="post">
+            <form action="{{ route('back.categories.update', ['category' => $category->id]) }}" method="post">
                 @csrf
                 {{ method_field('PUT') }}
 

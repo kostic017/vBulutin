@@ -12,7 +12,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('back.forums.update', ['forum' => $forum->slug]) }}" method="post">
+            <form action="{{ route('back.forums.update', ['forum' => $forum->id]) }}" method="post">
                 @csrf
                 {{ method_field('PUT') }}
 
