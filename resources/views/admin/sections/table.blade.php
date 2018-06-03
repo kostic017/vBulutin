@@ -5,12 +5,12 @@
 @stop
 
 @section("content")
-    <form id="index" action="{{ route("{$table}.index") }}" method="get"></form>
+    <form id="index" action="{{ route("back.{$table}.index") }}" method="get"></form>
 
     <div class="admin-actions">
 
         <div>
-            <a href="{{ route("{$table}.create") }}" class="btn btn-primary">
+            <a href="{{ route("back.{$table}.create") }}" class="btn btn-primary">
                 {{ $table === 'categories' ? __('admin.create-category') : __('admin.create-forum') }}
             </a>
             <select name="perPage" class="form-control">
@@ -71,23 +71,23 @@
                         @endif
 
                         <td>
-                            <a href="{{ route("{$table}.show", [$table => $row->slug]) }}" class="btn btn-xs btn-success">
+                            <a href="{{ route("back.{$table}.show", [$table => $row->slug]) }}" class="btn btn-xs btn-success">
                                 {{ __('admin.view') }}
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route("{$table}.edit", [$table => $row->slug]) }}" class="btn btn-xs btn-info">
+                            <a href="{{ route("back.{$table}.edit", [$table => $row->slug]) }}" class="btn btn-xs btn-info">
                                 {{ __('admin.edit') }}
                             </a>
                         </td>
                         <td>
                             @if ($row->trashed())
-                                <form action="{{ route("{$table}.restore", [$table => $row->slug]) }}" method="post">
+                                <form action="{{ route("back.{$table}.restore", [$table => $row->slug]) }}" method="post">
                                     @csrf
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.restore') }}</button>
                                 </form>
                             @else
-                                <form action="{{ route("{$table}.destroy", [$table => $row->slug]) }}" method="post">
+                                <form action="{{ route("back.{$table}.destroy", [$table => $row->slug]) }}" method="post">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.delete') }}</button>

@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    <form class="profile" action="{{ route('public.profile.update', ['username' => $user->username]) }}" method="post">
+    <form class="profile" action="{{ route('front.users.update', ['username' => $user->username]) }}" method="post">
         @csrf
 
         <fieldset>

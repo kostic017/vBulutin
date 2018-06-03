@@ -23,10 +23,14 @@ return [
     'logout' => 'Odjavi se',
     'register' => 'Registruj se',
     'remember' => 'Upamti me',
+    'banned' => 'Banovani ste!',
     'forgot' => 'Zaboravili ste lozinku?',
     'reset-password' => 'Resetuj lozinku',
     'send-reset-link' => 'Pošalji link za resetovanje lozinke',
 
+    'login-again' => 'Morate ponovo da se prijavite.',
+    'must-login' => 'Samo prijavljeni korisnici mogu da vide ovu stranicu.',
+    'can-login' => 'Sada se možete prijaviti!',
     'logged-in' => 'Uspešno ste se prijavili!',
     'captcha-failed' => 'Imamo razloga da mislimo da niste ljudsko biće. Pokušajte ponovo.',
 

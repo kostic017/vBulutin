@@ -10,27 +10,35 @@ Projekat iz Web programiranja. Bez nekih originalnih ideja. Prvi Laravel projeka
 
 Implementirao sam najosnovnije funkcionalnosti koje neki forum software treba da ima, a pritom sam ispunio sve uslove projekta.
 
-Nešto što nije odrađeno, a bilo je planirano na početku:
+### Šta je odrađeno
 
-* *Glasanje*
+TODO
+
+### Šta je moglo da se odradi
+
+* Glasanje ★
 * Ćaskanje
-* *Moderatori*
-* *Višejezičnost*
+* Moderatori ★
+* Višejezičnost ★
 * Privatne poruke
+* Izbor šeme boja
 * Ko je gledao profil
-* Više tema (šema boja)
-* *Prijavljivanje neprikladnih poruka*
-* *Praćenje tema, poruka i kategorija*
+* Prijavljivanje neprikladnih poruka ★
+* Praćenje tema, poruka i kategorija ★
 * Prikazuj trenutnu aktivnost korisnika
 * Registracija putem društvenih mreža
+* Refaktorizacija
+  * Trenutno je sve zbrda-zdola sklopljeno kako bi projekat što pre bio završen.
 * Praćenje IP adresa korisnika
   * Da se osiguramo da korisnik nema više od jednog naloga.
+* Izmena poruka ★
+  * Verzije poruka se čuvaju u posebnoj tabeli. Admini imaju opciju da urade undo (posle ne može redo).
 * Moj, centralizovan, hosting
   * Kao što nudi [Forumotion](https://www.forumotion.com/). Trenutno aplikaciju svako mora da skine i instalira na svom serveru. Postarao sam se da to bude što bezbolnije moguće.
-* *Lajkovanje/dislajkovanje poruka*
+* Lajkovanje/dislajkovanje poruka ★
   * Poruke sa negativnim rejtingom se sakrivaju (korisnik može da prikaže poruku ako želi). Korisnici koji daju loše rejtinge jer nemaju pametnija posla gube mogućnost da ostavljaju rejting. Admin može da poništi rejting ako proceni da nije validan.
 
-*Sve je pripremljeno (npr. u bazi se nalaze potrebne tabele i polja), ali ipak nije implementirano.*
+★ Sve je pripremljeno (npr. u bazi), ali ipak nije implementirano.
 
 ## Instalacija
 
@@ -51,9 +59,12 @@ TODO
 ## Baza podataka
 ![model](doc/model.png)
 
+## Istorijat
+
+1. Radio ne prateći MVC.
+2. Pokušao da napravim svoj MVC framework.
+3. Skinuo Laravel i sve odradio ispočeteka.
+
 ## TODO
 
 - Generisanje izvestaja (HTML, PDF, DOCX, XSLX, ...)
-- Logovanje korisnickih akcija i gresaka
-- *Izmena poruka*
-  * Verzije poruka se čuvaju u posebnoj tabeli. Admini imaju opciju da urade undo (posle ne može redo).

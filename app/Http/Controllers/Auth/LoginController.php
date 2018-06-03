@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Helpers\FileLogger;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -73,12 +74,12 @@ class LoginController extends Controller
         // the IP address of the client making these requests into this application.
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-
             return $this->sendLockoutResponse($request);
         }
 
         if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            throw new \App\Exceptions\CaptchaFailedException('login');
+            FileLogger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            return alert_redirect(route('login'), 'error', __('auth.captcha-failed'));
         }
 
         if ($user = User::where($this->username(), $request[$this->username()])->first()) {
@@ -136,9 +137,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->guard()->logout();
-
         $request->session()->invalidate();
-
         return redirect()->back();
     }
 

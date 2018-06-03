@@ -4,9 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
@@ -28,22 +25,22 @@ class Post extends Model
         'created_at'
     ];
 
-    public function topic(): BelongsTo
+    public function topic()
     {
         return $this->belongsTo('App\Topic');
     }
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    public function reports(): BelongsToMany
+    public function reports()
     {
         return $this->belongsToMany('App\UserReport', 'user_reports');
     }
 
-    public function ratings(): BelongsToMany
+    public function ratings()
     {
         return $this->belongsToMany('App\UserRating', 'user_ratings');
     }

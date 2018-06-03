@@ -8,7 +8,14 @@ class BBCode {
 
     private const EMOTICONS_FOLDER = 'vendor/sceditor/emoticons/';
 
-    public static function parse(string $bbcode): string
+    /**
+     * Convert BBCode to HTML.
+     * Singelton.
+     *
+     * @param  string  $bbcode
+     * @return string  Generated HTML code.
+     */
+    public static function parse($bbcode)
     {
         if (!self::$parser) {
             self::$parser = new \App\Packages\ChrisKonnertz\BBCode\BBCode();
@@ -47,16 +54,25 @@ class BBCode {
         }
 
         $code = self::$parser->render(e($bbcode), false);
-        $code = self::parseSmiles($code);
+        $code = self::parseEmoticons($code);
 
         return $code;
     }
 
-    private static function parseSmiles(string $code): string
+    /**
+     * Replace emoticon codes with <img> tags.
+     * Singelton.
+     *
+     * @param  string  $code
+     * @return string  Generated HTML code.
+     */
+    private static function parseEmoticons($code)
     {
         if (!self::$emoticons) {
             self::$emoticons = [];
+
             $files = \File::allFiles(self::EMOTICONS_FOLDER);
+
             foreach ($files as $file) {
                 self::$emoticons[] = [
                     'path' => '/' . self::EMOTICONS_FOLDER . $file->getFilename(),

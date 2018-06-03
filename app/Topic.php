@@ -7,66 +7,60 @@ use Carbon\Carbon;
 use App\Exceptions\UnexpectedException;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Topic extends Model
 {
     use SoftDeletes;
 
-    public function solution(): ?Post
+    public function solution()
     {
         return Post::find($this->solution_id);
     }
 
-    public function lastPost(): Post
+    public function lastPost()
     {
         return $this->posts()->orderBy('created_at', 'desc')->firstOrFail();
     }
 
-    public function firstPost(): Post
+    public function firstPost()
     {
         return $this->posts()->orderBy('created_at', 'asc')->firstOrFail();
     }
 
-    public function starter(): User
+    public function starter()
     {
         return $this->firstPost()->user()->firstOrFail();
     }
 
-    public function readStatus(): string
+    public function readStatus()
     {
         return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days') ||
             ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->get()->count() ?
                 'old' : 'new';
     }
 
-    public function forum(): BelongsTo
+    public function forum()
     {
         return $this->belongsTo('App\Forum');
     }
 
-    public function poll(): HasOne
+    public function poll()
     {
         return $this->hasOne('App\Poll');
     }
 
-    public function posts(): HasMany
+    public function posts()
     {
         return $this->hasMany('App\Post');
     }
 
-    public function readers(): BelongsToMany
+    public function readers()
     {
         return $this->belongsToMany('App\User', 'read_topics');
     }
 
-    public function watchers(): HasMany
+    public function watchers()
     {
         // Ne mora da mergujemo sa posmatracima kategorije
         // posto to vec radimo kad trazimo posmatrace foruma.

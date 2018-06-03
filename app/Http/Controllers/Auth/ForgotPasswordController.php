@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\FileLogger;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
@@ -41,7 +42,8 @@ class ForgotPasswordController extends Controller
         $this->validateEmail($request);
 
         if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            throw new \App\Exceptions\CaptchaFailedException('password.request');
+            FileLogger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            return alert_redirect(route('login'), 'error', __('auth.captcha-failed'));
         }
 
         // We will send the password reset link to this user. Once we have attempted

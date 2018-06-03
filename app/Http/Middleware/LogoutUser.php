@@ -22,20 +22,17 @@ class LogoutUser
             $message = "";
 
             if ($user->to_logout) {
-                $message = "Morate da se ponovo ulogojete.";
+                $message = __('auth.login-again');
                 $user->to_logout = false;
                 $user->save();
             }
 
             if ($user->is_banned) {
-                $message = "Banovani ste.";
+                $message = __('auth.banned');
             }
 
             Auth::logout();
-            return redirect(route('login'))->with([
-                'alert-type' => 'info',
-                'message' => $message,
-            ]);
+            return alert_redirect(route('login'), 'info', $message);
         }
 
         return $next($request);

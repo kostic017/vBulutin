@@ -1,17 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use Session;
-use Validator;
+namespace App\Http\Controllers\Back;
 
 use App\Forum;
 use App\Category;
-use App\Exceptions\SlugNotFoundException;
-
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ForumsController extends SectionsController
@@ -36,7 +28,7 @@ class ForumsController extends SectionsController
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    public function edit(string $slug): View
+    public function edit($slug)
     {
         return parent::edit($slug);
     }
@@ -45,23 +37,23 @@ class ForumsController extends SectionsController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $slug): RedirectResponse
+    public function update($request, $id)
     {
-        return parent::update($request, $slug);
+        return parent::update($request, $id);
     }
 
     /**
      * Restore a soft-deleted model instance.
      *
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(string $slug): RedirectResponse
+    public function restore($id)
     {
-        return parent::restore($slug);
+        return parent::restore($id);
     }
 
     /**
@@ -69,7 +61,7 @@ class ForumsController extends SectionsController
      *
      * @return \Illuminate\View\View
      */
-    public function create(): View
+    public function create()
     {
         $categories = Category::all(['id', 'title']);
         $rootForums = Forum::select (
@@ -92,13 +84,13 @@ class ForumsController extends SectionsController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store($request)
     {
         if (isset($request->parent_id)) {
             $request->request->add(['category_id' => Forum::find($request->parent_id)->pluck('category_id')->first()]);
         }
 
-        $validator = Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(), [
             'title' => 'required|max:255|unique:forums',
             'category_id' => 'required|integer'
         ]);
@@ -125,10 +117,7 @@ class ForumsController extends SectionsController
         $forum->slug = unique_slug($forum->title, $forum->id);
         $forum->save();
 
-        return redirect(route('forums.show', ['forum' => $forum->slug]))->with([
-            'alert-type' => 'success',
-            'message' => 'db.stored'
-        ]);
+        return alert_redirect(route('back.forums.show', ['forum' => $forum->slug]), 'success', 'db.stored');
     }
 
     /**
@@ -137,19 +126,15 @@ class ForumsController extends SectionsController
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    public function show(string $slug): View
+    public function show($slug)
     {
-        try {
-            $forum = Forum::withTrashed()->where('slug', $slug)->firstOrFail();
-            $category = Category::withTrashed()->where('id', $forum->category_id)->get(['id', 'slug', 'title'])->first();
-            $parentForum = Forum::withTrashed()->where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
-            return view('admin.sections.forums.show')
-                ->with('forum', $forum)
-                ->with('category', $category)
-                ->with('parentForum', $parentForum);
-        } catch (ModelNotFoundException $e) {
-            throw new SlugNotFoundException($slug, "forums");
-        }
+        $forum = Forum::withTrashed()->where('slug', $slug)->firstOrFail();
+        $category = Category::withTrashed()->where('id', $forum->category_id)->get(['id', 'slug', 'title'])->first();
+        $parentForum = Forum::withTrashed()->where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
+        return view('admin.sections.forums.show')
+            ->with('forum', $forum)
+            ->with('category', $category)
+            ->with('parentForum', $parentForum);
     }
 
 }

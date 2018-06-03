@@ -23,10 +23,14 @@ return [
     'logout' => 'Log out',
     'register' => 'Register',
     'remember' => 'Remember Me',
+    'banned' => 'You are banned!',
     'forgot' => 'Forgot Your Password?',
     'reset-password' => 'Reset Password',
     'send-reset-link' => 'Send Password Reset Link',
 
+    'login-again' => 'You have to log in again.',
+    'must-login' => 'Only logged in users can view this page.',
+    'can-login' => 'You Can Log In Now!',
     'logged-in' => 'You Are Now Logged In!',
     'captcha-failed' => 'We have reasons to think that you probably are not human. Please try again.',
 

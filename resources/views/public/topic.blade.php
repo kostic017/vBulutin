@@ -4,13 +4,13 @@
     @include('public.includes.topbox')
 
     @if ($is_admin || Auth::id() === $topicStarter->id)
-        <form id="solutionform" method="post" action="{{ route('public.topic.solution', ['topic' => $self->slug]) }}">
+        <form id="solutionform" method="post" action="{{ route('front.topics.solution', ['topic' => $self->slug]) }}">
             @csrf
             <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
         </form>
 
         <a href="#" id="edittitle">Izmeni naslov</a>
-        <form id="edittitle-form" action="{{ route('public.topic.title', ['topic' => $self->slug]) }}" method="post" class="m-2" style="display: none;">
+        <form id="edittitle-form" action="{{ route('front.topics.title', ['topic' => $self->slug]) }}" method="post" class="m-2" style="display: none;">
             @csrf
             <div class="form-group d-flex flex-wrap">
                 <label for="title" class="sr-only">Novi naslov</label>
@@ -23,7 +23,7 @@
     <div class="topbox-actions">
         <p><a href="#scform">Pošalji odgovor</a></p>
         @if ($is_admin)
-            <form action="{{ route('public.topic.togglelock', ['slug' => $self->slug]) }}" method="post">
+            <form action="{{ route('front.topics.lock', ['slug' => $self->slug]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
                     {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} temu
@@ -39,14 +39,14 @@
 
             <div class="d-flex flex-wrap">
                 <ul class="profile">
-                    <li><a href="{{ route('public.profile.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
-                    <li><a href="{{ route('public.profile.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
+                    <li><a href="{{ route('front.users.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
+                    <li><a href="{{ route('front.users.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
                     <li><strong>Broj poruka: </strong>{{ $user->posts()->get()->count() }}</li>
                     <li><strong>Pridružio: </strong>{{ extractDate($user->registered_at) }}</li>
                 </ul>
                 <div class="body">
                     <p class="author">
-                        <a href="{{ route('public.topic', ['topic' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
+                        <a href="{{ route('front.topics.show', ['topic' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
                         napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ extractDate($post->created_at) }} {{ extractTime($post->created_at) }}
                     </p>
                     <div class="content">
@@ -62,15 +62,18 @@
                 <ul>
                     @auth
                         @if ($is_admin || Auth::id() == $user->id)
-                            <li><a href="#" class="editpost" data-postid="{{ $post->id }}">Izmeni</a></li>
+                            {{-- <li><a href="#" class="editpost" data-postid="{{ $post->id }}">Izmeni</a></li> --}}
                             @if ($is_admin || $lastPost->id === $post->id)
                                 <li>
                                     @if ($post->deleted_at)
-                                        <form method="get" action="{{ route('public.post.restore', ['id' => $post->id]) }}">
+                                        <form method="post" action="{{ route('front.posts.restore', ['id' => $post->id]) }}">
+                                            @csrf
                                             <button type="submit" class="btn btn-link">Vrati</button>
                                         </form>
                                     @else
-                                        <form method="get" action="{{ route('public.post.delete', ['id' => $post->id]) }}">
+                                        <form method="post" action="{{ route('front.posts.destroy', ['id' => $post->id]) }}">
+                                            @csrf
+                                            {{ method_field('DELETE') }}
                                             <button type="submit" class="btn btn-link">Obriši</button>
                                         </form>
                                     @endif
@@ -93,9 +96,9 @@
         </div>
     @endforeach
 
-    @if (!$self->is_locked)
+    @if (!($self->is_locked || $forum->is_locked))
         @auth
-            <form action="{{ route('public.post.create', ['topic' => $self->id]) }}" method="post" id="scform">
+            <form action="{{ route('front.posts.update', ['topic' => $self->id]) }}" method="post" id="scform">
                 @csrf
 
                 <div class="form-group">

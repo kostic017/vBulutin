@@ -1,4 +1,5 @@
 <?php
+// https://stackoverflow.com/a/39353352
 
 namespace App\Helpers;
 
@@ -9,6 +10,7 @@ use Monolog\Handler\StreamHandler;
 class FileLogger extends Logger
 {
     protected $path = null;
+    public static $logger;
 
     public function __construct($name, $level = 'DEBUG', $path = null, array $processors = [ ])
     {
@@ -53,5 +55,22 @@ class FileLogger extends Logger
         parent::addRecord($level, $message, $context);
 
         return $this;
+    }
+
+    /**
+     * Add a new record to the log file.
+     * Singelton.
+     *
+     * @param  string  $level
+     * @param  $array  $method
+     * @param  string  $message
+     * @return void
+     */
+    public static function log($level, $method, $message)
+    {
+        if (!$self::$logger) {
+            $self::$logger = new FileLogger('forum41');
+        }
+        $self::$logger->addRecord($level, "{$method}: {$message}");
     }
 }

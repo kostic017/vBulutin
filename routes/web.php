@@ -16,50 +16,51 @@ Auth::routes();
 Route::group(['prefix' => '/'], function () {
     Route::get('home', 'HomeController@index')->name('home');
     Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
-
-    // index
-    Route::get('', 'Frontend\IndexController@index')->name('public.index');
-    Route::get('users/', 'Frontend\IndexController@users')->name('public.users');
-
-    // show
-    Route::get('topic/{topic}', 'Frontend\ShowController@topic')->name('public.topic');
-    Route::get('forum/{forum}', 'Frontend\ShowController@forum')->name('public.forum');
-    Route::get('category/{category}', 'Frontend\ShowController@category')->name('public.category');
-    Route::get('profile/{username}/show', 'Frontend\ShowController@profile')->name('public.profile.show');
-
-    // create & store
-    Route::post('create/post/{topic}', 'Frontend\CreateController@post')->name('public.post.create');
-    Route::post('create/topic/{forum}', 'Frontend\CreateController@topic')->name('public.topic.create');
-
-    // edit
-    Route::get('profile/{username}/edit', 'Frontend\EditController@profile')->name('public.profile.edit');
-    Route::post('topic/{topic}/title', 'Frontend\EditController@topicTitle')->name('public.topic.title');
-    Route::post('topic/{topic}/solution', 'Frontend\EditController@topicSolution')->name('public.topic.solution');
-
-    // update
-    Route::post('profile/{username}/update', 'Frontend\UpdateController@profile')->name('public.profile.update');
-    Route::post('user/{username}/toggleban', 'Frontend\UpdateController@toggleBan')->name('public.user.toggleban');
-    Route::post('forum/{slug}/togglelock', 'Frontend\UpdateController@toggleLockForum')->name('public.forum.togglelock');
-    Route::post('topic/{slug}/togglelock', 'Frontend\UpdateController@toggleLockTopic')->name('public.topic.togglelock');
-
-    // delete
-    Route::get('post/{id}/restore', 'Frontend\DeleteController@postRestore')->name('public.post.restore');
-    Route::get('post/{id}/delete', 'Frontend\DeleteController@post')->name('public.post.delete');
 });
 
-Route::group(['prefix' => '/admin', 'middleware' => 'admin'], function () {
-    Route::get('/', function () {
-        return redirect(route('categories.index'));
-    })->name('admin.index');
+Route::namespace('Front')
+    ->prefix('/')
+    ->name('front.')
+    ->group(
+        function () {
+            Route::get('/', 'FrontController@index')->name('index');
 
-    Route::get('positions/', 'Admin\CategoriesController@positions')->name('admin.positions');
+            Route::resource('users', 'UsersController');
+            Route::resource('posts', 'PostsController');
+            Route::resource('topics', 'TopicsController');
+            Route::resource('forums', 'ForumsController');
+            Route::resource('categories', 'CategoriesController');
 
-    Route::post('forums/{forum}/restore', 'Admin\ForumsController@restore')->name('forums.restore');
-    Route::post('categories/{category}/restore', 'Admin\CategoriesController@restore')->name('categories.restore');
+            Route::post('user/{id}/ban', 'UsersController@ban')->name('users.ban');
+            Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forums.lock');
+            Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topics.lock');
+            Route::post('topic/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
+            Route::post('topic/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
 
-    Route::resource('forums', 'Admin\ForumsController');
-    Route::resource('categories', 'Admin\CategoriesController');
-});
+            Route::post('post/{id}/restore', 'PostsController@restore')->name('posts.restore');
+            Route::post('topic/{id}/restore', 'TopicsController@restore')->name('topics.restore');
+        }
+    );
+
+Route::namespace('Back')
+    ->name('back.')
+    ->prefix('/admin')
+    ->middleware('admin')
+    ->group(
+        function () {
+            Route::get('/', function () {
+                return redirect(route('back.categories.index'));
+            })->name('index');
+
+            Route::resource('forums', 'ForumsController');
+            Route::resource('categories', 'CategoriesController');
+
+            Route::get('positions/', 'CategoriesController@positions')->name('positions');
+
+            Route::post('forums/{id}/restore', 'ForumsController@restore')->name('forums.restore');
+            Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
+        }
+    );
 
 Route::group(['prefix' => '/ajax'], function () {
     Route::post('quote', 'AjaxController@quote')->name('ajax.quote');

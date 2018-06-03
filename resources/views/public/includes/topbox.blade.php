@@ -4,13 +4,13 @@
         <ul class="path">
             <li><a href="/">{{ config('app.name') }}</a></li>
             @if (isset($category) && $topbox !== 'category')
-                <li><a href="{{ route('public.category', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
+                <li><a href="{{ route('front.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
             @endif
             @if (isset($parent))
-                <li><a href="{{ route('public.forum', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
+                <li><a href="{{ route('front.forums.show', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
             @endif
             @if (isset($forum))
-                <li><a href="{{ route('public.forum', ['forum' => $forum->slug]) }}">{{ $forum->title }}</a></li>
+                <li><a href="{{ route('front.forums.show', ['forum' => $forum->slug]) }}">{{ $forum->title }}</a></li>
             @endif
         </ul>
 
@@ -30,7 +30,7 @@
                     @else
                         <ul>
                             @foreach ($mods as $mod)
-                                <li><a href="{{ route('public.profile.show', ['profile' => $mod->username]) }}">{{ $mod->username }}</a></li>
+                                <li><a href="{{ route('front.users.show', ['profile' => $mod->username]) }}">{{ $mod->username }}</a></li>
                             @endforeach
                         </ul>
                     @endif

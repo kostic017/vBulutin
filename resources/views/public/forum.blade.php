@@ -6,7 +6,7 @@
     <div class="topbox-actions">
         <p><a href="#scform">Otvori temu</a></p>
         @if ($is_admin)
-            <form action="{{ route('public.forum.togglelock', ['slug' => $self->slug]) }}" method="post">
+            <form action="{{ route('front.forum.lock', ['slug' => $self->slug]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
                     {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} forum
@@ -32,7 +32,7 @@
                     </td>
 
                     <td class="main-info">
-                        <a href="{{ route('public.forum', ['forum' => $child->slug]) }}" class="name">{{ $child->title }}</a>
+                        <a href="{{ route('front.forums.show', ['forum' => $child->slug]) }}" class="name">{{ $child->title }}</a>
                     </td>
 
                     <td class="side-info count">
@@ -46,10 +46,10 @@
                             @php ($topic = $lastPost->topic()->first())
 
                             <div class="post-info">
-                                <a href="{{ route('public.profile.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
+                                <a href="{{ route('front.users.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
                                 <ul>
-                                    <li><a href="{{ route('public.topic', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
-                                    <li><a href="{{ route('public.profile.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
+                                    <li><a href="{{ route('front.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
+                                    <li><a href="{{ route('front.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                     <li>{{ extractDate($lastPost->created_at) }}</li>
                                     <li>{{ extractTime($lastPost->created_at) }}</li>
                                 </ul>
@@ -82,7 +82,7 @@
                     </td>
 
                     <td class="main-info">
-                        <a href="{{ route('public.topic', ['topic' => $topic->slug]) }}" class="name">{{ $topic->title }}</a>
+                        <a href="{{ route('front.topics.show', ['topic' => $topic->slug]) }}" class="name">{{ $topic->title }}</a>
                     </td>
 
                     <td class="side-info count">
@@ -95,10 +95,10 @@
                         @php ($user = $lastPost->user()->first())
 
                         <div class="post-info">
-                            <a href="{{ route('public.profile.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
+                            <a href="{{ route('front.users.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
                             <ul>
-                                <li><a href="{{ route('public.topic', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
-                                <li><a href="{{ route('public.profile.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
+                                <li><a href="{{ route('front.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
+                                <li><a href="{{ route('front.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                 <li>{{ extractDate($lastPost->created_at) }}</li>
                                 <li>{{ extractTime($lastPost->created_at) }}</li>
                             </ul>
@@ -113,7 +113,7 @@
 
     @if (!$self->is_locked)
         @auth
-            <form action="{{ route('public.topic.create', ['forum' => $self->id]) }}" method="post" id="scform">
+            <form action="{{ route('front.topics.store', ['forum' => $self->id]) }}" method="post" id="scform">
                 @csrf
                 <div class="form-group">
                     <label for="title">Naslov</label>

@@ -17,13 +17,13 @@
                 <nav>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/categories*')) }}">
-                            <a href="{{ route('categories.index') }}">{{ __('admin.categories') }}</a>
+                            <a href="{{ route('back.categories.index') }}">{{ __('admin.categories') }}</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*')) }}">
-                            <a href="{{ route('forums.index') }}">{{ __('admin.forums') }}</a>
+                            <a href="{{ route('back.forums.index') }}">{{ __('admin.forums') }}</a>
                         </li>
-                        <li class="list-group-item  {{ active_class(if_route('admin.positions')) }}">
-                            <a href="{{ route('admin.positions') }}">{{ __('admin.positioning') }}</a>
+                        <li class="list-group-item  {{ active_class(if_route('back.admin.positions')) }}">
+                            <a href="{{ route('back.admin.positions') }}">{{ __('admin.positioning') }}</a>
                         </li>
                     </ul>
                 </nav>

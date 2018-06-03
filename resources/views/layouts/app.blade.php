@@ -35,7 +35,7 @@
             <script>
                 $(function() {
                     toastr.options.closeButton = true;
-                    const type = "{{ Session::get('alert-type') }}";
+                    const type = "{{ Session::get('level') }}";
                     const message = "{{ Session::get('message') }}";
                     switch (type) {
                         case 'info': toastr.info(message); break;
@@ -67,11 +67,11 @@
                         </ul>
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
-                            <li><a class="nav-link" href="{{ route('public.users') }}">Korisnici</a></li>
+                            <li><a class="nav-link" href="{{ route('front.users.index') }}">Korisnici</a></li>
                             @guest
                                 <!-- Authentication Links -->
                                 @yield('nav-guest')
-                                <li><a class="nav-link" href="{{ route('login') }}" target="_blank">{{ __('auth.login') }}</a></li>
+                                <li><a class="nav-link" href="{{ route('login') }}">{{ __('auth.login') }}</a></li>
                                 <li><a class="nav-link" href="{{ route('register') }}">{{ __('auth.register') }}</a></li>
                             @else
                                 @yield('nav-auth')
@@ -80,7 +80,7 @@
                                         {{ Auth::user()->name ?? Auth::user()->username }} <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('public.profile.show', ['profile' => Auth::user()->username]) }}">
+                                        <a class="dropdown-item" href="{{ route('front.users.show', ['profile' => Auth::user()->username]) }}">
                                             <i class="fas fa-user"></i> Profil
                                         </a>
                                         <a class="dropdown-item" href="#" id="btn-messages" data-newmessages="0">

@@ -1,17 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use Session;
-use Validator;
+namespace App\Http\Controllers\Back;
 
 use App\Forum;
 use App\Category;
-use App\Exceptions\SlugNotFoundException;
-
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoriesController extends SectionsController
@@ -36,7 +28,7 @@ class CategoriesController extends SectionsController
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    public function edit(string $slug): View
+    public function edit($slug)
     {
         return parent::edit($slug);
     }
@@ -45,23 +37,23 @@ class CategoriesController extends SectionsController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $slug): RedirectResponse
+    public function update($request, $id)
     {
-        return parent::update($request, $slug);
+        return parent::update($request, $id);
     }
 
     /**
      * Restore a soft-deleted model instance.
      *
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(string $slug): RedirectResponse
+    public function restore($id)
     {
-        return parent::restore($slug);
+        return parent::restore($id);
     }
 
     /**
@@ -69,7 +61,7 @@ class CategoriesController extends SectionsController
      *
      * @return \Illuminate\View\View
      */
-    public function create(): View
+    public function create()
     {
         return view('admin.sections.categories.create');
     }
@@ -80,9 +72,9 @@ class CategoriesController extends SectionsController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store($request)
     {
-        $validator = Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(), [
             'title' => 'required|max:255|unique:categories'
         ]);
 
@@ -100,10 +92,7 @@ class CategoriesController extends SectionsController
         $category->slug = unique_slug($category->title, $category->id);
         $category->save();
 
-        return redirect(route('categories.show', ['category' => $category->slug]))->with([
-            'alert-type' => 'success',
-            'message' => __('db.stored')
-        ]);
+        return alert_redirect(route('back.categories.show', ['category' => $category->slug]), 'success', __('db.stored'));
     }
 
     /**
@@ -112,14 +101,10 @@ class CategoriesController extends SectionsController
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    public function show(string $slug): view
+    public function show($slug)
     {
-        try {
-            $category = Category::withTrashed()->where('slug', $slug)->firstOrFail();
-            return view('admin.sections.categories.show')->with('category', $category);
-        } catch (ModelNotFoundException $e) {
-            throw new SlugNotFoundException($slug, "categories");
-        }
+        $category = Category::withTrashed()->where('slug', $slug)->firstOrFail();
+        return view('admin.sections.categories.show')->with('category', $category);
     }
 
     /**
@@ -128,7 +113,7 @@ class CategoriesController extends SectionsController
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    public function positions(): View
+    public function positions()
     {
         $columns = ['id', 'title', 'deleted_at'];
         $categories = Category::withTrashed()

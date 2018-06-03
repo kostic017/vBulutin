@@ -44,7 +44,7 @@
                             <p>Registrovani korisnici:</p>
                             <ul>
                                 @foreach ($visibleOnlineUsers as $user)
-                                    <li><a href="{{ route('public.profile.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
+                                    <li><a href="{{ route('front.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                 @endforeach
                             </ul>
                         @endif
@@ -61,7 +61,7 @@
                         Ukupno poruka <b>{{ $postCount }}</b> &bull;
                         Ukupno tema <b>{{ $topicCount }}</b> &bull;
                         Ukupno članova <b>{{ $userCount }}</b> &bull;
-                        Naš najnoviji član <a href="{{ route('public.profile.show', ['profile' => $newestUser->username]) }}">{{ $newestUser->username }}</a>
+                        Naš najnoviji član <a href="{{ route('front.users.show', ['profile' => $newestUser->username]) }}">{{ $newestUser->username }}</a>
                     </p>
             </div>
         </section>

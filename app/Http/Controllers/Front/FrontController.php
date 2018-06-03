@@ -1,19 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+// note: Public is a reserved word
+namespace App\Http\Controllers\Front;
 
 use View;
 use Activity;
-
 use App\User;
 use App\Post;
 use App\Topic;
-
+use App\Category;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class FrontController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
+    {
+        return view('public.index')->with('categories', Category::all());
+    }
+
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -28,6 +39,7 @@ class DashboardController extends Controller
             $visibleOnlineUsersCount = $visibleOnlineUsers->count();
             $allOnlineUsersCount = Activity::users($onlineUsersMinutes)->count();
 
+            View::share('is_admin', is_admin());
             View::share('postCount', Post::count());
             View::share('guestCount', $guestCount);
             View::share('topicCount', Topic::count());
@@ -35,7 +47,6 @@ class DashboardController extends Controller
             View::share('userCount', User::all()->count());
             View::share('visibleOnlineUsers', $visibleOnlineUsers);
             View::share('onlineUsersMinutes', $onlineUsersMinutes);
-            View::share('is_admin', Auth::user()->is_admin ?? false);
             View::share('peopleOnline', $allOnlineUsersCount + $guestCount);
             View::share('visibleOnlineUsersCount', $visibleOnlineUsersCount);
             View::share('invisibleOnlineUsersCount', $allOnlineUsersCount - $visibleOnlineUsersCount);

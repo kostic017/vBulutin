@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Session;
-
 use App\User;
 use App\Profile;
+use App\Helpers\FileLogger;
 use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
-use App\Exceptions\InvalidEmailTokenException;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -58,7 +53,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        return \Validator::make($data, [
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -76,7 +71,8 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            throw new \App\Exceptions\CaptchaFailedException('register');
+            FileLogger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            return alert_redirect(route('login'), 'error', __('auth.captcha-failed'));
         }
 
         event(new Registered($user = $this->create($request->all())));
@@ -95,10 +91,7 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        return redirect(route('login'))->with([
-            'alert-type' => 'info',
-            'message' => __('auth.confirmation-sent')
-        ]);
+        return alert_redirect(route('login'), 'info', __('auth.confirmation-sent'));
     }
 
     /**
@@ -113,7 +106,7 @@ class RegisterController extends Controller
         $user->username = $data['username'];
         $user->email = $data['email'];
         $user->email_token = str_random(30);
-        $user->password = Hash::make($data['password']);
+        $user->password = \Hash::make($data['password']);
         $user->save();
 
         $profile = new Profile;
@@ -136,12 +129,9 @@ class RegisterController extends Controller
             $user = User::where('email_token', $token)->firstOrFail();
             $user->email_token = null;
             $user->save();
-            return redirect(route('login'))->with([
-                'alert-type' => 'success',
-                'message' => 'Sada se možete logovati.'
-            ]);
+            return alert_redirect(route('login'), 'success', __('auth.can-login'));
         } catch (ModelNotFoundException $e) {
-            throw new InvalidEmailTokenException($token);
+            FileLogger::log('error', __METHOD__, request()->ip() . ' has provided invalid confirmation token');
         }
     }
 }

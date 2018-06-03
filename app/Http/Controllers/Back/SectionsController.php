@@ -1,19 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Back;
 
-use Session;
-use Validator;
-
-use App\Category;
-use App\Helpers\Common\Functions;
 use App\Http\Controllers\Controller;
-use App\Exceptions\SlugNotFoundException;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class SectionsController extends Controller
@@ -40,7 +31,7 @@ abstract class SectionsController extends Controller
         $max = (int)config('custom.pagination.max');
         $step = (int)config('custom.pagination.step');
 
-        $validator = Validator::make($request->all(), [
+        $validator = \Validator::make($request->all(), [
             'perPage' => "integer|between:0,{$max}",
             'filter' => Rule::in(['all', 'active', 'trashed']),
             'sort_column' => Rule::in($cols),
@@ -137,88 +128,63 @@ abstract class SectionsController extends Controller
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    public function edit(string $slug): View
+    public function edit($slug)
     {
-        try {
-            $section = $this->model::where('slug', $slug)->firstOrFail();
-            return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
-        } catch (ModelNotFoundException $e) {
-            throw new SlugNotFoundException($slug, $this->table);
-        }
+        $section = $this->model::where('slug', $slug)->firstOrFail();
+        return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $slug): RedirectResponse
+    public function update($request, $id)
     {
-        try {
-            $section = $this->model::where('slug', $slug)->firstOrFail();
+        $section = $this->model::findOrFail($id);
 
-            $validator = Validator::make($request->all(), [
-                'title' => "required|max:255|unique:{$this->table},title,{$section->id}",
-            ]);
+        $validator = Validator::make($request->all(), [
+            'title' => "required|max:255|unique:{$this->table},title,{$section->id}",
+        ]);
 
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            $section->title = $request->title;
-            $section->slug = unique_slug($section->title, $section->id);
-            $section->description = $request->description;
-            $section->save();
-
-            return redirect(route("{$this->table}.show", [$this->singular => $section->slug]))->with([
-                'alert-type' => 'success',
-                'message' => __('db.updated')
-            ]);
-        } catch (ModelNotFoundException $e) {
-            throw new SlugNotFoundException($slug, $this->table);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        $section->title = $request->title;
+        $section->slug = unique_slug($section->title, $section->id);
+        $section->description = $request->description;
+        $section->save();
+
+        return alert_redirect(route("back.{$this->table}.show", [$this->singular => $section->slug]), 'success', __('db.updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $slug): RedirectResponse
+    public function destroy($id)
     {
-        try {
-            $section = $this->model::where('slug', $slug)->firstOrFail();
-            $section->delete();
-            return redirect(route("{$this->table}.index"))->with([
-                'alert-type' => 'success',
-                'message' => __('db.deleted')
-            ]);
-        } catch (ModelNotFoundException $e) {
-            throw new SlugNotFoundException($slug, $this->table);
-        }
+        $section = $this->model::findOrFail($id);
+        $section->delete();
+        return alert_redirect(route("back.{$this->table}.index"), 'success', __('db.deleted'));
     }
 
     /**
      * Restore a soft-deleted model instance.
      *
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore(string $slug): RedirectResponse
+    public function restore($id)
     {
-        try {
-            $section = $this->model::onlyTrashed()->where('slug', $slug)->firstOrFail();
-            $section->restore();
-            return redirect(route("{$this->table}.index"))->with([
-                'alert-type' => 'success',
-                'message' => __('db.restored')
-            ]);
-        } catch (ModelNotFoundException $e) {
-            throw new SlugNotFoundException($slug, $this->table);
-        }
+        $section = $this->model::onlyTrashed()->findOrFail($id);
+        $section->restore();
+        return alert_redirect(route("back.{$this->table}.index"), 'success', __('db.restored'));
     }
 
     /**
@@ -227,14 +193,14 @@ abstract class SectionsController extends Controller
      * @param  string  $slug
      * @return \Illuminate\View\View
      */
-    abstract public function show(string $slug): View;
+    abstract public function show($slug);
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\View\View
      */
-    abstract public function create(): View;
+    abstract public function create();
 
     /**
      * Store a newly created resource in storage.
@@ -242,6 +208,6 @@ abstract class SectionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    abstract public function store(Request $request): RedirectResponse;
+    abstract public function store($request);
 
 }

@@ -17,34 +17,30 @@ class AjaxController extends Controller
 
     public function positions()
     {
-        try {
-            $data = request('data');
+        $data = request('data');
 
-            foreach ($data as $categoryId => $categoryData) {
-                $category = Category::withTrashed()->find($categoryId);
-                $category->update(['position' => $category['position']]);
+        foreach ($data as $categoryId => $categoryData) {
+            $category = Category::withTrashed()->find($categoryId);
+            $category->update(['position' => $category['position']]);
 
-                foreach ($categoryData['forums'] ?? [] as $parentIndex => $parentForumData) {
-                    $parentForum = Forum::withTrashed()->find($parentForumData['id']);
+            foreach ($categoryData['forums'] ?? [] as $parentIndex => $parentForumData) {
+                $parentForum = Forum::withTrashed()->find($parentForumData['id']);
 
-                    $parentForum->update([
-                        'parent_id' => null,
+                $parentForum->update([
+                    'parent_id' => null,
+                    'category_id' => $categoryId,
+                    'position' => $parentIndex + 1
+                ]);
+
+                foreach ($parentForumData['children'] ?? [] as $childIndex => $childForumData) {
+                    $childForum = Forum::withTrashed()->find($childForumData['id']);
+                    $childForum->update([
+                        'parent_id' => $parentForumData['id'],
                         'category_id' => $categoryId,
-                        'position' => $parentIndex + 1
+                        'position' => $childIndex + 1
                     ]);
-
-                    foreach ($parentForumData['children'] ?? [] as $childIndex => $childForumData) {
-                        $childForum = Forum::withTrashed()->find($childForumData['id']);
-                        $childForum->update([
-                            'parent_id' => $parentForumData['id'],
-                            'category_id' => $categoryId,
-                            'position' => $childIndex + 1
-                        ]);
-                    }
                 }
             }
-        } catch (Exception $e) {
-            throw new UnexpectedException($e);
         }
     }
 
