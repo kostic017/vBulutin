@@ -1,20 +1,20 @@
 # SimpleForumSoftware
 
-Projekat iz Web programiranja. Bez nekih originalnih ideja. Prvi Laravel projekat.
+Projekat iz Web programiranja. Prva Laravel aplikacija. Bez nekih originalnih ideja.
 
 | ![publicarea](doc/publicarea.png) | ![adminarea](doc/adminarea.png) |
 |:---:|:---:|
-| Deo za javnost | Deo za administratore |
+| Public Area | Admin Area |
 
-## Projekat je završen
+## Projekat završen
 
-Implementirao sam najosnovnije funkcionalnosti koje neki forum software treba da ima, a pritom sam ispunio sve uslove projekta.
+Implementirao sam najosnovnije funkcionalnosti forum softvera i pritom ispunio sve uslove projekta.
 
 ### Šta je odrađeno
 
-TODO
+* Puno toga
 
-### Šta je moglo da se odradi
+### Šta je još bilo planirano
 
 * Glasanje ★
 * Ćaskanje
@@ -31,10 +31,10 @@ TODO
   * Trenutno je sve zbrda-zdola sklopljeno kako bi projekat što pre bio završen.
 * Praćenje IP adresa korisnika
   * Da se osiguramo da korisnik nema više od jednog naloga.
+* Moj, centralizovan, hosting
+  -  Kao što nudi [Forumotion](https://www.forumotion.com/). Trenutno aplikaciju svako mora da skine i instalira na svom serveru. 
 * Izmena poruka ★
   * Verzije poruka se čuvaju u posebnoj tabeli. Admini imaju opciju da urade undo (posle ne može redo).
-* Moj, centralizovan, hosting
-  * Kao što nudi [Forumotion](https://www.forumotion.com/). Trenutno aplikaciju svako mora da skine i instalira na svom serveru. Postarao sam se da to bude što bezbolnije moguće.
 * Lajkovanje/dislajkovanje poruka ★
   * Poruke sa negativnim rejtingom se sakrivaju (korisnik može da prikaže poruku ako želi). Korisnici koji daju loše rejtinge jer nemaju pametnija posla gube mogućnost da ostavljaju rejting. Admin može da poništi rejting ako proceni da nije validan.
 
@@ -59,9 +59,3 @@ TODO
 
 ## Baza podataka
 ![model](doc/model.png)
-
-## Istorijat
-
-1. Radio bez MVC framework-a.
-2. Pokušao da napravim svoj MVC framework.
-3. Skinuo Laravel i sve odradio ispočeteka.
