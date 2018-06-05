@@ -8,27 +8,7 @@ Projekat iz Web programiranja. Prva Laravel aplikacija. Bez nekih previše origi
 ## O projektu
 Do sada sam implementirao neke najosnovnije funkcionalnosti forum softvera.
 
-Pregled nekih od funkcionalnosti po grupama korisnika:
-
- * Gosti
-    * Ograničeno kretanje po javnom delu
-    * Registracija i prijavljivanje na forum
-       * Potvrda mejl adrese
-       * Zaboravljena lozinka
- * Registrovani korisnici
-    * Otvaranje novih tema
-    * Pregled korisničkih profila
-    * Odgovaranje na postojeće teme
-    * Izmena informacija o nalogu/profilu
- * Administratori
-    * Banovanje korisnika
-    * Generisanje izveštaja
-    * Brisanje odgovora na teme
-    * Zaključavanje tema i foruma
-    * Izmena korisničkih informacija
-    * Administriranje kategorija i foruma
-
-### Šta bi još moglo da se ubaci
+### Šta bi još moglo da se odradi
 
 * Glasanje ★
 * Ćaskanje

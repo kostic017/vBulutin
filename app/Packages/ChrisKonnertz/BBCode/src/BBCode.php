@@ -290,9 +290,8 @@ class BBCode
             return $code;
         }
 
-        // __MODIFIED__
         // Don't parse content of code tags.
-        if (isset($openTags['code']) and sizeof($openTags['code']) > 0) {
+        if (isset($openTags['code']) && sizeof($openTags['code']) > 0) {
             if ($tag->opening) {
                 return (string)$tag;
             } else {
