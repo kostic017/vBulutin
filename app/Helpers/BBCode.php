@@ -80,7 +80,7 @@ class BBCode {
         }
 
         foreach (self::$emoticons as $emoticon) {
-            $pattern = "/:{$emoticon['name']}:/";
+            $pattern = "/<code>[\s\S]*?<\/code>(*SKIP)(*F)|(:{$emoticon['name']}:)/";
             $replace = "<img src=\"{$emoticon['path']}\" alt=\"{$emoticon['name']}\">";
             while (preg_match($pattern, $code)) {
                 $code = preg_replace($pattern, $replace, $code);
