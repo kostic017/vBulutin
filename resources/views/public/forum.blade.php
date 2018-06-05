@@ -6,7 +6,7 @@
     <div class="topbox-actions">
         <p><a href="#scform">Otvori temu</a></p>
         @if ($is_admin)
-            <form action="{{ route('front.forum.lock', ['slug' => $self->id]) }}" method="post">
+            <form action="{{ route('front.forums.lock', ['slug' => $self->id]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
                     {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} forum
