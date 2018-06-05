@@ -101,8 +101,10 @@
     @elseif ($forum->is_locked)
         <p>Tema se nalazi u zaključanom forumu, te nije moguće odgovoriti na nju.</p>
     @elseif (Auth::check())
-        <form action="{{ route('front.posts.update', ['topic' => $self->id]) }}" method="post" id="scform">
+        <form action="{{ route('front.posts.store') }}" method="post" id="scform">
             @csrf
+
+            <input type="hidden" name="topic_id" value="{{ $self->id }}">
 
             <div class="form-group">
                 <label for="sceditor" class="sr-only">Poruka</label>

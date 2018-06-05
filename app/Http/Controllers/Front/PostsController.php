@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use Auth;
 use App\Post;
 use App\Topic;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostsController extends FrontController
@@ -13,10 +14,9 @@ class PostsController extends FrontController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $topic_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($request, $topic_id)
+    public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'content' => 'required|min:5',
@@ -26,7 +26,7 @@ class PostsController extends FrontController
             return redirect()->to(app('url')->previous(). '#scform')->withErrors($validator)->withInput();
         }
 
-        $topic = Topic::findOrFail($topic_id);
+        $topic = Topic::findOrFail($request->topic_id);
         $post = $topic->lastPost();
 
         if (Auth::id() === $post->user()->firstOrFail()->id) {

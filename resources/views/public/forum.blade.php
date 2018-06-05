@@ -114,8 +114,10 @@
     @if ($self->is_locked)
         <p>Forum je zaključan, te nije moguće otvarati nove teme.</p>
     @elseif (Auth::check())
-        <form action="{{ route('front.topics.store', ['forum' => $self->id]) }}" method="post" id="scform">
+        <form action="{{ route('front.topics.store') }}" method="post" id="scform">
             @csrf
+            <input type="hidden" name="forum_id" value="{{ $self->id }}">
+
             <div class="form-group">
                 <label for="title">Naslov</label>
                 <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">

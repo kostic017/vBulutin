@@ -68,7 +68,7 @@ class TopicsController extends FrontController
      * @param  string  $forum_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, string $forum_id)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
@@ -82,7 +82,7 @@ class TopicsController extends FrontController
         $topic = new Topic;
         $topic->title = $request->title;
         $topic->slug = str_slug($topic->title);
-        $topic->forum_id = $forum_id;
+        $topic->forum_id = $request->forum_id;
         $topic->save();
 
         $topic->slug = unique_slug($topic->title, $topic->id);
