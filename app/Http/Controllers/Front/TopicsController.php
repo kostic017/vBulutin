@@ -50,12 +50,12 @@ class TopicsController extends FrontController
     /**
      * Toggle lock state of the specified resource.
      *
-     * @param  string  $slug
+     * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function lock($slug)
+    public function lock($id)
     {
-        $topic = Topic::where('slug', $slug)->firstOrFail();
+        $topic = Topic::findOrFail($id);
         $topic->is_locked = !$topic->is_locked;
         $topic->save();
         return redirect()->back();

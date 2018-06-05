@@ -10,7 +10,6 @@ class BBCode {
 
     /**
      * Convert BBCode to HTML.
-     * Singelton.
      *
      * @param  string  $bbcode
      * @return string  Generated HTML code.
@@ -61,7 +60,6 @@ class BBCode {
 
     /**
      * Replace emoticon codes with <img> tags.
-     * Singelton.
      *
      * @param  string  $code
      * @return string  Generated HTML code.

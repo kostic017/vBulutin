@@ -121,7 +121,6 @@ class CategoriesController extends SectionsController
     /**
      * Generates ordered tree of all forums and categories.
      *
-     * @param  string  $slug
      * @return \Illuminate\View\View
      */
     public function positions()
