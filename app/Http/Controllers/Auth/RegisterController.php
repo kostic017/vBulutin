@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Profile;
-use App\Helpers\FileLogger;
+use App\Helpers\Logger;
 use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
 
@@ -71,7 +71,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            FileLogger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
             return alert_redirect(route('login'), 'error', __('auth.captcha-failed'));
         }
 
@@ -131,7 +131,7 @@ class RegisterController extends Controller
             $user->save();
             return alert_redirect(route('login'), 'success', __('auth.can-login'));
         } catch (ModelNotFoundException $e) {
-            FileLogger::log('error', __METHOD__, request()->ip() . ' has provided invalid confirmation token');
+            Logger::log('error', __METHOD__, request()->ip() . ' has provided invalid confirmation token');
         }
     }
 }

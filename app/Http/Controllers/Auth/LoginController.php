@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use App\Helpers\FileLogger;
+use App\Helpers\Logger;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -78,7 +78,7 @@ class LoginController extends Controller
         }
 
         if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            FileLogger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
             return alert_redirect(route('login'), 'error', __('auth.captcha-failed'));
         }
 

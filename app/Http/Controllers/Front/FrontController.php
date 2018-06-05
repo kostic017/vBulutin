@@ -1,6 +1,5 @@
 <?php
 
-// note: Public is a reserved word
 namespace App\Http\Controllers\Front;
 
 use View;
@@ -22,6 +21,7 @@ class FrontController extends Controller
      */
     public function index(Request $request)
     {
+        \App\Helpers\Logger::log('dasda', 'dasdsa', 'dasdas');
         return view('public.index')->with('categories', Category::all());
     }
 
