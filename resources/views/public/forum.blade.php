@@ -111,37 +111,39 @@
         </table>
     @endif
 
-    @if (!$self->is_locked)
-        @auth
-            <form action="{{ route('front.topics.store', ['forum' => $self->id]) }}" method="post" id="scform">
-                @csrf
-                <div class="form-group">
-                    <label for="title">Naslov</label>
-                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
-                    @if ($errors->has('title'))
-                        <span class="invalid-feedback" style="display:block">
-                            <strong>{{ $errors->first('title') }}</strong>
-                        </span>
-                    @endif
-                </div>
+    @if ($self->is_locked)
+        <p>Forum je zaključan, te nije moguće otvarati nove teme.</p>
+    @elseif (Auth::check())
+        <form action="{{ route('front.topics.store', ['forum' => $self->id]) }}" method="post" id="scform">
+            @csrf
+            <div class="form-group">
+                <label for="title">Naslov</label>
+                <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
+                @if ($errors->has('title'))
+                    <span class="invalid-feedback" style="display:block">
+                        <strong>{{ $errors->first('title') }}</strong>
+                    </span>
+                @endif
+            </div>
 
-                <div class="form-group">
-                    <label for="sceditor" class="sr-only">Poruka</label>
-                    <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
+            <div class="form-group">
+                <label for="sceditor" class="sr-only">Poruka</label>
+                <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
 
-                    @if ($errors->has('content'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('content') }}</strong>
-                        </span>
-                    @endif
-                </div>
+                @if ($errors->has('content'))
+                    <span class="invalid-feedback">
+                        <strong>{{ $errors->first('content') }}</strong>
+                    </span>
+                @endif
+            </div>
 
-                <div class="form-group text-center">
-                    <button class="btn btn-success" type="submit">Otvori temu</button>
-                </div>
-            </form>
+            <div class="form-group text-center">
+                <button class="btn btn-success" type="submit">Otvori temu</button>
+            </div>
+        </form>
 
-            @include('includes.sceditor')
-        @endauth
+        @include('includes.sceditor')
+    @else
+        <p>Samo prijavljeni korisnici mogu otvarati nove teme.</p>
     @endif
 @stop

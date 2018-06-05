@@ -96,29 +96,33 @@
         </div>
     @endforeach
 
-    @if (!($self->is_locked || $forum->is_locked))
-        @auth
-            <form action="{{ route('front.posts.update', ['topic' => $self->id]) }}" method="post" id="scform">
-                @csrf
+    @if ($self->is_locked)
+        <p>Tema je zaključana, te nije moguće odgovarati na nju.</p>
+    @elseif ($forum->is_locked)
+        <p>Tema se nalazi u zaključanom forumu, te nije moguće odgovoriti na nju.</p>
+    @elseif (Auth::check())
+        <form action="{{ route('front.posts.update', ['topic' => $self->id]) }}" method="post" id="scform">
+            @csrf
 
-                <div class="form-group">
-                    <label for="sceditor" class="sr-only">Poruka</label>
-                    <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
+            <div class="form-group">
+                <label for="sceditor" class="sr-only">Poruka</label>
+                <textarea id="sceditor" id="content" name="content" class="{{ $errors->has('content') ? ' is-invalid' : '' }}">{{ old('content') }}</textarea>
 
-                    @if ($errors->has('content'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('content') }}</strong>
-                        </span>
-                    @endif
-                </div>
+                @if ($errors->has('content'))
+                    <span class="invalid-feedback">
+                        <strong>{{ $errors->first('content') }}</strong>
+                    </span>
+                @endif
+            </div>
 
-                <div class="form-group text-center">
-                    <button class="btn btn-success" type="submit">Pošalji odgovor</button>
-                </div>
-            </form>
+            <div class="form-group text-center">
+                <button class="btn btn-success" type="submit">Pošalji odgovor</button>
+            </div>
+        </form>
 
-            @include('includes.overlay')
-            @include('includes.sceditor')
-        @endauth
+        @include('includes.overlay')
+        @include('includes.sceditor')
+    @else
+        <p>Samo prijavljeni korisnici mogu slati odgovore.</p>
     @endif
 @stop
