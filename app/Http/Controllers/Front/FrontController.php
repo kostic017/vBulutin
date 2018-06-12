@@ -6,6 +6,7 @@ use View;
 use Activity;
 use App\User;
 use App\Post;
+use App\Board;
 use App\Topic;
 use App\Category;
 use App\Http\Controllers\Controller;
@@ -19,9 +20,10 @@ class FrontController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request, string $boardName)
     {
-        return view('board.public.index')->with('categories', Category::all());
+        $board = Board::where('name', $boardName)->firstOrFail();
+        return view('board.public.index')->with('categories', $board->categories()->get());
     }
 
     public function __construct()

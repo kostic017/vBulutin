@@ -29,13 +29,12 @@ Route::namespace('Website')
         }
     );
 
+Route::get('/{board_name}/', 'Front\FrontController@index')->name('front.index');
+
 Route::namespace('Front')
-    ->prefix('{board_name}/')
     ->name('front.')
     ->group(
         function () {
-            Route::get('/', 'FrontController@index')->name('index');
-
             Route::resource('posts', 'PostsController');
             Route::resource('topics', 'TopicsController');
             Route::resource('forums', 'ForumsController');
@@ -66,7 +65,6 @@ Route::namespace('Back')
 
             Route::get('reports/', 'ReportsController@index')->name('reports.index');
             Route::get('positions/', 'CategoriesController@positions')->name('positions');
-
 
             Route::post('forums/{id}/restore', 'ForumsController@restore')->name('forums.restore');
             Route::post('reports/{table}/generate', 'ReportsController@generate')->name('reports.generate');

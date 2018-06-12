@@ -19,6 +19,7 @@ class CategoriesController extends FrontController
             ->with('topbox', 'category')
             ->with('category', $category)
             ->with('self', $category)
-            ->with('mods', $category->moderators());
+            ->with('mods', $category->moderators())
+            ->with('board', $category->board()->firstOrFail());
     }
 }

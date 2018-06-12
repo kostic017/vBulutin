@@ -38,6 +38,7 @@ class TopicsController extends FrontController
             'topicStarter' => $topic->starter(),
             'solution' => $topic->solution(),
             'posts' => $posts,
+            'board' => $category->board()->firstOrFail(),
         ];
 
         if ($forum->parent_id) {

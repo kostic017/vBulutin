@@ -16,13 +16,15 @@ class ForumsController extends FrontController
     public function show($slug)
     {
         $forum = Forum::where('slug', $slug)->firstOrFail();
+        $category = Category::findOrFail($forum->category_id);
 
         $vars = [
             'topbox' => 'forum',
             'self' => $forum,
             'children' => $forum->children()->get(),
             'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
-            'category' => Category::findOrFail($forum->category_id),
+            'category' => $category,
+            'board' => $category->board()->firstOrFail(),
         ];
 
         if ($forum->parent_id) {

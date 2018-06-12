@@ -16,6 +16,11 @@ class Category extends Model
      */
     public $timestamps = false;
 
+    public function board()
+    {
+        return $this->belongsTo('App\Board');
+    }
+
     public function forums()
     {
         return $this->hasMany('App\Forum');

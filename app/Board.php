@@ -12,4 +12,9 @@ class Board extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function categories()
+    {
+        return $this->hasMany('App\Category');
+    }
 }
