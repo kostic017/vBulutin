@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.website')
 
 @section('content')
     <form action="{{ route('website.users.index') }}" method="get" id="form1">

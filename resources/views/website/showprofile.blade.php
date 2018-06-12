@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.website')
 
 @section('content')
     <div class="show-profile bgc-main p-main">

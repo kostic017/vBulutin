@@ -1,4 +1,4 @@
-@extends('layouts.public')
+@extends('layouts.website')
 
 @section('content')
     @if (!$errors->isEmpty())
