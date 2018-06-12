@@ -99,19 +99,6 @@ class LoginController extends Controller
             $this->sendFailedLoginResponse($request);
     }
 
-     /**
-     * The user has been authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    public function authenticated(Request $request, $user)
-    {
-        $user->last_login_at = \Carbon::now()->toDateTimeString();
-        $user->save();
-    }
-
     /**
      * Get the failed login response instance.
      * (email not confirmed)

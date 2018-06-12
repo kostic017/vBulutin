@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class Boards extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('boards', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug');
+            $table->string('name');
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->integer('position');
-            $table->integer('board_id');
-            $table->softDeletes();
+            $table->string('description')->nullable();
+            $table->boolean('visible')->default(false);
+            $table->integer('owned_by');
         });
     }
 
@@ -31,6 +30,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('boards');
     }
 }
