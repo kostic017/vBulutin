@@ -22,9 +22,7 @@ Route::namespace('Website')
     ->name('website.')
     ->group(
         function() {
-            Route::get('/', function () {
-                return view('website.index');
-            })->name('index');
+            Route::get('/', 'WebsiteController@index')->name('index');
 
             Route::resource('users', 'UsersController');
             Route::post('user/{id}/ban', 'UsersController@ban')->name('users.ban');

@@ -17,5 +17,5 @@
 @overwrite
 
 @section('content')
-    Welcome
+    @yield('content')
 @overwrite

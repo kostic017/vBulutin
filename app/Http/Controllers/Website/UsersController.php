@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Website;
 
 use Auth;
 use App\Post;
@@ -9,7 +9,7 @@ use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class UsersController extends FrontController
+class UsersController
 {
 
     /**
