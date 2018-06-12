@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    @include('public.includes.topbox')
+    @include('board.public.includes.topbox')
 
     @if ($is_admin || Auth::id() === $topicStarter->id)
         <form id="solutionform" method="post" action="{{ route('front.topics.solution', ['id' => $self->id]) }}">
@@ -39,8 +39,8 @@
 
             <div class="d-flex flex-wrap">
                 <ul class="profile">
-                    <li><a href="{{ route('front.users.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
-                    <li><a href="{{ route('front.users.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
+                    <li><a href="{{ route('website.users.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
+                    <li><a href="{{ route('website.users.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
                     <li><strong>Broj poruka: </strong>{{ $user->posts()->get()->count() }}</li>
                     <li><strong>Pridružio: </strong>{{ extractDate($user->registered_at) }}</li>
                 </ul>
@@ -127,4 +127,47 @@
     @else
         <p>Samo prijavljeni korisnici mogu slati odgovore.</p>
     @endif
+@stop
+
+@section('scripts')
+    <script>
+        $(function() {
+            $("#edittitle").on("click", function(event) {
+                event.preventDefault();
+                $("#edittitle-form").toggle();
+            });
+
+            $(".quotepost").on("click", function(event) {
+                event.preventDefault();
+
+                const postId = $(this).attr("data-postid");
+                const editor = sceditor.instance(document.querySelector("#sceditor"));
+
+                const overlay = $("#overlay");
+                overlay.show();
+                overlay.fitText();
+
+                $.post('/ajax/quote', { postId }, function (code) {
+                    editor.insert(code);
+                    overlay.hide();
+                }).fail(function() {
+                    toastr.error($("span[data-key='generic.error']").text());
+                    overlay.hide();
+                });
+
+            });
+
+            $(".marksolution").on("click", function (event) {
+                event.preventDefault();
+                $("input[name=solution_id]").val($(this).attr("data-postId"));
+                $("#solutionform").submit();
+            });
+
+            $(".unmarksolution").on("click", function(event) {
+                event.preventDefault();
+                $("input[name=solution_id]").val("");
+                $("#solutionform").submit();
+            });
+        });
+    </script>
 @stop

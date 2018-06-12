@@ -74,7 +74,7 @@ class CategoriesController extends SectionsController
      */
     public function create()
     {
-        return view('admin.sections.categories.create');
+        return view('board.admin.sections.categories.create');
     }
 
     /**
@@ -115,7 +115,7 @@ class CategoriesController extends SectionsController
     public function show($slug)
     {
         $category = Category::withTrashed()->where('slug', $slug)->firstOrFail();
-        return view('admin.sections.categories.show')->with('category', $category);
+        return view('board.admin.sections.categories.show')->with('category', $category);
     }
 
     /**
@@ -142,7 +142,7 @@ class CategoriesController extends SectionsController
                                         ->get($columns);
             }
         }
-        return view('admin.sections.positions', ['categories' => $categories]);
+        return view('board.admin.sections.positions', ['categories' => $categories]);
     }
 
 }

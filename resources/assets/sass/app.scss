@@ -9,7 +9,6 @@ select {
 }
 
 th[data-column] {
-
     .fa-search {
         cursor: pointer;
     }
@@ -42,7 +41,6 @@ th[data-column] {
             display: none;
         }
     }
-
 }
 
 #overlay {
@@ -109,5 +107,15 @@ span.invalid-feedback {
         &:hover {
             color: $c-captionlink-hover;
         }
+    }
+}
+
+.footer {
+    margin-top: $m-main;
+    border-top: 1px solid $bc-main;
+
+    .copyright {
+        text-align: center;
+        margin-top: ($m-main / 2);
     }
 }

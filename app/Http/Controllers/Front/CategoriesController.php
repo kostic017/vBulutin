@@ -15,7 +15,7 @@ class CategoriesController extends FrontController
     public function show($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
-        return view('public.category')
+        return view('board.public.category')
             ->with('topbox', 'category')
             ->with('category', $category)
             ->with('self', $category)

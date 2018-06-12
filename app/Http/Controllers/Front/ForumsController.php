@@ -29,7 +29,7 @@ class ForumsController extends FrontController
             $vars['parent'] = Forum::findOrFail($forum->parent_id);
         }
 
-        return view('public.forum')
+        return view('board.public.forum')
             ->with($vars)
             ->with('mods', $forum->moderators());
     }

@@ -117,7 +117,7 @@ abstract class SectionsController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        return view('admin.sections.table')
+        return view('board.admin.sections.table')
             ->with('table', $this->table)
             ->with(compact('rows', 'perPage', 'max', 'step', 'filter', 'sortColumn', 'sortOrder', 'searchColumn', 'searchQuery'));
     }

@@ -84,7 +84,7 @@ class ForumsController extends SectionsController
          ->whereNull('parent_id')
          ->whereNull('categories.deleted_at')
          ->get();
-        return view('admin.sections.forums.create')
+        return view('board.admin.sections.forums.create')
                 ->with('categories', $categories)
                 ->with('rootForums', $rootForums);
     }
@@ -142,7 +142,7 @@ class ForumsController extends SectionsController
         $forum = Forum::withTrashed()->where('slug', $slug)->firstOrFail();
         $category = Category::withTrashed()->where('id', $forum->category_id)->get(['id', 'slug', 'title'])->first();
         $parentForum = Forum::withTrashed()->where('id', $forum->parent_id)->get(['id', 'slug', 'title'])->first();
-        return view('admin.sections.forums.show')
+        return view('board.admin.sections.forums.show')
             ->with('forum', $forum)
             ->with('category', $category)
             ->with('parentForum', $parentForum);

@@ -44,7 +44,7 @@ class TopicsController extends FrontController
             $vars['parent'] = Forum::findOrFail($forum->parent_id);
         }
 
-        return view('public.topic')->with($vars);
+        return view('board.public.topic')->with($vars);
     }
 
     /**

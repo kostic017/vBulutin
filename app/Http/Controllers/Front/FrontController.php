@@ -21,8 +21,7 @@ class FrontController extends Controller
      */
     public function index(Request $request)
     {
-        \App\Helpers\Logger::log('dasda', 'dasdsa', 'dasdas');
-        return view('public.index')->with('categories', Category::all());
+        return view('board.public.index')->with('categories', Category::all());
     }
 
     public function __construct()

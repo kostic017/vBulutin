@@ -18,7 +18,7 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return view('admin.reports')
+        return view('board.admin.reports')
             ->with('categories', Schema::getColumnListing('categories'))
             ->with('forums', Schema::getColumnListing('forums'))
             ->with('topics', Schema::getColumnListing('topics'))

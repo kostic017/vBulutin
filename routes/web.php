@@ -18,20 +18,31 @@ Route::group(['prefix' => '/'], function () {
     Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
 });
 
+Route::namespace('Website')
+    ->name('website.')
+    ->group(
+        function() {
+            Route::get('/', function () {
+                return view('website.index');
+            })->name('index');
+
+            Route::resource('users', 'UsersController');
+            Route::post('user/{id}/ban', 'UsersController@ban')->name('users.ban');
+        }
+    );
+
 Route::namespace('Front')
-    ->prefix('/')
+    ->prefix('{board_name}/')
     ->name('front.')
     ->group(
         function () {
             Route::get('/', 'FrontController@index')->name('index');
 
-            Route::resource('users', 'UsersController');
             Route::resource('posts', 'PostsController');
             Route::resource('topics', 'TopicsController');
             Route::resource('forums', 'ForumsController');
             Route::resource('categories', 'CategoriesController');
 
-            Route::post('user/{id}/ban', 'UsersController@ban')->name('users.ban');
             Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forums.lock');
             Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topics.lock');
             Route::post('topic/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
@@ -44,7 +55,7 @@ Route::namespace('Front')
 
 Route::namespace('Back')
     ->name('back.')
-    ->prefix('/admin')
+    ->prefix('{board_name}/admin')
     ->middleware('admin')
     ->group(
         function () {

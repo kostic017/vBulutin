@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <form method="post" action="{{ route('back.reports.generate', ['table' => 'categories']) }}">
                                 @php ($columns = $categories)
-                                @include('admin.includes.report-form')
+                                @include('board.admin.includes.report-form')
                             </form>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="card-body">
                             <form method="post" action="{{ route('back.reports.generate', ['table' => 'forums']) }}">
                                 @php ($columns = $forums)
-                                @include('admin.includes.report-form')
+                                @include('board.admin.includes.report-form')
                             </form>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         <div class="card-body">
                             <form method="post" action="{{ route('back.reports.generate', ['table' => 'topics']) }}">
                                 @php ($columns = $topics)
-                                @include('admin.includes.report-form')
+                                @include('board.admin.includes.report-form')
                             </form>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                         <div class="card-body">
                             <form method="post" action="{{ route('back.reports.generate', ['table' => 'users']) }}">
                                 @php ($columns = $users)
-                                @include('admin.includes.report-form')
+                                @include('board.admin.includes.report-form')
                             </form>
                         </div>
                     </div>

@@ -30,7 +30,7 @@
                     @else
                         <ul>
                             @foreach ($mods as $mod)
-                                <li><a href="{{ route('front.users.show', ['profile' => $mod->username]) }}">{{ $mod->username }}</a></li>
+                                <li><a href="{{ route('website.users.show', ['profile' => $mod->username]) }}">{{ $mod->username }}</a></li>
                             @endforeach
                         </ul>
                     @endif

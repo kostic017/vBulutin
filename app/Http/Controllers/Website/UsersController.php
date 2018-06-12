@@ -84,7 +84,7 @@ class UsersController extends FrontController
         |--------------------------------------------------------------------------
         */
 
-        return view('public.users')
+        return view('board.public.users')
             ->with(compact('users', 'perPage', 'step', 'max', 'sortColumn', 'sortOrder'));
     }
 
@@ -98,7 +98,7 @@ class UsersController extends FrontController
     {
         if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
-            return view('public.showprofile')
+            return view('board.public.showprofile')
                 ->with('user', $user)
                 ->with('profile', $user->profile()->firstOrFail());
         } else {
@@ -117,11 +117,11 @@ class UsersController extends FrontController
         if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
             if (Auth::id() == $user->id || Auth::user()->is_admin) {
-                return view('public.editprofile')
+                return view('board.public.editprofile')
                     ->with('user', $user)
                     ->with('profile', $user->profile()->firstOrFail());
             }
-            return redirect(route('front.users.show', ['profile' => $profile]));
+            return redirect(route('website.users.show', ['profile' => $profile]));
         } else {
             return alert_redirect(route(url()->previous()), 'info', __('auth.must-login'));
         }
@@ -184,7 +184,7 @@ class UsersController extends FrontController
         $user->save();
         $profile->save();
 
-        return alert_redirect(route('front.users.show', ['profile' => $user->username]), 'success', __('db.updated'));
+        return alert_redirect(route('website.users.show', ['profile' => $user->username]), 'success', __('db.updated'));
     }
 
     /**

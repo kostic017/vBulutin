@@ -67,7 +67,7 @@
                         </ul>
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
-                            <li><a class="nav-link" href="{{ route('front.users.index') }}">Korisnici</a></li>
+                            <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
                             @guest
                                 <!-- Authentication Links -->
                                 @yield('nav-guest')
@@ -80,7 +80,7 @@
                                         {{ Auth::user()->name ?? Auth::user()->username }} <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('front.users.show', ['profile' => Auth::user()->username]) }}">
+                                        <a class="dropdown-item" href="{{ route('website.users.show', ['profile' => Auth::user()->username]) }}">
                                             <i class="fas fa-user"></i> Profil
                                         </a>
                                         <a class="dropdown-item" href="#" id="btn-messages" data-newmessages="0">
@@ -104,6 +104,11 @@
                 @yield('content')
             </main>
 
+            <section class="footer">
+                <div class="copyright">
+                   Copyright &copy; {{ date('Y') }} Nikola Kostić
+                </div>
+            </section>
         </div>
 
     </body>
