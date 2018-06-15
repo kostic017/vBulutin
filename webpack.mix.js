@@ -11,8 +11,6 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.browserSync('forum41.local');
-
 mix.sass('resources/assets/sass/app.scss', 'public/css/app.css');
 mix.sass('resources/assets/sass/board/admin/style.scss', 'public/css/board-admin.css');
 mix.sass('resources/assets/sass/board/public/style.scss', 'public/css/board-public.css');
