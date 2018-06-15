@@ -1,0 +1,11 @@
+@import "../partials/import";
+
+.board {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    @include margins-but(first, top, $m-main);
+}

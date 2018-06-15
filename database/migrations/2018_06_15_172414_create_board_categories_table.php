@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Boards extends Migration
+class CreateBoardCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class Boards extends Migration
      */
     public function up()
     {
-        Schema::create('boards', function (Blueprint $table) {
+        Schema::create('board_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('slug');
             $table->string('title');
             $table->string('description')->nullable();
-            $table->boolean('is_visible')->default(false);
-            $table->integer('owned_by');
-            $table->integer('board_category_id');
         });
     }
 
@@ -31,6 +28,6 @@ class Boards extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boards');
+        Schema::dropIfExists('board_categories');
     }
 }

@@ -10,11 +10,6 @@ class Forum extends Model
 {
     use SoftDeletes;
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
     public function postCount()
@@ -62,9 +57,6 @@ class Forum extends Model
         return true;
     }
 
-    /**
-     * Poredi poslednje poruke u svakoj temi u forumu i vraca najnoviju.
-     */
     public function lastPost()
     {
         $lastPost = null;
@@ -87,12 +79,6 @@ class Forum extends Model
             }
         }
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
 
     public function category()
     {

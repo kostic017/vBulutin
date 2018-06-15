@@ -9,7 +9,7 @@ use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class UsersController
+class UsersController extends WebsiteController
 {
 
     /**

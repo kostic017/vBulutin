@@ -20,9 +20,9 @@ class FrontController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request, string $boardName)
+    public function index(Request $request, string $name)
     {
-        $board = Board::where('name', $boardName)->firstOrFail();
+        $board = Board::where('name', $name)->firstOrFail();
         return view('board.public.index')->with('categories', $board->categories()->get());
     }
 

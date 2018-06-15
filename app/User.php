@@ -9,22 +9,12 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
     protected $fillable = [
         'username', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'email_token', 'remember_token',
     ];
@@ -34,12 +24,6 @@ class User extends Authenticatable
         return self::select('username')->orderBy('registered_at', 'desc')->first();
     }
 
-    /**
-     * Route notifications for the mail channel.
-     *
-     * @param  \Illuminate\Notifications\Notification  $notification
-     * @return string
-     */
     public function routeNotificationForMail($notification)
     {
         return $this->email;

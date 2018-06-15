@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Website;
 
-use App\Board;
+use View;
+use App\BoardCategory;
 
 class WebsiteController
 {
-
-    public function index() {
-        return view('website.index')
-            ->with('boards', Board::all());
+    public function __construct()
+    {
+        View::share('boardCategories', BoardCategory::all());
     }
-
 }

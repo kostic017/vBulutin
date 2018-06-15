@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PollAnswer extends Model
+class BoardCategory extends Model
 {
     public $timestamps = false;
 
-    public function poll()
+    public function boards()
     {
-        return $this->belongsTo('poll');
+        return $this->hasMany('App\Board');
     }
 }

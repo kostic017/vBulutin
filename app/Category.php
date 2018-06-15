@@ -9,11 +9,6 @@ class Category extends Model
 {
     use SoftDeletes;
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
     public function board()

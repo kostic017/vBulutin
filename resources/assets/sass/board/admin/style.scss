@@ -5,25 +5,6 @@ p {
     text-align: justify;
 }
 
-nav {
-    margin-bottom: 15px;
-
-    .list-group {
-        @include margins-but(first, top, 10px);
-    }
-
-    .list-group-item {
-        padding: 0;
-        a {
-            display: block;
-            padding: .75rem 1.25rem;
-        }
-        &.active a {
-            color: #fff;
-        }
-    }
-}
-
 table.show {
     margin: 0;
 

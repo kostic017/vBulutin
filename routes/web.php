@@ -22,14 +22,12 @@ Route::namespace('Website')
     ->name('website.')
     ->group(
         function() {
-            Route::get('/', 'WebsiteController@index')->name('index');
+            Route::get('/{slug?}', 'IndexController@index')->name('index');
 
             Route::resource('users', 'UsersController');
             Route::post('user/{id}/ban', 'UsersController@ban')->name('users.ban');
         }
     );
-
-Route::get('/{board_name}/', 'Front\FrontController@index')->name('front.index');
 
 Route::namespace('Front')
     ->name('front.')
@@ -39,6 +37,8 @@ Route::namespace('Front')
             Route::resource('topics', 'TopicsController');
             Route::resource('forums', 'ForumsController');
             Route::resource('categories', 'CategoriesController');
+
+            Route::get('/board/{board_name}/', 'FrontController@index')->name('index');
 
             Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forums.lock');
             Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topics.lock');

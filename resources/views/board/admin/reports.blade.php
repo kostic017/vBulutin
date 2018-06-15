@@ -6,7 +6,6 @@
             <h2 class="card-title">Izveštaji</h2>
 
             <div id="accordion">
-
                 <div class="card">
                     <div class="card-header p-1" id="headingCategories">
                         <h3 class="mb-0">
@@ -78,7 +77,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

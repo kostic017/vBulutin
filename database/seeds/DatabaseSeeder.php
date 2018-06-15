@@ -7,21 +7,22 @@ use App\Forum;
 use App\Board;
 use App\Profile;
 use App\Category;
+use App\BoardCategory;
 use App\UserModerates;
 
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    const BOARD_COUNT = 2;
-    const USER_COUNT = 30;
-
-    const CATEGORIES_PER_BOARD = 3;
-    const ROOTS_PER_CATEGORY = 4;
+    const USER_COUNT = 20;
+    const BOARD_CATEGORIES_COUNT = 2;
+    const BOARDS_PER_CATEGORY = 2;
+    const CATEGORIES_PER_BOARD = 2;
+    const ROOTS_PER_CATEGORY = 2;
     const CHILDREN_PER_ROOT = 2;
-    const TOPICS_PER_FORUM = 5;
-    const POSTS_PER_TOPIC = 10;
-    const MAX_MODS_PER_CATEGORY = 10;
+    const TOPICS_PER_FORUM = 2;
+    const POSTS_PER_TOPIC = 2;
+    const MAX_MODS_PER_CATEGORY = 2;
 
     // Ko moderise kategoriju, moderise i forume i potforume u njoj. Analogno,
     // ako neko moderise natforum, onda moderise i potforume. Dok npr. neko moze
@@ -43,19 +44,23 @@ class DatabaseSeeder extends Seeder
                 factory(Profile::class, 1)->create(['user_id' => $user->id]);
             });
 
-        factory(Board::class, self::BOARD_COUNT)
+        factory(BoardCategory::class, self::BOARD_CATEGORIES_COUNT)
             ->create()
-            ->each(function ($board) {
-                $owner = User::findOrFail($board->owned_by);
-                $owner->admin_of = $board->id;
-                $owner->save();
+            ->each(function ($boardCategory) {
+                factory(Board::class, self::BOARDS_PER_CATEGORY)
+                    ->create(['board_category_id' => $boardCategory->id])
+                    ->each(function ($board) {
+                        $owner = User::findOrFail($board->owned_by);
+                        $owner->admin_of = $board->id;
+                        $owner->save();
 
-                factory(Category::class, self::CATEGORIES_PER_BOARD)
-                    ->create(['board_id' => $board->id])
-                    ->each(function ($category) {
-                        $this->modCount = 0;
-                        $this->addModerators($category->id, 'category');
-                        $this->createForums(null, $category->id);
+                        factory(Category::class, self::CATEGORIES_PER_BOARD)
+                            ->create(['board_id' => $board->id])
+                            ->each(function ($category) {
+                                $this->modCount = 0;
+                                $this->addModerators($category->id, 'category');
+                                $this->createForums(null, $category->id);
+                            });
                     });
             });
     }
