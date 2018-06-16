@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the 'web' middleware group. Now create something great!
-|
-*/
-
 Auth::routes();
 
 Route::group(['prefix' => '/'], function () {
@@ -22,10 +11,13 @@ Route::namespace('Website')
     ->name('website.')
     ->group(
         function() {
-            Route::get('/{slug?}', 'IndexController@index')->name('index');
+            Route::get('/', function () {
+                return redirect(route('website.boardcats', ['slug' => 'all']));
+            })->name('index');
 
             Route::resource('users', 'UsersController');
-            Route::post('user/{id}/ban', 'UsersController@ban')->name('users.ban');
+            Route::get('boardcats/{slug}', 'IndexController@index')->name('boardcats');
+            Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
         }
     );
 
@@ -38,21 +30,21 @@ Route::namespace('Front')
             Route::resource('forums', 'ForumsController');
             Route::resource('categories', 'CategoriesController');
 
-            Route::get('/board/{board_name}/', 'FrontController@index')->name('index');
+            Route::get('/boards/{board_name}/', 'FrontController@index')->name('index');
 
-            Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forums.lock');
-            Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topics.lock');
-            Route::post('topic/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
-            Route::post('topic/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
+            Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
+            Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');
+            Route::post('topics/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
+            Route::post('topics/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
 
-            Route::post('post/{id}/restore', 'PostsController@restore')->name('posts.restore');
-            Route::post('topic/{id}/restore', 'TopicsController@restore')->name('topics.restore');
+            Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
+            Route::post('topics/{id}/restore', 'TopicsController@restore')->name('topics.restore');
         }
     );
 
 Route::namespace('Back')
     ->name('back.')
-    ->prefix('{board_name}/admin')
+    ->prefix('admin/{board_name}')
     ->middleware('admin')
     ->group(
         function () {

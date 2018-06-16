@@ -7,7 +7,7 @@ use App\BoardCategory;
 
 class IndexController extends WebsiteController
 {
-    public function index($slug = "all") {
+    public function index($slug) {
         if ($slug === "all") {
             $boards = Board::all();
         } else {
@@ -15,7 +15,7 @@ class IndexController extends WebsiteController
         }
 
         return view('website.index')
-            ->with('boardCategories', BoardCategory::all())
-            ->with('boards', $boards);
+            ->with('boards', $boards)
+            ->with('board_categories', BoardCategory::all());
     }
 }

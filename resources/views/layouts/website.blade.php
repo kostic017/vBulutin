@@ -19,31 +19,27 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            @if ($boards->isEmpty())
-                Niko nije napravio forum.
-            @else
-                <div class="col-md-4 col-lg-3">
-                    <nav>
-                        <ul class="list-group">
-                            <li class="list-group-item {{ active_class(if_uri("/")) }}">
-                                <a href="/">Svi</a>
+            <div class="col-md-4 col-lg-3">
+                <nav>
+                    <ul class="list-group">
+                        <li class="list-group-item {{ active_class(if_route_param('slug', 'all')) }}">
+                            <a href="{{ route('website.boardcats', ['slug' => 'all']) }}">Svi</a>
+                        </li>
+                        @foreach ($board_categories as $board_category)
+                            <li class="list-group-item {{ active_class(if_route_param('slug', $board_category->slug)) }}">
+                                <a href="{{ route('website.boardcats', ['slug' => $board_category->slug]) }}">{{ $board_category->title }}</a>
                             </li>
-                            @foreach ($boardCategories as $boardCategory)
-                                <li class="list-group-item {{ active_class(if_uri_pattern("{$boardCategory->slug}")) }}">
-                                    <a href="{{ "/{$boardCategory->slug}" }}">{{ $boardCategory->title }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-md-8 col-lg-9">
-                    <div class="card">
-                        <div class="card-body">
-                            @yield('content')
-                        </div>
+                        @endforeach
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        @yield('content')
                     </div>
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 @overwrite

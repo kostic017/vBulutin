@@ -2,7 +2,7 @@
 
 @section('content')
     @if ($boards->isEmpty())
-        Nema boards.
+        Niko još nije napravio forum.
     @else
         @foreach ($boards as $key => $board)
             @if ($board->is_visible)
