@@ -6,12 +6,6 @@ use App\Category;
 
 class CategoriesController extends FrontController
 {
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\View\View
-     */
     public function show($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
@@ -20,6 +14,6 @@ class CategoriesController extends FrontController
             ->with('category', $category)
             ->with('self', $category)
             ->with('mods', $category->moderators())
-            ->with('board', $category->board()->firstOrFail());
+            ->with('current_board', $category->board()->firstOrFail());
     }
 }

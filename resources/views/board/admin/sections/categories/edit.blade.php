@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="card">
-
         <div class="card-header">
             <strong>{{ __('admin.edit-category') }}</strong>
         </div>
@@ -38,7 +37,6 @@
 
             </form>
         </div>
-
     </div>
 
     @include('includes.sceditor')

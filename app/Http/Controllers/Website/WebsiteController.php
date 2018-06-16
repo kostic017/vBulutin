@@ -9,6 +9,6 @@ class WebsiteController
 {
     public function __construct()
     {
-        View::share('boardCategories', BoardCategory::all());
+        View::share('board_categories', BoardCategory::all());
     }
 }

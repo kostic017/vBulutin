@@ -82,7 +82,7 @@
                         @endif
                         @if (!$post->deleted_at && ($is_admin || Auth::id() == $topicStarter->id))
                             @if ($solution && $solution->id === $post->id)
-                                <li><a href="#" class="unmarksolution">Ipak ovo nije rešenje</a></li>
+                                <li><a href="#" class="unmarksolution">Ipak nije ovo rešenje</a></li>
                             @else
                                 <li><a href="#" class="marksolution" data-postid="{{ $post->id }}">Označi kao rešenje</a></li>
                             @endif
@@ -99,7 +99,7 @@
     @if ($self->is_locked)
         <p>Tema je zaključana, te nije moguće odgovarati na nju.</p>
     @elseif ($forum->is_locked)
-        <p>Tema se nalazi u zaključanom forumu, te nije moguće odgovoriti na nju.</p>
+        <p>Tema se nalazi u zaključanom forumu, te nije moguće odgovorati na nju.</p>
     @elseif (Auth::check())
         <form action="{{ route('front.posts.store') }}" method="post" id="scform">
             @csrf

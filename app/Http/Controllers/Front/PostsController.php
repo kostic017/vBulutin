@@ -6,16 +6,9 @@ use Auth;
 use App\Post;
 use App\Topic;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostsController extends FrontController
 {
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -45,12 +38,6 @@ class PostsController extends FrontController
         return redirect(route('front.topics.show', ['topic' => $topic->slug]) . '#post-' . $post->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
@@ -65,12 +52,6 @@ class PostsController extends FrontController
         return redirect()->back();
     }
 
-    /**
-     * Restore a soft-deleted model instance.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function restore($id)
     {
         Post::onlyTrashed()->findOrFail($id)->restore();

@@ -5,30 +5,7 @@
     @yield('styles')
 @overwrite
 
-@section('nav-auth')
-    @if (is_admin())
-        <li><a class="nav-link" href="{{ route('back.index') }}">Admin panel</a></li>
-    @endif
-    @yield('nav-auth')
-@overwrite
-
-@section('scripts')
-    @yield('scripts')
-@overwrite
-
 @section('content')
-    {{--
-    <form name="search" action="search.php">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Pretraga..." aria-label="Pretraga">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary submitsearch" type="button"><i class="fas fa-search"></i></button>
-                <button class="btn btn-outline-secondary advancedsearch" type="button"><i class="fas fa-cog"></i></button>
-            </div>
-        </div>
-    </form>
-    --}}
-
     <section class="content">
        @yield('content')
     </section>

@@ -14,16 +14,12 @@ use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
-     */
     public function index(Request $request, string $name)
     {
-        $board = Board::where('name', $name)->firstOrFail();
-        return view('board.public.index')->with('categories', $board->categories()->get());
+        $current_board = Board::where('name', $name)->firstOrFail();
+        return view('board.public.index')
+            ->with('current_board', $current_board)
+            ->with('categories', $current_board->categories()->get());
     }
 
     public function __construct()

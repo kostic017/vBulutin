@@ -1,15 +1,7 @@
 @extends('layouts.website')
 
 @section('content')
-    @if (!$errors->isEmpty())
-        <div class="alert alert-danger" role="alert">
-            <ul class="m-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('includes.errors')
 
     <form class="profile" action="{{ route('website.users.update', ['username' => $user->username]) }}" method="post">
         @csrf
@@ -91,6 +83,5 @@
         </fieldset>
 
         <button type="submit" class="btn btn-primary">Promeni</button>
-
     </form>
 @stop

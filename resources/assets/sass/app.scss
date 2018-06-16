@@ -3,6 +3,17 @@
 @import "partials/import";
 @import "~bootstrap/scss/bootstrap";
 
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: $h-footer;
+}
+
 button,
 select {
     cursor: pointer;
@@ -104,6 +115,10 @@ span.invalid-feedback {
     .navbar-toggler-icon {
         width: 1.24em;
     }
+
+    .container {
+        max-width: 100%;
+    }
 }
 
 .home-links {
@@ -130,11 +145,19 @@ span.invalid-feedback {
 }
 
 .footer {
-    margin-top: $m-main;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: $h-footer;
+    position: absolute;
     border-top: 1px solid $bc-main;
 
     .copyright {
         text-align: center;
-        margin-top: ($m-main / 2);
+        padding: ($m-main / 2) 0;
     }
+}
+
+.grecaptcha-badge {
+    z-index: 9999;
 }

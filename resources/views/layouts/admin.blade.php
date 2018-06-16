@@ -5,11 +5,6 @@
     @yield('styles')
 @overwrite
 
-@section('scripts')
-    <script src="{{ asset('js/admin.js') }}"></script>
-    @yield('scripts')
-@overwrite
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -39,5 +34,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/admin.js') }}"></script>
 @overwrite
 

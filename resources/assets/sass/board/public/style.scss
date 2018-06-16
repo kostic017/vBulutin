@@ -1,13 +1,12 @@
 @import "../../partials/import";
 
-@import "buttons";
 @import "base";
 @import "table";
-@import "topbox";
-@import "permissions";
 @import "topic";
-@import "users";
+@import "topbox";
+@import "buttons";
 @import "foruminfo";
+@import "permissions";
 
 .main-container {
     width: 100%;

@@ -1,9 +1,5 @@
 @extends('layouts.admin')
 
-@section('scripts')
-    <script>$(() => { sectionsTable(); });</script>
-@stop
-
 @section('content')
     <form id="index" action="{{ route("back.{$table}.index") }}" method="get"></form>
 
@@ -105,4 +101,6 @@
             {{ $rows->appends('perPage', $perPage)->appends('filter', $filter)->links() }}
         </div>
     @endif
+
+    <script>$(() => { sectionsTable(); });</script>
 @stop

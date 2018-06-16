@@ -1,9 +1,5 @@
 @extends('layouts.admin')
 
-@section('scripts')
-    <script>$(() => { forceCategory(); });</script>
-@overwrite
-
 @section('content')
     <div class="card">
 
@@ -76,4 +72,5 @@
     </div>
 
     @include('includes.sceditor')
+    <script>$(() => { forceCategory(); });</script>
 @stop

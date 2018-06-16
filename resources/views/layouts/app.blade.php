@@ -55,9 +55,16 @@
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+                    @if (isset($current_board))
+                        <a class="navbar-brand" href="{{ route('front.index', ['board_name' => $current_board->name]) }}">
+                            {{ $current_board->title }}
+                        </a>
+                    @else
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            {{ config('app.name') }}
+                        </a>
+                    @endif
+
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -67,6 +74,7 @@
                         </ul>
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
+                            <li><a class="nav-link" href="/">Glavna</a></li>
                             <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
                             @guest
                                 <!-- Authentication Links -->

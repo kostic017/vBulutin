@@ -13,17 +13,11 @@ use Illuminate\Http\Request;
 class TopicsController extends FrontController
 {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\View\View
-     */
     public function show(string $slug)
     {
         $topic = Topic::where('slug', $slug)->firstOrFail();
-        $forum = Forum::findOrFail($topic->forum_id);
-        $category = Category::findOrFail($forum->category_id);
+        $forum = $topic->forum()->firstOrFail();;
+        $category = $forum->category()->firstOrFail();
 
         $posts = (is_admin() ? Post::withTrashed() : Post::query())
                 ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
@@ -38,7 +32,7 @@ class TopicsController extends FrontController
             'topicStarter' => $topic->starter(),
             'solution' => $topic->solution(),
             'posts' => $posts,
-            'board' => $category->board()->firstOrFail(),
+            'current_board' => $category->board()->firstOrFail(),
         ];
 
         if ($forum->parent_id) {
@@ -48,12 +42,6 @@ class TopicsController extends FrontController
         return view('board.public.topic')->with($vars);
     }
 
-    /**
-     * Toggle lock state of the specified resource.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function lock($id)
     {
         $topic = Topic::findOrFail($id);
@@ -62,13 +50,6 @@ class TopicsController extends FrontController
         return redirect()->back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $forum_id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -98,13 +79,6 @@ class TopicsController extends FrontController
         return redirect(route('front.topics.show', ['topic' => $topic->slug]));
     }
 
-    /**
-     * Update title of the specified resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function updateTitle(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
@@ -123,13 +97,6 @@ class TopicsController extends FrontController
         return redirect()->back();
     }
 
-    /**
-     * Update solution of this topic.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function updateSolution(Request $request, string $id)
     {
         $topic = Topic::findOrFail($id);

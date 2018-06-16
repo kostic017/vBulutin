@@ -7,15 +7,13 @@ use App\BoardCategory;
 
 class IndexController extends WebsiteController
 {
-    public function index($slug) {
-        if ($slug === "all") {
+    public function index($category_slug) {
+        if ($category_slug === "all") {
             $boards = Board::all();
         } else {
-            $boards = BoardCategory::where('slug', $slug)->firstOrFail()->boards()->get();
+            $boards = BoardCategory::where('slug', $category_slug)->firstOrFail()->boards()->get();
         }
 
-        return view('website.index')
-            ->with('boards', $boards)
-            ->with('board_categories', BoardCategory::all());
+        return view('website.index')->with('boards', $boards);
     }
 }

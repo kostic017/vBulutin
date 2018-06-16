@@ -4,12 +4,6 @@
     <link rel="stylesheet" href="{{ asset('vendor/jquery-ui/jquery-ui.min.css') }}">
 @stop
 
-@section('scripts')
-    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery-nestable/jquery.nestable.min.js') }}"></script>
-    <script>$(() => { positions(); });</script>
-@stop
-
 @section('content')
     @include('includes.overlay')
 
@@ -69,5 +63,9 @@
 
     <span class="d-none" data-key="generic.error">{{ __('generic.error') }}</span>
     <span class="d-none" data-key="admin.positions-success">{{ __('admin.positions-success') }}</span>
+
+    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-nestable/jquery.nestable.min.js') }}"></script>
+    <script>$(() => { positions(); });</script>
 @stop
 

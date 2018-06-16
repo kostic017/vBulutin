@@ -2,7 +2,8 @@
 
 @section('content')
     @if ($boards->isEmpty())
-        Niko još nije napravio forum.
+        <p>Budi prvi ko je napravio forum.</p>
+        <button type="button" class="btn btn-light">Napravi svoj forum</button>
     @else
         @foreach ($boards as $key => $board)
             @if ($board->is_visible)

@@ -8,22 +8,21 @@
 
         <title>Page Not Found</title>
 
-        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-        <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
                 margin: 0;
+                height: 100vh;
+                color: #636b6f;
+                font-weight: 100;
+                background-color: #fff;
+                font-family: 'Raleway', sans-serif;
             }
 
             a {
-                color: green;
+                color: #636b6f;
+                font-size: 25px;
             }
 
             .full-height {
@@ -31,8 +30,8 @@
             }
 
             .flex-center {
-                align-items: center;
                 display: flex;
+                align-items: center;
                 justify-content: center;
             }
 
@@ -45,8 +44,8 @@
             }
 
             .title {
-                font-size: 36px;
                 padding: 20px;
+                font-size: 36px;
             }
         </style>
     </head>
@@ -57,7 +56,7 @@
                     Sorry, the page you are looking for could not be found.
                 </div>
                 <p>
-                    <a href="/">Početna stranica</a>
+                    <a href="/">Home</a>
                 </p>
             </div>
         </div>

@@ -25,12 +25,12 @@ Route::namespace('Front')
     ->name('front.')
     ->group(
         function () {
+            Route::get('/boards/{board_name}/', 'FrontController@index')->name('index');
+
             Route::resource('posts', 'PostsController');
             Route::resource('topics', 'TopicsController');
             Route::resource('forums', 'ForumsController');
             Route::resource('categories', 'CategoriesController');
-
-            Route::get('/boards/{board_name}/', 'FrontController@index')->name('index');
 
             Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
             Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');

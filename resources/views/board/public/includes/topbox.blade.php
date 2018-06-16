@@ -2,7 +2,6 @@
     <div class="top-box">
 
         <ul class="path">
-            <li><a href="{{ route('front.index', ['board_name' => $board->name]) }}">{{ $board->title }}</a></li>
             @if (isset($category) && $topbox !== 'category')
                 <li><a href="{{ route('front.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
             @endif
