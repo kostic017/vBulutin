@@ -10,7 +10,7 @@
         <meta name="author" content="Nikola Kostić">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name') }}</title>
 
         <link rel="icon" href="{{ asset("favicon.ico") }}">
 
@@ -74,7 +74,6 @@
                         </ul>
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
-                            <li><a class="nav-link" href="/">Glavna</a></li>
                             <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
                             @guest
                                 <!-- Authentication Links -->
@@ -114,7 +113,10 @@
 
             <section class="footer">
                 <div class="copyright">
-                   Copyright &copy; {{ date('Y') }} Nikola Kostić
+                    @if (isset($current_board))
+                        <a href="/">Napravi i ti svoj forum</a><br>
+                    @endif
+                    Copyright &copy; 2017-{{ date('Y') }} Nikola Kostić
                 </div>
             </section>
         </div>

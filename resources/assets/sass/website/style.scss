@@ -10,3 +10,47 @@
 
     @include margins-but(first, top, $m-main);
 }
+
+.board-categories {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.board-category {
+    width: 25%;
+    text-align: center;
+
+    a {
+        padding: 50px;
+        text-decoration: none;
+        @include full-block;
+
+        &:hover {
+            color: #fff;
+            background-color: #369fcf;
+
+            p {
+                color: #fff;
+            }
+        }
+    }
+
+    p {
+        color: #333;
+    }
+}
+
+.card-header.directory {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    p {
+        margin: 0;
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+    }
+}

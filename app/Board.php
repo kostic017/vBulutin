@@ -13,8 +13,8 @@ class Board extends Model
         return $this->hasMany('App\Category');
     }
 
-    public function boardCategory()
+    public function directory()
     {
-        return $this->belongsTo('App\BoardCategory');
+        return $this->belongsTo('App\Directory');
     }
 }

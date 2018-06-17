@@ -2,9 +2,9 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\BoardCategory::class, function (Faker $faker) {
+$factory->define(App\Directory::class, function (Faker $faker) {
     static $id = 0;
-    $title = rtrim($faker->sentence(6), '.');
+    $title = rtrim($faker->sentence(2), '.');
 
     return [
         'title' => $title,

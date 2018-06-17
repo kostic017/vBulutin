@@ -11,12 +11,10 @@ Route::namespace('Website')
     ->name('website.')
     ->group(
         function() {
-            Route::get('/', function () {
-                return redirect(route('website.boardcats', ['slug' => 'all']));
-            })->name('index');
+            Route::get('/', 'WebsiteController@index')->name('index');
+            Route::get('directory/{slug}', 'WebsiteController@directory')->name('directory');
 
             Route::resource('users', 'UsersController');
-            Route::get('boardcats/{slug}', 'IndexController@index')->name('boardcats');
             Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
         }
     );

@@ -20,7 +20,7 @@ class Boards extends Migration
             $table->string('description')->nullable();
             $table->boolean('is_visible')->default(false);
             $table->integer('owned_by');
-            $table->integer('board_category_id');
+            $table->integer('directory_id');
         });
     }
 

@@ -47,6 +47,7 @@
                     Ukupno članova <b>{{ $userCount }}</b> &bull;
                     Naš najnoviji član <a href="{{ route('website.users.show', ['profile' => $newestUser->username]) }}">{{ $newestUser->username }}</a>
                 </p>
+            </div>
         </div>
     </section>
 @overwrite

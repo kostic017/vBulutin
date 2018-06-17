@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBoardCategoriesTable extends Migration
+class CreateDirectoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBoardCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('board_categories', function (Blueprint $table) {
+        Schema::create('directories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug');
             $table->string('title');
@@ -28,6 +28,6 @@ class CreateBoardCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('board_categories');
+        Schema::dropIfExists('directories');
     }
 }
