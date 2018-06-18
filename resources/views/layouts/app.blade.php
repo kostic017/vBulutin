@@ -82,7 +82,7 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     <label for="email">{{ __("auth.name-or-mail") }}</label>
-                                                    <input type="email" name="email" id="email" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
+                                                    <input type="text" name="email" id="email" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
 
                                                     @if ($errors->has('username'))
                                                         <span class="invalid-feedback" style="display:block">

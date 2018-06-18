@@ -119,7 +119,7 @@ class UsersController
         $user->is_invisible = $request->is_invisible;
 
         if ($user->email !== $request->email || is_not_empty($request->password) || is_not_empty($request->password_confirm)) {
-            if (isEmpty($request->password_current)) {
+            if (is_empty($request->password_current)) {
                 $errors['password_current'] = 'Niste upisali trenutnu šifru.';
             } elseif (!Hash::check($request->password_current, $user->password)) {
                 $errors['password_current'] = 'Upisali ste pogrešnu šifru.';

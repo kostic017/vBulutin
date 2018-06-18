@@ -5,13 +5,7 @@ use App\UserWatches;
 use App\UserModerates;
 use Carbon\Carbon;
 
-function alert_redirect($url, $level, $message)
-{
-    return redirect($url)->with([
-        'level' => $level,
-        'message' => $message
-    ]);
-}
+/////////////////////////
 
 function is_admin()
 {
@@ -26,6 +20,21 @@ function getWatchers($myTable, $myId)
 function getModerators($myTable, $myId)
 {
     return User::findMany(UserModerates::select('user_id')->where("{$myTable}_id", $myId)->get()->toArray());
+}
+
+///////////////////////////
+
+function alert_redirect($url, $level, $message)
+{
+    return redirect($url)->with([
+        'level' => $level,
+        'message' => $message
+    ]);
+}
+
+function captcha_set()
+{
+    return is_not_empty(config('custom.captcha.site_key')) && is_not_empty(config('custom.captcha.secret_key'));
 }
 
 function validate_captcha($response, $ip)
@@ -77,7 +86,7 @@ function is_not_empty($str)
     return strlen(trim($str)) > 0;
 }
 
-function isEmpty($str)
+function is_empty($str)
 {
     return !is_not_empty($str);
 }

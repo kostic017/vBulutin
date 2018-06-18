@@ -77,13 +77,15 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
-            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+        if (captcha_set()) {
+            if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
+                Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+                return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+            }
         }
 
         if ($user = User::where($this->username(), $request[$this->username()])->first()) {
-            if (isEmpty($user->email_token)) {
+            if (is_empty($user->email_token)) {
                 if ($this->attemptLogin($request)) {
                     return $this->sendLoginResponse($request);
                 }

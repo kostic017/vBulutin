@@ -59,8 +59,11 @@ class ResetPasswordController extends Controller
     {
         $this->validate($request, $this->rules(), $this->validationErrorMessages());
 
-        if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            throw new \App\Exceptions\CaptchaFailedException('password.reset');
+        if (captcha_set()) {
+            if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
+                Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+                return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+            }
         }
 
         // Here we will attempt to reset the user's password. If it is successful we

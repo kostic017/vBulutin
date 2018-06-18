@@ -41,9 +41,11 @@ class ForgotPasswordController extends Controller
     {
         $this->validateEmail($request);
 
-        if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
-            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+        if (captcha_set()) {
+            if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
+                Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+                return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+            }
         }
 
         // We will send the password reset link to this user. Once we have attempted
