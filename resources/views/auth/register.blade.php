@@ -6,7 +6,7 @@
     </div>
 
     <div class="card-body">
-        <form id="captcha-form" method="POST" action="{{ route('register') }}">
+        <form id="captcha-form" method="post" action="{{ route('register') }}">
             @csrf
 
             <div class="form-group row">
@@ -59,8 +59,11 @@
                 </div>
             </div>
 
-            @include('includes.recaptcha', ['recaptcha_action' => __('auth.register')])
-
+            <div class="form-group row mb-0">
+                <div class="col-md-6 offset-md-4">
+                    @include('includes.recaptcha', ['recaptcha_action' => __('auth.register')])
+                </div>
+            </div>
         </form>
     </div>
 @endsection

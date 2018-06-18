@@ -6,7 +6,7 @@ function captchaOnSubmit(token) {
     $("#captcha-form").submit();
 }
 
-function isNotEmpty(string) {
+function is_not_empty(string) {
     return string.trim().length > 0;
 }
 
@@ -29,7 +29,7 @@ function isEqualToAnyWord(haystack, needle, ignoreCase = true) {
 }
 
 function appendDataToForm(form, name, value) {
-    if (isNotEmpty(value)) {
+    if (is_not_empty(value)) {
         form.append($("<input>").attr("type", "hidden").attr("name", name).val(value));
     }
 }

@@ -79,7 +79,7 @@ class LoginController extends Controller
 
         if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
             Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
-            return alert_redirect(route('login'), 'error', __('auth.captcha-failed'));
+            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
         }
 
         if ($user = User::where($this->username(), $request[$this->username()])->first()) {
@@ -95,24 +95,9 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return ($user && isNotEmpty($user->email_token)) ? $this->sendFailedLoginResponseEmail($request) :
-            $this->sendFailedLoginResponse($request);
-    }
-
-    /**
-     * Get the failed login response instance.
-     * (email not confirmed)
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function sendFailedLoginResponseEmail(Request $request)
-    {
-        throw ValidationException::withMessages([
-            $this->username() => [__('auth.not-confirmed')],
-        ]);
+        return ($user && is_not_empty($user->email_token)) ?
+            alert_redirect(url()->previous(), 'error', __('auth.not-confirmed')) :
+            alert_redirect(url()->previous(), 'error', __('auth.failed'));
     }
 
     /**

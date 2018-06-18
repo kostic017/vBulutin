@@ -34,7 +34,7 @@ function sectionsTable() {
     });
 
     searchSubmit.on('click', function () {
-        if (isNotEmpty(searchQuery.val())) {
+        if (is_not_empty(searchQuery.val())) {
             form.submit();
         }
     });

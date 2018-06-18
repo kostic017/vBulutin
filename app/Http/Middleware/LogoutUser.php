@@ -32,7 +32,7 @@ class LogoutUser
             }
 
             Auth::logout();
-            return alert_redirect(route('login'), 'info', $message);
+            return alert_redirect(url()->previous(), 'info', $message);
         }
 
         return $next($request);

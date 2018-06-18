@@ -53,8 +53,11 @@
                 </div>
             </div>
 
-            @include('includes.recaptcha', ['recaptcha_action' => __('auth.reset-password')])
-
+            <div class="form-group row mb-0">
+                <div class="col-md-6 offset-md-4">
+                    @include('includes.recaptcha', ['recaptcha_action' => __('auth.reset-password')])
+                </div>
+            </div>
         </form>
     </div>
 @endsection

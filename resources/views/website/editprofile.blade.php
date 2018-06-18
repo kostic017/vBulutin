@@ -44,7 +44,7 @@
                     <select class="form-control" name="sex" id="sex">
                         <option value="m" {{ $profile->sex === 'm' ? 'selected' : '' }}>Мuški</option>
                         <option value="f" {{ $profile->sex === 'f' ? 'selected' : '' }}>Ženski</option>
-                        <option value="s" {{ $profile->sex === 's' ? 'selected' : '' }}>Trandža</option>
+                        <option value="o" {{ $profile->sex === 'o' ? 'selected' : '' }}>Drugo</option>
                     </select>
                 </div>
                 <div class="form-group">

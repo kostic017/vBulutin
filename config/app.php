@@ -151,7 +151,6 @@ return [
          * Package Service Providers...
          */
         Barryvdh\DomPDF\ServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
         Kim\Activity\ActivityServiceProvider::class,
         Jimmyjs\ReportGenerator\ServiceProvider::class,
@@ -184,7 +183,6 @@ return [
         'BBCode' => App\Helpers\BBCode::class,
         'Carbon' => Carbon\Carbon::class, // for views
         'Active' => HieuLe\Active\Facades\Active::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
 
         'App' => Illuminate\Support\Facades\App::class,

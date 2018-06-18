@@ -39,6 +39,6 @@ return [
     'confirmation-sent' => 'Poslali smo Vam link za potvrdu na mejl.',
     'wrong-token' => 'Token je pogrešan ili je istekao! Možda ćete morati da se registrujete opet.',
 
-    'failed' => 'Pogrešno korisničko ime/mejl ili lozinka.',
+    'failed' => 'Uneti podaci se ne poklapaju sa onima koje mi imamo.',
     'throttle' => 'Previše puta ste pokušali da se prijavite. Probajte opet za :seconds sekundi.',
 ];

@@ -17,7 +17,7 @@ class ProfilesTable extends Migration
             $table->integer('user_id');
             $table->text('about')->nullable();
             $table->date('birthday_on')->nullable();
-            $table->enum('sex', ['m', 'f', 's'])->nullable();
+            $table->enum('sex', ['m', 'f', 'o'])->nullable();
             $table->string('job')->nullable();
             $table->string('name')->nullable();
             $table->string('residence')->nullable();

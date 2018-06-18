@@ -19,7 +19,14 @@
                     <dt>Ukupno poruka</b><dt>
                     <dd>{{ $user->posts()->get()->count() }}</dd>
                     <dt>Pol</dt>
-                    <dd>{{ $profile->sex ?? '-' }}</dd>
+                    <dd><?php
+                        switch ($profile->sex) {
+                            case 'm': echo 'Muški'; break;
+                            case 'f': echo 'Ženski'; break;
+                            case 'o': echo 'Drugo'; break;
+                            default: echo '-'; break;
+                        }
+                    ?></dd>
                 </dl>
                 <dl>
                     <dt>Datum rođenja</dt>

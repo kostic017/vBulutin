@@ -62,7 +62,7 @@ abstract class SectionsController extends Controller
                 'search_column' => $searchColumn,
             ];
 
-            if (isNotEmpty($searchQuery)) {
+            if (is_not_empty($searchQuery)) {
                 $queries['search_query'] = $searchQuery;
             }
 
@@ -93,7 +93,7 @@ abstract class SectionsController extends Controller
             )->join('categories', 'forums.category_id', 'categories.id');
         }
 
-        if (isNotEmpty($searchQuery)) {
+        if (is_not_empty($searchQuery)) {
             $query->where(
                 $searchColumn === 'category' ? 'categories.title' : "{$this->table}.{$searchColumn}",
                 'LIKE', "%{$searchQuery}%"

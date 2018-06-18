@@ -1,7 +1,7 @@
 @extends('layouts.website')
 
 @section('content')
-    <div class="card-header directory">
+    <div class="card-header card-header-directory">
         <div>
             <h2>{{ $directory->title }}</h2>
             <p>{{ $directory->description }}</p>

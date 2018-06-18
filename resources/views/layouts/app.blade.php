@@ -51,7 +51,6 @@
 
     <body>
         <div id="top"></div>
-
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
@@ -69,19 +68,53 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav mr-auto">
-                        </ul>
-                        <!-- Right Side Of Navbar -->
+                        <ul class="navbar-nav mr-auto"></ul>
                         <ul class="navbar-nav ml-auto">
                             <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
                             @guest
-                                <!-- Authentication Links -->
-                                @yield('nav-guest')
-                                <li><a class="nav-link" href="{{ route('login') }}">{{ __('auth.login') }}</a></li>
-                                <li><a class="nav-link" href="{{ route('register') }}">{{ __('auth.register') }}</a></li>
+                                <li>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle nav-link" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ __('auth.login') }}
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-login">
+                                            <form class="px-4 py-3" id="captcha-form" method="post" action="{{ route('login') }}">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="email">{{ __("auth.name-or-mail") }}</label>
+                                                    <input type="email" name="email" id="email" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
+
+                                                    @if ($errors->has('username'))
+                                                        <span class="invalid-feedback" style="display:block">
+                                                            <strong>{{ $errors->first('username') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">{{ __('auth.password') }}</label>
+                                                    <input type="password" name="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
+
+                                                    @if ($errors->has('password'))
+                                                        <span class="invalid-feedback">
+                                                            <strong>{{ $errors->first('password') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="remember">{{ __('auth.remember') }}</label>
+                                                </div>
+                                                <div class="mt-3">
+                                                    @include('includes.recaptcha', ['recaptcha_action' => __('auth.login')])
+                                                </div>
+                                            </form>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ route('register') }}">{{ __('auth.register') }}</a>
+                                            <a class="dropdown-item" href="{{ route('password.request') }}">{{ __('auth.forgot') }}</a>
+                                        </div>
+                                    </div>
+                                </li>
                             @else
-                                @yield('nav-auth')
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name ?? Auth::user()->username }} <span class="caret"></span>
@@ -90,13 +123,13 @@
                                         <a class="dropdown-item" href="{{ route('website.users.show', ['profile' => Auth::user()->username]) }}">
                                             <i class="fas fa-user"></i> Profil
                                         </a>
-                                        <a class="dropdown-item" href="#" id="btn-messages" data-newmessages="0">
+                                        {{-- <a class="dropdown-item" href="#" id="btn-messages" data-newmessages="0">
                                             <i class="fas fa-envelope"></i> Nema novih poruka
-                                        </a>
+                                        </a> --}}
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="fas fa-sign-out-alt"></i> {{ __('auth.logout') }}
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="post" style="display: none;">
                                             @csrf
                                         </form>
                                     </div>
@@ -122,5 +155,4 @@
         </div>
 
     </body>
-
 </html>

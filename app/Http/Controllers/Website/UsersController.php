@@ -9,15 +9,9 @@ use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class UsersController extends WebsiteController
+class UsersController
 {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     */
     public function index(Request $request)
     {
         /*
@@ -88,12 +82,6 @@ class UsersController extends WebsiteController
             ->with(compact('users', 'perPage', 'step', 'max', 'sortColumn', 'sortOrder'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $username
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     */
     public function show($username)
     {
         if (Auth::check()) {
@@ -106,12 +94,6 @@ class UsersController extends WebsiteController
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  string  $username
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     */
     public function edit($username)
     {
         if (Auth::check()) {
@@ -127,13 +109,6 @@ class UsersController extends WebsiteController
         }
     }
 
-    /**
-     * Update profile of the specified user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $username
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, string $username)
     {
         $errors = [];
@@ -143,7 +118,7 @@ class UsersController extends WebsiteController
 
         $user->is_invisible = $request->is_invisible;
 
-        if ($user->email !== $request->email || isNotEmpty($request->password) || isNotEmpty($request->password_confirm)) {
+        if ($user->email !== $request->email || is_not_empty($request->password) || is_not_empty($request->password_confirm)) {
             if (isEmpty($request->password_current)) {
                 $errors['password_current'] = 'Niste upisali trenutnu šifru.';
             } elseif (!Hash::check($request->password_current, $user->password)) {
@@ -156,7 +131,7 @@ class UsersController extends WebsiteController
                     $user->notify(new ConfirmEmail($user->email_token));
                 }
 
-                if (isNotEmpty($request->password) || isNotEmpty($request->password_confirm)) {
+                if (is_not_empty($request->password) || is_not_empty($request->password_confirm)) {
                     if ($request->password !== $request->password_confirm) {
                         $errors['password_matching'] = 'Lozinke se ne poklapaju.';
                     } elseif (!isset($errors['password_current'])) {
@@ -187,12 +162,6 @@ class UsersController extends WebsiteController
         return alert_redirect(route('website.users.show', ['profile' => $user->username]), 'success', __('db.updated'));
     }
 
-    /**
-     * Toggle ban state for the specified user.
-     *
-     * @param  string  $username
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function ban($username)
     {
         $user = User::where('username', $username)->firstOrFail();

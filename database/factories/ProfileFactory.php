@@ -6,7 +6,7 @@ $factory->define(App\Profile::class, function (Faker $faker, array $args) {
     return [
         'about' => $faker->optional()->paragraph(),
         'birthday_on' => $faker->optional()->date(),
-        'sex' => $faker->optional()->randomElement(['m', 'f', 's']),
+        'sex' => $faker->optional()->randomElement(['m', 'f', 'o']),
 
         'job' => $faker->optional()->jobTitle,
         'name' => $faker->optional()->name,

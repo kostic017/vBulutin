@@ -1,9 +1,9 @@
-@if (!$errors->isEmpty())
-    <div class="alert alert-danger" role="alert">
-        <ul class="m-0">
+@if ($errors->any())
+    <span class="invalid-feedback" style="display:block">
+        <ul class="m-0 list-unstyled">
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+                <li><strong>{{ $error }}</strong></li>
             @endforeach
         </ul>
-    </div>
+    </span>
 @endif

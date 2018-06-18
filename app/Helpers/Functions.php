@@ -71,7 +71,7 @@ function extractDate($datetime)
     return Carbon::parse($datetime)->format('d.m.Y');
 }
 
-function isNotEmpty($str)
+function is_not_empty($str)
 {
     if ($str === null) return false;
     return strlen(trim($str)) > 0;
@@ -79,7 +79,7 @@ function isNotEmpty($str)
 
 function isEmpty($str)
 {
-    return !isNotEmpty($str);
+    return !is_not_empty($str);
 }
 
 function isEqualToAnyWord($haystack, $needle, $ignoreCase = true)

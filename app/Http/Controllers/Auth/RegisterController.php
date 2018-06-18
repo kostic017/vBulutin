@@ -72,7 +72,7 @@ class RegisterController extends Controller
 
         if (!validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
             Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
-            return alert_redirect(route('login'), 'error', __('auth.captcha-failed'));
+            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
         }
 
         event(new Registered($user = $this->create($request->all())));
@@ -91,7 +91,7 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        return alert_redirect(route('login'), 'info', __('auth.confirmation-sent'));
+        return alert_redirect(url()->previous(), 'info', __('auth.confirmation-sent'));
     }
 
     /**
@@ -129,7 +129,7 @@ class RegisterController extends Controller
             $user = User::where('email_token', $token)->firstOrFail();
             $user->email_token = null;
             $user->save();
-            return alert_redirect(route('login'), 'success', __('auth.can-login'));
+            return alert_redirect(url()->previous(), 'success', __('auth.can-login'));
         } catch (ModelNotFoundException $e) {
             Logger::log('error', __METHOD__, request()->ip() . ' has provided invalid confirmation token');
         }
