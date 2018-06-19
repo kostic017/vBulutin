@@ -2,11 +2,6 @@
 
 Auth::routes();
 
-Route::group(['prefix' => '/'], function () {
-    Route::get('home', 'HomeController@index')->name('home');
-    Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
-});
-
 Route::namespace('Website')
     ->name('website.')
     ->group(
@@ -14,8 +9,14 @@ Route::namespace('Website')
             Route::get('/', 'WebsiteController@index')->name('index');
             Route::get('directory/{slug}', 'WebsiteController@directory')->name('directory');
 
+            Route::get('create', function () {
+                return view('website.create');
+            })->name('create');
+
             Route::resource('users', 'UsersController');
             Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
+
+            Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('confirm');
         }
     );
 

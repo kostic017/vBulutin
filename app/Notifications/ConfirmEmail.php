@@ -46,7 +46,7 @@ class ConfirmEmail extends Notification
         return (new MailMessage)
             ->subject(config('APP_NAME') . ': ' . __('emails.email-confirm_subject'))
             ->line(__('emails.email-confirm_line1'))
-            ->action(__('emails.email-confirm_action'), route('register.confirm', ['token' => $this->token]))
+            ->action(__('emails.email-confirm_action'), route('website.confirm', ['token' => $this->token]))
             ->line(__('emails.email-confirm_line2'));
     }
 

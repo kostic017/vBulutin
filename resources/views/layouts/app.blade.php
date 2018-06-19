@@ -73,7 +73,7 @@
                             <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
                             @guest
                                 <li>
-                                    <div class="dropdown">
+                                    <div class="dropdown" id="dropdown-login">
                                         <a class="dropdown-toggle nav-link" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             {{ __('auth.login') }}
                                         </a>

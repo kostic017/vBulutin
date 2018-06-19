@@ -7,7 +7,7 @@
             <p>{{ $directory->description }}</p>
         </div>
         <div class="button">
-            <button type="button" class="btn btn-primary">Napravi svoj forum</button>
+            <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('website.create') : "#" }}" role="button">Napravi svoj forum</a>
         </div>
     </div>
     <div class="card-body">
@@ -23,5 +23,19 @@
             @endforeach
         @endif
     </div>
+
+    @if (!Auth::check())
+        <script>
+            $(function() {
+                $('#create-forum').click(function(e){
+                    e.stopPropagation();
+                    const dropdown = $("#dropdown-login");
+                    if ($('.dropdown-menu', dropdown).is(":hidden")){
+                        $('.dropdown-toggle', dropdown).dropdown('toggle');
+                    }
+                });
+            });
+        </script>
+    @endif
 @stop
 
