@@ -8,7 +8,7 @@ $factory->define(App\Board::class, function (Faker $faker) {
 
     return [
         'title' => $title,
-        'name' => strtok($title, ' ') . $id++,
+        'url' => strtok($title, ' ') . $id++,
         'description' => $faker->optional()->paragraph(),
         'is_visible' => true,
         'owned_by' => function() {

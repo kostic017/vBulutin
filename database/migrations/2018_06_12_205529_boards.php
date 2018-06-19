@@ -15,8 +15,8 @@ class Boards extends Migration
     {
         Schema::create('boards', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->string('title');
+            $table->string('url');
             $table->string('description')->nullable();
             $table->boolean('is_visible')->default(false);
             $table->integer('owned_by');

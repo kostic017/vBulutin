@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
-    public function index(Request $request, string $name)
+    public function index(Request $request, string $url)
     {
-        $current_board = Board::where('name', $name)->firstOrFail();
+        $current_board = Board::where('url', $url)->firstOrFail();
         return view('board.public.index')
             ->with('current_board', $current_board)
             ->with('categories', $current_board->categories()->get());

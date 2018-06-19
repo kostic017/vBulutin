@@ -18,7 +18,7 @@
                 <div class="board">
                     <h4>{{ $board->title }}</h4>
                     <p>{{ $board->description }}</a></p>
-                    <p><a href="{{ route('front.index', ['board_name' => $board->name]) }}/">Poseti forum</a></p>
+                    <p><a href="{{ route('front.index', ['board_url' => $board->url]) }}/">Poseti forum</a></p>
                 </div>
             @endforeach
         @endif

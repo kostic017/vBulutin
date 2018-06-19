@@ -24,7 +24,7 @@ Route::namespace('Front')
     ->name('front.')
     ->group(
         function () {
-            Route::get('/boards/{board_name}/', 'FrontController@index')->name('index');
+            Route::get('/boards/{board_url}/', 'FrontController@index')->name('index');
 
             Route::resource('posts', 'PostsController');
             Route::resource('topics', 'TopicsController');

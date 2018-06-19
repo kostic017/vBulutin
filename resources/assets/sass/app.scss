@@ -125,6 +125,15 @@ span.invalid-feedback {
     }
 }
 
+.form-group.required label:before {
+    color: red;
+    font-size: 10px;
+    content: "\f005";
+    font-weight: 900;
+    margin-right: 5px;
+    font-family: 'Font Awesome\ 5 Free';
+}
+
 .home-links {
     margin-top: 10px;
     list-style-type: none;

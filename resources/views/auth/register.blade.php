@@ -13,7 +13,7 @@
                 <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('auth.username') }}</label>
 
                 <div class="col-md-6">
-                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
+                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" autofocus>
 
                     @if ($errors->has('username'))
                         <span class="invalid-feedback">
@@ -27,7 +27,7 @@
                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('auth.email') }}</label>
 
                 <div class="col-md-6">
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
 
                     @if ($errors->has('email'))
                         <span class="invalid-feedback" style="display:block">
@@ -41,7 +41,7 @@
                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('auth.password') }}</label>
 
                 <div class="col-md-6">
-                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
 
                     @if ($errors->has('password'))
                         <span class="invalid-feedback">
@@ -55,7 +55,7 @@
                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('auth.password2') }}</label>
 
                 <div class="col-md-6">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                 </div>
             </div>
 
