@@ -75,7 +75,7 @@ class ForumsController extends SectionsController
     public function create()
     {
         $categories = Category::all(['id', 'title']);
-        $rootForums = Forum::select (
+        $rootForums = Forum::select(
             'forums.id AS id',
             'forums.title AS title',
             'categories.id AS category_id',

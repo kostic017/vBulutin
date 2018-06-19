@@ -60,9 +60,9 @@ class UsersController
         */
 
         $users = User::query()
-            ->select('username', 'registered_at', 'about', \DB::raw('COUNT(*) AS post_count'))
+            ->select('username', 'registered_at', 'about', \DB::raw('COUNT(posts.id) AS post_count'))
             ->join('profiles', 'users.id', 'profiles.user_id')
-            ->join('posts', 'users.id', 'posts.user_id')
+            ->leftJoin('posts', 'users.id', 'posts.user_id')
             ->groupBy('username', 'registered_at', 'about')
             ->orderBy($sortColumn, $sortOrder);
 
