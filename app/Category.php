@@ -23,6 +23,11 @@ class Category extends Model
 
     public function watchers()
     {
-        return getWatchers('category', $this->id);
+        return self::get_watchers('category', $this->id);
+    }
+
+    public static function get_watchers($myTable, $myId)
+    {
+        return User::findMany(UserWatches::select('user_id')->where("{$myTable}_id", $myId)->get()->toArray());
     }
 }

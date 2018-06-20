@@ -19,7 +19,7 @@ class User extends Authenticatable
         'password', 'email_token', 'remember_token',
     ];
 
-    public static function newestUser()
+    public static function newest_user()
     {
         return self::select('username')->orderBy('registered_at', 'desc')->first();
     }

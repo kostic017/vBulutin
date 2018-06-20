@@ -12,5 +12,5 @@ return [
     ],
 
     'gc_read_status_days' => env('GC_READ_STATUS_DAYS', 30),
-    'refresh_online_users_minutes' => env('REFRESH_ONLINE_USERS_MINUTES', 5),
+    'refresh_online_minutes' => env('REFRESH_ONLINE_MINUTES', 5),
 ];

@@ -50,8 +50,8 @@
                                 <ul>
                                     <li><a href="{{ route('board.public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
                                     <li><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
-                                    <li>{{ extractDate($lastPost->created_at) }}</li>
-                                    <li>{{ extractTime($lastPost->created_at) }}</li>
+                                    <li>{{ extract_date($lastPost->created_at) }}</li>
+                                    <li>{{ extract_time($lastPost->created_at) }}</li>
                                 </ul>
                             </div>
                         @endif
@@ -99,8 +99,8 @@
                             <ul>
                                 <li><a href="{{ route('board.public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
                                 <li><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
-                                <li>{{ extractDate($lastPost->created_at) }}</li>
-                                <li>{{ extractTime($lastPost->created_at) }}</li>
+                                <li>{{ extract_date($lastPost->created_at) }}</li>
+                                <li>{{ extract_time($lastPost->created_at) }}</li>
                             </ul>
                         </div>
                     </td>

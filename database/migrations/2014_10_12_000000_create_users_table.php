@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('email_token')->nullable();
             $table->integer('admin_of')->nullable();
-            $table->integer('banned_on')->default(false);
+            $table->boolean('is_master')->default(false);
             $table->boolean('is_invisible')->default(false);
             $table->boolean('to_logout')->default(false);
             $table->timestamp('registered_at')->useCurrent();

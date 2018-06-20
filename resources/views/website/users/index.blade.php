@@ -34,7 +34,7 @@
                         <td>{{ ++$i }}</td>
                         <td><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></td>
                         <td class="about">{{ limit_words($user->about ?? '-', 10) }}</td>
-                        <td>{{ extractDate($user->registered_at) }}</td>
+                        <td>{{ extract_date($user->registered_at) }}</td>
                         <td>{{ $user->post_count }}</td>
                     </tr>
                 @endforeach

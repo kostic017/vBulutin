@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserRatingsTable extends Migration
+class CreatePostRatingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_ratings', function (Blueprint $table) {
+        Schema::create('post_ratings', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('mark', ['1', '-1']);
             $table->integer('user_id');
@@ -29,6 +29,6 @@ class CreateUserRatingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_ratings');
+        Schema::dropIfExists('post_ratings');
     }
 }

@@ -102,12 +102,12 @@ class Forum extends Model
 
     public function watchers()
     {
-        $mine = getWatchers('forum', $this->id);
-        $fromCategory = getWatchers('category', $this->category()->firstOrFail()->id);
+        $mine = Category::get_watchers('forum', $this->id);
+        $fromCategory = Category::get_watchers('category', $this->category()->firstOrFail()->id);
         $mine = $mine->merge($fromCategory);
 
         if ($parent = $this->parent()->first()) {
-            $fromParent = getWatchers('forum', $parent->id);
+            $fromParent = Category::get_watchers('forum', $parent->id);
             $mine = $mine->merge($fromParent);
         }
 

@@ -42,12 +42,12 @@
                     <li><a href="{{ route('website.users.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
                     <li><a href="{{ route('website.users.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
                     <li><strong>Broj poruka: </strong>{{ $user->posts()->get()->count() }}</li>
-                    <li><strong>Pridružio: </strong>{{ extractDate($user->registered_at) }}</li>
+                    <li><strong>Pridružio: </strong>{{ extract_date($user->registered_at) }}</li>
                 </ul>
                 <div class="body">
                     <p class="author">
                         <a href="{{ route('board.public.topics.show', ['slug' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
-                        napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ extractDate($post->created_at) }} {{ extractTime($post->created_at) }}
+                        napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ extract_date($post->created_at) }} {{ extract_time($post->created_at) }}
                     </p>
                     <div class="content">
                         {!! BBCode::parse($post->content) !!}

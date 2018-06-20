@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
         $admin->username = 'admin';
         $admin->password = \Hash::make('admin');
         $admin->email = 'admin@forum.com';
+        $admin->is_master = true;
         $admin->save();
         factory(Profile::class, 1)->create(['user_id' => $admin->id]);
 

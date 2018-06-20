@@ -15,7 +15,7 @@
                 </p> --}}
                 <dl>
                     <dt>Pridružio</dt>
-                    <dd>{{ extractDate($user->registered_at) }}</dd>
+                    <dd>{{ extract_date($user->registered_at) }}</dd>
                     <dt>Ukupno poruka</b><dt>
                     <dd>{{ $user->posts()->get()->count() }}</dd>
                     <dt>Pol</dt>
