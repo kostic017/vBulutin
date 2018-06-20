@@ -55,7 +55,7 @@
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
                     @if (isset($current_board))
-                        <a class="navbar-brand" href="{{ route('front.index', ['board_name' => $current_board->name]) }}">
+                        <a class="navbar-brand" href="{{ route('board.public.show', ['board_name' => $current_board->name]) }}">
                             {{ $current_board->title }}
                         </a>
                     @else

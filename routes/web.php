@@ -1,54 +1,52 @@
 <?php
 
 Auth::routes();
+Route::get('/', 'Website\WebsiteController@index')->name('index');
+Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
 
 Route::namespace('Website')
     ->name('website.')
+    ->prefix('website')
     ->group(
         function() {
-            Route::get('/', 'WebsiteController@index')->name('index');
-            Route::get('directory/{slug}', 'WebsiteController@directory')->name('directory');
-
-            Route::get('create', function () {
-                return view('website.create');
-            })->name('create');
-
             Route::resource('users', 'UsersController');
             Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
 
-            Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('confirm');
+            Route::resource('directories', 'DirectoriesController');
         }
     );
 
-Route::namespace('Front')
-    ->name('front.')
+Route::namespace('BoardPublic')
+    ->name('board.public.')
     ->group(
         function () {
-            Route::get('/boards/{board_url}/', 'FrontController@index')->name('index');
+            Route::get('{url}', 'BoardsController@show')->name('show');
+            Route::get('{directory_slug}/create', 'BoardsController@create')->name('create');
 
-            Route::resource('posts', 'PostsController');
-            Route::resource('topics', 'TopicsController');
-            Route::resource('forums', 'ForumsController');
             Route::resource('categories', 'CategoriesController');
 
+            Route::resource('posts', 'PostsController');
+            Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
+
+            Route::resource('forums', 'ForumsController');
             Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
+
+            Route::resource('topics', 'TopicsController');
             Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');
             Route::post('topics/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
             Route::post('topics/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
-
-            Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
             Route::post('topics/{id}/restore', 'TopicsController@restore')->name('topics.restore');
         }
     );
 
-Route::namespace('Back')
-    ->name('back.')
+Route::namespace('BoardAdmin')
+    ->name('board.admin.')
     ->prefix('admin/{board_name}')
     ->middleware('admin')
     ->group(
         function () {
             Route::get('/', function () {
-                return redirect(route('back.categories.index'));
+                return redirect(route('board.admin.categories.index'));
             })->name('index');
 
             Route::resource('forums', 'ForumsController');
