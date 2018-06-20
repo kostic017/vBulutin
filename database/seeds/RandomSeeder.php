@@ -8,7 +8,6 @@ use App\Board;
 use App\Profile;
 use App\Category;
 use App\Directory;
-use App\UserModerates;
 
 use Illuminate\Database\Seeder;
 
@@ -22,14 +21,6 @@ class RandomSeeder extends Seeder
     const CHILDREN_PER_ROOT = 2;
     const TOPICS_PER_FORUM = 2;
     const POSTS_PER_TOPIC = 2;
-    const MAX_MODS_PER_CATEGORY = 2;
-
-    // Ko moderise kategoriju, moderise i forume i potforume u njoj. Analogno,
-    // ako neko moderise natforum, onda moderise i potforume. Dok npr. neko moze
-    // da moderise samo odredjeni potforum. Posto ja sada hocu da ogranicim broj
-    // kreiranih moderatora, vodim racuna o broju moderatora koje sam vec kreirao.
-    // Polje je vezano za kategoriju kojoj kreiram moderature u datom trenutku!!!
-    private $modCount;
 
     public function run()
     {
@@ -52,24 +43,10 @@ class RandomSeeder extends Seeder
                         factory(Category::class, self::CATEGORIES_PER_BOARD)
                             ->create(['board_id' => $board->id])
                             ->each(function ($category) {
-                                $this->modCount = 0;
-                                $this->addModerators($category->id, 'category');
                                 $this->createForums(null, $category->id);
                             });
                     });
             });
-    }
-
-    private function addModerators($sectionId, $sectionType) {
-        $count = rand(0, self::MAX_MODS_PER_CATEGORY - $this->modCount);
-        $this->modCount += $count;
-
-        for ($i = 0; $i < $count; ++$i) {
-            UserModerates::create([
-                "{$sectionType}_id" => $sectionId,
-                'user_id' => User::inRandomOrder()->first()->id,
-            ]);
-        }
     }
 
     private function createForums($parentId, $categoryId) {
@@ -80,7 +57,6 @@ class RandomSeeder extends Seeder
 
         $forums->each(function ($forum) use ($parentId, $categoryId) {
             $this->createTopics($forum);
-            $this->addModerators($forum->id, 'forum');
 
             if ($parentId === null) {
                 $this->createForums($forum->id, $categoryId);

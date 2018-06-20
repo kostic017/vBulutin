@@ -113,18 +113,4 @@ class Forum extends Model
 
         return $mine;
     }
-
-    public function moderators()
-    {
-        $mine = getModerators('forum', $this->id);
-        $fromCategory = getModerators('category', $this->category()->firstOrFail()->id);
-        $mine = $mine->merge($fromCategory);
-
-        if ($parent = $this->parent()->first()) {
-            $fromParent = getModerators('forum', $parent->id);
-            $mine = $mine->merge($fromParent);
-        }
-
-        return $mine;
-    }
 }

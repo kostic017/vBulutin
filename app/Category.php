@@ -25,9 +25,4 @@ class Category extends Model
     {
         return getWatchers('category', $this->id);
     }
-
-    public function moderators()
-    {
-        return getModerators('category', $this->id);
-    }
 }

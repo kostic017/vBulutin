@@ -25,9 +25,7 @@ class ForumsController extends FrontController
             $vars['parent'] = $forum->parent()->firstOrFail();
         }
 
-        return view('public.forum')
-            ->with($vars)
-            ->with('mods', $forum->moderators());
+        return view('public.forum')->with($vars);
     }
 
     public function lock($id)

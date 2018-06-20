@@ -31,15 +31,6 @@
         .desc {
             margin: 0 0 10px 0;
         }
-
-        .mods {
-            display: flex;
-
-            ul {
-                margin-left: $ml-inlinelist;
-                @include comma-separated-list;
-            }
-        }
     }
 }
 

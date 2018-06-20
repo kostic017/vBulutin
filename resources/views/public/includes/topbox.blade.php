@@ -14,28 +14,12 @@
         </ul>
 
         <div class="page-info">
-
             <h2>{{ $self->title }}</h2>
-
             @if ($topbox !== 'topic')
                 @if ($self->description)
                     <p class="desc">{{ $self->description }}</p>
                 @endif
-
-                <div class="mods">
-                    Moderatori:
-                    @if ($mods->isEmpty())
-                        nema
-                    @else
-                        <ul>
-                            @foreach ($mods as $mod)
-                                <li><a href="{{ route('website.users.show', ['profile' => $mod->username]) }}">{{ $mod->username }}</a></li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
             @endif
-
         </div>
 
     </div>
