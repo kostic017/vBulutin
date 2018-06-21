@@ -1,7 +1,20 @@
 @extends('layouts.public')
 
 @section('content')
-    @include('public.includes.topbox')
+    <div class="top-box">
+        <ul class="path">
+            <li><a href="{{ route('public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
+            @if (isset($parent))
+                <li><a href="{{ route('public.forums.show', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
+            @endif
+        </ul>
+        <div class="page-info">
+            <h2>{{ $self->title }}</h2>
+            @if ($self->description)
+                <p class="desc">{{ $self->description }}</p>
+            @endif
+        </div>
+    </div>
 
     <div class="topbox-actions">
         <p><a href="#scform">Otvori temu</a></p>

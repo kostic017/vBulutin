@@ -1,10 +1,10 @@
-@php ($parents = $category->forums()->whereNull('parent_id')->get())
+@php ($parents = $self->forums()->whereNull('parent_id')->get())
 
 <table class="main-table table-hover">
 
     <caption>
         <div>
-            @if (isset($topbox))
+            @if (if_route('public.categories.show'))
                 Forumi
             @else
                 <a href="{{ route('public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a>

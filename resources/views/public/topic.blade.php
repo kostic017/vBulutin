@@ -1,7 +1,18 @@
 @extends('layouts.public')
 
 @section('content')
-    @include('public.includes.topbox')
+    <div class="top-box">
+        <ul class="path">
+            <li><a href="{{ route('public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
+            @if (isset($parent))
+                <li><a href="{{ route('public.forums.show', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
+            @endif
+            <li><a href="{{ route('public.forums.show', ['forum' => $forum->slug]) }}">{{ $forum->title }}</a></li>
+        </ul>
+        <div class="page-info">
+            <h2>{{ $self->title }}</h2>
+        </div>
+    </div>
 
     @if ($is_admin || Auth::id() === $topicStarter->id)
         <form id="solutionform" method="post" action="{{ route('public.topics.solution', ['id' => $self->id]) }}">

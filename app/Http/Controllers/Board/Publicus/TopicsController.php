@@ -24,14 +24,13 @@ class TopicsController extends PublicusController
                 ->get();
 
         $vars = [
-            'topbox' => 'topic',
             'self' => $topic,
-            'category' => $category,
             'forum' => $forum,
+            'posts' => $posts,
+            'category' => $category,
             'lastPost' => $topic->lastPost(),
             'topicStarter' => $topic->starter(),
             'solution' => $topic->solution(),
-            'posts' => $posts,
             'current_board' => $category->board()->firstOrFail(),
         ];
 

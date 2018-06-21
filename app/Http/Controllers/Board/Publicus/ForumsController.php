@@ -13,12 +13,11 @@ class ForumsController extends PublicusController
         $category = $forum->category()->firstOrFail();
 
         $vars = [
-            'topbox' => 'forum',
             'self' => $forum,
-            'children' => $forum->children()->get(),
-            'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
             'category' => $category,
+            'children' => $forum->children()->get(),
             'current_board' => $category->board()->firstOrFail(),
+            'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
         ];
 
         if ($forum->parent_id) {
