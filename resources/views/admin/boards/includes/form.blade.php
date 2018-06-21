@@ -1,5 +1,5 @@
 <div class="card-body">
-    <form method="post" action="{{ isset($force_directory) ? route('board.admin.boards.store') : route('board.admin.boards.update') }}">
+    <form method="post" action="{{ isset($force_directory) ? route('admin.boards.store') : route('admin.boards.update') }}">
         @csrf
 
         <div class="form-group required">
@@ -15,7 +15,7 @@
         <div class="form-group required">
             <label for="url">URL</label>
             <input type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" id="url" name="url" aria-describedby="url-help" value="{{ old('url') }}">
-            <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('board.public.show', ['board_name' => 'url']) }}</code>. Dozvoljena slova, brojevi, donje crte i crtice.</small>
+            <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('public.show', ['board_name' => 'url']) }}</code>. Dozvoljena slova, brojevi, donje crte i crtice.</small>
 
             @if ($errors->has('url'))
                 <span class="invalid-feedback">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BoardAdmin;
+namespace App\Http\Controllers\Board\Admin;
 
 use App\Http\Controllers\Controller;
 
@@ -158,7 +158,7 @@ abstract class SectionsController extends Controller
         $section->description = $request->description;
         $section->save();
 
-        return alert_redirect(route("board.admin.{$this->table}.show", [$this->singular => $section->slug]), 'success', __('db.updated'));
+        return alert_redirect(route("admin.{$this->table}.show", [$this->singular => $section->slug]), 'success', __('db.updated'));
     }
 
     /**
@@ -171,7 +171,7 @@ abstract class SectionsController extends Controller
     {
         $section = $this->model::findOrFail($id);
         $section->delete();
-        return alert_redirect(route("board.admin.{$this->table}.index"), 'success', __('db.deleted'));
+        return alert_redirect(route("admin.{$this->table}.index"), 'success', __('db.deleted'));
     }
 
     /**
@@ -184,7 +184,7 @@ abstract class SectionsController extends Controller
     {
         $section = $this->model::onlyTrashed()->findOrFail($id);
         $section->restore();
-        return alert_redirect(route("board.admin.{$this->table}.index"), 'success', __('db.restored'));
+        return alert_redirect(route("admin.{$this->table}.index"), 'success', __('db.restored'));
     }
 
     /**

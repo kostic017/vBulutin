@@ -3,13 +3,13 @@
 
         <ul class="path">
             @if (isset($category) && $topbox !== 'category')
-                <li><a href="{{ route('board.public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
+                <li><a href="{{ route('public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
             @endif
             @if (isset($parent))
-                <li><a href="{{ route('board.public.forums.show', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
+                <li><a href="{{ route('public.forums.show', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
             @endif
             @if (isset($forum))
-                <li><a href="{{ route('board.public.forums.show', ['forum' => $forum->slug]) }}">{{ $forum->title }}</a></li>
+                <li><a href="{{ route('public.forums.show', ['forum' => $forum->slug]) }}">{{ $forum->title }}</a></li>
             @endif
         </ul>
 

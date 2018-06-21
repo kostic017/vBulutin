@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BoardAdmin;
+namespace App\Http\Controllers\Board\Admin;
 
 use DB;
 use Schema;

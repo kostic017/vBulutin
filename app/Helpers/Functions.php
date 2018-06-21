@@ -1,10 +1,5 @@
 <?php
 
-use App\User;
-use App\UserWatches;
-use App\UserModerates;
-use Carbon\Carbon;
-
 function alert_redirect($url, $level, $message)
 {
     return redirect($url)->with([
@@ -13,7 +8,7 @@ function alert_redirect($url, $level, $message)
     ]);
 }
 
-function captcha_set()
+function is_captcha_set()
 {
     return is_not_empty(config('custom.captcha.site_key')) && is_not_empty(config('custom.captcha.secret_key'));
 }
@@ -53,12 +48,12 @@ function limit_words($value, $words = 3, $end = '...')
 
 function extract_time($datetime)
 {
-    return Carbon::parse($datetime)->format('H:i:s');
+    return \Carbon::parse($datetime)->format('H:i:s');
 }
 
 function extract_date($datetime)
 {
-    return Carbon::parse($datetime)->format('d.m.Y');
+    return \Carbon::parse($datetime)->format('d.m.Y');
 }
 
 function is_not_empty($str)

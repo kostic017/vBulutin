@@ -6,7 +6,7 @@
     <div class="topbox-actions">
         <p><a href="#scform">Otvori temu</a></p>
         @if ($is_admin)
-            <form action="{{ route('board.public.forums.lock', ['slug' => $self->id]) }}" method="post">
+            <form action="{{ route('public.forums.lock', ['slug' => $self->id]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
                     {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} forum
@@ -32,7 +32,7 @@
                     </td>
 
                     <td class="main-info">
-                        <a href="{{ route('board.public.forums.show', ['forum' => $child->slug]) }}" class="name">{{ $child->title }}</a>
+                        <a href="{{ route('public.forums.show', ['forum' => $child->slug]) }}" class="name">{{ $child->title }}</a>
                     </td>
 
                     <td class="side-info count">
@@ -48,7 +48,7 @@
                             <div class="post-info">
                                 <a href="{{ route('website.users.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
                                 <ul>
-                                    <li><a href="{{ route('board.public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
+                                    <li><a href="{{ route('public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
                                     <li><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                     <li>{{ extract_date($lastPost->created_at) }}</li>
                                     <li>{{ extract_time($lastPost->created_at) }}</li>
@@ -82,7 +82,7 @@
                     </td>
 
                     <td class="main-info">
-                        <a href="{{ route('board.public.topics.show', ['topic' => $topic->slug]) }}" class="name">{{ $topic->title }}</a>
+                        <a href="{{ route('public.topics.show', ['topic' => $topic->slug]) }}" class="name">{{ $topic->title }}</a>
                     </td>
 
                     <td class="side-info count">
@@ -97,7 +97,7 @@
                         <div class="post-info">
                             <a href="{{ route('website.users.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
                             <ul>
-                                <li><a href="{{ route('board.public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
+                                <li><a href="{{ route('public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
                                 <li><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                 <li>{{ extract_date($lastPost->created_at) }}</li>
                                 <li>{{ extract_time($lastPost->created_at) }}</li>
@@ -114,7 +114,7 @@
     @if ($self->is_locked)
         <p>Forum je zaključan, te nije moguće otvarati nove teme.</p>
     @elseif (Auth::check())
-        <form action="{{ route('board.public.topics.store') }}" method="post" id="scform">
+        <form action="{{ route('public.topics.store') }}" method="post" id="scform">
             @csrf
             <input type="hidden" name="forum_id" value="{{ $self->id }}">
 

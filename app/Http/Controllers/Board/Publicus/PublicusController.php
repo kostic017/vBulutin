@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BoardPublic;
+namespace App\Http\Controllers\Board\Publicus;
 
 use View;
 use Activity;
@@ -9,7 +9,7 @@ use App\Post;
 use App\Topic;
 use App\Http\Controllers\Controller;
 
-class FrontController extends Controller
+class PublicusController extends Controller
 {
     public function __construct()
     {

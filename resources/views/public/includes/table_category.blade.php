@@ -7,7 +7,7 @@
             @if (isset($topbox))
                 Forumi
             @else
-                <a href="{{ route('board.public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a>
+                <a href="{{ route('public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a>
             @endif
             <a href="#top" class="back2top" title="Top">Top</a>
         </div>
@@ -28,13 +28,13 @@
                 </td>
 
                 <td class="main-info">
-                    <a href="{{ route('board.public.forums.show', ['forum' => $parent->slug]) }}" class="name">{{ $parent->title }}</a>
+                    <a href="{{ route('public.forums.show', ['forum' => $parent->slug]) }}" class="name">{{ $parent->title }}</a>
                     @if ($children->count())
                         <ul class="subforum-list post-list">
                             @foreach ($children as $child)
                                 <li>
                                     <img class="iconpost" src="{{ asset("img/subforum_{$child->readStatus()}.png") }}">
-                                    <a href="{{ route('board.public.forums.show', ['forum' => $child->slug]) }}">{{ $child->title }}</a>
+                                    <a href="{{ route('public.forums.show', ['forum' => $child->slug]) }}">{{ $child->title }}</a>
                                 </li>
                             @endforeach
                         </ul>
@@ -54,7 +54,7 @@
                         <div class="post-info">
                             <a href="{{ route('website.users.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
                             <ul>
-                                <li><a href="{{ route('board.public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
+                                <li><a href="{{ route('public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
                                 <li><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                 <li>{{ extract_date($lastPost->created_at) }}</li>
                                 <li>{{ extract_time($lastPost->created_at) }}</li>

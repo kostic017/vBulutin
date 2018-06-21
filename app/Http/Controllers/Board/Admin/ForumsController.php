@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BoardAdmin;
+namespace App\Http\Controllers\Board\Admin;
 
 use App\Forum;
 use App\Category;
@@ -128,7 +128,7 @@ class ForumsController extends SectionsController
         $forum->slug = unique_slug($forum->title, $forum->id);
         $forum->save();
 
-        return alert_redirect(route('board.admin.forums.show', ['forum' => $forum->slug]), 'success', 'db.stored');
+        return alert_redirect(route('admin.forums.show', ['forum' => $forum->slug]), 'success', 'db.stored');
     }
 
     /**

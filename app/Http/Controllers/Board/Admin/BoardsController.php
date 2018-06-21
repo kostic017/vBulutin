@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BoardAdmin;
+namespace App\Http\Controllers\Board\Admin;
 
 use App\Board;
 use App\Directory;
@@ -17,7 +17,8 @@ class BoardsController
     public function edit($id)
     {
         return view('admin.boards.edit')
-            ->with('directories', Directory::all());
+            ->with('directories', Directory::all())
+            ->with('board', Board::findOrFail($id));
     }
 
     public function store()
@@ -42,6 +43,6 @@ class BoardsController
         $board->description = $request->description;
         $board->save();
 
-        return alert_redirect(route('board.public.show', ['url' => $board->url]), 'success', 'Forum uspešno napravljen.');
+        return alert_redirect(route('public.show', ['url' => $board->url]), 'success', 'Forum uspešno napravljen.');
     }
 }

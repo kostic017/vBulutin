@@ -10,14 +10,12 @@ Route::namespace('Website')
     ->group(
         function() {
             Route::resource('users', 'UsersController');
-            Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
-
             Route::resource('directories', 'DirectoriesController');
         }
     );
 
-Route::namespace('BoardPublic')
-    ->name('board.public.')
+Route::namespace('Board\Publicus')
+    ->name('public.')
     ->group(
         function () {
             Route::resource('posts', 'PostsController');
@@ -31,19 +29,19 @@ Route::namespace('BoardPublic')
             Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
             Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');
             Route::post('topics/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
-            Route::post('topics/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
             Route::post('topics/{id}/restore', 'TopicsController@restore')->name('topics.restore');
+            Route::post('topics/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
         }
     );
 
-Route::namespace('BoardAdmin')
-    ->name('board.admin.')
+Route::namespace('Board\Admin')
+    ->name('admin.')
     ->prefix('admin/{board_name}')
     ->middleware('admin')
     ->group(
         function () {
             Route::get('/', function () {
-                return redirect(route('board.admin.categories.index'));
+                return redirect(route('admin.categories.index'));
             })->name('index');
 
             Route::resource('forums', 'ForumsController');
@@ -52,6 +50,7 @@ Route::namespace('BoardAdmin')
             Route::get('reports/', 'ReportsController@index')->name('reports.index');
             Route::get('positions/', 'CategoriesController@positions')->name('positions');
 
+            Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
             Route::post('forums/{id}/restore', 'ForumsController@restore')->name('forums.restore');
             Route::post('reports/{table}/generate', 'ReportsController@generate')->name('reports.generate');
             Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
@@ -59,10 +58,10 @@ Route::namespace('BoardAdmin')
     );
 
 
-Route::name('board.admin.')
+Route::name('admin.')
     ->group(function() {
-        Route::resource('boards', 'BoardAdmin\BoardsController');
-        Route::get('{directory_slug}/create', 'BoardAdmin\BoardsController@create')->name('boards.create');
+        Route::resource('boards', 'Board\Admin\BoardsController');
+        Route::get('{directory_slug}/create', 'Board\Admin\BoardsController@create')->name('boards.create');
     });
 
 Route::group(['prefix' => '/ajax'], function () {

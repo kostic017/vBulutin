@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\BoardPublic;
+namespace App\Http\Controllers\Board\Publicus;
 
 use Auth;
 use App\Post;
 use App\Topic;
 use Illuminate\Http\Request;
 
-class PostsController extends FrontController
+class PostsController extends PublicusController
 {
     public function store(Request $request)
     {
@@ -35,7 +35,7 @@ class PostsController extends FrontController
         }
 
         $topic->touch();
-        return redirect(route('board.public.topics.show', ['topic' => $topic->slug]) . '#post-' . $post->id);
+        return redirect(route('public.topics.show', ['topic' => $topic->slug]) . '#post-' . $post->id);
     }
 
     public function destroy($id)

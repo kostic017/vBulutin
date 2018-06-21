@@ -55,7 +55,7 @@
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
                     @if (isset($current_board))
-                        <a class="navbar-brand" href="{{ route('board.public.show', ['board_name' => $current_board->name]) }}">
+                        <a class="navbar-brand" href="{{ route('public.show', ['board_name' => $current_board->name]) }}">
                             {{ $current_board->title }}
                         </a>
                     @else
@@ -123,9 +123,6 @@
                                         <a class="dropdown-item" href="{{ route('website.users.show', ['profile' => Auth::user()->username]) }}">
                                             <i class="fas fa-user"></i> Profil
                                         </a>
-                                        {{-- <a class="dropdown-item" href="#" id="btn-messages" data-newmessages="0">
-                                            <i class="fas fa-envelope"></i> Nema novih poruka
-                                        </a> --}}
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="fas fa-sign-out-alt"></i> {{ __('auth.logout') }}
                                         </a>

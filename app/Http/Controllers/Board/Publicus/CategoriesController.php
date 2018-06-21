@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\BoardPublic;
+namespace App\Http\Controllers\Board\Publicus;
 
 use App\Category;
 
-class CategoriesController extends FrontController
+class CategoriesController extends PublicusController
 {
     public function show($slug)
     {

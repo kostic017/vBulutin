@@ -16,7 +16,7 @@
                     </div>
                     <div id="collapseCategories" class="collapse show" aria-labelledby="headingCategories" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('board.admin.reports.generate', ['table' => 'categories']) }}">
+                            <form method="post" action="{{ route('admin.reports.generate', ['table' => 'categories']) }}">
                                 @php ($columns = $categories)
                                 @include('admin.includes.report-form')
                             </form>
@@ -34,7 +34,7 @@
                     </div>
                     <div id="collapseForums" class="collapse" aria-labelledby="headingForums" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('board.admin.reports.generate', ['table' => 'forums']) }}">
+                            <form method="post" action="{{ route('admin.reports.generate', ['table' => 'forums']) }}">
                                 @php ($columns = $forums)
                                 @include('admin.includes.report-form')
                             </form>
@@ -52,7 +52,7 @@
                     </div>
                     <div id="collapseTopics" class="collapse" aria-labelledby="headingTopics" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('board.admin.reports.generate', ['table' => 'topics']) }}">
+                            <form method="post" action="{{ route('admin.reports.generate', ['table' => 'topics']) }}">
                                 @php ($columns = $topics)
                                 @include('admin.includes.report-form')
                             </form>
@@ -70,7 +70,7 @@
                     </div>
                     <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('board.admin.reports.generate', ['table' => 'users']) }}">
+                            <form method="post" action="{{ route('admin.reports.generate', ['table' => 'users']) }}">
                                 @php ($columns = $users)
                                 @include('admin.includes.report-form')
                             </form>

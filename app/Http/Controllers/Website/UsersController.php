@@ -162,12 +162,4 @@ class UsersController
         return alert_redirect(route('website.users.show', ['profile' => $user->username]), 'success', __('db.updated'));
     }
 
-    public function ban($username)
-    {
-        $user = User::where('username', $username)->firstOrFail();
-        $user->is_banned = !$user->is_banned;
-        $user->save();
-        return redirect()->back();
-    }
-
 }

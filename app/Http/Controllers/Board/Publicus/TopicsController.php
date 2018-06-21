@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BoardPublic;
+namespace App\Http\Controllers\Board\Publicus;
 
 use Auth;
 use Validator;
@@ -10,7 +10,7 @@ use App\Topic;
 use App\Category;
 use Illuminate\Http\Request;
 
-class TopicsController extends FrontController
+class TopicsController extends PublicusController
 {
 
     public function show(string $slug)
@@ -76,7 +76,7 @@ class TopicsController extends FrontController
         $post->user_id = Auth::id();
         $post->save();
 
-        return redirect(route('board.public.topics.show', ['topic' => $topic->slug]));
+        return redirect(route('public.topics.show', ['topic' => $topic->slug]));
     }
 
     public function updateTitle(Request $request, string $id)

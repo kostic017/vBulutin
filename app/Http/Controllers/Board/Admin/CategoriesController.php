@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BoardAdmin;
+namespace App\Http\Controllers\Board\Admin;
 
 use App\Forum;
 use App\Category;
@@ -62,7 +62,7 @@ class CategoriesController extends SectionsController
         $category->slug = unique_slug($category->title, $category->id);
         $category->save();
 
-        return alert_redirect(route('board.admin.categories.show', ['category' => $category->slug]), 'success', __('db.stored'));
+        return alert_redirect(route('admin.categories.show', ['category' => $category->slug]), 'success', __('db.stored'));
     }
 
     public function show($slug)

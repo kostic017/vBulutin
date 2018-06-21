@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\BoardPublic;
+namespace App\Http\Controllers\Board\Publicus;
 
 use App\Forum;
 use App\Category;
 
-class ForumsController extends FrontController
+class ForumsController extends PublicusController
 {
     public function show($slug)
     {

@@ -5,15 +5,8 @@ namespace App\Helpers;
 class BBCode {
     private static $parser = null;
     private static $emoticons = null;
-
     private const EMOTICONS_FOLDER = 'vendor/sceditor/emoticons/';
 
-    /**
-     * Convert BBCode to HTML.
-     *
-     * @param  string  $bbcode
-     * @return string  Generated HTML code.
-     */
     public static function parse($bbcode)
     {
         if (!self::$parser) {
@@ -53,18 +46,12 @@ class BBCode {
         }
 
         $code = self::$parser->render(e($bbcode), false);
-        $code = self::parseEmoticons($code);
+        $code = self::parse_emoticons($code);
 
         return $code;
     }
 
-    /**
-     * Replace emoticon codes with <img> tags.
-     *
-     * @param  string  $code
-     * @return string  Generated HTML code.
-     */
-    private static function parseEmoticons($code)
+    private static function parse_emoticons($code)
     {
         if (!self::$emoticons) {
             self::$emoticons = [];

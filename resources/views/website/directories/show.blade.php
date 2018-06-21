@@ -7,7 +7,7 @@
             <p>{{ $directory->description }}</p>
         </div>
         <div class="button">
-            <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('board.admin.boards.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>
+            <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('admin.boards.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>
         </div>
     </div>
     <div class="card-body">
@@ -18,7 +18,7 @@
                 <div class="board">
                     <h4>{{ $board->title }}</h4>
                     <p>{{ $board->description }}</a></p>
-                    <p><a href="{{ route('board.public.show', ['url' => $board->url]) }}/">Poseti forum</a></p>
+                    <p><a href="{{ route('public.show', ['url' => $board->url]) }}/">Poseti forum</a></p>
                 </div>
             @endforeach
         @endif

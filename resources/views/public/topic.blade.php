@@ -4,13 +4,13 @@
     @include('public.includes.topbox')
 
     @if ($is_admin || Auth::id() === $topicStarter->id)
-        <form id="solutionform" method="post" action="{{ route('board.public.topics.solution', ['id' => $self->id]) }}">
+        <form id="solutionform" method="post" action="{{ route('public.topics.solution', ['id' => $self->id]) }}">
             @csrf
             <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
         </form>
 
         <a href="#" id="edittitle">Izmeni naslov</a>
-        <form id="edittitle-form" action="{{ route('board.public.topics.title', ['id' => $self->id]) }}" method="post" class="m-2" style="display: none;">
+        <form id="edittitle-form" action="{{ route('public.topics.title', ['id' => $self->id]) }}" method="post" class="m-2" style="display: none;">
             @csrf
             <div class="form-group d-flex flex-wrap">
                 <label for="title" class="sr-only">Novi naslov</label>
@@ -23,7 +23,7 @@
     <div class="topbox-actions">
         <p><a href="#scform">Pošalji odgovor</a></p>
         @if ($is_admin)
-            <form action="{{ route('board.public.topics.lock', ['id' => $self->id]) }}" method="post">
+            <form action="{{ route('public.topics.lock', ['id' => $self->id]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
                     {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} temu
@@ -46,7 +46,7 @@
                 </ul>
                 <div class="body">
                     <p class="author">
-                        <a href="{{ route('board.public.topics.show', ['slug' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
+                        <a href="{{ route('public.topics.show', ['slug' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
                         napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ extract_date($post->created_at) }} {{ extract_time($post->created_at) }}
                     </p>
                     <div class="content">
@@ -66,12 +66,12 @@
                             @if ($is_admin || $lastPost->id === $post->id)
                                 <li>
                                     @if ($post->deleted_at)
-                                        <form method="post" action="{{ route('board.public.posts.restore', ['id' => $post->id]) }}">
+                                        <form method="post" action="{{ route('public.posts.restore', ['id' => $post->id]) }}">
                                             @csrf
                                             <button type="submit" class="btn btn-link">Vrati</button>
                                         </form>
                                     @else
-                                        <form method="post" action="{{ route('board.public.posts.destroy', ['id' => $post->id]) }}">
+                                        <form method="post" action="{{ route('public.posts.destroy', ['id' => $post->id]) }}">
                                             @csrf
                                             {{ method_field('DELETE') }}
                                             <button type="submit" class="btn btn-link">Obriši</button>
@@ -101,7 +101,7 @@
     @elseif ($forum->is_locked)
         <p>Tema se nalazi u zaključanom forumu, te nije moguće odgovorati na nju.</p>
     @elseif (Auth::check())
-        <form action="{{ route('board.public.posts.store') }}" method="post" id="scform">
+        <form action="{{ route('public.posts.store') }}" method="post" id="scform">
             @csrf
 
             <input type="hidden" name="topic_id" value="{{ $self->id }}">

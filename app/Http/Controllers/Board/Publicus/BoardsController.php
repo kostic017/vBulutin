@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\BoardPublic;
+namespace App\Http\Controllers\Board\Publicus;
 
 use App\Board;
 
-class BoardsController extends FrontController
+class BoardsController extends PublicusController
 {
     public function show(string $url)
     {

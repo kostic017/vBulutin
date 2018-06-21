@@ -19,7 +19,7 @@ class Logger
         fclose($this->file);
     }
 
-    private function addRecord($level, $method, $message)
+    private function add_record($level, $method, $message)
     {
         $level = strtoupper($level);
         $date = \Carbon::now()->toDateString();
@@ -31,6 +31,6 @@ class Logger
         if (!self::$logger) {
             self::$logger = new Logger('forum41');
         }
-        self::$logger->addRecord($level, $method, $message);
+        self::$logger->add_record($level, $method, $message);
     }
 }
