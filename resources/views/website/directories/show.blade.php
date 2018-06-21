@@ -18,7 +18,7 @@
                 <div class="board">
                     <h4>{{ $board->title }}</h4>
                     <p>{{ $board->description }}</a></p>
-                    <p><a href="{{ route('public.show', ['url' => $board->url]) }}/">Poseti forum</a></p>
+                    <p><a href="{{ route('public.show', ['board_url' => $board->url]) }}/">Poseti forum</a></p>
                 </div>
             @endforeach
         @endif

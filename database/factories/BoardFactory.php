@@ -11,8 +11,11 @@ $factory->define(App\Board::class, function (Faker $faker) {
         'url' => strtok($title, ' ') . $id++,
         'description' => $faker->optional()->paragraph(),
         'is_visible' => true,
-        'owned_by' => function() {
-            return App\User::inRandomOrder()->first()->id;
+        'owner_id' => function() {
+            $owner = App\User::inRandomOrder()->first();
+            $owner->email_token = null;
+            $owner->save();
+            return $owner->id;
         }
     ];
 });

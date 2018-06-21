@@ -7,7 +7,7 @@
             @if (if_route('public.categories.show'))
                 Forumi
             @else
-                <a href="{{ route('public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a>
+                <a href="{{ route('public.categories.show', ['category' => $self->slug]) }}">{{ $self->title }}</a>
             @endif
             <a href="#top" class="back2top" title="Top">Top</a>
         </div>

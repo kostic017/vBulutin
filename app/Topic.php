@@ -2,10 +2,6 @@
 
 namespace App;
 
-use Auth;
-use Carbon\Carbon;
-use App\Exceptions\UnexpectedException;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -35,8 +31,8 @@ class Topic extends Model
 
     public function readStatus()
     {
-        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days') ||
-            ReadTopics::where('topic_id', $this->id)->where('user_id', Auth::id())->get()->count() ?
+        return \Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days') ||
+            ReadTopics::where('topic_id', $this->id)->where('user_id', \Auth::id())->get()->count() ?
                 'old' : 'new';
     }
 

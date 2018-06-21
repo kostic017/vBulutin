@@ -181,6 +181,7 @@ return [
     'aliases' => [
 
         'BBCode' => App\Helpers\BBCode::class,
+        'Logger' => App\Helpers\Logger::class,
         'Carbon' => Carbon\Carbon::class, // for views
         'Active' => HieuLe\Active\Facades\Active::class,
         'Activity' => Kim\Activity\ActivityFacade::class,

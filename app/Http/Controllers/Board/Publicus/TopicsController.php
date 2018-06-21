@@ -18,8 +18,10 @@ class TopicsController extends PublicusController
         $topic = Topic::where('slug', $slug)->firstOrFail();
         $forum = $topic->forum()->firstOrFail();;
         $category = $forum->category()->firstOrFail();
+        $board = $category->board()->firstOrFail();
+        $is_admin = $board->is_admin();
 
-        $posts = (is_admin() ? Post::withTrashed() : Post::query())
+        $posts = ($board->is_admin() ? Post::withTrashed() : Post::query())
                 ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
                 ->get();
 
@@ -31,7 +33,8 @@ class TopicsController extends PublicusController
             'lastPost' => $topic->lastPost(),
             'topicStarter' => $topic->starter(),
             'solution' => $topic->solution(),
-            'current_board' => $category->board()->firstOrFail(),
+            'is_admin' => $is_admin,
+            'current_board' => $board,
         ];
 
         if ($forum->parent_id) {

@@ -165,9 +165,13 @@ span.invalid-feedback {
     position: absolute;
     border-top: 1px solid $bc-main;
 
-    .copyright {
+    div {
         text-align: center;
         padding: ($m-main / 2) 0;
+    }
+
+    p {
+        margin: 0;
     }
 }
 

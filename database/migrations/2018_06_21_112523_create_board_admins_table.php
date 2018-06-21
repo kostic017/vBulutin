@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Boards extends Migration
+class CreateBoardAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class Boards extends Migration
      */
     public function up()
     {
-        Schema::create('boards', function (Blueprint $table) {
+        Schema::create('board_admins', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('url');
-            $table->string('description')->nullable();
-            $table->boolean('is_visible')->default(false);
-            $table->integer('owner_id');
-            $table->integer('directory_id');
+            $table->integer('user_id');
+            $table->integer('board_id');
         });
     }
 
@@ -31,6 +27,6 @@ class Boards extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boards');
+        Schema::dropIfExists('board_admins');
     }
 }

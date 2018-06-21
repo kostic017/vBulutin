@@ -36,10 +36,6 @@ class RandomSeeder extends Seeder
                 factory(Board::class, self::BOARDS_PER_DIRECTORY)
                     ->create(['directory_id' => $directory->id])
                     ->each(function ($board) {
-                        $owner = User::findOrFail($board->owned_by);
-                        $owner->admin_of = $board->id;
-                        $owner->save();
-
                         factory(Category::class, self::CATEGORIES_PER_BOARD)
                             ->create(['board_id' => $board->id])
                             ->each(function ($category) {

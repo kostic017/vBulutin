@@ -78,7 +78,7 @@ class UsersController
         |--------------------------------------------------------------------------
         */
 
-        return view('website.users')
+        return view('website.users.index')
             ->with(compact('users', 'perPage', 'step', 'max', 'sortColumn', 'sortOrder'));
     }
 
@@ -86,7 +86,7 @@ class UsersController
     {
         if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
-            return view('website.showprofile')
+            return view('website.users.show')
                 ->with('user', $user)
                 ->with('profile', $user->profile()->firstOrFail());
         } else {
@@ -98,8 +98,8 @@ class UsersController
     {
         if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
-            if (Auth::id() == $user->id || Auth::user()->is_admin) {
-                return view('website.editprofile')
+            if (Auth::id() == $user->id || Auth::user()->is_master) {
+                return view('website.users.edit')
                     ->with('user', $user)
                     ->with('profile', $user->profile()->firstOrFail());
             }

@@ -11,12 +11,14 @@ class ForumsController extends PublicusController
     {
         $forum = Forum::where('slug', $slug)->firstOrFail();
         $category = $forum->category()->firstOrFail();
+        $board = $category->board()->firstOrFail();
 
         $vars = [
             'self' => $forum,
             'category' => $category,
+            'current_board' => $board,
+            'is_admin' => $board->is_admin(),
             'children' => $forum->children()->get(),
-            'current_board' => $category->board()->firstOrFail(),
             'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
         ];
 

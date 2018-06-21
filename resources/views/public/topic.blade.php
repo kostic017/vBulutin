@@ -73,7 +73,6 @@
                 <ul>
                     @auth
                         @if ($is_admin || Auth::id() == $user->id)
-                            {{-- <li><a href="#" class="editpost" data-postid="{{ $post->id }}">Izmeni</a></li> --}}
                             @if ($is_admin || $lastPost->id === $post->id)
                                 <li>
                                     @if ($post->deleted_at)

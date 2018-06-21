@@ -55,7 +55,7 @@
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
                     @if (isset($current_board))
-                        <a class="navbar-brand" href="{{ route('public.show', ['board_name' => $current_board->name]) }}">
+                        <a class="navbar-brand" href="{{ route('public.show', ['board_url' => $current_board->url]) }}">
                             {{ $current_board->title }}
                         </a>
                     @else
@@ -63,7 +63,6 @@
                             {{ config('app.name') }}
                         </a>
                     @endif
-
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -71,6 +70,9 @@
                         <ul class="navbar-nav mr-auto"></ul>
                         <ul class="navbar-nav ml-auto">
                             <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
+                            @if (isset($is_admin))
+                                <li><a class="nav-link" href="{{ route('admin.index', ['board_url' => $current_board->url]) }}">Admin panel</a></li>
+                            @endif
                             @guest
                                 <li>
                                     <div class="dropdown" id="dropdown-login">
@@ -142,9 +144,13 @@
             </main>
 
             <section class="footer">
-                <div class="copyright">
+                <div>
                     @if (isset($current_board))
-                        <a href="/">Napravi i ti svoj forum</a><br>
+                        @php($owner = $current_board->owner()->firstOrFail()->username)
+                        <p>
+                            Vlasnik ovog foruma je <a href="{{ route('website.users.show', ['username' => $owner]) }}">{{ $owner }}</a>.
+                            <a href="/">Napravi i ti svoj forum</a>
+                        </p>
                     @endif
                     Copyright &copy; 2017-{{ date('Y') }} Nikola Kostić
                 </div>

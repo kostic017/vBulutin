@@ -36,7 +36,7 @@ Route::namespace('Board\Publicus')
 
 Route::namespace('Board\Admin')
     ->name('admin.')
-    ->prefix('admin/{board_name}')
+    ->prefix('admin/{board_url}')
     ->middleware('admin')
     ->group(
         function () {
