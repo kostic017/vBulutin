@@ -39,27 +39,6 @@ select[name=perPage] {
     }
 }
 
-.avatar {
-    &-small, &-medium, &-big {
-        display: block;
-    }
-
-    &-small {
-        width: 50px;
-        height: 50px;
-    }
-
-    &-medium {
-        width: 100px;
-        height: 100px;
-    }
-
-    &-big {
-        width: 200px;
-        height: 200px;
-    }
-}
-
 @media screen and (max-width: 630px) {
     table.users .about {
         display: none;

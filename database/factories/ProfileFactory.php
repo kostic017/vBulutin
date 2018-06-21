@@ -12,6 +12,6 @@ $factory->define(App\Profile::class, function (Faker $faker, array $args) {
         'name' => $faker->optional()->name,
         'residence' => $faker->optional()->city,
         'birthplace' => $faker->optional()->city,
-        'avatar' => $faker->optional()->imageUrl(100, 100),
+        'avatar' => $faker->randomElement([null, config('custom.random_image')]),
     ];
 });

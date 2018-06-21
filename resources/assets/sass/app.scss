@@ -157,6 +157,27 @@ span.invalid-feedback {
     }
 }
 
+.avatar {
+    &-small, &-medium, &-big {
+        display: block;
+    }
+
+    &-small {
+        width: 50px;
+        height: 50px;
+    }
+
+    &-medium {
+        width: 100px;
+        height: 100px;
+    }
+
+    &-big {
+        width: 200px;
+        height: 200px;
+    }
+}
+
 .footer {
     left: 0;
     right: 0;
