@@ -42,6 +42,7 @@ class PostsController extends PublicusController
     {
         $post = Post::findOrFail($id);
         $topic = $post->topic()->first();
+        $forum = $topic->forum()->first();
 
         if ($topic->solution_id === $id) {
             $topic->solution_id = null;
@@ -49,6 +50,12 @@ class PostsController extends PublicusController
         }
 
         $post->delete();
+
+        if ($topic->posts()->count() == 0) {
+            $topic->delete();
+            return redirect('public.forum.show', ['forum' => $forum->slug]);
+        }
+
         return redirect()->back();
     }
 
