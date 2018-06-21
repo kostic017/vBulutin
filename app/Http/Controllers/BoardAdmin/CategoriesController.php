@@ -12,77 +12,36 @@ class CategoriesController extends SectionsController
     protected $singular = 'category';
     protected $model = 'App\Category';
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
-     */
     public function index()
     {
         return parent::index();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\View\View
-     */
     public function edit($slug)
     {
         return parent::edit($slug);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update($request, $id)
     {
         return parent::update($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function destroy($id)
     {
         return parent::destroy($id);
     }
 
-    /**
-     * Restore a soft-deleted model instance.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function restore($id)
     {
         return parent::restore($id);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
     public function create()
     {
         return view('admin.sections.categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store($request)
     {
         $validator = \Validator::make($request->all(), [
@@ -106,23 +65,12 @@ class CategoriesController extends SectionsController
         return alert_redirect(route('board.admin.categories.show', ['category' => $category->slug]), 'success', __('db.stored'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\View\View
-     */
     public function show($slug)
     {
         $category = Category::withTrashed()->where('slug', $slug)->firstOrFail();
         return view('admin.sections.categories.show')->with('category', $category);
     }
 
-    /**
-     * Generates ordered tree of all forums and categories.
-     *
-     * @return \Illuminate\View\View
-     */
     public function positions()
     {
         $columns = ['id', 'title', 'deleted_at'];

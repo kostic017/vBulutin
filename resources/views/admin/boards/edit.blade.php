@@ -3,5 +3,5 @@
     <div class="card-header">
         <h2>Izmeni forum</h2>
     </div>
-    @include('includes.board-form')
+    @include('admin.boards.includes.form')
 @stop

@@ -1,17 +1,31 @@
 <div class="card-body">
-    <form method="post" action="{{ active_class(if_route('website.directories.add'), '') }}">
+    <form method="post" action="{{ isset($force_directory) ? route('board.admin.boards.store') : route('board.admin.boards.update') }}">
+        @csrf
+
         <div class="form-group required">
             <label for="title">Naziv</label>
-            <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+            <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" value="{{ old('title') }}">
+
+             @if ($errors->has('title'))
+                <span class="invalid-feedback">
+                    <strong>{{ $errors->first('title') }}</strong>
+                </span>
+            @endif
         </div>
         <div class="form-group required">
             <label for="url">URL</label>
-            <input type="text" class="form-control" id="url" name="url" aria-describedby="url-help" value="{{ old('url') }}">
-            <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('board.public.show', ['board_name' => 'url']) }}</code>. Ne stavljajte razmake.</small>
+            <input type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" id="url" name="url" aria-describedby="url-help" value="{{ old('url') }}">
+            <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('board.public.show', ['board_name' => 'url']) }}</code>. Dozvoljena slova, brojevi, donje crte i crtice.</small>
+
+            @if ($errors->has('url'))
+                <span class="invalid-feedback">
+                    <strong>{{ $errors->first('url') }}</strong>
+                </span>
+            @endif
         </div>
         <div class="form-group">
             <label for="directory">Direktorijum</label>
-            <select class="form-control" {{ isset($force_directory) ? "disabled" : "" }}>
+            <select class="form-control{{ $errors->has('directory') ? ' is-invalid' : '' }}" {{ isset($force_directory) ? "disabled" : "" }}>
                 @foreach ($directories as $directory)
                     @php(
                         $selected = isset($force_directory) ?
@@ -21,6 +35,9 @@
                     <option value="{{ $directory->id }}" {{ $selected }}>{{ $directory->title }}</option>
                 @endforeach
             </select>
+            @if (isset($force_directory))
+                <input type="hidden" name="directory" value="{{ $force_directory->id }}">
+            @endif
         </div>
         <div class="form-group form-check">
             <input type="hidden" name="visible" value="0">

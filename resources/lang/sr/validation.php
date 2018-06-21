@@ -85,7 +85,7 @@ return [
     ],
     'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'Već postoju ta vrednost za :attribute.',
+    'unique'               => 'Već postoji ta vrednost za :attribute.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 

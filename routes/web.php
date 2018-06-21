@@ -20,18 +20,15 @@ Route::namespace('BoardPublic')
     ->name('board.public.')
     ->group(
         function () {
-            Route::get('{url}', 'BoardsController@show')->name('show');
-            Route::get('{directory_slug}/create', 'BoardsController@create')->name('create');
-
+            Route::resource('posts', 'PostsController');
+            Route::resource('forums', 'ForumsController');
+            Route::resource('topics', 'TopicsController');
             Route::resource('categories', 'CategoriesController');
 
-            Route::resource('posts', 'PostsController');
+            Route::get('{url}', 'BoardsController@show')->name('show');
+
             Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
-
-            Route::resource('forums', 'ForumsController');
             Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
-
-            Route::resource('topics', 'TopicsController');
             Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');
             Route::post('topics/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
             Route::post('topics/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
@@ -60,6 +57,13 @@ Route::namespace('BoardAdmin')
             Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
         }
     );
+
+
+Route::name('board.admin.')
+    ->group(function() {
+        Route::resource('boards', 'BoardAdmin\BoardsController');
+        Route::get('{directory_slug}/create', 'BoardAdmin\BoardsController@create')->name('boards.create');
+    });
 
 Route::group(['prefix' => '/ajax'], function () {
     Route::post('quote', 'AjaxController@quote')->name('ajax.quote');

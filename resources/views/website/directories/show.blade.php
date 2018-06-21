@@ -7,7 +7,7 @@
             <p>{{ $directory->description }}</p>
         </div>
         <div class="button">
-            <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('board.public.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>
+            <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('board.admin.boards.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>
         </div>
     </div>
     <div class="card-body">
