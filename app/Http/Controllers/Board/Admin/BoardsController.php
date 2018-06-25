@@ -36,7 +36,7 @@ class BoardsController
 
         $board = new Board;
         $board->url = $request->url;
-        $board->owned_by = \Auth::id();
+        $board->owner_id = \Auth::id();
         $board->title = $request->title;
         $board->is_visible = $request->is_visible;
         $board->directory_id = $request->directory;

@@ -40,9 +40,9 @@
             @endif
         </div>
         <div class="form-group form-check">
-            <input type="hidden" name="visible" value="0">
-            <input type="checkbox" class="form-check-input" id="visible" name="visible" value="1" {{ old('visible') === "1" || old('visible') === null ? "checked" : "" }}>
-            <label class="form-check-label" for="visible">Vidljiv</label>
+            <input type="hidden" name="is_visible" value="0">
+            <input type="checkbox" class="form-check-input" id="is_visible" name="is_visible" value="1" {{ old('is_visible') === "1" || old('is_visible') === null ? "checked" : "" }}>
+            <label class="form-check-label" for="is_visible">Vidljiv</label>
         </div>
         <div class="form-group">
             <label for="sceditor">{{ __('db.description') }}</label>

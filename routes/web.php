@@ -61,7 +61,7 @@ Route::namespace('Board\Admin')
 Route::name('admin.')
     ->group(function() {
         Route::resource('boards', 'Board\Admin\BoardsController');
-        Route::get('{directory_slug}/create', 'Board\Admin\BoardsController@create')->name('boards.create');
+        Route::get('website/directories/{directory_slug}/create', 'Board\Admin\BoardsController@create')->name('boards.create');
     });
 
 Route::group(['prefix' => '/ajax'], function () {
