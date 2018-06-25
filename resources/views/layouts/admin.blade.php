@@ -21,7 +21,6 @@
                             <a href="{{ route('admin.positions') }}">{{ __('admin.positioning') }}</a>
                         </li>
                     </ul>
-
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_route('admin.reports.index')) }}">
                             <a href="{{ route('admin.reports.index') }}">Izveštaji</a>

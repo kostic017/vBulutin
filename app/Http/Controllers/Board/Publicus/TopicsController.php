@@ -10,7 +10,7 @@ use App\Topic;
 use App\Category;
 use Illuminate\Http\Request;
 
-class TopicsController extends PublicusController
+class TopicsController
 {
 
     public function show(string $slug)

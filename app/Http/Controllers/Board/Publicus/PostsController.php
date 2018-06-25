@@ -7,7 +7,7 @@ use App\Post;
 use App\Topic;
 use Illuminate\Http\Request;
 
-class PostsController extends PublicusController
+class PostsController
 {
     public function store(Request $request)
     {

@@ -1,5 +1,7 @@
 @import "../partials/import";
+
 @import "users";
+@import "foruminfo";
 
 .board {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -23,7 +25,6 @@
     min-width: 200px;
     word-wrap: normal;
     text-align: center;
-    margin-bottom: $m-main;
 
     a {
         @include full-block;

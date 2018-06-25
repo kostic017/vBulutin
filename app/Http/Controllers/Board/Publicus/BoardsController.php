@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Board\Publicus;
 
 use App\Board;
 
-class BoardsController extends PublicusController
+class BoardsController
 {
     public function show(string $url)
     {

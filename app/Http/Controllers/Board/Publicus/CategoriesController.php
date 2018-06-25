@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Board\Publicus;
 
 use App\Category;
 
-class CategoriesController extends PublicusController
+class CategoriesController
 {
     public function show($slug)
     {

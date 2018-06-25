@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Board\Publicus;
 use App\Forum;
 use App\Category;
 
-class ForumsController extends PublicusController
+class ForumsController
 {
     public function show($slug)
     {

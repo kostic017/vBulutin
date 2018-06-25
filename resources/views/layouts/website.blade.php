@@ -10,5 +10,6 @@
         <div class="card">
             @yield('content')
         </div>
+        @yield('more-content')
     </div>
 @overwrite
