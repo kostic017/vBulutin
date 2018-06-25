@@ -70,7 +70,7 @@
                         <ul class="navbar-nav mr-auto"></ul>
                         <ul class="navbar-nav ml-auto">
                             <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
-                            @if (isset($is_admin))
+                            @if (isset($is_admin) && $is_admin)
                                 <li><a class="nav-link" href="{{ route('admin.index', ['board_url' => $current_board->url]) }}">Admin panel</a></li>
                             @endif
                             @guest
