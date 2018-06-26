@@ -12,28 +12,35 @@ class WebsiteController
 {
     public function index()
     {
-        $refresh_online_minutes = config('custom.refresh_online_minutes');
+        $vars = [
+            'directories' => Directory::all()
+        ];
 
-        $visible_online = Activity::users($refresh_online_minutes)
-            ->join('users', 'sessions.user_id', 'users.id')
-            ->where('is_invisible', false)
-            ->get();
+        if (User::count() > 0) {
+            $refresh_online_minutes = config('custom.refresh_online_minutes');
 
-        $guest_count = Activity::guests()->count();
-        $visible_online_count = $visible_online->count();
-        $all_online_count = Activity::users($refresh_online_minutes)->count();
+            $visible_online = Activity::users($refresh_online_minutes)
+                ->join('users', 'sessions.user_id', 'users.id')
+                ->where('is_invisible', false)
+                ->get();
 
-        return view('website.index')
-            ->with('post_count', Post::count())
-            ->with('guest_count', $guest_count)
-            ->with('topic_count', Topic::count())
-            ->with('directories', Directory::all())
-            ->with('newest_user', User::newest_user())
-            ->with('user_count', User::all()->count())
-            ->with('visible_online', $visible_online)
-            ->with('visible_online_count', $visible_online_count)
-            ->with('refresh_online_minutes', $refresh_online_minutes)
-            ->with('people_online', $all_online_count + $guest_count)
-            ->with('invisible_online_count', $all_online_count - $visible_online_count);
+            $guest_count = Activity::guests()->count();
+            $visible_online_count = $visible_online->count();
+            $all_online_count = Activity::users($refresh_online_minutes)->count();
+
+            $vars['show_stats'] = true;
+            $vars['post_count'] = Post::count();
+            $vars['guest_count'] = $guest_count;
+            $vars['topic_count'] = Topic::count();
+            $vars['newest_user'] = User::newest_user();
+            $vars['user_count'] = User::all()->count();
+            $vars['visible_online'] = $visible_online;
+            $vars['visible_online_count'] = $visible_online_count;
+            $vars['refresh_online_minutes'] = $refresh_online_minutes;
+            $vars['people_online_count'] = $all_online_count + $guest_count;
+            $vars['invisible_online_count'] = $all_online_count - $visible_online_count;
+        }
+
+        return view('website.index')->with($vars);
     }
 }
