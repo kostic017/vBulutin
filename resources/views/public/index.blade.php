@@ -2,9 +2,9 @@
 
 @section('content')
     @if ($categories->isEmpty())
-        <p>Trenutno nema ničeg ovde...</p>
+        Trenutno nema ničeg ovde...
     @else
-        @foreach ($categories as $self)
+        @foreach ($categories as $category)
             @include('public.includes.table_category')
         @endforeach
     @endif

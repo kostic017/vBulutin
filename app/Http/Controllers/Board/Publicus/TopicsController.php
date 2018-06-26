@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Board\Publicus;
 
-use Auth;
-use Validator;
-
 use App\Post;
 use App\Board;
 use App\Forum;
 use App\Topic;
-use App\Category;
-use Illuminate\Http\Request;
 
 class TopicsController
 {
@@ -23,20 +18,21 @@ class TopicsController
         $topic = $forum->topics()->where('slug', $topic_slug)->firstOrFail();
         $is_admin = $board->is_admin();
 
-        $posts = ($board->is_admin() ? Post::withTrashed() : Post::query())
+        $posts = ($is_admin ? Post::withTrashed() : Post::query())
                 ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
                 ->get();
 
         $vars = [
-            'self' => $topic,
+            'topic' => $topic,
             'forum' => $forum,
             'posts' => $posts,
             'category' => $category,
-            'lastPost' => $topic->lastPost(),
-            'topicStarter' => $topic->starter(),
-            'solution' => $topic->solution(),
             'is_admin' => $is_admin,
-            'board' => $board,
+            'current_board' => $board,
+            'solution' => $topic->solution(),
+            'lastPost' => $topic->lastPost(),
+            'topic_starter' => $topic->starter(),
+            'parent_forum' => $forum->parent()->first(),
         ];
 
         if ($forum->parent_id) {
@@ -54,9 +50,11 @@ class TopicsController
         return redirect()->back();
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $validator = Validator::make($request->all(), [
+        $request = request();
+
+        $validator = \Validator::make($request->all(), [
             'title' => 'required|max:255',
             'content' => 'required|min:5',
         ]);
@@ -77,15 +75,17 @@ class TopicsController
         $post = new Post;
         $post->content = $request->content;
         $post->topic_id = $topic->id;
-        $post->user_id = Auth::id();
+        $post->user_id = \Auth::id();
         $post->save();
 
         return redirect(route_topic_show($topic));
     }
 
-    public function update_title(Request $request, string $id)
+    public function update_title($id)
     {
-        $validator = Validator::make($request->all(), [
+        $request = request();
+
+        $validator = \Validator::make($request->all(), [
             'title' => 'required|max:255'
         ]);
 
@@ -101,8 +101,10 @@ class TopicsController
         return redirect()->back();
     }
 
-    public function update_solution(Request $request, string $id)
+    public function update_solution($id)
     {
+        $request = request();
+
         $topic = Topic::findOrFail($id);
         $topic->solution_id = $request->solution_id;
         $topic->save();

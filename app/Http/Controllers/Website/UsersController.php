@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Website;
 
-use Auth;
 use App\Post;
 use App\User;
 use App\Topic;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class UsersController
 {
 
-    public function index(Request $request)
+    public function index()
     {
+        $request = request();
+
         /*
         |--------------------------------------------------------------------------
         | Get Valid or Correct Bad Input
@@ -84,7 +84,7 @@ class UsersController
 
     public function show($username)
     {
-        if (Auth::check()) {
+        if (\Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
             return view('website.users.show')
                 ->with('user', $user)
@@ -96,22 +96,23 @@ class UsersController
 
     public function edit($username)
     {
-        if (Auth::check()) {
+        if (\Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
-            if (Auth::id() == $user->id || Auth::user()->is_master) {
+            if (\Auth::id() == $user->id || \Auth::user()->is_master) {
                 return view('website.users.edit')
                     ->with('user', $user)
                     ->with('profile', $user->profile()->firstOrFail());
             }
-            return redirect(route('website.user.show', ['profile' => $profile]));
+            return redirect(route_user_show($user));
         } else {
             return alert_redirect(route(url()->previous()), 'info', __('auth.must-login'));
         }
     }
 
-    public function update(Request $request, string $username)
+    public function update($username)
     {
         $errors = [];
+        $request = request();
 
         $user = User::where('username', $username)->firstOrFail();
         $profile = $user->profile()->firstOrFail();
@@ -159,7 +160,7 @@ class UsersController
         $user->save();
         $profile->save();
 
-        return alert_redirect(route('website.user.show', ['profile' => $user->username]), 'success', __('db.updated'));
+        return alert_redirect(route_user_show($user), 'success', __('db.updated'));
     }
 
 }

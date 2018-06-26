@@ -14,6 +14,11 @@ class Topic extends Model
         return Post::find($this->solution_id);
     }
 
+    public function postCount()
+    {
+        return $this->posts()->count();
+    }
+
     public function lastPost()
     {
         return $this->posts()->orderBy('created_at', 'desc')->firstOrFail();

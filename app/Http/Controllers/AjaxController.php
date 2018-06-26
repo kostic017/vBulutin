@@ -8,9 +8,6 @@ use App\User;
 use App\Post;
 use App\Forum;
 use App\Category;
-use App\Exceptions\UnexpectedException;
-
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AjaxController extends Controller
 {

@@ -5,3 +5,9 @@
 .bgc-main {
     background-color: $bgc-main !important;
 }
+
+.flex-center-xy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

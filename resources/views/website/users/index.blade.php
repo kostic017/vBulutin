@@ -32,7 +32,7 @@
                 @foreach ($users as $user)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td><a href="{{ route('website.user.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></td>
+                        <td><a href="{{ route_user_show($user) }}">{{ $user->username }}</a></td>
                         <td class="about">{{ limit_words($user->about ?? '-', 10) }}</td>
                         <td>{{ extract_date($user->registered_at) }}</td>
                         <td>{{ $user->post_count }}</td>

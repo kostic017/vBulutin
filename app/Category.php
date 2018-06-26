@@ -21,6 +21,11 @@ class Category extends Model
         return $this->hasMany('App\Forum');
     }
 
+    public function parent_forums()
+    {
+        return $this->forums()->whereNull('parent_id');
+    }
+
     public function watchers()
     {
         return self::get_watchers('category', $this->id);

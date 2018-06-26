@@ -1,5 +1,10 @@
 <?php
 
+function route_user_show($user)
+{
+    return route('website.user.show', ['username' => $user->username]);
+}
+
 function route_category_show($category)
 {
     return route('public.category.show', [

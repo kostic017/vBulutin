@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Board\Publicus;
 
 use App\Board;
 use App\Forum;
-use App\Category;
 
 class ForumsController
 {
@@ -15,16 +14,16 @@ class ForumsController
         $forum = $category->forums()->where('slug', $forum_slug)->firstOrFail();
 
         $vars = [
-            'self' => $forum,
+            'forum' => $forum,
             'category' => $category,
-            'board' => $board,
+            'current_board' => $board,
             'is_admin' => $board->is_admin(),
-            'children' => $forum->children()->get(),
+            'child_forums' => $forum->children()->get(),
             'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),
         ];
 
         if ($forum->parent_id) {
-            $vars['parent'] = $forum->parent()->firstOrFail();
+            $vars['parent_forum'] = $forum->parent()->firstOrFail();
         }
 
         return view('public.forum')->with($vars);
