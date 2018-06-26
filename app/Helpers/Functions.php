@@ -24,6 +24,11 @@ function validate_captcha($response, $ip)
     return $result->success;
 }
 
+function random_title($faker, $words, $unique = true)
+{
+    return rtrim($unique ? $faker->unique()->sentence($words) : $faker->sentence($words), '.');
+}
+
 function file_get_contents_curl($url)
 {
     $ch = curl_init($url);

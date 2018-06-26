@@ -3,18 +3,14 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Category::class, function (Faker $faker) {
-    static $id = 1;
     static $position = 1;
-
-    $title = rtrim($faker->sentence(6), '.');
+    $title = random_title($faker, 5);
 
     return [
         'title' => $title,
-        'slug' => unique_slug($title, $id++),
-
-        'description' => $faker->optional()->paragraph(),
         'position' => $position++,
+        'slug' => str_slug($title),
+        'description' => $faker->optional()->paragraph(),
         'deleted_at' => $faker->optional(0.1)->dateTime()
     ];
-
 });

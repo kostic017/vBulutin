@@ -3,14 +3,14 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Board::class, function (Faker $faker) {
-    static $id = 0;
-    $title = rtrim($faker->sentence(6), '.');
+    $title = random_title($faker, 5, false);
 
     return [
         'title' => $title,
-        'url' => strtok($title, ' ') . $id++,
-        'description' => $faker->optional()->paragraph(),
         'is_visible' => true,
+        'url' => str_slug($title),
+        'description' => $faker->optional()->paragraph(),
+
         'owner_id' => function() {
             $owner = App\User::inRandomOrder()->first();
             $owner->email_token = null;

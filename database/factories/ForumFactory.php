@@ -3,8 +3,6 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Forum::class, function (Faker $faker, array $args) {
-    static $id = 1;
-
     // Pozicija koju novokreirani forum treba da zauzme unutar
     // odredjenog roditeljskog foruma odnosno kategorije.
     static $positions = [
@@ -15,11 +13,11 @@ $factory->define(App\Forum::class, function (Faker $faker, array $args) {
     $parentId = $args['parent_id'];
     $categoryId = $args['category_id'];
 
-    $title = rtrim($faker->sentence(6), '.');
+    $title = random_title($faker, 5);
 
     return [
         'title' => $title,
-        'slug' => unique_slug($title, $id++),
+        'slug' => str_slug($title),
         'description' => $faker->optional()->paragraph(),
 
         'position' => function() use (&$positions, $categoryId, $parentId) {
@@ -40,5 +38,4 @@ $factory->define(App\Forum::class, function (Faker $faker, array $args) {
 
         'deleted_at' => $faker->optional(0.1)->dateTime()
     ];
-
 });
