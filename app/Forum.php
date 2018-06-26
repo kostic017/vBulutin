@@ -80,11 +80,6 @@ class Forum extends Model
         }
     }
 
-    public function category()
-    {
-        return $this->belongsTo('App\Category');
-    }
-
     public function parent()
     {
         return $this->belongsTo('App\Forum', 'parent_id');
@@ -112,5 +107,15 @@ class Forum extends Model
         }
 
         return $mine;
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
+    public function board()
+    {
+        return $this->category()->firstOrFail()->board();
     }
 }

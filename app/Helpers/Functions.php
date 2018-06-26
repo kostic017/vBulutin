@@ -1,5 +1,32 @@
 <?php
 
+function route_category_show($category)
+{
+    return route('public.category.show', [
+        'board_url' => $category->board()->firstOrFail()->url,
+        'category_slug' => $category->slug,
+    ]);
+}
+
+function route_forum_show($forum)
+{
+    return route('public.forum.show', [
+        'board_url' => $forum->board()->firstOrFail()->url,
+        'category_slug' => $forum->category()->firstOrFail()->slug,
+        'forum_slug' => $forum->slug,
+    ]);
+}
+
+function route_topic_show($topic)
+{
+    return route('public.topic.show', [
+        'board_url' => $topic->board()->firstOrFail()->url,
+        'category_slug' => $topic->category()->firstOrFail()->slug,
+        'forum_slug' => $topic->forum()->firstOrFail()->slug,
+        'topic_slug' => $topic->slug
+    ]);
+}
+
 function alert_redirect($url, $level, $message)
 {
     return redirect($url)->with([

@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Board\Publicus;
 
-use App\Category;
+use App\Board;
 
 class CategoriesController
 {
-    public function show($slug)
+    public function show($board_url, $category_slug)
     {
-        $category = Category::where('slug', $slug)->firstOrFail();
-        $board = $category->board()->firstOrFail();
+        $board = Board::where('url', $board_url)->firstOrFail();
+        $category = $board->categories()->where('slug', $slug)->firstOrFail();
+
         return view('public.category')
             ->with('self', $category)
-            ->with('current_board', $board)
+            ->with('board', $board)
             ->with('is_admin', $board->is_admin());
     }
 }

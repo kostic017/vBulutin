@@ -1,5 +1,5 @@
 <div class="card-body">
-    <form method="post" action="{{ isset($force_directory) ? route('admin.boards.store') : route('admin.boards.update') }}">
+    <form method="post" action="{{ isset($force_directory) ? route('admin.boards.store') : route('admin.board.update') }}">
         @csrf
 
         <div class="form-group required">

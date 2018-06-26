@@ -4,10 +4,10 @@
 
     <caption>
         <div>
-            @if (if_route('public.categories.show'))
+            @if (if_route('public.category.show'))
                 Forumi
             @else
-                <a href="{{ route('public.categories.show', ['category' => $self->slug]) }}">{{ $self->title }}</a>
+                <a href="{{ route('public.category.show', ['board' => $board->url, 'category' => $self->slug]) }}">{{ $self->title }}</a>
             @endif
             <a href="#top" class="back2top" title="Top">Top</a>
         </div>
@@ -28,13 +28,13 @@
                 </td>
 
                 <td class="main-info">
-                    <a href="{{ route('public.forums.show', ['forum' => $parent->slug]) }}" class="name">{{ $parent->title }}</a>
+                    <a href="{{ route_forum_show($parent) }}" class="name">{{ $parent->title }}</a>
                     @if ($children->count())
                         <ul class="subforum-list post-list">
                             @foreach ($children as $child)
                                 <li>
                                     <img class="iconpost" src="{{ asset("img/subforum_{$child->readStatus()}.png") }}">
-                                    <a href="{{ route('public.forums.show', ['forum' => $child->slug]) }}">{{ $child->title }}</a>
+                                    <a href="{{ route_forum_show($child) }}">{{ $child->title }}</a>
                                 </li>
                             @endforeach
                         </ul>
@@ -52,10 +52,10 @@
                         @php ($topic = $lastPost->topic()->first())
 
                         <div class="post-info">
-                            <a href="{{ route('website.users.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
+                            <a href="{{ route('website.user.show', ['profile' => $user->username]) }}">@avatar(medium)</a>
                             <ul>
-                                <li><a href="{{ route('public.topics.show', ['topic' => $topic->slug]) }}">{{ limit_words($topic->title) }}</a></li>
-                                <li><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
+                                <li><a href="{{ route_topic_show($topic) }}">{{ limit_words($topic->title) }}</a></li>
+                                <li><a href="{{ route('website.user.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                 <li>{{ extract_date($lastPost->created_at) }}</li>
                                 <li>{{ extract_time($lastPost->created_at) }}</li>
                             </ul>

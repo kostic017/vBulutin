@@ -15,11 +15,6 @@ class Post extends Model
         'created_at'
     ];
 
-    public function topic()
-    {
-        return $this->belongsTo('App\Topic');
-    }
-
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -33,5 +28,25 @@ class Post extends Model
     public function ratings()
     {
         return $this->belongsToMany('App\UserRating', 'user_ratings');
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo('App\Topic');
+    }
+
+    public function forum()
+    {
+        return $this->topic()->firstOrFail()->forum();
+    }
+
+    public function category()
+    {
+        return $this->forum()->firstOrFail()->category();
+    }
+
+    public function board()
+    {
+        return $this->category()->firstOrFail()->board();
     }
 }

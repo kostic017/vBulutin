@@ -7,7 +7,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('admin.categories.store') }}" method="post">
+            <form action="{{ route('admin.category.store') }}" method="post">
                 @csrf
 
                 <div class="form-group">

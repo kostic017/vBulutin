@@ -3,11 +3,11 @@
 @section('content')
     <div class="top-box">
         <ul class="path">
-            <li><a href="{{ route('public.categories.show', ['category' => $category->slug]) }}">{{ $category->title }}</a></li>
+            <li><a href="{{ route_category_show($category) }}">{{ $category->title }}</a></li>
             @if (isset($parent))
-                <li><a href="{{ route('public.forums.show', ['forum' => $parent->slug]) }}">{{ $parent->title }}</a></li>
+                <li><a href="{{ route_forum_show($parent) }}">{{ $parent->title }}</a></li>
             @endif
-            <li><a href="{{ route('public.forums.show', ['forum' => $forum->slug]) }}">{{ $forum->title }}</a></li>
+            <li><a href="{{ route_forum_show($forum) }}">{{ $forum->title }}</a></li>
         </ul>
         <div class="page-info">
             <h2>{{ $self->title }}</h2>
@@ -15,13 +15,13 @@
     </div>
 
     @if ($is_admin || Auth::id() === $topicStarter->id)
-        <form id="solutionform" method="post" action="{{ route('public.topics.solution', ['id' => $self->id]) }}">
+        <form id="solutionform" method="post" action="{{ route('public.topic.solution', ['id' => $self->id]) }}">
             @csrf
             <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
         </form>
 
         <a href="#" id="edittitle">Izmeni naslov</a>
-        <form id="edittitle-form" action="{{ route('public.topics.title', ['id' => $self->id]) }}" method="post" class="m-2" style="display: none;">
+        <form id="edittitle-form" action="{{ route('public.topic.title', ['id' => $self->id]) }}" method="post" class="m-2" style="display: none;">
             @csrf
             <div class="form-group d-flex flex-wrap">
                 <label for="title" class="sr-only">Novi naslov</label>
@@ -34,7 +34,7 @@
     <div class="topbox-actions">
         <p><a href="#scform">Pošalji odgovor</a></p>
         @if ($is_admin)
-            <form action="{{ route('public.topics.lock', ['id' => $self->id]) }}" method="post">
+            <form action="{{ route('public.topic.lock', ['id' => $self->id]) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-{{ $self->is_locked ? 'success' : 'danger' }}">
                     {{ $self->is_locked ? 'Otključaj' : 'Zaključaj' }} temu
@@ -50,14 +50,14 @@
 
             <div class="d-flex flex-wrap">
                 <ul class="profile">
-                    <li><a href="{{ route('website.users.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
-                    <li><a href="{{ route('website.users.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
+                    <li><a href="{{ route('website.user.show', ['username' => $user->username]) }}">@avatar(medium)</a></li>
+                    <li><a href="{{ route('website.user.show', ['username' => $user->username]) }}">{{ $user->username }}</a></li>
                     <li><strong>Broj poruka: </strong>{{ $user->posts()->get()->count() }}</li>
                     <li><strong>Pridružio: </strong>{{ extract_date($user->registered_at) }}</li>
                 </ul>
                 <div class="body">
                     <p class="author">
-                        <a href="{{ route('public.topics.show', ['slug' => $self->slug]) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
+                        <a href="{{ route_topic_show($self) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
                         napisao <strong><a href="" class="username-coloured">{{ $user->username }}</a></strong> » {{ extract_date($post->created_at) }} {{ extract_time($post->created_at) }}
                     </p>
                     <div class="content">

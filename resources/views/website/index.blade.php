@@ -8,7 +8,7 @@
             <div class="directories">
                 @foreach ($directories as $directory)
                     <div class="directory">
-                        <a href="{{ route('website.directories.show', ['slug' => $directory->slug]) }}">
+                        <a href="{{ route('website.directory.show', ['slug' => $directory->slug]) }}">
                             <h2>{{ $directory->title }}</h2>
                             <p>Broj foruma: {{ $directory->boards()->count() }}</p>
                         </a>
@@ -39,7 +39,7 @@
                             <p>Registrovani korisnici:</p>
                             <ul>
                                 @foreach ($visible_online as $user)
-                                    <li><a href="{{ route('website.users.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
+                                    <li><a href="{{ route('website.user.show', ['profile' => $user->username]) }}">{{ $user->username }}</a></li>
                                 @endforeach
                             </ul>
                         @endif
@@ -56,7 +56,7 @@
                         Ukupno poruka <b>{{ $post_count }}</b> &bull;
                         Ukupno tema <b>{{ $topic_count }}</b> &bull;
                         Ukupno članova <b>{{ $user_count }}</b> &bull;
-                        Naš najnoviji član <a href="{{ route('website.users.show', ['profile' => $newest_user->username]) }}">{{ $newest_user->username }}</a>
+                        Naš najnoviji član <a href="{{ route('website.user.show', ['profile' => $newest_user->username]) }}">{{ $newest_user->username }}</a>
                     </p>
                 </div>
             </div>

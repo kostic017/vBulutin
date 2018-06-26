@@ -103,7 +103,7 @@ class UsersController
                     ->with('user', $user)
                     ->with('profile', $user->profile()->firstOrFail());
             }
-            return redirect(route('website.users.show', ['profile' => $profile]));
+            return redirect(route('website.user.show', ['profile' => $profile]));
         } else {
             return alert_redirect(route(url()->previous()), 'info', __('auth.must-login'));
         }
@@ -159,7 +159,7 @@ class UsersController
         $user->save();
         $profile->save();
 
-        return alert_redirect(route('website.users.show', ['profile' => $user->username]), 'success', __('db.updated'));
+        return alert_redirect(route('website.user.show', ['profile' => $user->username]), 'success', __('db.updated'));
     }
 
 }

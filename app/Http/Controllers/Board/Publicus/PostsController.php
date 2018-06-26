@@ -35,14 +35,14 @@ class PostsController
         }
 
         $topic->touch();
-        return redirect(route('public.topics.show', ['topic' => $topic->slug]) . '#post-' . $post->id);
+
+        return redirect(route_topic_show($topic->board()->firstOrFail(), $topic->category()->firstOrFail(), $topic->forum()->firstOrFail(), $topic));
     }
 
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        $topic = $post->topic()->first();
-        $forum = $topic->forum()->first();
+        $topic = $post->topic()->firstOrFail();
 
         if ($topic->solution_id === $id) {
             $topic->solution_id = null;
@@ -53,7 +53,7 @@ class PostsController
 
         if ($topic->posts()->count() == 0) {
             $topic->delete();
-            return redirect('public.forum.show', ['forum' => $forum->slug]);
+            return route_forum_show($topic->board()->firstOrFail(), $topic->category()->firstOrFail(), $topic->forum()->firstOrFail());
         }
 
         return redirect()->back();

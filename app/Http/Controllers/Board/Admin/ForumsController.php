@@ -128,7 +128,7 @@ class ForumsController extends SectionsController
         $forum->slug = unique_slug($forum->title, $forum->id);
         $forum->save();
 
-        return alert_redirect(route('admin.forums.show', ['forum' => $forum->slug]), 'success', 'db.stored');
+        return alert_redirect(route('admin.forum.show', ['forum' => $forum->slug]), 'success', 'db.stored');
     }
 
     /**

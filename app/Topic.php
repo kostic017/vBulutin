@@ -36,11 +36,6 @@ class Topic extends Model
                 'old' : 'new';
     }
 
-    public function forum()
-    {
-        return $this->belongsTo('App\Forum');
-    }
-
     public function poll()
     {
         return $this->hasOne('App\Poll');
@@ -64,5 +59,20 @@ class Topic extends Model
         $forum = $this->forum()->firstOrFail();
         $mine = getWatchers('topic', $this->id);
         return $mine->merge($forum->getWatchers());
+    }
+
+    public function forum()
+    {
+        return $this->belongsTo('App\Forum');
+    }
+
+    public function category()
+    {
+        return $this->forum()->firstOrFail()->category();
+    }
+
+    public function board()
+    {
+        return $this->category()->firstOrFail()->board();
     }
 }

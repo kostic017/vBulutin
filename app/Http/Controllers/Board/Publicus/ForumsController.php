@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Board\Publicus;
 
+use App\Board;
 use App\Forum;
 use App\Category;
 
 class ForumsController
 {
-    public function show($slug)
+    public function show($board_url, $category_slug, $forum_slug)
     {
-        $forum = Forum::where('slug', $slug)->firstOrFail();
-        $category = $forum->category()->firstOrFail();
-        $board = $category->board()->firstOrFail();
+        $board = Board::where('url', $board_url)->firstOrFail();
+        $category = $board->categories()->where('slug', $category_slug)->firstOrFail();
+        $forum = $category->forums()->where('slug', $forum_slug)->firstOrFail();
 
         $vars = [
             'self' => $forum,
             'category' => $category,
-            'current_board' => $board,
+            'board' => $board,
             'is_admin' => $board->is_admin(),
             'children' => $forum->children()->get(),
             'topics' => $forum->topics()->orderBy('updated_at', 'desc')->get(),

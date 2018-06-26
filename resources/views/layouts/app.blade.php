@@ -54,9 +54,9 @@
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
-                    @if (isset($current_board))
-                        <a class="navbar-brand" href="{{ route('public.show', ['board_url' => $current_board->url]) }}">
-                            {{ $current_board->title }}
+                    @if (isset($board))
+                        <a class="navbar-brand" href="{{ route('public.show', ['board_url' => $board->url]) }}">
+                            {{ $board->title }}
                         </a>
                     @else
                         <a class="navbar-brand" href="{{ url('/') }}">
@@ -69,9 +69,9 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto"></ul>
                         <ul class="navbar-nav ml-auto">
-                            <li><a class="nav-link" href="{{ route('website.users.index') }}">Korisnici</a></li>
+                            <li><a class="nav-link" href="{{ route('website.user.index') }}">Korisnici</a></li>
                             @if (isset($is_admin) && $is_admin)
-                                <li><a class="nav-link" href="{{ route('admin.index', ['board_url' => $current_board->url]) }}">Admin panel</a></li>
+                                <li><a class="nav-link" href="{{ route('admin.index', ['board_url' => $board->url]) }}">Admin panel</a></li>
                             @endif
                             @guest
                                 <li>
@@ -122,7 +122,7 @@
                                         {{ Auth::user()->name ?? Auth::user()->username }} <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('website.users.show', ['profile' => Auth::user()->username]) }}">
+                                        <a class="dropdown-item" href="{{ route('website.user.show', ['profile' => Auth::user()->username]) }}">
                                             <i class="fas fa-user"></i> Profil
                                         </a>
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -145,10 +145,10 @@
 
             <section class="footer">
                 <div>
-                    @if (isset($current_board))
-                        @php($owner = $current_board->owner()->firstOrFail()->username)
+                    @if (isset($board))
+                        @php($owner = $board->owner()->firstOrFail()->username)
                         <p>
-                            Vlasnik ovog foruma je <a href="{{ route('website.users.show', ['username' => $owner]) }}">{{ $owner }}</a>.
+                            Vlasnik ovog foruma je <a href="{{ route('website.user.show', ['username' => $owner]) }}">{{ $owner }}</a>.
                             <a href="/">Napravi i ti svoj forum</a>
                         </p>
                     @endif

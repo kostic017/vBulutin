@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
-    <form id="index" action="{{ route("admin.{$table}.index") }}" method="get"></form>
+    <form id="index" action="{{ route("admin.{$singular}.index") }}" method="get"></form>
 
     <div class="admin-actions">
 
         <div>
-            <a href="{{ route("admin.{$table}.create") }}" class="btn btn-primary">
-                {{ $table === 'categories' ? __('admin.create-category') : __('admin.create-forum') }}
+            <a href="{{ route("admin.{$singular}.create") }}" class="btn btn-primary">
+                {{ $singular === 'category' ? __('admin.create-category') : __('admin.create-forum') }}
             </a>
             <select name="perPage" class="form-control">
                 <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
@@ -67,23 +67,23 @@
                         @endif
 
                         <td>
-                            <a href="{{ route("admin.{$table}.show", [$table => $row->slug]) }}" class="btn btn-xs btn-success">
+                            <a href="{{ route("admin.{$singular}.show", [$singular => $row->slug]) }}" class="btn btn-xs btn-success">
                                 {{ __('admin.view') }}
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route("admin.{$table}.edit", [$table => $row->id]) }}" class="btn btn-xs btn-info">
+                            <a href="{{ route("admin.{$singular}.edit", [$singular => $row->id]) }}" class="btn btn-xs btn-info">
                                 {{ __('admin.edit') }}
                             </a>
                         </td>
                         <td>
                             @if ($row->trashed())
-                                <form action="{{ route("admin.{$table}.restore", [$table => $row->id]) }}" method="post">
+                                <form action="{{ route("admin.{$singular}.restore", [$singular => $row->id]) }}" method="post">
                                     @csrf
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.restore') }}</button>
                                 </form>
                             @else
-                                <form action="{{ route("admin.{$table}.destroy", [$table => $row->id]) }}" method="post">
+                                <form action="{{ route("admin.{$singular}.destroy", [$singular => $row->id]) }}" method="post">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-xs btn-danger" type="submit">{{ __('admin.delete') }}</button>

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Board\Publicus;
 
 use Auth;
 use Validator;
+
 use App\Post;
+use App\Board;
 use App\Forum;
 use App\Topic;
 use App\Category;
@@ -13,12 +15,12 @@ use Illuminate\Http\Request;
 class TopicsController
 {
 
-    public function show(string $slug)
+    public function show($board_url, $category_slug, $forum_slug, $topic_slug)
     {
-        $topic = Topic::where('slug', $slug)->firstOrFail();
-        $forum = $topic->forum()->firstOrFail();;
-        $category = $forum->category()->firstOrFail();
-        $board = $category->board()->firstOrFail();
+        $board = Board::where('url', $board_url)->firstOrFail();
+        $category = $board->categories()->where('slug', $category_slug)->firstOrFail();
+        $forum = $category->forums()->where('slug', $forum_slug)->firstOrFail();
+        $topic = $forum->topics()->where('slug', $topic_slug)->firstOrFail();
         $is_admin = $board->is_admin();
 
         $posts = ($board->is_admin() ? Post::withTrashed() : Post::query())
@@ -34,7 +36,7 @@ class TopicsController
             'topicStarter' => $topic->starter(),
             'solution' => $topic->solution(),
             'is_admin' => $is_admin,
-            'current_board' => $board,
+            'board' => $board,
         ];
 
         if ($forum->parent_id) {
@@ -78,10 +80,10 @@ class TopicsController
         $post->user_id = Auth::id();
         $post->save();
 
-        return redirect(route('public.topics.show', ['topic' => $topic->slug]));
+        return redirect(route_topic_show($topic));
     }
 
-    public function updateTitle(Request $request, string $id)
+    public function update_title(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255'
@@ -99,7 +101,7 @@ class TopicsController
         return redirect()->back();
     }
 
-    public function updateSolution(Request $request, string $id)
+    public function update_solution(Request $request, string $id)
     {
         $topic = Topic::findOrFail($id);
         $topic->solution_id = $request->solution_id;

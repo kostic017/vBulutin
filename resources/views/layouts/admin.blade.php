@@ -12,18 +12,18 @@
                 <nav>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/categories*')) }}">
-                            <a href="{{ route('admin.categories.index') }}">{{ __('admin.categories') }}</a>
+                            <a href="{{ route('admin.category.index') }}">{{ __('admin.categories') }}</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*')) }}">
-                            <a href="{{ route('admin.forums.index') }}">{{ __('admin.forums') }}</a>
+                            <a href="{{ route('admin.forum.index') }}">{{ __('admin.forums') }}</a>
                         </li>
                         <li class="list-group-item  {{ active_class(if_route('admin.positions')) }}">
                             <a href="{{ route('admin.positions') }}">{{ __('admin.positioning') }}</a>
                         </li>
                     </ul>
                     <ul class="list-group">
-                        <li class="list-group-item {{ active_class(if_route('admin.reports.index')) }}">
-                            <a href="{{ route('admin.reports.index') }}">Izveštaji</a>
+                        <li class="list-group-item {{ active_class(if_route('admin.report.index')) }}">
+                            <a href="{{ route('admin.report.index') }}">Izveštaji</a>
                         </li>
                     </ul>
                 </nav>

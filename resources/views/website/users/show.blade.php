@@ -46,7 +46,7 @@
                 </dl>
             </section>
             @if ($is_admin || $user->id == Auth::id())
-                <a class="btn btn-success" href="{{ route('website.users.edit', ['profile' => $user->username]) }}">Izmeni profil</a>
+                <a class="btn btn-success" href="{{ route('website.user.edit', ['profile' => $user->username]) }}">Izmeni profil</a>
             @endif
         </div>
     </div>

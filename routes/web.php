@@ -1,38 +1,54 @@
 <?php
 
 Auth::routes();
-Route::get('/', 'Website\WebsiteController@index')->name('index');
 Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
 
-Route::namespace('Website')
-    ->name('website.')
-    ->prefix('website')
-    ->group(
-        function() {
-            Route::resource('users', 'UsersController');
-            Route::resource('directories', 'DirectoriesController');
-        }
-    );
+/*
+|--------------------------------------------------------------------------
+| Website
+|--------------------------------------------------------------------------
+*/
 
-Route::namespace('Board\Publicus')
-    ->name('public.')
-    ->group(
-        function () {
-            Route::resource('posts', 'PostsController');
-            Route::resource('forums', 'ForumsController');
-            Route::resource('topics', 'TopicsController');
-            Route::resource('categories', 'CategoriesController');
+Route::get('/', 'Website\WebsiteController@index')->name('index');
 
-            Route::get('{url}', 'BoardsController@show')->name('show');
+Route::resource('user', 'Website\UsersController', ['as' => 'website']);
+Route::resource('directory', 'Website\DirectoriesController', ['as' => 'website']);
 
-            Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
-            Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
-            Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');
-            Route::post('topics/{id}/title', 'TopicsController@updateTitle')->name('topics.title');
-            Route::post('topics/{id}/restore', 'TopicsController@restore')->name('topics.restore');
-            Route::post('topics/{id}/solution', 'TopicsController@updateSolution')->name('topics.solution');
-        }
-    );
+/*
+|--------------------------------------------------------------------------
+| Board Public Area
+|--------------------------------------------------------------------------
+*/
+
+Route::group([
+        'as' => 'public.',
+        'namespace' => 'Board\Publicus',
+    ], function() {
+        Route::resource('topic', 'TopicsController')->only(['store']);
+        Route::resource('post', 'PostsController')->only(['store', 'destroy']);
+
+        Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forum.lock');
+        Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topic.lock');
+        Route::post('topic/{id}/restore', 'TopicsController@restore')->name('topic.restore');
+        Route::post('topic/{id}/title', 'TopicsController@update_title')->name('topic.title');
+        Route::post('topic/{id}/solution', 'TopicsController@update_solution')->name('topic.solution');
+
+        Route::post('post/{id}/restore', 'PostsController@restore')->name('post.restore');
+
+        Route::group(['prefix' => 'public/{board_url}'], function() {
+            Route::get('/', 'BoardsController@show')->name('show');
+            Route::get('{category_slug}', 'CategoriesController@show')->name('category.show');
+            Route::get('{category_slug}/{forum_slug}', 'ForumsController@show')->name('forum.show');
+            Route::get('{category_slug}/{forum_slug}/{topic_slug}', 'TopicsController@show')->name('topic.show');
+        });
+    }
+);
+
+/*
+|--------------------------------------------------------------------------
+| Board Admin Area
+|--------------------------------------------------------------------------
+*/
 
 Route::namespace('Board\Admin')
     ->name('admin.')
@@ -41,19 +57,19 @@ Route::namespace('Board\Admin')
     ->group(
         function () {
             Route::get('/', function () {
-                return redirect(route('admin.categories.index'));
+                return redirect(route('admin.category.index'));
             })->name('index');
 
-            Route::resource('forums', 'ForumsController');
-            Route::resource('categories', 'CategoriesController');
+            Route::resource('forum', 'ForumsController');
+            Route::resource('category', 'CategoriesController');
 
             Route::get('reports/', 'ReportsController@index')->name('reports.index');
             Route::get('positions/', 'CategoriesController@positions')->name('positions');
 
-            Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
-            Route::post('forums/{id}/restore', 'ForumsController@restore')->name('forums.restore');
-            Route::post('reports/{table}/generate', 'ReportsController@generate')->name('reports.generate');
-            Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
+            Route::post('user/{id}/ban', 'UsersController@ban')->name('user.ban');
+            Route::post('forum/{id}/restore', 'ForumsController@restore')->name('forum.restore');
+            Route::post('report/{table}/generate', 'ReportsController@generate')->name('report.generate');
+            Route::post('category/{id}/restore', 'CategoriesController@restore')->name('category.restore');
         }
     );
 
@@ -64,7 +80,13 @@ Route::name('admin.')
         Route::get('website/directories/{directory_slug}/create', 'Board\Admin\BoardsController@create')->name('boards.create');
     });
 
-Route::group(['prefix' => '/ajax'], function () {
+/*
+|--------------------------------------------------------------------------
+| AJAX
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['prefix' => 'ajax'], function () {
     Route::post('quote', 'AjaxController@quote')->name('ajax.quote');
     Route::post('positions/save', 'AjaxController@positions')->name('ajax.positions');
 });
