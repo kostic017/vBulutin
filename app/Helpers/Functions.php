@@ -17,7 +17,6 @@ function route_forum_show($forum)
 {
     return route('public.forum.show', [
         'board_url' => $forum->board->url,
-        'category_slug' => $forum->category->slug,
         'forum_slug' => $forum->slug,
     ]);
 }
@@ -26,8 +25,6 @@ function route_topic_show($topic)
 {
     return route('public.topic.show', [
         'board_url' => $topic->board->url,
-        'category_slug' => $topic->category->slug,
-        'forum_slug' => $topic->forum->slug,
         'topic_slug' => $topic->slug
     ]);
 }

@@ -37,9 +37,9 @@ Route::group([
 
         Route::group(['prefix' => 'board/{board_url}'], function() {
             Route::get('/', 'BoardsController@show')->name('show');
-            Route::get('{category_slug}', 'CategoriesController@show')->name('category.show');
-            Route::get('{category_slug}/{forum_slug}', 'ForumsController@show')->name('forum.show');
-            Route::get('{category_slug}/{forum_slug}/{topic_slug}', 'TopicsController@show')->name('topic.show');
+            Route::get('category/{category_slug}', 'CategoriesController@show')->name('category.show');
+            Route::get('forum/{forum_slug}', 'ForumsController@show')->name('forum.show');
+            Route::get('topic/{topic_slug}', 'TopicsController@show')->name('topic.show');
         });
     }
 );

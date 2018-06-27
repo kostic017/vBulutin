@@ -12,12 +12,10 @@ use App\ReadTopic;
 class TopicsController
 {
 
-    public function show($board_url, $category_slug, $forum_slug, $topic_slug)
+    public function show($board_url, $topic_slug)
     {
         $board = Board::where('url', $board_url)->firstOrFail();
-        $category = $board->categories()->where('slug', $category_slug)->firstOrFail();
-        $forum = $category->forums()->where('slug', $forum_slug)->firstOrFail();
-        $topic = $forum->topics()->where('slug', $topic_slug)->firstOrFail();
+        $topic = $board->topics()->where('topics.slug', $topic_slug)->firstOrFail();
         $is_admin = $board->is_admin();
 
         $posts = ($is_admin ? Post::withTrashed() : Post::query())
@@ -26,19 +24,19 @@ class TopicsController
 
         $vars = [
             'topic' => $topic,
-            'forum' => $forum,
             'posts' => $posts,
-            'category' => $category,
             'is_admin' => $is_admin,
+            'forum' => $topic->forum,
             'current_board' => $board,
             'solution' => $topic->solution(),
             'last_post' => $topic->last_post(),
             'topic_starter' => $topic->starter(),
-            'parent_forum' => $forum->parent,
+            'category' => $topic->forum->category,
+            'parent_forum' => $topic->forum->parent,
         ];
 
-        if ($forum->parent_id) {
-            $vars['parent'] = Forum::findOrFail($forum->parent_id);
+        if ($topic->forum->parent_id) {
+            $vars['parent'] = Forum::findOrFail($topic->forum->parent_id);
         }
 
         if (Auth::check() && !$topic->is_old()) {

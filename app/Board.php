@@ -30,6 +30,20 @@ class Board extends Model
         return $this->hasMany('App\Category');
     }
 
+    public function forums()
+    {
+        return $this->hasManyThrough('App\Forum', 'App\Category');
+    }
+
+    public function topics()
+    {
+        return Topic::select('topics.*')
+            ->join('forums', 'topics.forum_id', 'forums.id')
+            ->join('categories', 'forums.category_id', 'categories.id')
+            ->join('boards', 'categories.board_id', 'boards.id')
+            ->where('boards.url', $this->url);
+    }
+
     public function owner()
     {
         return $this->hasOne('App\User', 'id', 'owner_id');
