@@ -5,7 +5,7 @@
         <div class="card-header card-header-directory">
             <div>
                 <h2>{{ $directory->title }}</h2>
-                <p>{{ $directory->description }}</p>
+                <p>{!! BBCode::parse($directory->description) !!}</p>
             </div>
             <div class="button">
                 <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('admin.boards.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>&nbsp;
@@ -20,7 +20,7 @@
                     <div class="board">
                         <h4>{{ $board->title }}</h4>
                         @if (is_not_empty($board->description))
-                            <p>{{ $board->description }}</a></p>
+                            <p>{!! BBCode::parse($board->description) !!}</a></p>
                         @endif
                         <a href="{{ route('public.show', ['board_url' => $board->url]) }}/">Poseti forum</a>
                     </div>

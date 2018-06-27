@@ -8,7 +8,9 @@
         </ul>
         <div class="page-info">
             <h2>{{ $forum->title }}</h2>
-            @if ($forum->description) <p class="desc">{{ $forum->description }}</p> @endif
+            @if ($forum->description)
+                <p class="desc">{!! BBCode::parse($forum->description) !!}</p>
+            @endif
         </div>
     </div>
 
