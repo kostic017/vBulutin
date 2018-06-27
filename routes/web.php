@@ -9,10 +9,21 @@ Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', 'Website\WebsiteController@index')->name('index');
+Route::group([
+    'as' => 'website.',
+    'namespace' => 'Website'
+], function() {
+    Route::get('/', 'WebsiteController@index')->name('index');
+    Route::get('user/{username}/show', 'UsersController@show')->name('user.show');
+    Route::get('directory/{slug}/show', 'DirectoriesController@show')->name('directory.show');
 
-Route::resource('user', 'Website\UsersController', ['as' => 'website']);
-Route::resource('directory', 'Website\DirectoriesController', ['as' => 'website']);
+    Route::group([
+        'middleware' => 'admin.master'
+    ], function() {
+        Route::resource('user', 'UsersController')->except(['show']);
+        Route::resource('directory', 'DirectoriesController')->except(['show']);
+    });
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -21,28 +32,27 @@ Route::resource('directory', 'Website\DirectoriesController', ['as' => 'website'
 */
 
 Route::group([
-        'as' => 'public.',
-        'namespace' => 'Board\Publicus',
-    ], function() {
-        Route::resource('topic', 'TopicsController')->only(['store']);
-        Route::resource('post', 'PostsController')->only(['store', 'destroy']);
+    'as' => 'public.',
+    'namespace' => 'Board\Publicus',
+], function() {
+    Route::resource('topic', 'TopicsController')->only(['store']);
+    Route::resource('post', 'PostsController')->only(['store', 'destroy']);
 
-        Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forum.lock');
-        Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topic.lock');
-        Route::post('topic/{id}/restore', 'TopicsController@restore')->name('topic.restore');
-        Route::post('topic/{id}/title', 'TopicsController@update_title')->name('topic.title');
-        Route::post('topic/{id}/solution', 'TopicsController@update_solution')->name('topic.solution');
+    Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forum.lock');
+    Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topic.lock');
+    Route::post('topic/{id}/restore', 'TopicsController@restore')->name('topic.restore');
+    Route::post('topic/{id}/title', 'TopicsController@update_title')->name('topic.title');
+    Route::post('topic/{id}/solution', 'TopicsController@update_solution')->name('topic.solution');
 
-        Route::post('post/{id}/restore', 'PostsController@restore')->name('post.restore');
+    Route::post('post/{id}/restore', 'PostsController@restore')->name('post.restore');
 
-        Route::group(['prefix' => 'board/{board_url}'], function() {
-            Route::get('/', 'BoardsController@show')->name('show');
-            Route::get('category/{category_slug}', 'CategoriesController@show')->name('category.show');
-            Route::get('forum/{forum_slug}', 'ForumsController@show')->name('forum.show');
-            Route::get('topic/{topic_slug}', 'TopicsController@show')->name('topic.show');
-        });
-    }
-);
+    Route::group(['prefix' => 'board/{board_url}'], function() {
+        Route::get('/', 'BoardsController@show')->name('show');
+        Route::get('category/{category_slug}', 'CategoriesController@show')->name('category.show');
+        Route::get('forum/{forum_slug}', 'ForumsController@show')->name('forum.show');
+        Route::get('topic/{topic_slug}', 'TopicsController@show')->name('topic.show');
+    });
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +63,7 @@ Route::group([
 Route::namespace('Board\Admin')
     ->name('admin.')
     ->prefix('admin/{board_url}')
-    ->middleware('admin')
+    ->middleware('admin.board')
     ->group(
         function () {
             Route::get('/', function () {

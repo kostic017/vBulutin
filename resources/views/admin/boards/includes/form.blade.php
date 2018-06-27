@@ -49,7 +49,6 @@
             <textarea id="sceditor" name="description">{{ old('description') }}</textarea>
         </div>
         <button type="submit" class="btn btn-primary">Sačuvaj</button>
+        @include('includes.sceditor')
     </form>
 </div>
-
-@include('includes.sceditor')

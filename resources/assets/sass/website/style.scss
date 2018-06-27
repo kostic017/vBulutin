@@ -13,6 +13,11 @@
     @include margins-but(first, top, $m-main);
 }
 
+.create-directory {
+    margin-top: 1rem;
+    text-align: center;
+}
+
 .directories {
     display: flex;
     flex-wrap: wrap;

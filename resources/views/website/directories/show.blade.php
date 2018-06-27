@@ -8,7 +8,8 @@
                 <p>{{ $directory->description }}</p>
             </div>
             <div class="button">
-                <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('admin.boards.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>
+                <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('admin.boards.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>&nbsp;
+                <a class="btn btn-success" href="{{ route('website.directory.edit', ['slug' => $directory->slug]) }}">Izmeni direktorijum</a>
             </div>
         </div>
         <div class="card-body">

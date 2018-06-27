@@ -20,6 +20,12 @@
         </div>
     </div>
 
+    @if (Auth::check() && Auth::user()->is_master)
+        <p class="create-directory">
+            <a href="{{ route('website.directory.create') }}" class="btn btn-primary">Napravi direktorijum</a>
+        </p>
+    @endif
+
     @if (isset($show_stats))
         <section class="forum-info">
             <div class="card online-users">
