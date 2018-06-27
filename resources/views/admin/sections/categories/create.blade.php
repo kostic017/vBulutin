@@ -13,12 +13,7 @@
                 <div class="form-group">
                     <label for="title">{{ __('db.title') }}</label>
                     <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
-
-                    @if ($errors->has('title'))
-                        <span class="invalid-feedback" style="display:block">
-                            <strong>{{ $errors->first('title') }}</strong>
-                        </span>
-                    @endif
+                    @include('includes.error', ['error_key' => 'title'])
                 </div>
 
                 <div class="form-group">

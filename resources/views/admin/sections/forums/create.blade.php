@@ -17,12 +17,7 @@
                     <div class="form-group">
                         <label for="title">{{ __('db.title') }} <span class="text-danger font-weight-bold">*</span></label>
                         <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title') }}">
-
-                        @if ($errors->has('title'))
-                            <span class="invalid-feedback" style="display:block">
-                                <strong>{{ $errors->first('title') }}</strong>
-                            </span>
-                        @endif
+                        @include('includes.error', ['error_key' => 'title'])
                     </div>
 
                     <div class="form-group">
@@ -32,12 +27,7 @@
                                 <option value="{{ $category->id }}" {{ old('category_id') === $category->id ? 'selected' : '' }}>{{ $category->title }}</option>
                             @endforeach
                         </select>
-
-                        @if ($errors->has('category_id'))
-                            <span class="invalid-feedback" style="display:block">
-                                <strong>{{ $errors->first('category_id') }}</strong>
-                            </span>
-                        @endif
+                        @include('includes.error', ['error_key' => 'category_id'])
                     </div>
 
                     <div class="form-group">

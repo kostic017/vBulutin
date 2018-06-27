@@ -4,24 +4,14 @@
 
         <div class="form-group required">
             <label for="title">Naziv</label>
-            <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" value="{{ old('title') }}">
-
-             @if ($errors->has('title'))
-                <span class="invalid-feedback">
-                    <strong>{{ $errors->first('title') }}</strong>
-                </span>
-            @endif
+            <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" value="{{ old('title', $board->title ?? '') }}">
+            @include('include.error', ['error_key' => 'title'])
         </div>
         <div class="form-group required">
             <label for="url">URL</label>
-            <input type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" id="url" name="url" aria-describedby="url-help" value="{{ old('url') }}">
+            <input type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" id="url" name="url" aria-describedby="url-help" value="{{ old('url', $board->url ?? '') }}">
             <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('public.show', ['board_url' => 'url']) }}</code>. Dozvoljena slova, brojevi, donje crte i crtice.</small>
-
-            @if ($errors->has('url'))
-                <span class="invalid-feedback">
-                    <strong>{{ $errors->first('url') }}</strong>
-                </span>
-            @endif
+            @include('include.error', ['error_key' => 'url'])
         </div>
         <div class="form-group">
             <label for="directory">Direktorijum</label>
@@ -29,8 +19,8 @@
                 @foreach ($directories as $directory)
                     @php(
                         $selected = isset($force_directory) ?
-                            ($force_directory->id === $directory->id ? "selected" : "") :
-                            (old('directory') === $directory->id ? "selected" : "")
+                            ($force_directory->id === $directory->id ? 'selected' : '') :
+                            (old('directory', $board->directory->id ?? '') === $directory->id ? 'selected' : '')
                     )
                     <option value="{{ $directory->id }}" {{ $selected }}>{{ $directory->title }}</option>
                 @endforeach
@@ -41,12 +31,12 @@
         </div>
         <div class="form-group form-check">
             <input type="hidden" name="is_visible" value="0">
-            <input type="checkbox" class="form-check-input" id="is_visible" name="is_visible" value="1" {{ old('is_visible') === "1" || old('is_visible') === null ? "checked" : "" }}>
+            <input type="checkbox" class="form-check-input" id="is_visible" name="is_visible" value="1" {{ old('is_visible', $board->is_visible ?? '') === '1' ? 'checked' : '' }}>
             <label class="form-check-label" for="is_visible">Vidljiv</label>
         </div>
         <div class="form-group">
             <label for="sceditor">{{ __('db.description') }}</label>
-            <textarea id="sceditor" name="description">{{ old('description') }}</textarea>
+            <textarea id="sceditor" name="description">{{ old('description', $board->description ?? '') }}</textarea>
         </div>
         <button type="submit" class="btn btn-primary">Sačuvaj</button>
         @include('includes.sceditor')

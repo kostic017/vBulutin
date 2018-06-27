@@ -16,12 +16,7 @@
 
                 <div class="col-md-6">
                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" autofocus>
-
-                    @if ($errors->has('email'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
+                    @include('includes.error', ['error_key' => 'email'])
                 </div>
             </div>
 
@@ -30,12 +25,7 @@
 
                 <div class="col-md-6">
                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
-
-                    @if ($errors->has('password'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </span>
-                    @endif
+                    @include('includes.error', ['error_key' => 'password'])
                 </div>
             </div>
 
@@ -44,12 +34,7 @@
 
                 <div class="col-md-6">
                     <input id="password-confirm" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation">
-
-                    @if ($errors->has('password_confirmation'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('password_confirmation') }}</strong>
-                        </span>
-                    @endif
+                    @include('includes.error', ['error_key' => 'password_confirmation'])
                 </div>
             </div>
 

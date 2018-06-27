@@ -82,22 +82,12 @@
                                                 <div class="form-group">
                                                     <label for="email">{{ __("auth.name-or-mail") }}</label>
                                                     <input type="text" name="email" id="email" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
-
-                                                    @if ($errors->has('username'))
-                                                        <span class="invalid-feedback" style="display:block">
-                                                            <strong>{{ $errors->first('username') }}</strong>
-                                                        </span>
-                                                    @endif
+                                                    @include('includes.error', ['error_key' => 'username'])
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password">{{ __('auth.password') }}</label>
                                                     <input type="password" name="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
-
-                                                    @if ($errors->has('password'))
-                                                        <span class="invalid-feedback">
-                                                            <strong>{{ $errors->first('password') }}</strong>
-                                                        </span>
-                                                    @endif
+                                                    @include('includes.error', ['error_key' => 'password'])
                                                 </div>
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
