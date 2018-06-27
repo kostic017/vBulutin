@@ -1,25 +1,25 @@
 @extends('layouts.website')
 
 @section('content')
-    <div class="card-body">
-        @if ($directories->isEmpty())
-            Trenutno nema ničeg ovde...
-        @else
-            <div class="directories">
-                @foreach ($directories as $directory)
-                    <div class="directory">
-                        <a href="{{ route('website.directory.show', ['slug' => $directory->slug]) }}">
-                            <h2>{{ $directory->title }}</h2>
-                            <p>Broj foruma: {{ $directory->boards()->count() }}</p>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-        @endif
+    <div class="card">
+        <div class="card-body">
+            @if ($directories->isEmpty())
+                Trenutno nema ničeg ovde...
+            @else
+                <div class="directories">
+                    @foreach ($directories as $directory)
+                        <div class="directory">
+                            <a href="{{ route('website.directory.show', ['slug' => $directory->slug]) }}">
+                                <h2>{{ $directory->title }}</h2>
+                                <p>Broj foruma: {{ $directory->boards()->count() }}</p>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
     </div>
-@stop
 
-@section('more-content')
     @if (isset($show_stats))
         <section class="forum-info">
             <div class="card online-users">
@@ -46,7 +46,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="card statistics">
                 <div class="card-header">
                     Statistika
