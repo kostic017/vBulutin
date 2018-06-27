@@ -14,36 +14,56 @@ class Topic extends Model
         return Post::find($this->solution_id);
     }
 
-    public function postCount()
-    {
-        return $this->posts()->count();
-    }
-
-    public function lastPost()
+    public function last_post()
     {
         return $this->posts()->orderBy('created_at', 'desc')->firstOrFail();
     }
 
-    public function firstPost()
+    public function first_post()
     {
         return $this->posts()->orderBy('created_at', 'asc')->firstOrFail();
     }
 
     public function starter()
     {
-        return $this->firstPost()->user()->firstOrFail();
+        return $this->first_post()->user;
     }
 
-    public function readStatus()
+    public function is_read()
     {
-        return \Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days') ||
-            ReadTopics::where('topic_id', $this->id)->where('user_id', \Auth::id())->get()->count() ?
-                'old' : 'new';
+        if (!\Auth::check())
+            return true;
+        if (\Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days'))
+            return true;
+        if ($this->readers()->where('user_id', \Auth::id())->count())
+            return true;
+        return false;
     }
 
-    public function poll()
+    public function get_all_watchers()
     {
-        return $this->hasOne('App\Poll');
+        // Ne mora da mergujemo sa posmatracima kategorije
+        // posto to vec radimo kad trazimo posmatrace foruma.
+
+        $forum = $this->firstOrFail();
+        $mine = Category::get_watchers('topic', $this->id);
+        return $mine->merge($forum->get_all_watchers());
+    }
+
+    public function scopeNewerTopics($query)
+    {
+        return $query->where('updated_at', '>', \Carbon::now()->subDays((int)config('custom.gc_read_status_days')));
+    }
+
+    //region Relationships
+    public function board()
+    {
+        return $this->category->board();
+    }
+
+    public function category()
+    {
+        return $this->forum->category();
     }
 
     public function posts()
@@ -51,33 +71,19 @@ class Topic extends Model
         return $this->hasMany('App\Post');
     }
 
-    public function readers()
-    {
-        return $this->belongsToMany('App\User', 'read_topics');
-    }
-
-    public function watchers()
-    {
-        // Ne mora da mergujemo sa posmatracima kategorije
-        // posto to vec radimo kad trazimo posmatrace foruma.
-
-        $forum = $this->forum()->firstOrFail();
-        $mine = getWatchers('topic', $this->id);
-        return $mine->merge($forum->getWatchers());
-    }
-
     public function forum()
     {
         return $this->belongsTo('App\Forum');
     }
 
-    public function category()
+    public function poll()
     {
-        return $this->forum()->firstOrFail()->category();
+        return $this->hasOne('App\Poll');
     }
 
-    public function board()
+    public function readers()
     {
-        return $this->category()->firstOrFail()->board();
+        return $this->belongsToMany('App\User', 'read_topics');
     }
+    //endregion
 }

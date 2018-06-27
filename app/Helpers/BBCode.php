@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use File;
+
 class BBCode {
     private static $parser = null;
     private static $emoticons = null;
@@ -56,7 +58,7 @@ class BBCode {
         if (!self::$emoticons) {
             self::$emoticons = [];
 
-            $files = \File::allFiles(self::EMOTICONS_FOLDER);
+            $files = File::allFiles(self::EMOTICONS_FOLDER);
 
             foreach ($files as $file) {
                 self::$emoticons[] = [

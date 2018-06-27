@@ -11,6 +11,23 @@ class Category extends Model
 
     public $timestamps = false;
 
+    public function get_all_watchers()
+    {
+        return self::get_watchers('category', $this->id);
+    }
+
+    /**
+    * @param string $my_table 'categories'|'forums'|'topics'
+    * @param string $my_id    ID of the specific resource.
+    *
+    * @return Illuminate\Database\Eloquent\Collection
+    */
+    public static function get_watchers($my_table, $my_id)
+    {
+        return User::findMany(UserWatches::select('user_id')->where("{$my_table}_id", $my_id)->get()->toArray());
+    }
+
+    //region Relationships
     public function board()
     {
         return $this->belongsTo('App\Board');
@@ -25,14 +42,5 @@ class Category extends Model
     {
         return $this->forums()->whereNull('parent_id');
     }
-
-    public function watchers()
-    {
-        return self::get_watchers('category', $this->id);
-    }
-
-    public static function get_watchers($myTable, $myId)
-    {
-        return User::findMany(UserWatches::select('user_id')->where("{$myTable}_id", $myId)->get()->toArray());
-    }
+    //endregion
 }

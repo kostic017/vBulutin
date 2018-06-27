@@ -35,7 +35,7 @@ Route::group([
 
         Route::post('post/{id}/restore', 'PostsController@restore')->name('post.restore');
 
-        Route::group(['prefix' => 'public/{board_url}'], function() {
+        Route::group(['prefix' => 'board/{board_url}'], function() {
             Route::get('/', 'BoardsController@show')->name('show');
             Route::get('{category_slug}', 'CategoriesController@show')->name('category.show');
             Route::get('{category_slug}/{forum_slug}', 'ForumsController@show')->name('forum.show');

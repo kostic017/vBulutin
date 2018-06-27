@@ -8,6 +8,7 @@ class Poll extends Model
 {
     public $timestamps = false;
 
+    //region Relationships
     public function topic()
     {
         return $this->belongsTo('App\Topic');
@@ -17,4 +18,5 @@ class Poll extends Model
     {
         return $this->hasMany('App\PollAnswer');
     }
+    //endregion
 }

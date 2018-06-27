@@ -143,7 +143,7 @@
             <section class="footer">
                 <div>
                     @if (isset($current_board))
-                        @php($owner = $current_board->owner()->firstOrFail())
+                        @php($owner = $current_board->owner)
                         <p>
                             Vlasnik ovog foruma je <a href="{{ route_user_show($owner) }}">{{ $owner->username }}</a>.
                             <a href="/">Napravi i ti svoj forum</a>

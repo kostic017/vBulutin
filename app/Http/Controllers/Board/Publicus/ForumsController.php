@@ -23,7 +23,7 @@ class ForumsController
         ];
 
         if ($forum->parent_id) {
-            $vars['parent_forum'] = $forum->parent()->firstOrFail();
+            $vars['parent_forum'] = $forum->parent;
         }
 
         return view('public.forum')->with($vars);

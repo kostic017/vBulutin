@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
+use App\Helpers\Logger;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -40,11 +42,11 @@ class LoginController extends Controller
         }
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            \App\Helpers\Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
             return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
         }
 
-        if ($user = \App\User::where($this->username(), $request[$this->username()])->first()) {
+        if ($user = User::where($this->username(), $request[$this->username()])->first()) {
             if (is_empty($user->email_token)) {
                 if ($this->attemptLogin($request)) {
                     return $this->sendLoginResponse($request);

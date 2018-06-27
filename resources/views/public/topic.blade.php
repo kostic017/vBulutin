@@ -43,7 +43,7 @@
     @endif
 
     @foreach ($posts as $post)
-        @php ($user = $post->user()->firstOrFail())
+        @php ($user = $post->user)
         <div class="post p-main {{ $post->deleted_at ? 'deleted' : '' }} {{ $topic->solution_id === $post->id ? 'solution' : ''}}" id="post-{{ $post->id }}">
             <div class="d-flex flex-wrap">
                 <ul class="profile">
@@ -61,14 +61,14 @@
                         {!! BBCode::parse($post->content) !!}
                     </div>
                     <div class="signature">
-                        {{ $user->profile()->first()->signature }}
+                        {{ $user->profile->signature }}
                     </div>
                 </div>
             </div>
             <div class="actions">
                 <ul>
                     @auth
-                        @if ($is_admin || (Auth::id() == $user->id && $lastPost->id === $post->id))
+                        @if ($is_admin || (Auth::id() == $user->id && $last_post->id === $post->id))
                             <li>
                                 @if ($post->deleted_at)
                                     <form method="post" action="{{ route('public.posts.restore', ['id' => $post->id]) }}">

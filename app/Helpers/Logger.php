@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Carbon;
+
 class Logger
 {
     private $file;
@@ -10,7 +12,7 @@ class Logger
 
     private function __construct($name)
     {
-        $date = \Carbon::now()->toDateString();
+        $date = Carbon::now()->toDateString();
         $this->file = fopen(storage_path("logs/$name-$date.log"), 'a');
     }
 
@@ -22,7 +24,7 @@ class Logger
     private function add_record($level, $method, $message)
     {
         $level = strtoupper($level);
-        $date = \Carbon::now()->toDateString();
+        $date = Carbon::now()->toDateString();
         fwrite($this->file, "[$date] $level@$method: $message\n");
     }
 

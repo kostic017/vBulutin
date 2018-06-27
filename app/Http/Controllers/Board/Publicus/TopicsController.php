@@ -30,9 +30,9 @@ class TopicsController
             'is_admin' => $is_admin,
             'current_board' => $board,
             'solution' => $topic->solution(),
-            'lastPost' => $topic->lastPost(),
+            'last_post' => $topic->last_post(),
             'topic_starter' => $topic->starter(),
-            'parent_forum' => $forum->parent()->first(),
+            'parent_forum' => $forum->parent,
         ];
 
         if ($forum->parent_id) {

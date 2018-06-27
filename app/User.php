@@ -29,6 +29,22 @@ class User extends Authenticatable
         return $this->email;
     }
 
+    public function watched_categories()
+    {
+        return Category::findMany(UserWatches::select('category_id')->where('user_id', $this->id)->get()->toArray());
+    }
+
+    public function watched_forums()
+    {
+        return Forum::findMany(UserWatches::select('forum_id')->where('user_id', $this->id)->get()->toArray());
+    }
+
+    public function watched_topics()
+    {
+        return Topic::findMany(UserWatches::select('topic_id')->where('user_id', $this->id)->get()->toArray());
+    }
+
+    //region Relationships
     public function profile()
     {
         return $this->hasOne('App\Profile');
@@ -58,19 +74,5 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\PollAnswer', 'user_answers');
     }
-
-    public function watchedCategories()
-    {
-        return Category::findMany(UserWatches::select('category_id')->where('user_id', $this->id)->get()->toArray());
-    }
-
-    public function watchedForums()
-    {
-        return Forum::findMany(UserWatches::select('forum_id')->where('user_id', $this->id)->get()->toArray());
-    }
-
-    public function watchedTopics()
-    {
-        return Topic::findMany(UserWatches::select('topic_id')->where('user_id', $this->id)->get()->toArray());
-    }
+    //endregion
 }

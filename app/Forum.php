@@ -12,72 +12,54 @@ class Forum extends Model
 
     public $timestamps = false;
 
-    public function postCount()
+    public function is_read()
     {
-        $count = 0;
-        $topics = $this->topics()->get();
-        foreach ($topics as $topic) {
-            $count += $topic->posts()->get()->count();
+        if (!\Auth::check()) {
+            return true;
         }
-        return $count;
-    }
 
-    /**
-     * Za svaku temu u forumu koja je azurirana u poslednjih
-     * GC_READ_STATUS_DAYS dana proverava da li je procitana. Vraca
-     * 'new' ako ima neprocitanih tema, a 'old' ako su sve procitane.
-     */
-    public function readStatus()
-    {
-        $children = $this->children()->get();
-        foreach ($children as $child) {
-            if (!$this->readStatusHelper($this->readStatusTopics($child))) {
-                return 'new';
-            }
-        }
-        if (!$this->readStatusHelper($this->readStatusTopics($this))) {
-            return 'new';
-        }
-        return 'old';
-    }
+        $my_topics = $this->topics()->newerTopics()->get();
+        $from_children = $this->topics_from_children()->newerTopics()->get();
+        $all_topics = $my_topics->merge($from_children);
 
-    private function readStatusTopics($forum)
-    {
-        $expDate = Carbon::now()->subDays((int)config('custom.gc_read_status_days'));
-        return $forum->topics()->where('updated_at', '>', $expDate)->get();
-    }
-
-    private function readStatusHelper($topics)
-    {
-        foreach ($topics as $topic) {
-            if ($topic->readStatus() === 'new') {
+        foreach ($all_topics as $topic) {
+            if ($topic->is_read() === false) {
                 return false;
             }
         }
+
         return true;
     }
 
-    public function lastPost()
+    public function last_post()
     {
-        $lastPost = null;
-        $children = $this->children()->get();
-        foreach ($children as $child) {
-            $this->lastPostHelper($child, $lastPost);
-        }
-        $this->lastPostHelper($this, $lastPost);
-        return $lastPost;
+        $all_topics = ($this->topics->merge($this->topics_from_children))->sortByDesc('updated_at');
+        return $all_topics->count() ? $all_topics[0]->last_post() : null;
     }
 
-    private function lastPostHelper($forum, &$lastPost)
+    public function get_all_watchers()
     {
-        if ($lastTopic = $forum->topics()->orderBy('updated_at', 'desc')->first()) {
-            $topicLastPost = $lastTopic->lastPost();
-            if (!$lastPost) {
-                $lastPost = $topicLastPost;
-            } elseif ($lastPost->created_at->lt($topicLastPost->created_at)) {
-                $lastPost = $topicLastPost;
-            }
+        $mine = Category::get_watchers('forum', $this->id);
+        $fromCategory = Category::get_watchers('category', $this->category->id);
+        $mine = $mine->merge($fromCategory);
+
+        if ($parent = $this->parent) {
+            $fromParent = Category::get_watchers('forum', $parent->id);
+            $mine = $mine->merge($fromParent);
         }
+
+        return $mine;
+    }
+
+    //region Relationships
+    public function board()
+    {
+        return $this->category->board();
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
     }
 
     public function parent()
@@ -95,27 +77,14 @@ class Forum extends Model
         return $this->hasMany('App\Topic');
     }
 
-    public function watchers()
+    public function topics_from_children()
     {
-        $mine = Category::get_watchers('forum', $this->id);
-        $fromCategory = Category::get_watchers('category', $this->category()->firstOrFail()->id);
-        $mine = $mine->merge($fromCategory);
-
-        if ($parent = $this->parent()->first()) {
-            $fromParent = Category::get_watchers('forum', $parent->id);
-            $mine = $mine->merge($fromParent);
-        }
-
-        return $mine;
+        return $this->hasManyThrough('App\Topic', 'App\Forum', 'parent_id');
     }
 
-    public function category()
+    public function posts()
     {
-        return $this->belongsTo('App\Category');
+        return $this->hasManyThrough('App\Post', 'App\Topic');
     }
-
-    public function board()
-    {
-        return $this->category()->firstOrFail()->board();
-    }
+    //endregion
 }

@@ -15,6 +15,27 @@ class Post extends Model
         'created_at'
     ];
 
+    //region Relationships
+    public function board()
+    {
+        return $this->category->board();
+    }
+
+    public function category()
+    {
+        return $this->forum->category();
+    }
+
+    public function forum()
+    {
+        return $this->topic->forum();
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo('App\Topic');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -29,24 +50,5 @@ class Post extends Model
     {
         return $this->belongsToMany('App\UserRating', 'user_ratings');
     }
-
-    public function topic()
-    {
-        return $this->belongsTo('App\Topic');
-    }
-
-    public function forum()
-    {
-        return $this->topic()->firstOrFail()->forum();
-    }
-
-    public function category()
-    {
-        return $this->forum()->firstOrFail()->category();
-    }
-
-    public function board()
-    {
-        return $this->category()->firstOrFail()->board();
-    }
+    //endregion
 }

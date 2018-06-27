@@ -88,7 +88,7 @@ class UsersController
             $user = User::where('username', $username)->firstOrFail();
             return view('website.users.show')
                 ->with('user', $user)
-                ->with('profile', $user->profile()->firstOrFail());
+                ->with('profile', $user->profile);
         } else {
             return alert_redirect(url()->previous(), 'info', __('auth.must-login'));
         }
@@ -101,7 +101,7 @@ class UsersController
             if (\Auth::id() == $user->id || \Auth::user()->is_master) {
                 return view('website.users.edit')
                     ->with('user', $user)
-                    ->with('profile', $user->profile()->firstOrFail());
+                    ->with('profile', $user->profile);
             }
             return redirect(route_user_show($user));
         } else {
@@ -115,7 +115,7 @@ class UsersController
         $request = request();
 
         $user = User::where('username', $username)->firstOrFail();
-        $profile = $user->profile()->firstOrFail();
+        $profile = $user->profile;
 
         $user->is_invisible = $request->is_invisible;
 

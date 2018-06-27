@@ -20,9 +20,9 @@ class PostsController
         }
 
         $topic = Topic::findOrFail($request->topic_id);
-        $post = $topic->lastPost();
+        $post = $topic->last_post();
 
-        if (\Auth::id() === $post->user()->firstOrFail()->id) {
+        if (\Auth::id() === $post->user->id) {
             $post->content .= "\n\n[b]========== " . __('generic.update') . ' ' .
                 \Carbon::now()->toDateTimeString() . "==========[/b]\n\n" . $request->content;
             $post->save();
@@ -36,13 +36,13 @@ class PostsController
 
         $topic->touch();
 
-        return redirect(route_topic_show($topic->board()->firstOrFail(), $topic->category()->firstOrFail(), $topic->forum()->firstOrFail(), $topic));
+        return redirect(route_topic_show($topic));
     }
 
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        $topic = $post->topic()->firstOrFail();
+        $topic = $post->topic;
 
         if ($topic->solution_id === $id) {
             $topic->solution_id = null;
@@ -53,7 +53,7 @@ class PostsController
 
         if ($topic->posts()->count() == 0) {
             $topic->delete();
-            return route_forum_show($topic->board()->firstOrFail(), $topic->category()->firstOrFail(), $topic->forum()->firstOrFail());
+            return route_forum_show($topic->forum);
         }
 
         return redirect()->back();
