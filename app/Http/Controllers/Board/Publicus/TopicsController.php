@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Board\Publicus;
 
+use Auth;
 use App\Post;
 use App\Board;
 use App\Forum;
 use App\Topic;
+use App\ReadTopic;
 
 class TopicsController
 {
@@ -37,6 +39,10 @@ class TopicsController
 
         if ($forum->parent_id) {
             $vars['parent'] = Forum::findOrFail($forum->parent_id);
+        }
+
+        if (Auth::check() && !$topic->is_old()) {
+            ReadTopic::firstOrCreate(['user_id' => Auth::id(), 'topic_id' => $topic->id]);
         }
 
         return view('public.topic')->with($vars);
@@ -75,7 +81,7 @@ class TopicsController
         $post = new Post;
         $post->content = $request->content;
         $post->topic_id = $topic->id;
-        $post->user_id = \Auth::id();
+        $post->user_id = Auth::id();
         $post->save();
 
         return redirect(route_topic_show($topic));

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Auth;
+use Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -31,13 +33,12 @@ class Topic extends Model
 
     public function is_read()
     {
-        if (!\Auth::check())
-            return true;
-        if (\Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days'))
-            return true;
-        if ($this->readers()->where('user_id', \Auth::id())->count())
-            return true;
-        return false;
+        return !Auth::check() || $this->is_old() || $this->readers()->where('user_id', Auth::id())->count();
+    }
+
+    public function is_old()
+    {
+        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days');
     }
 
     public function get_all_watchers()
@@ -52,7 +53,7 @@ class Topic extends Model
 
     public function scopeNewerTopics($query)
     {
-        return $query->where('updated_at', '>', \Carbon::now()->subDays((int)config('custom.gc_read_status_days')));
+        return $query->where('updated_at', '>', Carbon::now()->subDays((int)config('custom.gc_read_status_days')));
     }
 
     //region Relationships

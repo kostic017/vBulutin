@@ -17,7 +17,7 @@ class CreateReadTopicsTable extends Migration
             $table->increments('id');
             $table->integer('topic_id');
             $table->integer('user_id');
-            $table->integer('recorded_at')->useCurrent();
+            $table->timestamp('recorded_at')->useCurrent();
         });
     }
 
