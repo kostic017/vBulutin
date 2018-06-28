@@ -56,9 +56,9 @@
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
                     @if (isset($current_board))
-                        <a class="navbar-brand" href="{{ route('public.show', ['board_url' => $current_board->url]) }}">{{ $current_board->title }}</a>
+                        <a class="navbar-brand" href="{{ route('public.show', ['board_address' => $current_board->address]) }}">{{ $current_board->title }}</a>
                     @else
-                        <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name') }}</a>
+                        <a class="navbar-brand" href="{{ route('website.index') }}">{{ config('app.name') }}</a>
                     @endif
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -68,7 +68,7 @@
                         <ul class="navbar-nav ml-auto">
                             <li><a class="nav-link" href="{{ route('website.user.index') }}">Korisnici</a></li>
                             @if (isset($is_admin) && $is_admin)
-                                <li><a class="nav-link" href="{{ route('admin.index', ['board_url' => $current_board->url]) }}">Admin panel</a></li>
+                                <li><a class="nav-link" href="{{ route('admin.index', ['board_address' => $current_board->address]) }}">Admin panel</a></li>
                             @endif
                             @guest
                                 <li>
@@ -136,7 +136,7 @@
                         @php($owner = $current_board->owner)
                         <p>
                             Vlasnik ovog foruma je <a href="{{ route_user_show($owner) }}">{{ $owner->username }}</a>.
-                            <a href="/">Napravi i ti svoj forum</a>
+                            <a href="{{ route('website.index') }}">Napravi i ti svoj forum</a>
                         </p>
                     @endif
                     Copyright &copy; 2017-{{ date('Y') }} Nikola Kostić

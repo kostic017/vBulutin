@@ -22,7 +22,7 @@
                         @if (is_not_empty($board->description))
                             <p>{!! BBCode::parse($board->description) !!}</a></p>
                         @endif
-                        <a href="{{ route('public.show', ['board_url' => $board->url]) }}/">Poseti forum</a>
+                        <a href="{{ route('public.show', ['board_address' => $board->address]) }}/">Poseti forum</a>
                     </div>
                 @endforeach
             @endif

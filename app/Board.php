@@ -41,7 +41,7 @@ class Board extends Model
             ->join('forums', 'topics.forum_id', 'forums.id')
             ->join('categories', 'forums.category_id', 'categories.id')
             ->join('boards', 'categories.board_id', 'boards.id')
-            ->where('boards.url', $this->url);
+            ->where('boards.address', $this->address);
     }
 
     public function owner()

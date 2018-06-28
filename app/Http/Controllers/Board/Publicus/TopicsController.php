@@ -12,9 +12,9 @@ use App\ReadTopic;
 class TopicsController
 {
 
-    public function show($board_url, $topic_slug)
+    public function show($board_address, $topic_slug)
     {
-        $board = Board::where('url', $board_url)->firstOrFail();
+        $board = Board::where('address', $board_address)->firstOrFail();
         $topic = $board->topics()->where('topics.slug', $topic_slug)->firstOrFail();
         $is_admin = $board->is_admin();
 

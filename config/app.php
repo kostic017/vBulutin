@@ -52,7 +52,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => 'http://' . env('APP_DOMAIN', 'pmf-web-forum.com'),
+    'domain' => env('APP_DOMAIN', 'pmf-web-forum.com'),
 
     /*
     |--------------------------------------------------------------------------

@@ -9,21 +9,26 @@ Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register
 |--------------------------------------------------------------------------
 */
 
-Route::group([
-    'as' => 'website.',
-    'namespace' => 'Website'
-], function() {
-    Route::get('/', 'WebsiteController@index')->name('index');
-    Route::get('user/{username}/show', 'UsersController@show')->name('user.show');
-    Route::get('directory/{slug}/show', 'DirectoriesController@show')->name('directory.show');
-
+$website = function() {
     Route::group([
-        'middleware' => 'admin.master'
+        'as' => 'website.',
+        'namespace' => 'Website',
     ], function() {
-        Route::resource('user', 'UsersController')->except(['show']);
-        Route::resource('directory', 'DirectoriesController')->except(['show']);
+        Route::get('/', 'WebsiteController@index')->name('index');
+        Route::get('user/{username}/show', 'UsersController@show')->name('user.show');
+        Route::get('directory/{slug}/show', 'DirectoriesController@show')->name('directory.show');
+
+        Route::group([
+            'middleware' => 'admin.master'
+        ], function() {
+            Route::resource('user', 'UsersController')->except(['show']);
+            Route::resource('directory', 'DirectoriesController')->except(['show']);
+        });
     });
-});
+};
+
+Route::group(['domain' => 'www.' . config('app.domain')], $website);
+Route::group(['domain' => config('app.domain')], $website);
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +51,7 @@ Route::group([
 
     Route::post('post/{id}/restore', 'PostsController@restore')->name('post.restore');
 
-    Route::group(['prefix' => 'board/{board_url}'], function() {
+    Route::group(['domain' => '{board_address}.' . config('app.domain')], function() {
         Route::get('/', 'BoardsController@show')->name('show');
         Route::get('category/{category_slug}', 'CategoriesController@show')->name('category.show');
         Route::get('forum/{forum_slug}', 'ForumsController@show')->name('forum.show');
@@ -62,7 +67,7 @@ Route::group([
 
 Route::namespace('Board\Admin')
     ->name('admin.')
-    ->prefix('admin/{board_url}')
+    ->prefix('admin/{board_address}')
     ->middleware('admin.board')
     ->group(
         function () {

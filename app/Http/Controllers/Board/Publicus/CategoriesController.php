@@ -6,9 +6,9 @@ use App\Board;
 
 class CategoriesController
 {
-    public function show($board_url, $category_slug)
+    public function show($board_address, $category_slug)
     {
-        $board = Board::where('url', $board_url)->firstOrFail();
+        $board = Board::where('address', $board_address)->firstOrFail();
         $category = $board->categories()->where('slug', $category_slug)->firstOrFail();
 
         return view('public.category')

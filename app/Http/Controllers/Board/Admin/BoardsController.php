@@ -26,7 +26,7 @@ class BoardsController
         $request = request();
 
         $validator = \Validator::make($request->all(), [
-            'url' => 'required|max:255|alpha_dash',
+            'address' => 'required|max:255|alpha_dash',
             'title' => 'required|max:255|unique:boards',
         ]);
 
@@ -35,7 +35,7 @@ class BoardsController
         }
 
         $board = new Board;
-        $board->url = $request->url;
+        $board->address = $request->address;
         $board->owner_id = \Auth::id();
         $board->title = $request->title;
         $board->is_visible = $request->is_visible;
@@ -43,6 +43,6 @@ class BoardsController
         $board->description = $request->description;
         $board->save();
 
-        return alert_redirect(route('public.show', ['url' => $board->url]), 'success', 'Forum uspešno napravljen.');
+        return alert_redirect(route('public.show', ['address' => $board->address]), 'success', 'Forum uspešno napravljen.');
     }
 }

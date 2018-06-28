@@ -3,12 +3,12 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Board::class, function (Faker $faker) {
-    $title = random_title($faker, 5, false);
+    $title = random_title($faker, 2, false);
 
     return [
         'title' => $title,
         'is_visible' => true,
-        'url' => str_slug($title),
+        'address' => str_slug($title),
         'description' => $faker->optional()->paragraph(),
 
         'owner_id' => function() {

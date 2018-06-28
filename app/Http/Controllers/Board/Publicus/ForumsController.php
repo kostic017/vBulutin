@@ -7,9 +7,9 @@ use App\Forum;
 
 class ForumsController
 {
-    public function show($board_url, $forum_slug)
+    public function show($board_address, $forum_slug)
     {
-        $board = Board::where('url', $board_url)->firstOrFail();
+        $board = Board::where('address', $board_address)->firstOrFail();
         $forum = $board->forums()->where('forums.slug', $forum_slug)->firstOrFail();
 
         $vars = [

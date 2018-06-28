@@ -8,7 +8,7 @@ function route_user_show($user)
 function route_category_show($category)
 {
     return route('public.category.show', [
-        'board_url' => $category->board->url,
+        'board_address' => $category->board->address,
         'category_slug' => $category->slug,
     ]);
 }
@@ -16,7 +16,7 @@ function route_category_show($category)
 function route_forum_show($forum)
 {
     return route('public.forum.show', [
-        'board_url' => $forum->board->url,
+        'board_address' => $forum->board->address,
         'forum_slug' => $forum->slug,
     ]);
 }
@@ -24,7 +24,7 @@ function route_forum_show($forum)
 function route_topic_show($topic)
 {
     return route('public.topic.show', [
-        'board_url' => $topic->board->url,
+        'board_address' => $topic->board->address,
         'topic_slug' => $topic->slug
     ]);
 }

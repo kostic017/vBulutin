@@ -9,9 +9,9 @@
         </div>
         <div class="form-group required">
             <label for="url">URL</label>
-            <input type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" id="url" name="url" aria-describedby="url-help" value="{{ old('url', $board->url ?? '') }}">
-            <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('public.show', ['board_url' => 'url']) }}</code>. Dozvoljena slova, brojevi, donje crte i crtice.</small>
-            @include('include.error', ['error_key' => 'url'])
+            <input type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" id="url" name="url" aria-describedby="url-help" value="{{ old('address', $board->address ?? '') }}">
+            <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('public.show', ['board_address' => 'address']) }}</code>. Dozvoljena slova, brojevi, donje crte i crtice.</small>
+            @include('include.error', ['error_key' => 'address'])
         </div>
         <div class="form-group">
             <label for="directory">Direktorijum</label>

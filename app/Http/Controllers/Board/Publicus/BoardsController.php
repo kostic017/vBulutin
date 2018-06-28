@@ -6,9 +6,9 @@ use App\Board;
 
 class BoardsController
 {
-    public function show($url)
+    public function show($address)
     {
-        $board = Board::where('url', $url)->firstOrFail();
+        $board = Board::where('address', $address)->firstOrFail();
 
         return view('public.index')
             ->with('current_board', $board)

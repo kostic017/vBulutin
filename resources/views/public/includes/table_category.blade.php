@@ -2,7 +2,7 @@
     @if (if_route('public.show'))
         <caption>
             <div class="flex-center-xy">
-                <a href="{{ route('public.category.show', ['board' => $current_board->url, 'category' => $category->slug]) }}">{{ $category->title }}</a>
+                <a href="{{ route('public.category.show', ['board' => $current_board->address, 'category' => $category->slug]) }}">{{ $category->title }}</a>
                 <a href="#top" class="back2top" title="Top">Top</a>
             </div>
         </caption>
