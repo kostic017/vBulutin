@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <form id="captcha-form" method="POST" action="{{ route('password.email') }}">
+        <form method="post" action="{{ route('password.email') }}">
             @csrf
 
             <div class="form-group row">

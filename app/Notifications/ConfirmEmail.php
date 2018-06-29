@@ -7,8 +7,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class ConfirmEmail extends Notification
 {
-    private $id;
-    private $token;
+    public $id;
+    public $token;
 
     public function __construct(string $token)
     {

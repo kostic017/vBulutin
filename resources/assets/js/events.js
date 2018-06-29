@@ -16,4 +16,8 @@ $(function () {
         appendDataToForm(form, "sort_order", thSort.data("order"));
         form.submit();
     });
+
+    $(".g-recaptcha").on("click", function () {
+        $(this).closest("form").attr("id", "submit-me");
+    });
 });

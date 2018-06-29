@@ -77,16 +77,16 @@
                                             {{ __('auth.login') }}
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-login">
-                                            <form class="px-4 py-3" id="captcha-form" method="post" action="{{ route('login') }}">
+                                            <form class="px-4 py-3" method="post" action="{{ route('login') }}">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <label for="email">{{ __("auth.name-or-mail") }}</label>
-                                                    <input type="text" name="email" id="email" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
+                                                    <label for="login-email">{{ __("auth.name-or-mail") }}</label>
+                                                    <input type="text" id="login-email" name="email" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('email') }}">
                                                     @include('includes.error', ['error_key' => 'username'])
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="password">{{ __('auth.password') }}</label>
-                                                    <input type="password" name="password" id="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
+                                                    <label for="login-password">{{ __('auth.password') }}</label>
+                                                    <input type="password" id="login-password" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
                                                     @include('includes.error', ['error_key' => 'password'])
                                                 </div>
                                                 <div class="form-check">

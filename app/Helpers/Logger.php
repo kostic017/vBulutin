@@ -31,7 +31,7 @@ class Logger
     public static function log($level, $method, $message)
     {
         if (!self::$logger) {
-            self::$logger = new Logger('forum41');
+            self::$logger = new Logger('forum_log');
         }
         self::$logger->add_record($level, $method, $message);
     }
