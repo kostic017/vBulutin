@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => 'Forum',
+    'name' => env('APP_NAME'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (env('APP_ENV', 'production') !== 'production'),
+    'debug' => (env('APP_ENV') !== 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,8 +52,9 @@ return [
     |
     */
 
-    'url' => 'http://' . env('APP_DOMAIN', 'pmf-web-forum.com'),
-    'domain' => env('APP_DOMAIN', 'pmf-web-forum.com'),
+    'url' => 'http://' . env('APP_DOMAIN'),
+
+    'domain' => env('APP_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------

@@ -2,8 +2,8 @@
 
 return [
     'pagination' => [
-        'step' => env('PAGINATION_STEP', 5),
-        'max' => env('PAGINATION_MAX', 100),
+        'step' => env('PAGINATION_STEP'),
+        'max' => env('PAGINATION_MAX'),
     ],
 
     'captcha' => [
@@ -11,7 +11,7 @@ return [
         'secret_key' => env('CAPTCHA_SECRET_KEY'),
     ],
 
-    'gc_read_status_days' => env('GC_READ_STATUS_DAYS', 30),
-    'refresh_online_minutes' => env('REFRESH_ONLINE_MINUTES', 5),
-    'random_image' => env('RANDOM_IMAGE', 'https://placeimg.com/100/100/people'),
+    'random_image' => env('RANDOM_IMAGE', null),
+    'recent_topic_days' => env('RECENT_TOPIC_DAYS'),
+    'refresh_online_minutes' => env('REFRESH_ONLINE_MINUTES'),
 ];

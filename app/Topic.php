@@ -38,7 +38,7 @@ class Topic extends Model
 
     public function is_old()
     {
-        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.gc_read_status_days');
+        return Carbon::now()->diffInDays($this->updatedAt) >= (int)config('custom.recent_topic_days');
     }
 
     public function get_all_watchers()
@@ -53,7 +53,7 @@ class Topic extends Model
 
     public function scopeNewerTopics($query)
     {
-        return $query->where('updated_at', '>', Carbon::now()->subDays((int)config('custom.gc_read_status_days')));
+        return $query->where('updated_at', '>', Carbon::now()->subDays((int)config('custom.recent_topic_days')));
     }
 
     //region Relationships
