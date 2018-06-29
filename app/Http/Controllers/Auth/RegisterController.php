@@ -39,19 +39,18 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-                Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
-                return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+            Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
         }
 
         event(new Registered($user = $this->create($request->all())));
 
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 
     protected function registered(Request $request, $user)
     {
-        return alert_redirect(url()->previous(), 'info', __('auth.confirmation-sent'));
+        return alert_redirect('/', 'info', __('auth.confirmation-sent'));
     }
 
     protected function create(array $data)

@@ -1,58 +1,58 @@
 @component('mail::message')
 
-    {{-- Greeting --}}
-    @if (! empty($greeting))
-        # {{ $greeting }}
-    @else
-        @if ($level == 'error')
-            # {{ __('emails.whoops') }}
-        @else
-            # {{ __('emails.hello') }}
-        @endif
-    @endif
+{{-- Greeting --}}
+@if (! empty($greeting))
+# {{ $greeting }}
+@else
+@if ($level == 'error')
+# {{ __('emails.whoops') }}
+@else
+# {{ __('emails.hello') }}
+@endif
+@endif
 
-    {{-- Intro Lines --}}
-    @foreach ($introLines as $line)
-        {{ $line }}
-    @endforeach
+{{-- Intro Lines --}}
+@foreach ($introLines as $line)
+{{ $line }}
+@endforeach
 
-    {{-- Action Button --}}
-    @isset($actionText)
-        <?php
-            switch ($level) {
-                case 'success':
-                    $color = 'green';
-                    break;
-                case 'error':
-                    $color = 'red';
-                    break;
-                default:
-                    $color = 'blue';
-                    break;
-            }
-        ?>
-        @component('mail::button', ['url' => $actionUrl, 'color' => $color])
-            {{ $actionText }}
-        @endcomponent
-    @endisset
+{{-- Action Button --}}
+@isset($actionText)
+<?php
+    switch ($level) {
+    case 'success':
+        $color = 'green';
+        break;
+    case 'error':
+        $color = 'red';
+        break;
+    default:
+        $color = 'blue';
+        break;
+}
+?>
+@component('mail::button', ['url' => $actionUrl, 'color' => $color])
+{{ $actionText }}
+@endcomponent
+@endisset
 
-    {{-- Outro Lines --}}
-    @foreach ($outroLines as $line)
-        {{ $line }}
-    @endforeach
+{{-- Outro Lines --}}
+@foreach ($outroLines as $line)
+{{ $line }}
+@endforeach
 
-    {{-- Salutation --}}
-    @if (!empty($salutation))
-        {{ $salutation }}
-    @else
-        {{ __('emails.regards') }},<br>{{ config('app.name') }}
-    @endif
+{{-- Salutation --}}
+@if (!empty($salutation))
+{{ $salutation }}
+@else
+{{ __('emails.regards') }},<br>{{ config('app.name') }}
+@endif
 
-    {{-- Subcopy --}}
-    @isset($actionText)
-        @component('mail::subcopy')
-            {{ __('emails.subcopy', ['actionText' => $actionText, 'actionUrl' => $actionUrl]) }}
-        @endcomponent
-    @endisset
+{{-- Subcopy --}}
+@isset($actionText)
+@component('mail::subcopy')
+{{ __('emails.subcopy', ['actionText' => $actionText, 'actionUrl' => $actionUrl]) }}
+@endcomponent
+@endisset
 
 @endcomponent
