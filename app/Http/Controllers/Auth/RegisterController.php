@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Hash;
+use Validator;
+
 use App\User;
+use App\Profile;
+use App\Helpers\Logger;
+use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -21,7 +27,7 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
-        return \Validator::make($data, [
+        return Validator::make($data, [
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -33,7 +39,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-                \App\Helpers\Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+                Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
                 return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
         }
 
@@ -54,26 +60,28 @@ class RegisterController extends Controller
         $user->username = $data['username'];
         $user->email = $data['email'];
         $user->email_token = str_random(30);
-        $user->password = \Hash::make($data['password']);
+        $user->password = Hash::make($data['password']);
         $user->save();
 
-        $profile = new \App\Profile;
+        $profile = new Profile;
         $profile->user_id = $user->id;
         $profile->save();
 
-        $user->notify(new \App\Notifications\ConfirmEmail($user->email_token));
+        $user->notify(new ConfirmEmail($user->id, $user->email_token));
         return $user;
     }
 
-    public function confirm(string $token)
+    public function confirm($id, $token)
     {
         try {
-            $user = User::where('email_token', $token)->firstOrFail();
+            $user = User::where('id', $id)
+                ->where('email_token', $token)
+                ->firstOrFail();
             $user->email_token = null;
             $user->save();
             return alert_redirect(url()->previous(), 'success', __('auth.can-login'));
         } catch (ModelNotFoundException $e) {
-            Logger::log('error', __METHOD__, request()->ip() . ' has provided invalid confirmation token');
+            Logger::log('error', __METHOD__, request()->ip() . ' has failed to confirm his email address.');
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 Auth::routes();
-Route::get('{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
+Route::get('{id}/{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
 
 /*
 |--------------------------------------------------------------------------
