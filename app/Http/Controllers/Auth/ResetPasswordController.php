@@ -6,29 +6,24 @@ use App\Notifications\ResetPassword;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
-class ResetPasswordController extends Controller
-{
+class ResetPasswordController extends Controller {
 
     use ResetsPasswords;
 
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest');
     }
 
-    public function sendPasswordResetNotification($token)
-    {
+    public function sendPasswordResetNotification($token) {
         $this->notify(new ResetPassword($token));
     }
 
-    protected function sendResetResponse($response)
-    {
+    protected function sendResetResponse($response) {
         return redirect()->back()->with('status', trans($response));
     }
 
-    public function reset(Request $request)
-    {
+    public function reset(Request $request) {
         $this->validate($request, $this->rules(), $this->validationErrorMessages());
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {

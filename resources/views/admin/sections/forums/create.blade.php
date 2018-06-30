@@ -11,7 +11,7 @@
             @if ($categories->isEmpty())
                 <p>{{ __('admin.category-needed') }}</p>
             @else
-                <form action="{{ route('admin.forum.store') }}" method="post">
+                <form action="{{ route('forums.store') }}" method="post">
                     @csrf
 
                     <div class="form-group">
@@ -62,5 +62,4 @@
     </div>
 
     @include('includes.sceditor')
-    <script>$(() => { forceCategory(); });</script>
 @stop

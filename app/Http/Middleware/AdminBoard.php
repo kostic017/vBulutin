@@ -4,24 +4,18 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
+use App\Board;
 
 class AdminBoard
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if (!Auth::user()) {
-            return redirect()->guest(route("login"));
+    public function handle($request, Closure $next) {
+        if (Auth::check()) {
+            $address = $request->route('board_address');
+            $board = Board::where('address', $address)->firstOrFail();
+            if ($board->is_admin()) {
+                return $next($request);
+            }
         }
-        if (!Auth::user()->is_admin) {
-            return redirect('/');
-        }
-        return $next($request);
+        return alert_redirect(url()->previous(), 'error', 'Nemate pravo da pristupite ovoj stranici.');
     }
 }

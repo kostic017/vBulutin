@@ -7,6 +7,10 @@
         function recaptcha_submit() {
             $("#submit-me").submit();
         }
+
+        $(".g-recaptcha").on("click", function () {
+            $(this).closest("form").attr("id", "submit-me");
+        });
     </script>
 
     <script src="https://www.google.com/recaptcha/api.js"></script>

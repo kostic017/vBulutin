@@ -31,7 +31,6 @@ return [
     'login-again' => 'Morate ponovo da se prijavite.',
     'must-login' => 'Samo prijavljeni korisnici mogu da vide ovu stranicu.',
     'can-login' => 'Sada se možete prijaviti!',
-    'logged-in' => 'Uspešno ste se prijavili!',
     'captcha-failed' => 'Imamo razloga da mislimo da niste ljudsko biće. Pokušajte ponovo.',
 
     'confirmed' => 'Potvrdili ste svoj mejl.',

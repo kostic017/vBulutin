@@ -9,7 +9,7 @@
                 <div class="directories">
                     @foreach ($directories as $directory)
                         <div class="directory">
-                            <a href="{{ route('website.directory.show', ['slug' => $directory->slug]) }}">
+                            <a href="{{ route('directories.show', [$directory->slug]) }}">
                                 <h2>{{ $directory->title }}</h2>
                                 <p>Broj foruma: {{ $directory->boards()->count() }}</p>
                             </a>
@@ -20,9 +20,9 @@
         </div>
     </div>
 
-    @if (Auth::check() && Auth::user()->is_master)
+    @if (Auth::user()->is_master ?? false)
         <p class="create-directory">
-            <a href="{{ route('website.directory.create') }}" class="btn btn-primary">Napravi direktorijum</a>
+            <a href="{{ route('directories.create') }}" class="btn btn-primary">Napravi direktorijum</a>
         </p>
     @endif
 

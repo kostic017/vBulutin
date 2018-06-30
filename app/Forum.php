@@ -2,19 +2,17 @@
 
 namespace App;
 
-use Carbon\Carbon;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Forum extends Model
-{
+class Forum extends Model {
     use SoftDeletes;
 
     public $timestamps = false;
 
-    public function is_read()
-    {
-        if (!\Auth::check()) {
+    public function is_read() {
+        if (!Auth::check()) {
             return true;
         }
 
@@ -31,14 +29,12 @@ class Forum extends Model
         return true;
     }
 
-    public function last_post()
-    {
+    public function last_post() {
         $all_topics = ($this->topics->merge($this->topics_from_children))->sortByDesc('updated_at');
         return $all_topics->count() ? $all_topics[0]->last_post() : null;
     }
 
-    public function get_all_watchers()
-    {
+    public function get_all_watchers() {
         $mine = Category::get_watchers('forum', $this->id);
         $fromCategory = Category::get_watchers('category', $this->category->id);
         $mine = $mine->merge($fromCategory);
@@ -52,38 +48,31 @@ class Forum extends Model
     }
 
     //region Relationships
-    public function board()
-    {
+    public function board() {
         return $this->category->board();
     }
 
-    public function category()
-    {
+    public function category() {
         return $this->belongsTo('App\Category');
     }
 
-    public function parent()
-    {
+    public function parent() {
         return $this->belongsTo('App\Forum', 'parent_id');
     }
 
-    public function children()
-    {
+    public function children() {
         return $this->hasMany('App\Forum', 'parent_id');
     }
 
-    public function topics()
-    {
+    public function topics() {
         return $this->hasMany('App\Topic');
     }
 
-    public function topics_from_children()
-    {
+    public function topics_from_children() {
         return $this->hasManyThrough('App\Topic', 'App\Forum', 'parent_id');
     }
 
-    public function posts()
-    {
+    public function posts() {
         return $this->hasManyThrough('App\Post', 'App\Topic');
     }
     //endregion

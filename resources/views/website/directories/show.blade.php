@@ -8,9 +8,9 @@
                 <p>{!! BBCode::parse($directory->description) !!}</p>
             </div>
             <div class="button">
-                <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('admin.boards.create', ['slug' => $directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>&nbsp;
+                <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('boards.create', [$directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>&nbsp;
                 @if (Auth::user()->is_master ?? false)
-                    <a class="btn btn-success" href="{{ route('website.directory.edit', ['slug' => $directory->slug]) }}">Izmeni direktorijum</a>
+                    <a class="btn btn-success" href="{{ route('directories.edit', [$directory->slug]) }}">Izmeni direktorijum</a>
                 @endif
             </div>
         </div>
@@ -24,7 +24,7 @@
                         @if (is_not_empty($board->description))
                             <p>{!! BBCode::parse($board->description) !!}</a></p>
                         @endif
-                        <a href="{{ route('public.show', ['board_address' => $board->address]) }}/">Poseti forum</a>
+                        <a href="{{ route('boards.show', [$board->address]) }}/">Poseti forum</a>
                     </div>
                 @endforeach
             @endif

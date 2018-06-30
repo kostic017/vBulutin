@@ -4,7 +4,7 @@
     </td>
     <td class="main-info">
         <a href="{{ isset($is_topic) ? route_topic_show($row) : route_forum_show($row) }}" class="name">{{ $row->title }}</a>
-        @if (!if_route('public.forum.show') && $child_forums->count())
+        @if (!if_route('forums.show.public') && $child_forums->count())
             <ul class="subforum-list post-list">
                 @foreach ($child_forums as $child_forum)
                     <li>
@@ -16,7 +16,7 @@
         @endif
     </td>
     <td class="side-info count">
-        @if (if_route('public.forum.show'))
+        @if (if_route('forums.show.public'))
             {{-- row = topic --}}
             <strong>{{ $row->posts()->count() - 1 }}</strong> odgovora
         @else

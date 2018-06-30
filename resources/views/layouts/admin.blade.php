@@ -11,19 +11,17 @@
             <div class="col-md-4 col-lg-3">
                 <nav>
                     <ul class="list-group">
-                        <li class="list-group-item {{ active_class(if_uri_pattern('admin/categories*')) }}">
-                            <a href="{{ route('admin.category.index') }}">{{ __('admin.categories') }}</a>
+                        <li class="list-group-item {{ active_class(if_route('admin.index')) }}">
+                            <a href="{{ route('admin.index', [request()->route('board_address')]) }}">Početna</a>
                         </li>
-                        <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*')) }}">
-                            <a href="{{ route('admin.forum.index') }}">{{ __('admin.forums') }}</a>
+                        <li class="list-group-item {{ active_class(if_route('forums.index')) }}">
+                            <a href="{{ route('forums.index', [request()->route('board_address')]) }}">Kategorije i forumi</a>
                         </li>
-                        <li class="list-group-item  {{ active_class(if_route('admin.positions')) }}">
-                            <a href="{{ route('admin.positions') }}">{{ __('admin.positioning') }}</a>
+                        <li class="list-group-item {{ active_class(if_route('users.index.admin')) }}">
+                            <a href="{{ route('users.index.admin', [request()->route('board_address')]) }}">Korisnici</a>
                         </li>
-                    </ul>
-                    <ul class="list-group">
-                        <li class="list-group-item {{ active_class(if_route('admin.report.index')) }}">
-                            <a href="{{ route('admin.report.index') }}">Izveštaji</a>
+                        <li class="list-group-item {{ active_class(if_route('reports.index')) }}">
+                            <a href="{{ route('reports.index', [request()->route('board_address')]) }}">Izveštaji</a>
                         </li>
                     </ul>
                 </nav>
@@ -33,7 +31,5 @@
             </div>
         </div>
     </div>
-
-    <script src="{{ asset('js/admin.js') }}"></script>
 @overwrite
 

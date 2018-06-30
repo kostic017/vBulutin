@@ -1,9 +1,5 @@
 @extends('layouts.admin')
 
-@section('scripts')
-    <script>$(() => { forceCategory(); });</script>
-@stop
-
 @section('content')
     <div class="card">
 
@@ -12,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('admin.forum.update', ['forum' => $forum->id]) }}" method="post">
+            <form action="{{ route('forums.update', [$forum->id]) }}" method="post">
                 @csrf
                 {{ method_field('PUT') }}
 

@@ -1,4 +1,4 @@
-function initSceditor() {
+$(function () {
     sceditor.command.set("undobtn", {
         exec: "undo",
         txtExec: function () {
@@ -76,4 +76,4 @@ function initSceditor() {
         },
         style: "/vendor/sceditor/themes/content/default.min.css"
     });
-}
+});

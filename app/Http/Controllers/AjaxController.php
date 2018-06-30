@@ -9,11 +9,9 @@ use App\Post;
 use App\Forum;
 use App\Category;
 
-class AjaxController extends Controller
-{
+class AjaxController extends Controller {
 
-    public function positions()
-    {
+    public function positions() {
         $data = request('data');
 
         foreach ($data as $categoryId => $categoryData) {
@@ -41,8 +39,7 @@ class AjaxController extends Controller
         }
     }
 
-    public function quote()
-    {
+    public function quote() {
         $postId = request('postId');
         $post = Post::select('content', 'user_id')->findOrFail($postId);
         $user = User::select('username')->findOrFail($post->user_id);

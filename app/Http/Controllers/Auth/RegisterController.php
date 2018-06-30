@@ -16,17 +16,14 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class RegisterController extends Controller
-{
+class RegisterController extends Controller {
     use RegistersUsers;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest');
     }
 
-    protected function validator(array $data)
-    {
+    protected function validator(array $data) {
         return Validator::make($data, [
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -34,8 +31,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function register(Request $request)
-    {
+    public function register(Request $request) {
         $this->validator($request->all())->validate();
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
@@ -48,13 +44,11 @@ class RegisterController extends Controller
         return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 
-    protected function registered(Request $request, $user)
-    {
+    protected function registered(Request $request, $user) {
         return alert_redirect('/', 'info', __('auth.confirmation-sent'));
     }
 
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
         $user = new User;
         $user->username = $data['username'];
         $user->email = $data['email'];
@@ -70,8 +64,7 @@ class RegisterController extends Controller
         return $user;
     }
 
-    public function confirm($id, $token)
-    {
+    public function confirm($id, $token) {
         try {
             $user = User::where('id', $id)
                 ->where('email_token', $token)

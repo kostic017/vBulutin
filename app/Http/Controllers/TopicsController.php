@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Board\Publicus;
+namespace App\Http\Controllers;
 
 use Auth;
+use Validator;
+
 use App\Post;
 use App\Board;
 use App\Forum;
 use App\Topic;
 use App\ReadTopic;
 
-class TopicsController
-{
+class TopicsController extends Controller {
 
-    public function show($board_address, $topic_slug)
-    {
+    public function show($board_address, $topic_slug) {
         $board = Board::where('address', $board_address)->firstOrFail();
         $topic = $board->topics()->where('topics.slug', $topic_slug)->firstOrFail();
         $is_admin = $board->is_admin();
@@ -46,19 +46,17 @@ class TopicsController
         return view('public.topic')->with($vars);
     }
 
-    public function lock($id)
-    {
+    public function lock($board_address, $id) {
         $topic = Topic::findOrFail($id);
         $topic->is_locked = !$topic->is_locked;
         $topic->save();
         return redirect()->back();
     }
 
-    public function store()
-    {
+    public function store() {
         $request = request();
 
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'content' => 'required|min:5',
         ]);
@@ -85,11 +83,10 @@ class TopicsController
         return redirect(route_topic_show($topic));
     }
 
-    public function update_title($id)
-    {
+    public function update_title($id) {
         $request = request();
 
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'title' => 'required|max:255'
         ]);
 
@@ -105,8 +102,7 @@ class TopicsController
         return redirect()->back();
     }
 
-    public function update_solution($id)
-    {
+    public function update_solution($id) {
         $request = request();
 
         $topic = Topic::findOrFail($id);

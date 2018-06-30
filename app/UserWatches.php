@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 // kategoriju, posmatra i sve forume i teme u njoj; analogno
 // za forume.
 
-class UserWatches extends Model
-{
+class UserWatches extends Model {
     public $timestamps = false;
 }

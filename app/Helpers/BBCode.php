@@ -9,8 +9,7 @@ class BBCode {
     private static $emoticons = null;
     private const EMOTICONS_FOLDER = 'vendor/sceditor/emoticons/';
 
-    public static function parse($bbcode)
-    {
+    public static function parse($bbcode) {
         if (!self::$parser) {
             self::$parser = new \App\Packages\ChrisKonnertz\BBCode\BBCode();
 
@@ -53,8 +52,7 @@ class BBCode {
         return $code;
     }
 
-    private static function parse_emoticons($code)
-    {
+    private static function parse_emoticons($code) {
         if (!self::$emoticons) {
             self::$emoticons = [];
 

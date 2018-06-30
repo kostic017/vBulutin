@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Directory extends Model
-{
+class Directory extends Model {
     public $timestamps = false;
 
     //region Relationships
-    public function boards()
-    {
+    public function boards() {
         return $this->hasMany('App\Board');
     }
     //endregion

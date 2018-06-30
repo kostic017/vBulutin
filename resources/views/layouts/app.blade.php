@@ -10,7 +10,7 @@
         <meta name="author" content="Nikola Kostić">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name') }}</title>
+        <title>{{ isset($current_board) ? $current_board->title . ' | ' : '' }}{{ config('app.name') }}</title>
 
         <link rel="icon" href="{{ asset("favicon.ico") }}">
 
@@ -56,7 +56,7 @@
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
                     @if (isset($current_board))
-                        <a class="navbar-brand" href="{{ route('public.show', ['board_address' => $current_board->address]) }}">{{ $current_board->title }}</a>
+                        <a class="navbar-brand" href="{{ route('boards.show', [$current_board->address]) }}">{{ $current_board->title }}</a>
                     @else
                         <a class="navbar-brand" href="{{ route('website.index') }}">{{ config('app.name') }}</a>
                     @endif
@@ -66,9 +66,9 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto"></ul>
                         <ul class="navbar-nav ml-auto">
-                            <li><a class="nav-link" href="{{ route('website.user.index') }}">Korisnici</a></li>
+                            <li><a class="nav-link" href="{{ route('users.index.public') }}">Korisnici</a></li>
                             @if (isset($is_admin) && $is_admin)
-                                <li><a class="nav-link" href="{{ route('admin.index', ['board_address' => $current_board->address]) }}">Admin panel</a></li>
+                                <li><a class="nav-link" href="{{ route('admin.index', [$current_board->address]) }}">Admin panel</a></li>
                             @endif
                             @guest
                                 <li>

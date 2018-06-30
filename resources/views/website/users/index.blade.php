@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('website.user.index') }}" method="get" id="form1">
+            <form action="{{ route('users.index.public') }}" method="get" id="form1">
                 <select name="perPage" class="form-control" onchange="document.getElementById('form1').submit();">
                     <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
                     @for ($i = $step; $i <= $max; $i += $step)
@@ -48,7 +48,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('website.user.index') }}" method="get" id="form2">
+            <form action="{{ route('users.index.public') }}" method="get" id="form2">
                 <select name="perPage" class="form-control" onchange="document.getElementById('form2').submit();">
                     <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
                     @for ($i = $step; $i <= $max; $i += $step)

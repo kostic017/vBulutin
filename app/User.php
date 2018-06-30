@@ -5,8 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use Notifiable;
 
     public $timestamps = false;
@@ -19,59 +18,48 @@ class User extends Authenticatable
         'password', 'email_token', 'remember_token',
     ];
 
-    public static function newest_user()
-    {
+    public static function newest_user() {
         return self::select('username')->orderBy('registered_at', 'desc')->first();
     }
 
-    public function routeNotificationForMail($notification)
-    {
+    public function routeNotificationForMail($notification) {
         return $this->email;
     }
 
-    public function watched_categories()
-    {
+    public function watched_categories() {
         return Category::findMany(UserWatches::select('category_id')->where('user_id', $this->id)->get()->toArray());
     }
 
-    public function watched_forums()
-    {
+    public function watched_forums() {
         return Forum::findMany(UserWatches::select('forum_id')->where('user_id', $this->id)->get()->toArray());
     }
 
-    public function watched_topics()
-    {
+    public function watched_topics()  {
         return Topic::findMany(UserWatches::select('topic_id')->where('user_id', $this->id)->get()->toArray());
     }
 
     //region Relationships
-    public function profile()
-    {
+    public function profile() {
         return $this->hasOne('App\Profile');
     }
 
-    public function posts()
-    {
+    public function posts()  {
         return $this->hasMany('App\Post');
     }
 
-    public function reports()
-    {
+    public function reports() {
         return $this->belongsToMany('App\Post', 'user_reports');
     }
 
-    public function ratings()
-    {
+    public function ratings() {
         return $this->belongsToMany('App\Post', 'user_ratings');
     }
 
-    public function readTopics()
-    {
+    public function readTopics() {
         return $this->belongsToMany('App\Topic', 'read_topics');
     }
 
-    public function pollAnswers()
-    {
+    public function pollAnswers() {
         return $this->belongsToMany('App\PollAnswer', 'user_answers');
     }
     //endregion

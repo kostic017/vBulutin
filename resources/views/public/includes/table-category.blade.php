@@ -1,8 +1,8 @@
 <table class="main-table table-hover">
-    @if (if_route('public.show'))
+    @if (if_route('boards.show'))
         <caption>
             <div class="flex-center-xy">
-                <a href="{{ route('public.category.show', ['board' => $current_board->address, 'category' => $category->slug]) }}">{{ $category->title }}</a>
+                <a href="{{ route_category_show($category) }}">{{ $category->title }}</a>
                 <a href="#top" class="back2top" title="Top">Top</a>
             </div>
         </caption>
@@ -14,7 +14,7 @@
         </tr>
     @else
         @foreach ($parent_forums as $parent_forum)
-            @include('public.includes.table_row', ['row' => $parent_forum, 'child_forums' => $parent_forum->children()->get()])
+            @include('public.includes.table-row', ['row' => $parent_forum, 'child_forums' => $parent_forum->children()->get()])
         @endforeach
     @endif
 </table>

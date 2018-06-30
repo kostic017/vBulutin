@@ -1,23 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Board\Admin;
+namespace App\Http\Controllers;
 
 use DB;
+use Carbon;
 use Schema;
 use PdfReport;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class ReportsController extends Controller
-{
+class ReportsController extends Controller {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
-    {
+    public function index($board_address) {
         return view('admin.reports')
             ->with('categories', Schema::getColumnListing('categories'))
             ->with('forums', Schema::getColumnListing('forums'))
@@ -25,8 +17,9 @@ class ReportsController extends Controller
             ->with('users', Schema::getColumnListing('users'));
     }
 
-    public function generate(Request $request, string $table)
-    {
+    public function generate($board_address, $table) {
+        $request = request();
+
         if (!$request->columns) {
             return alert_redirect('error', url()->previous(), 'Odaberite bar jednu kolonu.');
         }
@@ -44,6 +37,6 @@ class ReportsController extends Controller
                 'table tr td:first-child' => 'display: none',
                 'table tr th:first-child' => 'display: none',
             ])
-            ->download($table . '-report-' . \Carbon::now());
+            ->download($table . '-report-' . Carbon::now());
     }
 }

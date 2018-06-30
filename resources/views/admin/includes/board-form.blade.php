@@ -1,32 +1,35 @@
 <div class="card-body">
-    <form method="post" action="{{ isset($force_directory) ? route('admin.boards.store') : route('admin.board.update') }}">
+    <form method="post" action="{{ if_route('boards.create') ? route('boards.store') : route('boards.update', [request()->route('board_address')]) }}">
         @csrf
+        @if (if_route('admin.index'))
+            {{ method_field('PUT') }}
+        @endif
 
         <div class="form-group required">
             <label for="title">Naziv</label>
             <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" value="{{ old('title', $board->title ?? '') }}">
-            @include('include.error', ['error_key' => 'title'])
+            @include('includes.error', ['error_key' => 'title'])
         </div>
         <div class="form-group required">
-            <label for="url">URL</label>
-            <input type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" id="url" name="url" aria-describedby="url-help" value="{{ old('address', $board->address ?? '') }}">
-            <small id="url-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>{{ route('public.show', ['board_address' => 'address']) }}</code>. Dozvoljena slova, brojevi, donje crte i crtice.</small>
-            @include('include.error', ['error_key' => 'address'])
+            <label for="address">Adresa</label>
+            <input type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" id="address" name="address" aria-describedby="address-help" value="{{ old('address', $board->address ?? 'adresa') }}">
+            <small id="address-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>http://<span id="preview"></span>.{{ config('app.domain') }}/</code>. Dozvoljena su slova, brojevi, donja crta i crtica.</small>
+            @include('includes.error', ['error_key' => 'address'])
         </div>
         <div class="form-group">
-            <label for="directory">Direktorijum</label>
-            <select class="form-control{{ $errors->has('directory') ? ' is-invalid' : '' }}" {{ isset($force_directory) ? "disabled" : "" }}>
+            <label for="directory_id">Direktorijum</label>
+            <select name="directory_id" id="directory_id" class="form-control{{ $errors->has('directory_id') ? ' is-invalid' : '' }}" {{ isset($force_directory) ? "disabled" : "" }}>
                 @foreach ($directories as $directory)
                     @php(
                         $selected = isset($force_directory) ?
                             ($force_directory->id === $directory->id ? 'selected' : '') :
-                            (old('directory', $board->directory->id ?? '') === $directory->id ? 'selected' : '')
+                            (old('directory_id', $board->directory->id ?? '') === $directory->id ? 'selected' : '')
                     )
                     <option value="{{ $directory->id }}" {{ $selected }}>{{ $directory->title }}</option>
                 @endforeach
             </select>
             @if (isset($force_directory))
-                <input type="hidden" name="directory" value="{{ $force_directory->id }}">
+                <input type="hidden" name="directory_id" value="{{ $force_directory->id }}">
             @endif
         </div>
         <div class="form-group form-check">
@@ -42,3 +45,11 @@
         @include('includes.sceditor')
     </form>
 </div>
+
+<script>
+    $(function() {
+        $("input[name=address]").on('input', function() {
+            $("#preview").html($(this).val());
+        }).trigger("input");
+    });
+</script>

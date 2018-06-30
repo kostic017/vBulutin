@@ -9,5 +9,5 @@
             @endif
         </div>
     </div>
-    @include('public.includes.table_category')
+    @include('public.includes.table-category')
 @stop

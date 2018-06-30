@@ -5,8 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
-{
+class Post extends Model {
     use SoftDeletes;
 
     public $timestamps = false;
@@ -16,38 +15,31 @@ class Post extends Model
     ];
 
     //region Relationships
-    public function board()
-    {
+    public function board() {
         return $this->category->board();
     }
 
-    public function category()
-    {
+    public function category() {
         return $this->forum->category();
     }
 
-    public function forum()
-    {
+    public function forum() {
         return $this->topic->forum();
     }
 
-    public function topic()
-    {
+    public function topic() {
         return $this->belongsTo('App\Topic');
     }
 
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo('App\User');
     }
 
-    public function reports()
-    {
+    public function reports() {
         return $this->belongsToMany('App\UserReport', 'user_reports');
     }
 
-    public function ratings()
-    {
+    public function ratings() {
         return $this->belongsToMany('App\UserRating', 'user_ratings');
     }
     //endregion

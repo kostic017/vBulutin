@@ -1,4 +1,4 @@
-function positions() {
+$(function() {
     $(".dd").nestable({
         maxDepth: 2,
         scroll: false
@@ -66,7 +66,7 @@ function positions() {
         overlay.show();
         overlay.fitText();
 
-        $.post('/ajax/positions', { data }, function () {
+        $.post('/ajax/forums/positions/save', { data }, function () {
             toastr.success($("span[data-key='admin.positions-success']").text());
             overlay.hide();
         }).fail(function () {
@@ -75,4 +75,4 @@ function positions() {
         });
 
     });
-}
+});

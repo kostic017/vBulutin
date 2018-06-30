@@ -1,107 +1,69 @@
 <?php
 
-Auth::routes();
-Route::get('{id}/{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
+Route::group(['domain' => config('app.domain')], function() {
+    Auth::routes();
+    Route::get('{id}/{token}/confirm', 'Auth\RegisterController@confirm')->name('register.confirm');
 
-/*
-|--------------------------------------------------------------------------
-| Website
-|--------------------------------------------------------------------------
-*/
+    Route::get('/', 'WebsiteController@index')->name('website.index');
 
-$website = function() {
-    Route::group([
-        'as' => 'website.',
-        'namespace' => 'Website',
-    ], function() {
-        Route::get('/', 'WebsiteController@index')->name('index');
-        Route::get('user/{username}/show', 'UsersController@show')->name('user.show');
-        Route::get('directory/{slug}/show', 'DirectoriesController@show')->name('directory.show');
+    Route::get('users', 'UsersController@index')->name('users.index.public');
+    Route::get('users/{username}/show', 'UsersController@show')->name('users.show');
 
-        Route::group([
-            'middleware' => 'admin.master'
-        ], function() {
-            Route::resource('user', 'UsersController')->except(['show']);
-            Route::resource('directory', 'DirectoriesController')->except(['show']);
-        });
+    Route::get('directories/{slug}/show', 'DirectoriesController@show')->name('directories.show');
+
+    Route::get('directories/{slug}/create-board', 'BoardsController@create')->name('boards.create');
+    Route::post('boards', 'BoardsController@store')->name('boards.store');
+
+    Route::post('topics', 'TopicsController@store')->name('topics.store');
+    Route::post('topics/{id}/title', 'TopicsController@update_title')->name('topic.title');
+    Route::post('topics/{id}/solution', 'TopicsController@update_solution')->name('topic.solution');
+
+    Route::resource('posts', 'PostsController')->only(['store', 'destroy']);
+    Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
+
+    Route::group(['middleware' => 'admin.master'], function () {
+        Route::resource('users', 'UsersController')->only(['edit', 'update']);
+        Route::resource('directories', 'DirectoriesController')->only(['create', 'store', 'edit', 'update', 'destroy']);
     });
-};
 
-Route::group(['domain' => 'www.' . config('app.domain')], $website);
-Route::group(['domain' => config('app.domain')], $website);
-
-/*
-|--------------------------------------------------------------------------
-| Board Public Area
-|--------------------------------------------------------------------------
-*/
-
-Route::group([
-    'as' => 'public.',
-    'namespace' => 'Board\Publicus',
-], function() {
-    Route::resource('topic', 'TopicsController')->only(['store']);
-    Route::resource('post', 'PostsController')->only(['store', 'destroy']);
-
-    Route::post('forum/{id}/lock', 'ForumsController@lock')->name('forum.lock');
-    Route::post('topic/{id}/lock', 'TopicsController@lock')->name('topic.lock');
-    Route::post('topic/{id}/restore', 'TopicsController@restore')->name('topic.restore');
-    Route::post('topic/{id}/title', 'TopicsController@update_title')->name('topic.title');
-    Route::post('topic/{id}/solution', 'TopicsController@update_solution')->name('topic.solution');
-
-    Route::post('post/{id}/restore', 'PostsController@restore')->name('post.restore');
-
-    Route::group(['domain' => '{board_address}.' . config('app.domain')], function() {
-        Route::get('/', 'BoardsController@show')->name('show');
-        Route::get('category/{category_slug}', 'CategoriesController@show')->name('category.show');
-        Route::get('forum/{forum_slug}', 'ForumsController@show')->name('forum.show');
-        Route::get('topic/{topic_slug}', 'TopicsController@show')->name('topic.show');
+    Route::group(['prefix' => 'ajax'], function () {
+        Route::post('quote', 'AjaxController@quote')->name('ajax.quote');
+        Route::post('forums/positions/save', 'AjaxController@positions')->name('ajax.positions');
     });
 });
 
-/*
-|--------------------------------------------------------------------------
-| Board Admin Area
-|--------------------------------------------------------------------------
-*/
+Route::group([
+    'domain' => '{board_address}.' . config('app.domain'),
+], function () {
+    Route::get('/', 'BoardsController@show')->name('boards.show');
+    Route::get('categories/{slug}/show', 'CategoriesController@show')->name('categories.show.public');
+    Route::get('forums/{slug}/show', 'ForumsController@show')->name('forums.show.public');
+    Route::get('topics/{slug}/show', 'TopicsController@show')->name('topics.show.public');
 
-Route::namespace('Board\Admin')
-    ->name('admin.')
-    ->prefix('admin/{board_address}')
-    ->middleware('admin.board')
-    ->group(
-        function () {
-            Route::get('/', function () {
-                return redirect(route('admin.category.index'));
-            })->name('index');
+    Route::group([
+        'prefix' => 'admin',
+        'middleware' => 'admin.board',
+    ], function () {
+        Route::get('/', 'BoardsController@edit')->name('admin.index');
 
-            Route::resource('forum', 'ForumsController');
-            Route::resource('category', 'CategoriesController');
+        Route::resource('forums', 'ForumsController')->except(['show']);
+        Route::resource('categories', 'CategoriesController')->except(['index', 'show']);
 
-            Route::get('reports/', 'ReportsController@index')->name('reports.index');
-            Route::get('positions/', 'CategoriesController@positions')->name('positions');
+        Route::put('boards/', 'BoardsController@update')->name('boards.update');
 
-            Route::post('user/{id}/ban', 'UsersController@ban')->name('user.ban');
-            Route::post('forum/{id}/restore', 'ForumsController@restore')->name('forum.restore');
-            Route::post('report/{table}/generate', 'ReportsController@generate')->name('report.generate');
-            Route::post('category/{id}/restore', 'CategoriesController@restore')->name('category.restore');
-        }
-    );
+        Route::get('categories/{slug}/show', 'CategoriesController@show_admin')->name('categories.show.admin');
 
+        Route::get('forums/{slug}/show', 'ForumsController@show_admin')->name('forums.show.admin');
+        Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
 
-Route::name('admin.')
-    ->group(function() {
-        Route::resource('boards', 'Board\Admin\BoardsController');
-        Route::get('website/directories/{directory_slug}/create', 'Board\Admin\BoardsController@create')->name('boards.create');
+        Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');
+
+        Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
+        Route::post('reports/{table}/generate', 'ReportsController@generate')->name('reports.generate');
+        Route::post('forums/{id}/restore', 'ForumsController@restore')->name('forums.restore');
+        Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
+
+        Route::get('reports', 'ReportsController@index')->name('reports.index');
+        Route::get('users', 'UsersController@index_admin')->name('users.index.admin');
     });
-
-/*
-|--------------------------------------------------------------------------
-| AJAX
-|--------------------------------------------------------------------------
-*/
-
-Route::group(['prefix' => 'ajax'], function () {
-    Route::post('quote', 'AjaxController@quote')->name('ajax.quote');
-    Route::post('positions/save', 'AjaxController@positions')->name('ajax.positions');
 });

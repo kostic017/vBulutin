@@ -3,8 +3,8 @@
 @section('content')
     <div class="top-box">
         <ul class="path">
-            <li><a href="{{ route_category_show($category) }}">{{ $category->title }}</a></li>
-            @if (isset($parent_forum)) <li><a href="{{ route_forum_show($parent_forum) }}">{{ $parent_forum->title }}</a></li> @endif
+            <li><a href="{{ route_category_show($forum->category) }}">{{ $forum->category->title }}</a></li>
+            @if ($forum->parent) <li><a href="{{ route_forum_show($forum->parent) }}">{{ $forum->parent->title }}</a></li> @endif
         </ul>
         <div class="page-info">
             <h2>{{ $forum->title }}</h2>
@@ -18,7 +18,7 @@
         <div class="topbox-actions">
             @if (!$forum->is_locked) <p><a href="#scform">Otvori temu</a></p> @endif
             @if ($is_admin)
-                <form action="{{ route('public.forum.lock', ['id' => $forum->id]) }}" method="post">
+                <form action="{{ route('forums.lock', [request()->route('board_address'), $forum->id]) }}" method="post">
                     @csrf
                     <button type="submit" class="btn btn-{{ $forum->is_locked ? 'success' : 'danger' }}">
                         {{ $forum->is_locked ? 'Otključaj' : 'Zaključaj' }} forum
@@ -37,7 +37,7 @@
                 </div>
             </caption>
             @foreach ($child_forums as $child_forum)
-                @include('public.includes.table_row', ['row' => $child_forum])
+                @include('public.includes.table-row', ['row' => $child_forum])
             @endforeach
         </table>
     @endif
@@ -53,7 +53,7 @@
                 </div>
             </caption>
             @foreach ($topics as $topic)
-                @include('public.includes.table_row', ['row' => $topic, 'is_topic' => true])
+                @include('public.includes.table-row', ['row' => $topic, 'is_topic' => true])
             @endforeach
         </table>
     @endif
@@ -61,7 +61,7 @@
     @if ($forum->is_locked)
         <p>Forum je zaključan, te nije moguće otvarati nove teme.</p>
     @elseif (Auth::check())
-        <form action="{{ route('public.topic.store') }}" method="post" id="scform">
+        <form action="{{ route('topics.store') }}" method="post" id="scform">
             @csrf
             <input type="hidden" name="forum_id" value="{{ $forum->id }}">
             <div class="form-group">

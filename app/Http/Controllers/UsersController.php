@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Website;
+namespace App\Http\Controllers;
+
+use DB;
+use Auth;
+use Hash;
+use Validator;
 
 use App\Post;
 use App\User;
 use App\Topic;
+
 use Illuminate\Validation\Rule;
 
-class UsersController
-{
+class UsersController extends Controller {
 
-    public function index()
-    {
+    public function index() {
         $request = request();
 
         /*
@@ -24,7 +28,7 @@ class UsersController
         $max = (int)config('custom.pagination.max');
         $step = (int)config('custom.pagination.step');
 
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'perPage' => "integer|between:0,{$max}",
             'sort_column' => Rule::in($cols),
             'sort_order' => Rule::in(['asc', 'desc']),
@@ -60,7 +64,7 @@ class UsersController
         */
 
         $users = User::query()
-            ->select('username', 'registered_at', 'about', \DB::raw('COUNT(posts.id) AS post_count'))
+            ->select('username', 'registered_at', 'about', DB::raw('COUNT(posts.id) AS post_count'))
             ->join('profiles', 'users.id', 'profiles.user_id')
             ->leftJoin('posts', 'users.id', 'posts.user_id')
             ->groupBy('username', 'registered_at', 'about')
@@ -82,9 +86,12 @@ class UsersController
             ->with(compact('users', 'perPage', 'step', 'max', 'sortColumn', 'sortOrder'));
     }
 
-    public function show($username)
-    {
-        if (\Auth::check()) {
+    public function index_admin() {
+
+    }
+
+    public function show($username) {
+        if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
             return view('website.users.show')
                 ->with('user', $user)
@@ -94,11 +101,10 @@ class UsersController
         }
     }
 
-    public function edit($username)
-    {
-        if (\Auth::check()) {
+    public function edit($username) {
+        if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
-            if (\Auth::id() == $user->id || \Auth::user()->is_master) {
+            if (Auth::id() == $user->id || Auth::user()->is_master) {
                 return view('website.users.edit')
                     ->with('user', $user)
                     ->with('profile', $user->profile);
@@ -109,8 +115,7 @@ class UsersController
         }
     }
 
-    public function update($username)
-    {
+    public function update($username) {
         $errors = [];
         $request = request();
 
@@ -161,6 +166,13 @@ class UsersController
         $profile->save();
 
         return alert_redirect(route_user_show($user), 'success', __('db.updated'));
+    }
+
+    public function ban($username) {
+        // $user = User::where('username', $username)->firstOrFail();
+        // $user->is_banned = !$user->is_banned;
+        // $user->save();
+        // return redirect()->back();
     }
 
 }

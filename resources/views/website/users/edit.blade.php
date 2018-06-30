@@ -5,7 +5,7 @@
         <div class="card-body">
             @include('includes.errors')
 
-            <form class="profile" action="{{ route('website.user.update', ['username' => $user->username]) }}" method="post">
+            <form class="profile" action="{{ route('users.update', [$user->username]) }}" method="post">
                 @csrf
 
                 <fieldset>

@@ -30,13 +30,13 @@
                 </tr>
                 <tr>
                     <td class="title">{{ __('db.category') }}</td>
-                    <td class="content"><a href="{{ route('admin.category.show', ['category' => $category->id]) }}">{{ $category->title }}</a></td>
+                    <td class="content"><a href="{{ route('categories.show.admin', [$category->id]) }}">{{ $category->title }}</a></td>
                 </tr>
                 <tr>
                     <td class="title">{{ __('db.parent_forum') }}</td>
                     <td class="content">
                         @if ($parentForum)
-                            <a href="{{ route('admin.forum.show', ['forum' => $parentForum->id]) }}">{{ $parentForum->title }}</a>
+                            <a href="{{ route('forums.show.admin', [$parentForum->id]) }}">{{ $parentForum->title }}</a>
                         @else
                             -
                         @endif
@@ -50,7 +50,7 @@
 
             @php ($row = $forum)
             @php ($table = ['singular' => 'forum', 'plural' => 'forums'])
-            @include ('admin.sections.includes.show-buttons')
+            @include ('admin.includes.show-buttons')
 
         </div>
     </div>

@@ -5,13 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Profile extends Model
-{
+class Profile extends Model {
     public $timestamps = false;
     protected $primaryKey = 'user_id';
 
-    public function user()
-    {
+    //region Relationships
+    public function user() {
         return $this->belongsTo('App\User');
     }
+    //endregion
 }

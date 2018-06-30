@@ -5,7 +5,7 @@
         Trenutno nema ničeg ovde...
     @else
         @foreach ($categories as $category)
-            @include('public.includes.table_category')
+            @include('public.includes.table-category')
         @endforeach
     @endif
 @stop

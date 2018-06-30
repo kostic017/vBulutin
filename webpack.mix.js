@@ -19,14 +19,6 @@ mix.sass('resources/assets/sass/website/style.scss', 'public/css/website.css');
 mix.scripts([
     'resources/assets/js/constants.js',
     'resources/assets/js/functions.js',
-    'resources/assets/js/sceditor.js',
-    'resources/assets/js/events.js',
 ], 'public/js/script.js');
-
-mix.scripts([
-    'resources/assets/js/admin/positions.js',
-    'resources/assets/js/admin/sections-table.js',
-    'resources/assets/js/admin/force-category.js'
-], 'public/js/admin.js');
 
 mix.js('resources/assets/js/app.js', 'public/js/app.js');

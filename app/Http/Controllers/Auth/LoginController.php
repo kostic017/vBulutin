@@ -10,28 +10,24 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
-{
+class LoginController extends Controller {
 
     use AuthenticatesUsers {
         redirectPath as laravelRedirectPath;
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest')->except('logout');
     }
 
-    public function username()
-    {
+    public function username() {
        $login = request()->input('email');
        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
        request()->merge([$field => $login]);
        return $field;
     }
 
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
         $this->validateLogin($request);
 
         if ($this->hasTooManyLoginAttempts($request)) {
@@ -59,13 +55,11 @@ class LoginController extends Controller
             alert_redirect(url()->previous(), 'error', __('auth.failed'));
     }
 
-    protected function authenticated(Request $request, $user)
-    {
+    protected function authenticated(Request $request, $user) {
         return redirect()->back();
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request) {
         $this->guard()->logout();
         $request->session()->invalidate();
         return redirect()->back();

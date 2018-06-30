@@ -66,6 +66,6 @@
 
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-nestable/jquery.nestable.min.js') }}"></script>
-    <script>$(() => { positions(); });</script>
+    <script src="{{ asset('js/nestable.js') }}"></script>
 @stop
 

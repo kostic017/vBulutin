@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Board\Publicus;
+namespace App\Http\Controllers;
+
+use Auth;
+use Carbon;
+use Validator;
 
 use App\Post;
 use App\Topic;
 
-class PostsController
-{
-    public function store($request)
-    {
+class PostsController extends Controller {
+
+    public function store() {
         $request = request();
 
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'content' => 'required|min:5',
         ]);
 
@@ -22,15 +25,15 @@ class PostsController
         $topic = Topic::findOrFail($request->topic_id);
         $post = $topic->last_post();
 
-        if (\Auth::id() === $post->user->id) {
+        if (Auth::id() === $post->user->id) {
             $post->content .= "\n\n[b]========== " . __('generic.update') . ' ' .
-                \Carbon::now()->toDateTimeString() . "==========[/b]\n\n" . $request->content;
+                Carbon::now()->toDateTimeString() . "==========[/b]\n\n" . $request->content;
             $post->save();
         } else {
             $post = new Post;
             $post->content = $request->content;
             $post->topic_id = $topic->id;
-            $post->user_id = \Auth::id();
+            $post->user_id = Auth::id();
             $post->save();
         }
 
@@ -39,8 +42,7 @@ class PostsController
         return redirect(route_topic_show($topic));
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $post = Post::findOrFail($id);
         $topic = $post->topic;
 
@@ -59,9 +61,9 @@ class PostsController
         return redirect()->back();
     }
 
-    public function restore($id)
-    {
+    public function restore($id) {
         Post::onlyTrashed()->findOrFail($id)->restore();
         return redirect()->back();
     }
+
 }
