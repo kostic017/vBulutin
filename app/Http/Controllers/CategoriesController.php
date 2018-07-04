@@ -10,6 +10,7 @@ use App\Category;
 
 class CategoriesController extends SectionsController {
     protected $table = 'categories';
+    protected $singular = 'category';
     protected $model = 'App\Category';
 
     public function edit($board_address, $slug) {

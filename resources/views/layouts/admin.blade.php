@@ -14,8 +14,8 @@
                         <li class="list-group-item {{ active_class(if_route('admin.index')) }}">
                             <a href="{{ route('admin.index', [request()->route('board_address')]) }}">Početna</a>
                         </li>
-                        <li class="list-group-item {{ active_class(if_route('forums.index')) }}">
-                            <a href="{{ route('forums.index', [request()->route('board_address')]) }}">Kategorije i forumi</a>
+                        <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*') || if_uri_pattern('admin/categories*')) }}">
+                            <a href="{{ route('forums.index', [request()->route('board_address')]) }}">Struktura</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_route('users.index.admin')) }}">
                             <a href="{{ route('users.index.admin', [request()->route('board_address')]) }}">Korisnici</a>

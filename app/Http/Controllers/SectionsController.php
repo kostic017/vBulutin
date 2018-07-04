@@ -9,10 +9,10 @@ use Illuminate\Validation\Rule;
 abstract class SectionsController extends Controller {
     protected $model = null;
     protected $table = null;
+    protected $singular = null;
 
-    public function edit($board_address, $slug) {
-        $section = $this->model::where('slug', $slug)->firstOrFail();
-        return view("admin.sections.{$this->table}.edit")->with($this->singular, $section);
+    public function edit($board_address, $id) {
+        return view("admin.sections.{$this->table}.edit")->with($this->singular, $this->model::findOrFail($id));
     }
 
     public function update($board_address, $id) {
@@ -47,9 +47,4 @@ abstract class SectionsController extends Controller {
         $section->restore();
         return alert_redirect(route("{$this->table}.index"), 'success', __('db.restored'));
     }
-
-    abstract public function create($board_address);
-    abstract public function store($board_address);
-    abstract public function show($board_address, $section_slug);
-    abstract public function show_admin($board_address, $section_slug);
 }

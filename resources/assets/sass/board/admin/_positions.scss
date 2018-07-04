@@ -1,26 +1,22 @@
-.forums-tree-controls,
-.categories-tree-controls {
-    .btn {
-        padding: 0;
-    }
-}
-
-.forums-tree-controls .btn:first-child {
-    margin-right: 4px;
-}
-
-.positioning-buttons {
-    display: flex;
-    margin: 5px 0;
-    justify-content: space-between;
-}
-
-.collapse-buttons button {
+.actions .btn {
+    padding: 0;
     width: 25px;
     height: 25px;
     padding-top: 0;
     padding-bottom: 0;
     box-sizing: border-box;
+}
+
+a.btn {
+    color: #000;
+    background-color: buttonface;
+}
+
+.toplevel-buttons {
+    display: flex;
+    margin: 5px 0;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .category-header {
@@ -29,9 +25,13 @@
     cursor: ns-resize;
     justify-content: space-between;
 
-    div {
+    .title {
         display: flex;
         align-items: center;
+    }
+
+    .btn {
+        @include margins-but(last, right, 3px);
     }
 }
 
@@ -54,14 +54,20 @@
     display: block;
 }
 
+.dd-item .actions {
+    text-align: right;
+}
+
 .dd-handle {
-    cursor: move;
     color: #333;
+    cursor: move;
     margin: 5px 0;
+    display: flex;
     padding: 5px 10px;
     border-radius: 3px;
     background: #fafafa;
     border: 1px solid #ccc;
+    justify-content: space-between;
     background: linear-gradient(to bottom, #fafafa 0%, #eee 100%);
 
     &:hover {
@@ -70,42 +76,29 @@
     }
 }
 
+.tree-control,
 .dd-item-button,
-.dd-item > button {
+.dd-item > .btn {
     border: 0;
-    padding: 0;
-    float: left;
-    height: 20px;
-    margin: 7px 0;
-    cursor: pointer;
-    font-size: 12px;
-    overflow: hidden;
-    font-weight: bold;
-    text-indent: 100%;
-    position: relative;
     background: transparent;
 
-    &:before {
-        width: 100%;
-        content: '+';
+    .btn-minus {
         display: block;
-        text-indent: 0;
-        position: absolute;
+    }
+
+    .btn-plus {
+        display: none;
     }
 
     &[data-action="collapse"]:before {
-        content: '-';
+        .btn-minus {
+            display: none;
+        }
+
+        .btn-plus {
+            display: block;
+        }
     }
-}
-
-.category-tree-control {
-    margin: 0;
-    line-height: 0;
-    @extend .dd-item-button;
-}
-
-div.categories-tree-controls {
-    margin: 5px 0;
 }
 
 .dd-placeholder,

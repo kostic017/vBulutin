@@ -7,15 +7,14 @@
 @section('content')
     @include('includes.overlay')
 
-    <div class="positioning-buttons">
-        <div>
-            <form action="" method="post">
-                <button type="button" class="btn btn-primary" name="save">{{ __('admin.save') }}</button>
-            </form>
-        </div>
-        <div class="categories-tree-controls collapse-buttons">
-            <button type="button" class="btn">-</button>
-            <button type="button" class="btn">+</button>
+    <div class="toplevel-buttons">
+        <form action="" method="post">
+            <button type="button" class="btn btn-primary" name="save">Sačuvaj pozicije</button>
+        </form>
+        <div class="actions">
+            <a href="{{ route('categories.create', [request()->route('board_address')]) }}" class="btn" title="Dodaj kategoriju"><i class="fas fa-file"></i></a>
+            <button class="btn" title="Skupi sve kategorije"><i class="fas fa-minus"></i></button>
+            <button class="btn" title="Raširi sve kategorije"><i class="fas fa-plus"></i></button>
         </div>
     </div>
 
@@ -24,29 +23,48 @@
             <div class="sortable-category">
 
                 <div class="category-header">
-                    <div class="{{ $category->deleted_at ? 'trashed' : '' }}">
-                        <button class="category-tree-control" data-action="collapse"></button>
+                    <div class="title{{ $category->deleted_at ? ' trashed' : '' }}">
+                        <button class="tree-control" data-action="collapse">
+                            <span class="btn-minus"><i class="fas fa-minus"></i></span>
+                            <span class="btn-plus"><i class="fas fa-plus"></i></span>
+                        </button>
                         ({{ $category->id }}) {{ $category->title }}
                     </div>
-                    <div class="forums-tree-controls">
-                        <button type="button" class="btn">-</button>
-                        <button type="button" class="btn">+</button>
+                    <div class="actions">
+                        <a href="{{ route('categories.show.admin', [request()->route('board_address'), $category->id]) }}" class="btn" title="Pregledaj kategoriju"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('forums.create', [request()->route('board_address'), 'category', $category->id]) }}" class="btn" title="Dodaj forum"><i class="fas fa-file"></i></a>
+                        <a href="{{ route('categories.edit', [request()->route('board_address'), $category->id]) }}" class="btn" title="Izmeni kategoriju"><i class="fas fa-pencil-alt"></i></a>
+                        <button type="button" class="btn" title="Obriši kategoriju"><i class="fas fa-eraser"></i></button>
+                        <button type="button" class="btn" title="Skupi sve forume"><i class="fas fa-minus"></i></button>
+                        <button type="button" class="btn" title="Raširi sve forume"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
 
                 <div class="dd" data-categoryid="{{ $category->id }}">
                     <ol class="dd-list">
-                        @foreach ($category["forums"] as $parentForum)
-                           <li class="dd-item" data-id="{{ $parentForum->id }}">
-                                <div class="dd-handle {{ $parentForum->deleted_at ? 'trashed' : '' }}">
-                                    ({{ $parentForum->id }}) {{ $parentForum->title }}
+                        @foreach ($category["parent_forums"] as $parent_forum)
+                           <li class="dd-item" data-id="{{ $parent_forum->id }}">
+                                <div class="dd-handle {{ $parent_forum->deleted_at ? 'trashed' : '' }}">
+                                    ({{ $parent_forum->id }}) {{ $parent_forum->title }}
                                 </div>
-                                @if (count($parentForum["children"]) > 0)
+                                <div class="actions">
+                                    <a href="{{ route('forums.show.admin', [request()->route('board_address'), $parent_forum->id]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('forums.create', [request()->route('board_address'), 'parent_forum', $parent_forum->id]) }}" class="btn" title="Dodaj potforum"><i class="fas fa-file"></i></a>
+                                    <a href="{{ route('forums.edit', [request()->route('board_address'), $parent_forum->id]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
+                                    <button type="button" class="btn" title="Obriši forum"><i class="fas fa-eraser"></i></button>
+                                </div>
+                                @if (count($parent_forum['child_forums']))
                                     <ol class="dd-list">
-                                        @foreach ($parentForum["children"] as $childForum)
-                                            <li class="dd-item" data-id="{{ $childForum->id }}">
-                                                <div class="dd-handle  {{ $childForum->deleted_at ? 'trashed' : '' }}">
-                                                    ({{ $childForum->id }}) {{ $childForum->title }}
+                                        @foreach ($parent_forum['child_forums'] as $child_forum)
+                                            <li class="dd-item" data-id="{{ $child_forum->id }}">
+                                                <div class="dd-handle {{ $child_forum->deleted_at ? ' trashed' : '' }}">
+                                                    <div>
+                                                        ({{ $child_forum->id }}) {{ $child_forum->title }}
+                                                    </div>
+                                                    <div class="actions">
+                                                        <button type="button" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></button>
+                                                        <button type="button" class="btn" title="Obriši forum"><i class="fas fa-eraser"></i></button>
+                                                    </div>
                                                 </div>
                                             </li>
                                         @endforeach

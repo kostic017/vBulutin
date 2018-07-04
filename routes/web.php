@@ -46,13 +46,14 @@ Route::group([
     ], function () {
         Route::get('/', 'BoardsController@edit')->name('admin.index');
 
-        Route::resource('forums', 'ForumsController')->except(['show']);
+        Route::resource('forums', 'ForumsController')->except(['show', 'create']);
         Route::resource('categories', 'CategoriesController')->except(['index', 'show']);
 
         Route::put('boards/', 'BoardsController@update')->name('boards.update');
 
         Route::get('categories/{slug}/show', 'CategoriesController@show_admin')->name('categories.show.admin');
 
+        Route::get('forums/{force_section}/{force_id}/create', 'ForumsController@create')->name('forums.create');
         Route::get('forums/{slug}/show', 'ForumsController@show_admin')->name('forums.show.admin');
         Route::post('forums/{id}/lock', 'ForumsController@lock')->name('forums.lock');
 

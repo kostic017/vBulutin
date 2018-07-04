@@ -10,24 +10,28 @@ use App\Category;
 
 class ForumsController extends SectionsController {
     protected $table = 'forums';
+    protected $singular = 'forum';
     protected $model = 'App\Forum';
 
     public function index($board_address) {
-        $columns = ['id', 'title', 'deleted_at'];
-        $categories = Category::withTrashed()
-            ->orderBy('position')
-            ->get($columns);
+        $board = Board::where('address', $board_address)->firstOrFail();
+        $categories = $board->categories()
+                            ->withTrashed()
+                            ->orderBy('position')
+                            ->get();
         foreach ($categories as &$category) {
-            $category['forums'] = Forum::withTrashed()
-                ->where('category_id', $category->id)
-                ->whereNull('parent_id')
-                ->orderBy('position')
-                ->get($columns);
+            $category['parent_forums'] =
+                $category->forums()
+                         ->withTrashed()
+                         ->whereNull('parent_id')
+                         ->orderBy('position')
+                         ->get();
             foreach ($category['forums'] as &$forum) {
-                $forum['children'] = Forum::withTrashed()
-                    ->where('parent_id', $forum->id)
-                    ->orderBy('position')
-                    ->get($columns);
+                $forum['child_forums'] =
+                    $forum->children()
+                          ->withTrashed()
+                          ->orderBy('position')
+                          ->get();
             }
         }
         return view('admin.sections.index', ['categories' => $categories]);
@@ -49,20 +53,16 @@ class ForumsController extends SectionsController {
         return parent::restore($board_address, $id);
     }
 
-    public function create($board_address) {
-        $categories = Category::all(['id', 'title']);
-        $rootForums = Forum::select(
-            'forums.id AS id',
-            'forums.title AS title',
-            'categories.id AS category_id',
-            'categories.deleted_at'
-        )->join('categories', 'forums.category_id', 'categories.id')
-         ->whereNull('parent_id')
-         ->whereNull('categories.deleted_at')
-         ->get();
-        return view('admin.sections.forums.create')
-                ->with('categories', $categories)
-                ->with('rootForums', $rootForums);
+    public function create($board_address, $force_section, $force_id) {
+        $board = Board::where('address', $board_address)->firstOrFail();
+        if ($force_section === 'category') {
+            $category = $board->categories()->findOrFail($force_id);
+            $parent_forum = null;
+        } else {
+            $parent_forum = $board->forums()->findOrFail($force_id);
+            $category = $parent_forum->category;
+        }
+        return view('admin.sections.forums.create')->with(compact('category', 'parent_forum'));
     }
 
     public function store($board_address) {

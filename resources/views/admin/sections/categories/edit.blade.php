@@ -7,12 +7,12 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('categories.update', [$category->id]) }}" method="post">
+            <form action="{{ route('categories.update', [request()->route('board_address'), $category->id]) }}" method="post">
                 @csrf
                 {{ method_field('PUT') }}
 
-                <div class="form-group">
-                    <label for="title">{{ __('db.title') }} <span class="text-danger font-weight-bold">*</span></label>
+                <div class="form-group required">
+                    <label for="title">{{ __('db.title') }}</label>
                     <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title', $category->title ?? '') }}">
                     @include('includes.error', ['error_key' => 'title'])
                 </div>
