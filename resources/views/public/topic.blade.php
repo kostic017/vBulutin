@@ -54,7 +54,7 @@
                 </ul>
                 <div class="body">
                     <p class="author">
-                        <a href="{{ route_topic_show($topic) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('img/icon_post_target.png') }}" alt="Post"></a>
+                        <a href="{{ route_topic_show($topic) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('images/icon_post_target.png') }}" alt="Post"></a>
                         napisao <strong><a href="{{ route_user_show($user) }}">{{ $user->username }}</a></strong> » {{ extract_date($post->created_at) }} {{ extract_time($post->created_at) }}
                     </p>
                     <div class="content">

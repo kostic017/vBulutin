@@ -15,7 +15,7 @@
         <link rel="icon" href="{{ asset("favicon.ico") }}">
 
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('fonts/Raleway/Raleway.css') }}">
 
         <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/fontawesome-all.min.css') }}">

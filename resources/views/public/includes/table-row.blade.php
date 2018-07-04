@@ -1,6 +1,6 @@
 <tr class="table-row">
     <td class="icon">
-        <img class="iconpost" src="{{ asset('img/forum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
+        <img class="iconpost" src="{{ asset('images/forum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
     </td>
     <td class="main-info">
         <a href="{{ isset($is_topic) ? route_topic_show($row) : route_forum_show($row) }}" class="name">{{ $row->title }}</a>
@@ -8,7 +8,7 @@
             <ul class="subforum-list post-list">
                 @foreach ($child_forums as $child_forum)
                     <li>
-                        <img class="iconpost" src="{{ asset('img/subforum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
+                        <img class="iconpost" src="{{ asset('images/subforum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
                         <a href="{{ route_forum_show($child_forum) }}">{{ $child_forum->title }}</a>
                     </li>
                 @endforeach
