@@ -59,11 +59,9 @@ a.btn {
     display: block;
 }
 
-.dd > .dd-list > .dd-item {
-    position: relative;
-}
-
 .dd-item {
+    position: relative;
+
     > button {
         border: 0;
         padding: 0;
@@ -82,18 +80,19 @@ a.btn {
         white-space: nowrap;
         background: transparent;
         transform: translateY(50%);
+        font-family: Font Awesome\ 5 Free;
 
         &:before {
             width: 100%;
-            content: '+';
             display: block;
             text-indent: 0;
+            content: '\f067';
             position: apsolute;
             text-align: center;
         }
 
         &[data-action="collapse"]:before {
-            content: '-';
+            content: '\f068';
         }
      }
 
@@ -173,9 +172,11 @@ a.btn {
     z-index: 9999;
     position: absolute;
     pointer-events: none;
+
     >.dd-item .dd-handle {
         margin-top: 0;
     }
+
     .dd-handle {
         box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
     }

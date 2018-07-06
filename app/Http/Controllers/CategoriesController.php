@@ -93,12 +93,12 @@ class CategoriesController extends Controller {
 
     public function destroy($board_address, $id) {
         Category::findOrFail($id)->delete();
-        return alert_redirect(route('forums.index'), 'success', __('db.deleted'));
+        return alert_redirect(route('forums.index', [$board_address]), 'success', __('db.deleted'));
     }
 
     public function restore($board_address, $id) {
         Category::onlyTrashed()->findOrFail($id)->restore();
-        return alert_redirect(route('forums.index'), 'success', __('db.restored'));
+        return alert_redirect(route('forums.index', [$board_address]), 'success', __('db.restored'));
     }
 
 }

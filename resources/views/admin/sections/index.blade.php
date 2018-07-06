@@ -16,7 +16,7 @@
             @endif
         </div>
         <div class="actions">
-            <a href="{{ route('categories.create', [$board->address]) }}" class="btn" title="Nova kategorija"><i class="fas fa-file"></i></a>
+            <a href="{{ route('categories.create', [$board->address]) }}" class="btn" title="Nova kategorija"><i class="fas fa-file-alt"></i></a>
             <button class="btn collapse-categories minus" title="Skupi sve kategorije"><i class="fas fa-minus"></i></button>
             <button class="btn collapse-categories plus" title="Raširi sve kategorije"><i class="fas fa-plus"></i></button>
         </div>
@@ -37,9 +37,20 @@
                         </div>
                         <div class="actions">
                             <a href="{{ route('categories.show.admin', [$board->address, $_category->slug]) }}" class="btn" title="Pregledaj kategoriju"><i class="fas fa-eye"></i></a>
-                            <a href="{{ route('forums.create', [$board->address, 'category', $_category->id]) }}" class="btn" title="Novi forum"><i class="fas fa-file"></i></a>
+                            <a href="{{ route('forums.create', [$board->address, 'category', $_category->id]) }}" class="btn" title="Novi forum"><i class="fas fa-file-alt"></i></a>
                             <a href="{{ route('categories.edit', [$board->address, $_category->slug]) }}" class="btn" title="Izmeni kategoriju"><i class="fas fa-pencil-alt"></i></a>
-                            <button type="button" class="btn" title="Obriši kategoriju"><i class="fas fa-eraser"></i></button>
+                            @if ($_category->deleted_at)
+                                <form class="d-inline-block" method="post" action="{{ route('categories.restore', [$board->address, $_category->id]) }}">
+                                    @csrf
+                                    <button type="submit" class="btn" title="Vrati kategoriju"><i class="fas fa-history"></i></button>
+                                </form>
+                            @else
+                                <form class="d-inline-block" method="post" action="{{ route('categories.destroy', [$board->address, $_category->id]) }}">
+                                    @csrf
+                                    {{ method_field('DELETE') }}
+                                    <button type="submit" class="btn" title="Obriši kategoriju"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            @endif
                             <button type="button" class="btn collapse-forums minus" title="Skupi sve forume"><i class="fas fa-minus"></i></button>
                             <button type="button" class="btn collapse-forums plus" title="Raširi sve forume"><i class="fas fa-plus"></i></button>
                         </div>
@@ -57,23 +68,43 @@
                                         </div>
                                         <div class="actions">
                                             <a href="{{ route('forums.show.admin', [$board->address, $_parent_forum->slug]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
-                                            <a href="{{ route('forums.create', [$board->address, 'parent_forum', $_parent_forum->id]) }}" class="btn" title="Novi potforum"><i class="fas fa-file"></i></a>
+                                            <a href="{{ route('forums.create', [$board->address, 'parent_forum', $_parent_forum->id]) }}" class="btn" title="Novi potforum"><i class="fas fa-file-alt"></i></a>
                                             <a href="{{ route('forums.edit', [$board->address, $_parent_forum->slug]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
-                                            <button type="button" class="btn" title="Obriši forum"><i class="fas fa-eraser"></i></button>
+                                            @if ($_parent_forum->deleted_at)
+                                                <form class="d-inline-block" method="post" action="{{ route('forums.restore', [$board->address, $_parent_forum->id]) }}">
+                                                    @csrf
+                                                    <button type="submit" class="btn" title="Vrati forum"><i class="fas fa-history"></i></button>
+                                                </form>
+                                            @else
+                                                <form class="d-inline-block" method="post" action="{{ route('forums.destroy', [$board->address, $_parent_forum->id]) }}">
+                                                    @csrf
+                                                    {{ method_field('DELETE') }}
+                                                    <button type="submit" class="btn" title="Obriši forum"><i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                            @endif
                                         </div>
                                         @if (count($_parent_forum['child_forums']))
                                             <ol class="dd-list">
-                                                @foreach ($_parent_forum['child_forums'] as $child_forum)
-                                                    <li class="dd-item" data-id="{{ $child_forum->id }}">
-                                                        <div class="dd-handle {{ $child_forum->deleted_at ? ' trashed' : '' }}">
-                                                            <div>
-                                                                ({{ $child_forum->id }}) {{ $child_forum->title }}
-                                                            </div>
-                                                            <div class="actions">
-                                                                <a href="{{ route('forums.show.admin', [$board->address, $child_forum->slug]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
-                                                                <a href="{{ route('forums.edit', [$board->address, $child_forum->slug]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
-                                                                <button type="button" class="btn" title="Obriši forum"><i class="fas fa-eraser"></i></button>
-                                                            </div>
+                                                @foreach ($_parent_forum['child_forums'] as $_child_forum)
+                                                    <li class="dd-item" data-id="{{ $_child_forum->id }}">
+                                                        <div class="dd-handle {{ $_child_forum->deleted_at ? ' trashed' : '' }}">
+                                                            ({{ $_child_forum->id }}) {{ $_child_forum->title }}
+                                                        </div>
+                                                        <div class="actions">
+                                                            <a href="{{ route('forums.show.admin', [$board->address, $_child_forum->slug]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
+                                                            <a href="{{ route('forums.edit', [$board->address, $_child_forum->slug]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
+                                                            @if ($_child_forum->deleted_at)
+                                                                <form class="d-inline-block" method="post" action="{{ route('forums.restore', [$board->address, $_child_forum->id]) }}">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn" title="Vrati forum"><i class="fas fa-history"></i></button>
+                                                                </form>
+                                                            @else
+                                                                <form class="d-inline-block" method="post" action="{{ route('forums.destroy', [$board->address, $_child_forum->id]) }}">
+                                                                    @csrf
+                                                                    {{ method_field('DELETE') }}
+                                                                    <button type="submit" class="btn" title="Obriši forum"><i class="fas fa-trash-alt"></i></button>
+                                                                </form>
+                                                            @endif
                                                         </div>
                                                     </li>
                                                 @endforeach

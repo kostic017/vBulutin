@@ -16,7 +16,7 @@ return [
     'parent_forum' => 'Natforum',
 
     'updated' => 'Podaci su uspešno ažurirani.',
-    'deleted' => 'Podaci su uspešno obrisani.',
+    'deleted' => 'Brisanje je bilo uspešno.',
     'restored' => 'Podaci su uspešno vraćeni.',
     'stored' => 'Podaci su uspešno dodati u bazu.',
 
