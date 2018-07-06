@@ -14,7 +14,7 @@ use App\ReadTopic;
 class TopicsController extends Controller {
 
     public function show($board_address, $topic_slug) {
-        $board = Board::where('address', $board_address)->firstOrFail();
+        $board = get_board($board_address);
         $topic = $board->topics()->where('topics.slug', $topic_slug)->firstOrFail();
         $is_admin = $board->is_admin();
 

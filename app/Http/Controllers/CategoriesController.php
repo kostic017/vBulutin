@@ -65,13 +65,13 @@ class CategoriesController extends SectionsController {
     }
 
     public function show_admin($board_address, $category_slug) {
-        $board = Board::where('address', $board_address)->firstOrFail();
+        $board = get_board($board_address);
         $category = $board->categories()->withTrashed()->where('categories.slug', $category_slug)->firstOrFail();
         return view('admin.sections.categories.show')->with('category', $category);
     }
 
     public function show($board_address, $category_slug) {
-        $board = Board::where('address', $board_address)->firstOrFail();
+        $board = get_board($board_address);
         $category = $board->categories()->where('slug', $category_slug)->firstOrFail();
 
         return view('public.category')

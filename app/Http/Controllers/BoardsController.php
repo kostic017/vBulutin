@@ -11,7 +11,7 @@ use App\Directory;
 class BoardsController extends Controller {
 
     public function show($address) {
-        $board = Board::where('address', $address)->firstOrFail();
+        $board = get_board($address);
 
         if (!$board->is_visible) {
             return alert_redirect(url()->previous(), 'info', 'Ovaj forum postoji ali nije vidljiv.');
@@ -32,7 +32,7 @@ class BoardsController extends Controller {
     public function edit($address) {
         return view('admin.index')
             ->with('directories', Directory::all())
-            ->with('board', Board::where('address', $address)->firstOrFail());
+            ->with('board', get_board($address));
     }
 
     public function store() {
@@ -61,7 +61,7 @@ class BoardsController extends Controller {
 
     public function update($address) {
         $request = request();
-        $board = Board::where('address', $address)->firstOrFail();
+        $board = get_board($address);
 
         $validator = Validator::make($request->all(), [
             'address' => "required|max:255|alpha_dash|not_in:www|unique:boards,address,{$board->id}",

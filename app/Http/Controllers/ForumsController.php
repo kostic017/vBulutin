@@ -14,7 +14,7 @@ class ForumsController extends SectionsController {
     protected $model = 'App\Forum';
 
     public function index($board_address) {
-        $board = Board::where('address', $board_address)->firstOrFail();
+        $board = get_board($board_address);
         $categories = $board->categories()
                             ->withTrashed()
                             ->orderBy('position')
@@ -54,7 +54,7 @@ class ForumsController extends SectionsController {
     }
 
     public function create($board_address, $force_section, $force_id) {
-        $board = Board::where('address', $board_address)->firstOrFail();
+        $board = get_board($board_address);
         if ($force_section === 'category') {
             $category = $board->categories()->findOrFail($force_id);
             $parent_forum = null;
@@ -103,13 +103,13 @@ class ForumsController extends SectionsController {
     }
 
     public function show_admin($board_address, $forum_slug) {
-        $board = Board::where('address', $board_address)->firstOrFail();
+        $board = get_board($board_address);
         $forum = $board->forums()->withTrashed()->where('forums.slug', $forum_slug)->firstOrFail();
         return view('admin.sections.forums.show')->with('forum', $forum);
     }
 
     public function show($board_address, $forum_slug) {
-        $board = Board::where('address', $board_address)->firstOrFail();
+        $board = get_board($board_address);
         $forum = $board->forums()->where('forums.slug', $forum_slug)->firstOrFail();
 
         return view('public.forum')

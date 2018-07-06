@@ -11,7 +11,7 @@ class AdminBoard
     public function handle($request, Closure $next) {
         if (Auth::check()) {
             $address = $request->route('board_address');
-            $board = Board::where('address', $address)->firstOrFail();
+            $board = get_board($address);
             if ($board->is_admin()) {
                 return $next($request);
             }
