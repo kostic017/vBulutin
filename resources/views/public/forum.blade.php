@@ -20,7 +20,7 @@
                 <p><a href="#scform">Otvori temu</a></p>
             @endif
             @if ($is_admin)
-                <form action="{{ route('forums.lock', [$current_board->address, $forum->id]) }}" method="post">
+                <form action="{{ route('forums.lock', [$board->address, $forum->id]) }}" method="post">
                     @csrf
                     <button type="submit" class="btn btn-{{ $forum->is_locked ? 'success' : 'danger' }}">
                         {{ $forum->is_locked ? 'Otključaj' : 'Zaključaj' }} forum

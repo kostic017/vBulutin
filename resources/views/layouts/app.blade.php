@@ -10,7 +10,24 @@
         <meta name="author" content="Nikola Kostić">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ isset($current_board) ? $current_board->title . ' | ' : '' }}{{ config('app.name') }}</title>
+        <title>
+            @if (if_uri_pattern('admin*'))
+                Admin panel |
+            @endif
+            @if (isset($topic))
+                {{ $topic->title }} |
+            @elseif (isset($forum))
+                {{ $forum->title }} |
+            @elseif (isset($category))
+                {{ $category->title }} |
+            @endif
+            @if (isset($board))
+                {{ $board->title }} |
+            @elseif (isset($directory))
+                {{ $directory->title }} |
+            @endif
+            {{ config('app.name') }}
+        </title>
 
         <link rel="icon" href="{{ asset("favicon.ico") }}">
 
@@ -54,8 +71,8 @@
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
-                    @if (isset($current_board))
-                        <a class="navbar-brand" href="{{ route('boards.show', [$current_board->address]) }}">{{ $current_board->title }}</a>
+                    @if (isset($board))
+                        <a class="navbar-brand" href="{{ route('boards.show', [$board->address]) }}">{{ $board->title }}</a>
                     @else
                         <a class="navbar-brand" href="{{ route('website.index') }}">{{ config('app.name') }}</a>
                     @endif
@@ -67,7 +84,7 @@
                         <ul class="navbar-nav ml-auto">
                             <li><a class="nav-link" href="{{ route('users.index.public') }}">Korisnici</a></li>
                             @if ($is_admin ?? false)
-                                <li><a class="nav-link" href="{{ route('admin.index', [$current_board->address]) }}">Admin panel</a></li>
+                                <li><a class="nav-link" href="{{ route('admin.index', [$board->address]) }}">Admin panel</a></li>
                             @endif
                             @guest
                                 <li>
@@ -131,8 +148,8 @@
 
             <section class="footer">
                 <div>
-                    @if (isset($current_board))
-                        @php($owner = $current_board->owner)
+                    @if (isset($board))
+                        @php($owner = $board->owner)
                         <p>
                             Vlasnik ovog foruma je <a href="{{ route_user_show($owner) }}">{{ $owner->username }}</a>.
                             <a href="{{ route('website.index') }}">Napravi i ti svoj forum</a>

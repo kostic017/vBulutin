@@ -57,7 +57,7 @@ function file_get_contents_curl($url) {
 }
 
 function unique_slug($title, $id) {
-    return str_slug($title) . "." . $id;
+    return str_slug($title) . '-' . $id;
 }
 
 function limit_words($value, $words = 3, $end = '...') {

@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('forums.store', [$current_board->address]) }}" method="post">
+            <form action="{{ route('forums.store', [$board->address]) }}" method="post">
                 @csrf
 
                 <div class="form-group required">

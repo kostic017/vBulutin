@@ -15,8 +15,8 @@ Route::group(['domain' => config('app.domain')], function() {
     Route::post('boards', 'BoardsController@store')->name('boards.store');
 
     Route::post('topics', 'TopicsController@store')->name('topics.store');
-    Route::post('topics/{id}/title', 'TopicsController@update_title')->name('topic.title');
-    Route::post('topics/{id}/solution', 'TopicsController@update_solution')->name('topic.solution');
+    Route::post('topics/{id}/title', 'TopicsController@update_title')->name('topics.title');
+    Route::post('topics/{id}/solution', 'TopicsController@update_solution')->name('topics.solution');
 
     Route::resource('posts', 'PostsController')->only(['store', 'destroy']);
     Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
