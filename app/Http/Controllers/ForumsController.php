@@ -67,18 +67,10 @@ class ForumsController extends SectionsController {
 
     public function store($board_address) {
         $request = request();
-        $board = get_board($board_address);
+        $category = Category::findOrFail($request->category_id);
 
         $validator = Validator::make($request->all(), [
-            'title' => [
-                'required',
-                'max:255',
-                function ($attribute, $value, $fail) use ($board) {
-                    if ($board->forums()->where('forums.title', $value)->count()) {
-                        return $fail(trans('validation.unique', ['attribute' => $attribute]));
-                    }
-                },
-            ],
+            'title' => 'required|max:255',
             'category_id' => 'required|integer'
         ]);
 
@@ -98,6 +90,11 @@ class ForumsController extends SectionsController {
                 Forum::where('parent_id', $forum->parent_id) :
                 Forum::whereNull('parent_id')->where('category_id', $forum->category_id)
         )->max('position') + 1;
+
+        $collisions = $category->board->forums()->where('forums.slug', $forum->slug)->count();
+        if ($collisions > 0) {
+            $forum->slug .= '-' . $collisions;
+        }
 
         $forum->save();
 
