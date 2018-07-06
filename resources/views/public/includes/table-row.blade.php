@@ -6,10 +6,10 @@
         <a href="{{ isset($is_topic) ? route_topic_show($row) : route_forum_show($row) }}" class="name">{{ $row->title }}</a>
         @if (!if_route('forums.show.public') && $child_forums->count())
             <ul class="subforum-list post-list">
-                @foreach ($child_forums as $child_forum)
+                @foreach ($child_forums as $_child_forum)
                     <li>
                         <img class="iconpost" src="{{ asset('images/subforum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
-                        <a href="{{ route_forum_show($child_forum) }}">{{ $child_forum->title }}</a>
+                        <a href="{{ route_forum_show($_child_forum) }}">{{ $_child_forum->title }}</a>
                     </li>
                 @endforeach
             </ul>

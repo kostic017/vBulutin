@@ -7,11 +7,11 @@
                 Trenutno nema ničeg ovde...
             @else
                 <div class="directories">
-                    @foreach ($directories as $directory)
+                    @foreach ($directories as $_directory)
                         <div class="directory">
-                            <a href="{{ route('directories.show', [$directory->slug]) }}">
-                                <h2>{{ $directory->title }}</h2>
-                                <p>Broj foruma: {{ $directory->boards()->where('is_visible', true)->count() }}</p>
+                            <a href="{{ route('directories.show', [$_directory->slug]) }}">
+                                <h2>{{ $_directory->title }}</h2>
+                                <p>Broj foruma: {{ $_directory->boards()->where('is_visible', true)->count() }}</p>
                             </a>
                         </div>
                     @endforeach
@@ -44,8 +44,8 @@
                         @else
                             <p>Registrovani korisnici:</p>
                             <ul>
-                                @foreach ($visible_online as $user)
-                                    <li><a href="{{ route_user_show($user) }}">{{ $user->username }}</a></li>
+                                @foreach ($visible_online as $_user)
+                                    <li><a href="{{ route_user_show($_user) }}">{{ $_user->username }}</a></li>
                                 @endforeach
                             </ul>
                         @endif

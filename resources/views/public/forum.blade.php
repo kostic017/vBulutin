@@ -38,8 +38,8 @@
                     <a href="#top" class="back2top" title="Top">Top</a>
                 </div>
             </caption>
-            @foreach ($child_forums as $child_forum)
-                @include('public.includes.table-row', ['row' => $child_forum])
+            @foreach ($child_forums as $_child_forum)
+                @include('public.includes.table-row', ['row' => $_child_forum])
             @endforeach
         </table>
     @endif
@@ -54,8 +54,8 @@
                     <a href="#top" class="back2top" title="Top">Top</a>
                 </div>
             </caption>
-            @foreach ($topics as $topic)
-                @include('public.includes.table-row', ['row' => $topic, 'is_topic' => true])
+            @foreach ($topics as $_topic)
+                @include('public.includes.table-row', ['row' => $_topic, 'is_topic' => true])
             @endforeach
         </table>
     @endif

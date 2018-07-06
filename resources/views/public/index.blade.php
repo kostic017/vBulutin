@@ -4,7 +4,7 @@
     @if ($categories->isEmpty())
         Trenutno nema ničeg ovde...
     @else
-        @foreach ($categories as $category)
+        @foreach ($categories as $_category)
             @include('public.includes.table-category')
         @endforeach
     @endif

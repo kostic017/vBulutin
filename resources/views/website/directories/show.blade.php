@@ -18,13 +18,13 @@
             @if ($boards->isEmpty())
                 <p>Još nema foruma u ovom direktorijumu.</p>
             @else
-                @foreach ($boards as $board)
+                @foreach ($boards as $_board)
                     <div class="board">
-                        <h4>{{ $board->title }}</h4>
-                        @if (is_not_empty($board->description))
-                            <p>{!! BBCode::parse($board->description) !!}</a></p>
+                        <h4>{{ $_board->title }}</h4>
+                        @if (is_not_empty($_board->description))
+                            <p>{!! BBCode::parse($_board->description) !!}</a></p>
                         @endif
-                        <a href="{{ route('boards.show', [$board->address]) }}/">Poseti forum</a>
+                        <a href="{{ route('boards.show', [$_board->address]) }}/">Poseti forum</a>
                     </div>
                 @endforeach
             @endif

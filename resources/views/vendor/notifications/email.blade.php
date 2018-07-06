@@ -12,8 +12,8 @@
 @endif
 
 {{-- Intro Lines --}}
-@foreach ($introLines as $line)
-{{ $line }}
+@foreach ($introLines as $_line)
+{{ $_line }}
 @endforeach
 
 {{-- Action Button --}}
@@ -37,8 +37,8 @@
 @endisset
 
 {{-- Outro Lines --}}
-@foreach ($outroLines as $line)
-{{ $line }}
+@foreach ($outroLines as $_line)
+{{ $_line }}
 @endforeach
 
 {{-- Salutation --}}

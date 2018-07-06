@@ -42,9 +42,9 @@
         </div>
     @endif
 
-    @foreach ($posts as $post)
-        @php ($user = $post->user)
-        <div class="post p-main {{ $post->deleted_at ? 'deleted' : '' }} {{ $topic->solution_id === $post->id ? 'solution' : ''}}" id="post-{{ $post->id }}">
+    @foreach ($posts as $_post)
+        @php ($user = $_post->user)
+        <div class="post p-main {{ $_post->deleted_at ? 'deleted' : '' }} {{ $topic->solution_id === $_post->id ? 'solution' : ''}}" id="post-{{ $_post->id }}">
             <div class="d-flex flex-wrap">
                 <ul class="profile">
                     <li><a href="{{ route_user_show($user) }}">@avatar(medium)</a></li>
@@ -54,11 +54,11 @@
                 </ul>
                 <div class="body">
                     <p class="author">
-                        <a href="{{ route_topic_show($topic) }}#post-{{ $post->id }}"><img class="icon-post-target" src="{{ asset('images/icon_post_target.png') }}" alt="Post"></a>
-                        napisao <strong><a href="{{ route_user_show($user) }}">{{ $user->username }}</a></strong> » {{ extract_date($post->created_at) }} {{ extract_time($post->created_at) }}
+                        <a href="{{ route_topic_show($topic) }}#post-{{ $_post->id }}"><img class="icon-post-target" src="{{ asset('images/icon_post_target.png') }}" alt="Post"></a>
+                        napisao <strong><a href="{{ route_user_show($user) }}">{{ $user->username }}</a></strong> » {{ extract_date($_post->created_at) }} {{ extract_time($_post->created_at) }}
                     </p>
                     <div class="content">
-                        {!! BBCode::parse($post->content) !!}
+                        {!! BBCode::parse($_post->content) !!}
                     </div>
                     <div class="signature">
                         {{ $user->profile->signature }}
@@ -68,15 +68,15 @@
             <div class="actions">
                 <ul>
                     @auth
-                        @if ($is_admin || (Auth::id() == $user->id && $last_post->id === $post->id))
+                        @if ($is_admin || (Auth::id() == $user->id && $last_post->id === $_post->id))
                             <li>
-                                @if ($post->deleted_at)
-                                    <form method="post" action="{{ route('posts.restore', [$post->id]) }}">
+                                @if ($_post->deleted_at)
+                                    <form method="post" action="{{ route('posts.restore', [$_post->id]) }}">
                                         @csrf
                                         <button type="submit" class="btn btn-link">Vrati</button>
                                     </form>
                                 @else
-                                    <form method="post" action="{{ route('posts.destroy', [$post->id]) }}">
+                                    <form method="post" action="{{ route('posts.destroy', [$_post->id]) }}">
                                         @csrf
                                         {{ method_field('DELETE') }}
                                         <button type="submit" class="btn btn-link">Obriši</button>
@@ -84,14 +84,14 @@
                                 @endif
                             </li>
                         @endif
-                        @if (!$post->deleted_at && ($is_admin || Auth::id() == $topic_starter->id))
-                            @if ($solution && $solution->id === $post->id)
+                        @if (!$_post->deleted_at && ($is_admin || Auth::id() == $topic_starter->id))
+                            @if ($solution && $solution->id === $_post->id)
                                 <li><a href="#" class="unmarksolution">Ipak nije ovo rešenje</a></li>
                             @else
-                                <li><a href="#" class="marksolution" data-postid="{{ $post->id }}">Označi kao rešenje</a></li>
+                                <li><a href="#" class="marksolution" data-postid="{{ $_post->id }}">Označi kao rešenje</a></li>
                             @endif
                         @endif
-                        <li><a href="#" class="quotepost" data-postid="{{ $post->id }}">Citiraj</a></li>
+                        <li><a href="#" class="quotepost" data-postid="{{ $_post->id }}">Citiraj</a></li>
                     @endauth
                     <li><a href="#top" class="back2top" title="Top">Top</a></li>
                 </ul>

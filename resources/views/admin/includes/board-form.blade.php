@@ -19,13 +19,13 @@
         <div class="form-group">
             <label for="directory_id">Direktorijum</label>
             <select name="directory_id" id="directory_id" class="form-control{{ $errors->has('directory_id') ? ' is-invalid' : '' }}" {{ isset($force_directory) ? "disabled" : "" }}>
-                @foreach ($directories as $directory)
+                @foreach ($directories as $_directory)
                     @php(
                         $selected = isset($force_directory) ?
-                            ($force_directory->id === $directory->id ? 'selected' : '') :
-                            (old('directory_id', isset($board) ? $board->directory->id : '') == $directory->id ? 'selected' : '')
+                            ($force_directory->id === $_directory->id ? 'selected' : '') :
+                            (old('directory_id', isset($board) ? $board->directory->id : '') == $_directory->id ? 'selected' : '')
                     )
-                    <option value="{{ $directory->id }}" {{ $selected }}>{{ $directory->title }}</option>
+                    <option value="{{ $_directory->id }}" {{ $selected }}>{{ $_directory->title }}</option>
                 @endforeach
             </select>
             @if (isset($force_directory))

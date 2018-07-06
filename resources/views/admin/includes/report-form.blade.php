@@ -1,11 +1,11 @@
 @csrf
 <table>
-    @foreach ($columns as $column)
+    @foreach ($columns as $_column)
         <tr>
             <td style="padding-right:10px;">
                 <label>
-                    <input type="checkbox" name="columns[]" value="{{ $column }}">
-                    {{ $column }}
+                    <input type="checkbox" name="columns[]" value="{{ $_column }}">
+                    {{ $_column }}
                 </label>
             </td>
             <td>
