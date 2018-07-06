@@ -29,13 +29,13 @@
                 </tr>
                 <tr>
                     <td class="title">{{ __('db.category') }}</td>
-                    <td class="content"><a href="{{ route('categories.show.admin', [$category->id]) }}">{{ $category->title }}</a></td>
+                    <td class="content"><a href="{{ route('categories.show.admin', [request()->route('board_address'), $forum->category->slug]) }}">{{ $forum->category->title }}</a></td>
                 </tr>
                 <tr>
                     <td class="title">{{ __('db.parent_forum') }}</td>
                     <td class="content">
-                        @if ($parentForum)
-                            <a href="{{ route('forums.show.admin', [$parentForum->id]) }}">{{ $parentForum->title }}</a>
+                        @if ($forum->parent)
+                            <a href="{{ route('forums.show.admin', [request()->route('board_address'), $forum->parent->slug]) }}">{{ $forum->parent->title }}</a>
                         @else
                             -
                         @endif
@@ -43,7 +43,7 @@
                 </tr>
                 <tr>
                     <td class="title">{{ __('db.trashed') }}</td>
-                    <td class="content">{{ $forum->deletedAt ?? '-' }}</td>
+                    <td class="content">{{ $forum->deleted_at ?? '-' }}</td>
                 </tr>
             </table>
         </div>

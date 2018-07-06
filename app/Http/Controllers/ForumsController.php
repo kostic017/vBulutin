@@ -26,7 +26,7 @@ class ForumsController extends SectionsController {
                          ->whereNull('parent_id')
                          ->orderBy('position')
                          ->get();
-            foreach ($category['forums'] as &$forum) {
+            foreach ($category['parent_forums'] as &$forum) {
                 $forum['child_forums'] =
                     $forum->children()
                           ->withTrashed()
@@ -67,13 +67,18 @@ class ForumsController extends SectionsController {
 
     public function store($board_address) {
         $request = request();
-
-        if (isset($request->parent_id)) {
-            $request->request->add(['category_id' => Forum::find($request->parent_id)->pluck('category_id')->first()]);
-        }
+        $board = get_board($board_address);
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:255|unique:forums',
+            'title' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) use ($board) {
+                    if ($board->forums()->where('forums.title', $value)->count()) {
+                        return $fail(trans('validation.unique', ['attribute' => $attribute]));
+                    }
+                },
+            ],
             'category_id' => 'required|integer'
         ]);
 
@@ -86,20 +91,17 @@ class ForumsController extends SectionsController {
         $forum->slug = str_slug($forum->title);
         $forum->description = $request->description;
         $forum->category_id = $request->category_id;
-        $forum->parent_id = $request->parent_id ?? null;
+        $forum->parent_id = $request->parent_id;
 
         $forum->position = (
             $forum->parent_id ?
-                Forum::where('parent_id', $forum->parent_id)->max('position') :
-                Forum::where('category_id', $forum->category_id)->where('parent_id', null)->max('position')
-        ) + 1;
+                Forum::where('parent_id', $forum->parent_id) :
+                Forum::whereNull('parent_id')->where('category_id', $forum->category_id)
+        )->max('position') + 1;
 
         $forum->save();
 
-        $forum->slug = unique_slug($forum->title, $forum->id);
-        $forum->save();
-
-        return alert_redirect(route('forums.show.admin', [$forum->slug]), 'success', 'db.stored');
+        return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', 'db.stored');
     }
 
     public function show_admin($board_address, $forum_slug) {
