@@ -11,7 +11,7 @@
                         <div class="directory">
                             <a href="{{ route('directories.show', [$directory->slug]) }}">
                                 <h2>{{ $directory->title }}</h2>
-                                <p>Broj foruma: {{ $directory->boards()->count() }}</p>
+                                <p>Broj foruma: {{ $directory->boards()->where('is_visible', true)->count() }}</p>
                             </a>
                         </div>
                     @endforeach
