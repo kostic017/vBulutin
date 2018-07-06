@@ -56,8 +56,6 @@ $(function() {
             };
         });
 
-        console.log(data);
-
         const overlay = $("#overlay");
         overlay.show();
         overlay.fitText();

@@ -14,7 +14,7 @@ class AjaxController extends Controller {
     public function positions() {
         $data = request('data');
 
-        foreach ($data as $category_id => $category_data) {
+        foreach ($data ?? [] as $category_id => $category_data) {
             $category = Category::withTrashed()->find($category_id);
             $category->update(['position' => $category['position']]);
 

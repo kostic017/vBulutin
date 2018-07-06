@@ -9,7 +9,11 @@
 
     <div class="toplevel-buttons">
         <div>
-            <button type="button" class="btn btn-primary" name="save">Sačuvaj pozicije</button>
+            @if ($categories->count())
+                <button type="button" class="btn btn-primary" name="save">Sačuvaj pozicije</button>
+            @else
+                Trenutno nema ničeg ovde...
+            @endif
         </div>
         <div class="actions">
             <a href="{{ route('categories.create', [request()->route('board_address')]) }}" class="btn" title="Nova kategorija"><i class="fas fa-file"></i></a>
@@ -18,9 +22,7 @@
         </div>
     </div>
 
-    @if ($categories->isEmpty())
-        Trenutno nema ničeg ovde...
-    @else
+    @if ($categories->count())
         <div class="sortable-categories collapse-buttons">
             @foreach ($categories as $category)
                 <div class="sortable-category">
