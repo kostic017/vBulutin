@@ -16,7 +16,7 @@ class AjaxController extends Controller {
 
         foreach ($data ?? [] as $category_id => $category_data) {
             $category = Category::withTrashed()->find($category_id);
-            $category->update(['position' => $category['position']]);
+            $category->update(['position' => $category_data['position']]);
 
             foreach ($category_data['forums'] ?? [] as $parent_index => $parent_forum_data) {
                 $parent_forum = Forum::withTrashed()->find($parent_forum_data['id']);

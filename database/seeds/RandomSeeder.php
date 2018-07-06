@@ -14,7 +14,7 @@ use Illuminate\Database\Seeder;
 class RandomSeeder extends Seeder
 {
     const USER_COUNT = 20;
-    const MIN_RAND_FOR_CHILDREN = 90;
+    const MIN_RAND_FOR_CHILDREN = 70;
 
     const BOARDS_PER_DIRECTORY = 1;
     const CATEGORIES_PER_BOARD = 1;

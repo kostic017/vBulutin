@@ -55,7 +55,7 @@ class CategoriesController extends SectionsController {
         $category->title = $request->title;
         $category->slug = str_slug($category->title);
         $category->description = $request->description;
-        $category->position = Category::max('position') + 1;
+        $category->position = $board->categories()->max('position') + 1;
         $category->board_id = $board->id;
         $category->save();
 

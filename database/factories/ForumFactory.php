@@ -10,8 +10,8 @@ $factory->define(App\Forum::class, function (Faker $faker, array $args) {
         'category_id' => []
     ];
 
-    $parentId = $args['parent_id'];
-    $categoryId = $args['category_id'];
+    $parent_id = $args['parent_id'];
+    $category_id = $args['category_id'];
 
     $title = random_title($faker, 5);
 
@@ -20,18 +20,18 @@ $factory->define(App\Forum::class, function (Faker $faker, array $args) {
         'slug' => str_slug($title),
         'description' => $faker->optional()->paragraph(),
 
-        'position' => function() use (&$positions, $categoryId, $parentId) {
-            if ($parentId) {
-                if (!array_key_exists($parentId, $positions['parent_id'])) {
-                    $positions['parent_id'][$parentId] = 1;
+        'position' => function() use (&$positions, $category_id, $parent_id) {
+            if ($parent_id) {
+                if (!array_key_exists($parent_id, $positions['parent_id'])) {
+                    $positions['parent_id'][$parent_id] = 1;
                 }
-                return $positions['parent_id'][$parentId]++;
+                return $positions['parent_id'][$parent_id]++;
             }
 
-            if (!array_key_exists($categoryId, $positions['category_id'])) {
-                $positions['category_id'][$categoryId] = 1;
+            if (!array_key_exists($category_id, $positions['category_id'])) {
+                $positions['category_id'][$category_id] = 1;
             }
-            return $positions['category_id'][$categoryId]++;
+            return $positions['category_id'][$category_id]++;
         },
 
         'is_locked' => $faker->randomElement([true, false]),

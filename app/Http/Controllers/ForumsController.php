@@ -97,9 +97,9 @@ class ForumsController extends SectionsController {
 
         $forum->position = (
             $forum->parent_id ?
-                Forum::where('parent_id', $forum->parent_id) :
-                Forum::whereNull('parent_id')->where('category_id', $forum->category_id)
-        )->max('position') + 1;
+                $category->board->forums()->where('parent_id', $forum->parent_id) :
+                $category->board->forums()->whereNull('parent_id')->where('category_id', $forum->category_id)
+        )->max('forums.position') + 1;
 
         $collisions = $category->board->forums()->where('forums.slug', $forum->slug)->count();
         if ($collisions > 0) {
