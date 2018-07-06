@@ -72,7 +72,15 @@ class ForumsController extends SectionsController {
         $category = Category::findOrFail($request->category_id);
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:255',
+            'title' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) use ($category) {
+                    if ($category->forums()->where('forums.title', $value)->count()) {
+                        return $fail('U jednoj kategoriji ne mogu postojati dva foruma koja se isto zovu.');
+                    }
+                },
+            ],
             'category_id' => 'required|integer'
         ]);
 
