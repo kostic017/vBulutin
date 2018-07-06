@@ -43,7 +43,7 @@
                 </tr>
                 <tr>
                     <td class="title">{{ __('db.trashed') }}</td>
-                    <td class="content">{{ $forum->deleted_at ?? '-' }}</td>
+                    <td class="content">{{ $forum->deleted_at ?: '-' }}</td>
                 </tr>
             </table>
         </div>

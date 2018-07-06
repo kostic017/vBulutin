@@ -14,13 +14,13 @@
 
                 <div class="form-group">
                     <label for="title">{{ __('db.title') }} <span class="text-danger font-weight-bold">*</span></label>
-                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title', $forum->title ?? '') }}">
+                    <input type="text" id="title" name="title" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" value="{{ old('title', $forum->title) }}">
                     @include('includes.error', ['error_key' => 'title'])
                 </div>
 
                 <div class="form-group">
                     <label for="sceditor">{{ __('db.description') }}</label>
-                    <textarea id="sceditor" name="description">{{ old('description', $forum->description ?? '') }}</textarea>
+                    <textarea id="sceditor" name="description">{{ old('description', $forum->description) }}</textarea>
                 </div>
 
                 <div class="form-group">

@@ -10,7 +10,6 @@ class ResetPasswordController extends Controller {
 
     use ResetsPasswords;
 
-
     public function __construct() {
         $this->middleware('guest');
     }

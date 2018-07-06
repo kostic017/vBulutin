@@ -31,19 +31,19 @@
                     </dl>
                     <dl>
                         <dt>Datum rođenja</dt>
-                        <dd>{{ $profile->birthday_on ?? '-' }}</dd>
+                        <dd>{{ $profile->birthday_on ?: '-' }}</dd>
                         <dt>Mesto rođenja</dt>
-                        <dd>{{ $profile->birthplace ?? '-' }}</dd>
+                        <dd>{{ $profile->birthplace ?: '-' }}</dd>
                         <dt>Prebivalište</dt>
-                        <dd>{{ $profile->residence ?? '-' }}</dd>
+                        <dd>{{ $profile->residence ?: '-' }}</dd>
                         <dt>Zanimanje</dt>
-                        <dd>{{ $profile->job ?? '-' }}</dd>
+                        <dd>{{ $profile->job ?: '-' }}</dd>
                     </dl>
                     <dl>
                         <dt>O meni</dt>
-                        <dd>{{ $profile->about ?? '-' }}</dd>
+                        <dd>{{ $profile->about ?: '-' }}</dd>
                         <dt>Potpis</dt>
-                        <dd>{{ $profile->signature ?? '-' }}</dd>
+                        <dd>{{ $profile->signature ?: '-' }}</dd>
                     </dl>
                 </section>
                 @if ($is_admin || $user->id == Auth::id())

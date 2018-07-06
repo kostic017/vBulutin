@@ -46,7 +46,7 @@ class PostsController extends Controller {
         $post = Post::findOrFail($id);
         $topic = $post->topic;
 
-        if ($topic->solution_id === $id) {
+        if ($topic->solution_id === (int)$id) {
             $topic->solution_id = null;
             $topic->save();
         }

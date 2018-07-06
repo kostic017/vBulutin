@@ -15,14 +15,14 @@
     @if ($is_admin || Auth::id() === $topic_starter->id)
         <form id="solutionform" method="post" action="{{ route('topics.solution', [$topic->id]) }}">
             @csrf
-            <input type="hidden" name="solution_id" value="{{ $solution->id ?? '' }}">
+            <input type="hidden" name="solution_id" value="{{ isset($solution) ? $solution->id : '' }}">
         </form>
         <a href="#" id="edittitle">Izmeni naslov</a>
         <form id="edittitle-form" action="{{ route('topics.title', [$topic->id]) }}" method="post" class="m-2" style="display: none;">
             @csrf
             <div class="form-group d-flex flex-wrap">
                 <label for="title" class="sr-only">Novi naslov</label>
-                <input type="text" id="title" name="title" class="form-control" value="{{ old('title') ?? $topic->title }}">
+                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $topic->title) }}">
                 <button type="submit" class="ml-1 btn btn-success">Izmeni</button>
             </div>
         </form>

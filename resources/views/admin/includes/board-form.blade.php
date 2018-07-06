@@ -7,12 +7,12 @@
 
         <div class="form-group required">
             <label for="title">Naziv</label>
-            <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" value="{{ old('title', $board->title ?? '') }}">
+            <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" value="{{ old('title', isset($board) ? $board->title : '') }}">
             @include('includes.error', ['error_key' => 'title'])
         </div>
         <div class="form-group required">
             <label for="address">Adresa</label>
-            <input type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" id="address" name="address" aria-describedby="address-help" value="{{ old('address', $board->address ?? 'adresa') }}">
+            <input type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" id="address" name="address" aria-describedby="address-help" value="{{ old('address', isset($board) ? $board->address : 'adresa') }}">
             <small id="address-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>http://<span id="preview"></span>.{{ config('app.domain') }}/</code>. Dozvoljena su slova, brojevi, donja crta i crtica.</small>
             @include('includes.error', ['error_key' => 'address'])
         </div>
@@ -23,7 +23,7 @@
                     @php(
                         $selected = isset($force_directory) ?
                             ($force_directory->id === $directory->id ? 'selected' : '') :
-                            (old('directory_id', $board->directory->id ?? '') === $directory->id ? 'selected' : '')
+                            (old('directory_id', isset($board) ? $board->directory->id : '') == $directory->id ? 'selected' : '')
                     )
                     <option value="{{ $directory->id }}" {{ $selected }}>{{ $directory->title }}</option>
                 @endforeach
@@ -34,12 +34,12 @@
         </div>
         <div class="form-group form-check">
             <input type="hidden" name="is_visible" value="0">
-            <input type="checkbox" class="form-check-input" id="is_visible" name="is_visible" value="1" {{ old('is_visible', $board->is_visible ?? '') === '1' ? 'checked' : '' }}>
+            <input type="checkbox" class="form-check-input" id="is_visible" name="is_visible" value="1" {{ old('is_visible', isset($board) ? $board->is_visible : '') == '1' ? 'checked' : '' }}>
             <label class="form-check-label" for="is_visible">Vidljiv</label>
         </div>
         <div class="form-group">
             <label for="sceditor">{{ __('db.description') }}</label>
-            <textarea id="sceditor" name="description">{{ old('description', $board->description ?? '') }}</textarea>
+            <textarea id="sceditor" name="description">{{ old('description', isset($board) ? $board->description : '') }}</textarea>
         </div>
         <button type="submit" class="btn btn-primary">Sačuvaj</button>
         @include('includes.sceditor')

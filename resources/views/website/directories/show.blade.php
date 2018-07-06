@@ -9,7 +9,7 @@
             </div>
             <div class="button">
                 <a class="btn btn-primary" id="create-forum" href="{{ Auth::check() ? route('boards.create', [$directory->slug]) : "#" }}" role="button">Napravi svoj forum</a>&nbsp;
-                @if (Auth::user()->is_master ?? false)
+                @if (($user = Auth::user()) && $user->is_master)
                     <a class="btn btn-success" href="{{ route('directories.edit', [$directory->slug]) }}">Izmeni direktorijum</a>
                 @endif
             </div>

@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    @if (Auth::user()->is_master ?? false)
+    @if (($user = Auth::user()) && $user->is_master)
         <p class="create-directory">
             <a href="{{ route('directories.create') }}" class="btn btn-primary">Napravi direktorijum</a>
         </p>
