@@ -11,10 +11,6 @@ abstract class SectionsController extends Controller {
     protected $table = null;
     protected $singular = null;
 
-    public function edit($board_address, $id) {
-        return view("admin.sections.{$this->table}.edit")->with($this->singular, $this->model::findOrFail($id));
-    }
-
     public function update($board_address, $id) {
         $request = request();
 

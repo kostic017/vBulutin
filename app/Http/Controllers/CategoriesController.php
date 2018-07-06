@@ -14,11 +14,9 @@ class CategoriesController extends SectionsController {
     protected $model = 'App\Category';
 
     public function edit($board_address, $slug) {
-        return parent::edit($board_address, $slug);
-    }
-
-    public function update($board_address, $id) {
-        return parent::update($board_address, $id);
+        return view('admin.sections.categories.edit')->with(
+            'category', get_board($board_address)->categories()->where('categories.slug', $slug)->firstOrFail()
+        );
     }
 
     public function destroy($board_address, $id) {
@@ -42,7 +40,7 @@ class CategoriesController extends SectionsController {
                 'required',
                 'max:255',
                 function ($attribute, $value, $fail) use ($board) {
-                    if ($board->categories()->where('title', $value)->count()) {
+                    if ($board->categories()->where('categories.title', $value)->count()) {
                         return $fail(trans('validation.unique', ['attribute' => $attribute]));
                     }
                 },
@@ -64,9 +62,38 @@ class CategoriesController extends SectionsController {
         return alert_redirect(route('categories.show.admin', [$board_address, $category->slug]), 'success', __('db.stored'));
     }
 
-    public function show_admin($board_address, $category_slug) {
+    public function update($board_address, $id) {
+        $request = request();
         $board = get_board($board_address);
-        $category = $board->categories()->withTrashed()->where('categories.slug', $category_slug)->firstOrFail();
+
+        $validator = Validator::make($request->all(), [
+            'title' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) use ($board, $id) {
+                    $collision = $board->categories()->where('categories.title', $value)->first();
+                    if ($collision && $collision->id !== (int)$id) {
+                        return $fail(trans('validation.unique', ['attribute' => $attribute]));
+                    }
+                },
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $category = Category::findOrFail($id);
+        $category->title = $request->title;
+        $category->slug = str_slug($category->title);
+        $category->description = $request->description;
+        $category->save();
+
+        return alert_redirect(route("categories.show.admin", [request()->route('board_address'), $category->slug]), 'success', __('db.updated'));
+    }
+
+    public function show_admin($board_address, $category_slug) {
+        $category = get_board($board_address)->categories()->withTrashed()->where('categories.slug', $category_slug)->firstOrFail();
         return view('admin.sections.categories.show')->with('category', $category);
     }
 

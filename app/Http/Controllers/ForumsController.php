@@ -38,7 +38,9 @@ class ForumsController extends SectionsController {
     }
 
     public function edit($board_address, $slug) {
-        return parent::edit($board_address, $slug);
+        return view('admin.sections.forums.edit')->with(
+            'forum', get_board($board_address)->forums()->where('forums.slug', $slug)->firstOrFail()
+        );
     }
 
     public function update($board_address, $id) {

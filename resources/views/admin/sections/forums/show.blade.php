@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <strong>{{ $forum->title }}</strong>
+            <strong>Forum: {{ $forum->title }}</strong>
         </div>
         <div class="card-body">
             <table class="table table-striped show">

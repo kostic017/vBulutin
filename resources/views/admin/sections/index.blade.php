@@ -36,7 +36,7 @@
                         <div class="actions">
                             <a href="{{ route('categories.show.admin', [request()->route('board_address'), $category->slug]) }}" class="btn" title="Pregledaj kategoriju"><i class="fas fa-eye"></i></a>
                             <a href="{{ route('forums.create', [request()->route('board_address'), 'category', $category->id]) }}" class="btn" title="Novi forum"><i class="fas fa-file"></i></a>
-                            <a href="{{ route('categories.edit', [request()->route('board_address'), $category->id]) }}" class="btn" title="Izmeni kategoriju"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{{ route('categories.edit', [request()->route('board_address'), $category->slug]) }}" class="btn" title="Izmeni kategoriju"><i class="fas fa-pencil-alt"></i></a>
                             <button type="button" class="btn" title="Obriši kategoriju"><i class="fas fa-eraser"></i></button>
                             <button type="button" class="btn collapse-forums minus" title="Skupi sve forume"><i class="fas fa-minus"></i></button>
                             <button type="button" class="btn collapse-forums plus" title="Raširi sve forume"><i class="fas fa-plus"></i></button>
@@ -56,7 +56,7 @@
                                         <div class="actions">
                                             <a href="{{ route('forums.show.admin', [request()->route('board_address'), $parent_forum->slug]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
                                             <a href="{{ route('forums.create', [request()->route('board_address'), 'parent_forum', $parent_forum->id]) }}" class="btn" title="Novi potforum"><i class="fas fa-file"></i></a>
-                                            <a href="{{ route('forums.edit', [request()->route('board_address'), $parent_forum->id]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="{{ route('forums.edit', [request()->route('board_address'), $parent_forum->slug]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
                                             <button type="button" class="btn" title="Obriši forum"><i class="fas fa-eraser"></i></button>
                                         </div>
                                         @if (count($parent_forum['child_forums']))
@@ -69,7 +69,7 @@
                                                             </div>
                                                             <div class="actions">
                                                                 <a href="{{ route('forums.show.admin', [request()->route('board_address'), $child_forum->slug]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
-                                                                <a href="{{ route('forums.edit', [request()->route('board_address'), $child_forum->id]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
+                                                                <a href="{{ route('forums.edit', [request()->route('board_address'), $child_forum->slug]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
                                                                 <button type="button" class="btn" title="Obriši forum"><i class="fas fa-eraser"></i></button>
                                                             </div>
                                                         </div>
