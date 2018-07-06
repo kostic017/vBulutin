@@ -4,42 +4,36 @@ $(function() {
         scroll: false
     });
 
+    $('.dd').on('change', function () {
+        /* on change event */
+    });
+
     $(".sortable-categories").sortable({
         scroll: false,
         handle: ".category-header",
         connectWith: ".sortable-categories"
     });
 
-    $(".forums-tree-controls").on("click", function (e) {
-        const action = $(e.target).text();
-        if (isEqualToAnyWord("- +", action)) {
-            // we are interested in a particular category
-            const dd = $(this).parents(".category-header").siblings(".dd");
-            if (action === "+") {
-                dd.nestable("expandAll");
-            } else if (action === "-") {
-                dd.nestable("collapseAll");
-            }
+    $(".collapse-forums").on("click", function () {
+        const dd = $(this).closest(".category-header").siblings(".dd");
+        dd.nestable($(this).is(".minus") ? "collapseAll" : "expandAll");
+    });
+
+    $(".collapse-categories").on("click", function () {
+        const dds = $(".dd");
+        const btns = $(".collapse-category");
+
+        if ($(this).is(".minus")) {
+            dds.hide();
+            console.log("hidden");
+            btns.attr("data-action", "");
+        } else {
+            dds.show();
+            btns.attr("data-action", "collapse");
         }
     });
 
-    $(".categories-tree-controls").on("click", function (e) {
-        const action = $(e.target).text();
-        if (isEqualToAnyWord("- +", action)) {
-            // we are interested in all categories
-            const dds = $(".dd");
-            const btns = $(".category-tree-control");
-            if (action === "-") {
-                dds.hide();
-                btns.attr("data-action", "");
-            } else if (action === "+") {
-                dds.show();
-                btns.attr("data-action", "collapse");
-            }
-        }
-    });
-
-    $(".category-tree-control").on("click", function () {
+    $(".collapse-category").on("click", function () {
         const dds = $(this).parents(".category-header").siblings(".dd");
         if ($(this).attr("data-action") === "collapse") {
             dds.hide();
@@ -62,17 +56,17 @@ $(function() {
             };
         });
 
+        console.log(data);
+
         const overlay = $("#overlay");
         overlay.show();
         overlay.fitText();
 
-        $.post('/ajax/forums/positions/save', { data }, function () {
-            toastr.success($("span[data-key='admin.positions-success']").text());
-            overlay.hide();
+        $.post('/ajax/forums/positions/save ', { data }, function () {
+            location.reload(true);
         }).fail(function () {
             toastr.error($("span[data-key='generic.error']").text());
             overlay.hide();
         });
-
     });
 });

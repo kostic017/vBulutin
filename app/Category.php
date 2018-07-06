@@ -10,6 +10,10 @@ class Category extends Model {
 
     public $timestamps = false;
 
+    public $fillable = [
+        'position',
+    ];
+
     public function get_all_watchers() {
         return self::get_watchers('category', $this->id);
     }

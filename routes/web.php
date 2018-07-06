@@ -25,11 +25,6 @@ Route::group(['domain' => config('app.domain')], function() {
         Route::resource('users', 'UsersController')->only(['edit', 'update']);
         Route::resource('directories', 'DirectoriesController')->only(['create', 'store', 'edit', 'update', 'destroy']);
     });
-
-    Route::group(['prefix' => 'ajax'], function () {
-        Route::post('quote', 'AjaxController@quote')->name('ajax.quote');
-        Route::post('forums/positions/save', 'AjaxController@positions')->name('ajax.positions');
-    });
 });
 
 Route::group([
@@ -39,6 +34,11 @@ Route::group([
     Route::get('categories/{slug}/show', 'CategoriesController@show')->name('categories.show.public');
     Route::get('forums/{slug}/show', 'ForumsController@show')->name('forums.show.public');
     Route::get('topics/{slug}/show', 'TopicsController@show')->name('topics.show.public');
+
+    Route::group(['prefix' => 'ajax'], function () {
+        Route::post('quote', 'AjaxController@quote')->name('ajax.quote');
+        Route::post('forums/positions/save', 'AjaxController@positions')->name('ajax.positions');
+    });
 
     Route::group([
         'prefix' => 'admin',

@@ -14,25 +14,24 @@ class AjaxController extends Controller {
     public function positions() {
         $data = request('data');
 
-        foreach ($data as $categoryId => $categoryData) {
-            $category = Category::withTrashed()->find($categoryId);
+        foreach ($data as $category_id => $category_data) {
+            $category = Category::withTrashed()->find($category_id);
             $category->update(['position' => $category['position']]);
 
-            foreach ($categoryData['forums'] ?? [] as $parentIndex => $parentForumData) {
-                $parentForum = Forum::withTrashed()->find($parentForumData['id']);
-
-                $parentForum->update([
+            foreach ($category_data['forums'] ?? [] as $parent_index => $parent_forum_data) {
+                $parent_forum = Forum::withTrashed()->find($parent_forum_data['id']);
+                $parent_forum->update([
                     'parent_id' => null,
-                    'category_id' => $categoryId,
-                    'position' => $parentIndex + 1
+                    'category_id' => $category_id,
+                    'position' => $parent_index + 1
                 ]);
 
-                foreach ($parentForumData['children'] ?? [] as $childIndex => $childForumData) {
-                    $childForum = Forum::withTrashed()->find($childForumData['id']);
-                    $childForum->update([
-                        'parent_id' => $parentForumData['id'],
-                        'category_id' => $categoryId,
-                        'position' => $childIndex + 1
+                foreach ($parent_forum_data['children'] ?? [] as $child_index => $child_forum_data) {
+                    $child_forum = Forum::withTrashed()->find($child_forum_data['id']);
+                    $child_forum->update([
+                        'parent_id' => $parent_forum_data['id'],
+                        'category_id' => $category_id,
+                        'position' => $child_index + 1
                     ]);
                 }
             }

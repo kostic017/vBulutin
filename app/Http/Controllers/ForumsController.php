@@ -101,7 +101,7 @@ class ForumsController extends SectionsController {
 
         $forum->save();
 
-        return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', 'db.stored');
+        return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', __('db.stored'));
     }
 
     public function show_admin($board_address, $forum_slug) {

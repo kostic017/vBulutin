@@ -11,6 +11,12 @@ class Forum extends Model {
 
     public $timestamps = false;
 
+    public $fillable = [
+        'position',
+        'parent_id',
+        'category_id',
+    ];
+
     public function is_read() {
         if (!Auth::check()) {
             return true;
