@@ -16,6 +16,10 @@ function route_topic_show($topic) {
     return route('topics.show.public', [$topic->board->address, $topic->slug]);
 }
 
+function get_board($board_address) {
+    return App\Board::where('address', $board_address)->firstOrFail();
+}
+
 function alert_redirect($url, $level, $message) {
     return redirect($url)->with([
         'level' => $level,

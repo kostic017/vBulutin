@@ -35,9 +35,18 @@ class CategoriesController extends SectionsController {
 
     public function store($board_address) {
         $request = request();
+        $board = get_board($board_address);
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:255|unique:categories'
+            'title' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) use ($board) {
+                    if ($board->categories()->where('title', $value)->count()) {
+                        return $fail(trans('validation.unique', ['attribute' => $attribute]));
+                    }
+                },
+            ],
         ]);
 
         if ($validator->fails()) {
@@ -49,17 +58,15 @@ class CategoriesController extends SectionsController {
         $category->slug = str_slug($category->title);
         $category->description = $request->description;
         $category->position = Category::max('position') + 1;
+        $category->board_id = $board->id;
         $category->save();
 
-        $category->slug = unique_slug($category->title, $category->id);
-        $category->save();
-
-        return alert_redirect(route('categories.show.admin', [$category->slug]), 'success', __('db.stored'));
+        return alert_redirect(route('categories.show.admin', [$board_address, $category->slug]), 'success', __('db.stored'));
     }
 
     public function show_admin($board_address, $category_slug) {
         $board = Board::where('address', $board_address)->firstOrFail();
-        $category = $board->categories()->withTrashed()->where('categorys.slug', $category_slug)->firstOrFail();
+        $category = $board->categories()->withTrashed()->where('categories.slug', $category_slug)->firstOrFail();
         return view('admin.sections.categories.show')->with('category', $category);
     }
 

@@ -6,7 +6,6 @@
             <strong>{{ $forum->title }}</strong>
         </div>
         <div class="card-body">
-
             <table class="table table-striped show">
                 <tr>
                     <td class="title">ID</td>
@@ -47,11 +46,6 @@
                     <td class="content">{{ $forum->deletedAt ?? '-' }}</td>
                 </tr>
             </table>
-
-            @php ($row = $forum)
-            @php ($table = ['singular' => 'forum', 'plural' => 'forums'])
-            @include ('admin.includes.show-buttons')
-
         </div>
     </div>
 @stop
