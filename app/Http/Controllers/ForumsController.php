@@ -8,10 +8,7 @@ use App\Forum;
 use App\Board;
 use App\Category;
 
-class ForumsController extends SectionsController {
-    protected $table = 'forums';
-    protected $singular = 'forum';
-    protected $model = 'App\Forum';
+class ForumsController extends Controller {
 
     public function index($board_address) {
         $board = get_board($board_address);
@@ -43,18 +40,6 @@ class ForumsController extends SectionsController {
         );
     }
 
-    public function update($board_address, $id) {
-        return parent::update($board_address, $id);
-    }
-
-    public function destroy($board_address, $id) {
-        return parent::destroy($board_address, $id);
-    }
-
-    public function restore($board_address, $id) {
-        return parent::restore($board_address, $id);
-    }
-
     public function create($board_address, $force_section, $force_id) {
         $board = get_board($board_address);
         if ($force_section === 'category') {
@@ -77,7 +62,7 @@ class ForumsController extends SectionsController {
                 'max:255',
                 function ($attribute, $value, $fail) use ($category) {
                     if ($category->forums()->where('forums.title', $value)->count()) {
-                        return $fail('U jednoj kategoriji ne mogu postojati dva foruma koja se isto zovu.');
+                        return $fail('Ne bi trebalo da u jednoj kategoriji postoje dva foruma koja se isto zovu.');
                     }
                 },
             ],
@@ -101,14 +86,49 @@ class ForumsController extends SectionsController {
                 $category->board->forums()->whereNull('parent_id')->where('category_id', $forum->category_id)
         )->max('forums.position') + 1;
 
-        $collisions = $category->board->forums()->where('forums.slug', $forum->slug)->count();
+        $collisions = $category->board->forums()->where('forums.title', $forum->title)->count();
         if ($collisions > 0) {
-            $forum->slug .= '-' . $collisions;
+            $forum->slug .= '.' . $collisions;
         }
 
         $forum->save();
 
         return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', __('db.stored'));
+    }
+
+    public function update($board_address, $id) {
+        $request = request();
+        $forum = Forum::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'title' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) use ($forum) {
+                    $collision = $forum->category->forums()->where('forums.title', $value)->first();
+                    if ($collision && $collision->id !== (int)$id) {
+                        return $fail('Ne bi trebalo da u jednoj kategoriji postoje dva foruma koja se isto zovu.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $forum->title = $request->title;
+        $forum->slug = str_slug($forum->title);
+        $forum->description = $request->description;
+
+        $collisions = $forum->category->forums()->where('forums.title', $forum->title)->count();
+        if ($collisions > 0) {
+            $forum->slug .= '.' . $collisions;
+        }
+
+        $forum->save();
+
+        return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', __('db.updated'));
     }
 
     public function show_admin($board_address, $forum_slug) {
@@ -132,6 +152,16 @@ class ForumsController extends SectionsController {
         $forum->is_locked = !$forum->is_locked;
         $forum->save();
         return redirect()->back();
+    }
+
+    public function destroy($board_address, $id) {
+        Forum::findOrFail($id)->delete();
+        return alert_redirect(route('forums.index'), 'success', __('db.deleted'));
+    }
+
+    public function restore($board_address, $id) {
+        Forum::onlyTrashed()->findOrFail($id)->restore();
+        return alert_redirect(route('forums.index'), 'success', __('db.restored'));
     }
 
 }
