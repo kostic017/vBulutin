@@ -17,7 +17,7 @@ class BoardsController extends Controller {
             return alert_redirect(url()->previous(), 'info', 'Forum trenutno nije vidljiv.');
         }
 
-        return view('public.index')->with('categories', $board->categories()->get());
+        return view('public.index')->with('categories', $board->categories()->orderBy('position')->get());
     }
 
     public function create($directory_slug) {

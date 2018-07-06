@@ -8,13 +8,13 @@
         </caption>
     @endif
 
-    @if (($parent_forums = $category->parent_forums()->get())->isEmpty())
+    @if (($parent_forums = $category->parent_forums()->orderBy('position')->get())->isEmpty())
         <tr class="table-row">
             <td>Nema foruma u ovoj kategoriji.</td>
         </tr>
     @else
         @foreach ($parent_forums as $parent_forum)
-            @include('public.includes.table-row', ['row' => $parent_forum, 'child_forums' => $parent_forum->children()->get()])
+            @include('public.includes.table-row', ['row' => $parent_forum, 'child_forums' => $parent_forum->children()->orderBy('position')->get()])
         @endforeach
     @endif
 </table>
