@@ -1,0 +1,45 @@
+form.dynamic-data {
+    section {
+        margin-bottom: 10px;
+    }
+
+    fieldset {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 0.25rem;
+        border: 1px solid #ced4da;
+
+        section:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    input,
+    select {
+        width: auto;
+        display: inline-block;
+        box-sizing: border-box;
+    }
+
+    .paginate {
+        select {
+            margin-right: 10px;
+            height: 35px !important;
+        }
+
+        ul {
+            margin-bottom: 0;
+        }
+    }
+
+    .user-status {
+        select {
+            margin-left: 10px;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

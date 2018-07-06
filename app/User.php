@@ -38,6 +38,12 @@ class User extends Authenticatable {
         return Topic::findMany(UserWatches::select('topic_id')->where('user_id', $this->id)->get()->toArray());
     }
 
+    //region Custom Attributes
+    public function getPostCountAttribute() {
+        return $this->posts()->count();
+    }
+    //endregion
+
     //region Relationships
     public function profile() {
         return $this->hasOne('App\Profile');

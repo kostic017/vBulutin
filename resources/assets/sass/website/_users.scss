@@ -11,19 +11,6 @@ table.users .about {
     width: 100%;
 }
 
-select[name=perPage] {
-    width: auto;
-    display: inline-block;
-
-    &:first-child {
-        margin-bottom: 15px;
-    }
-
-    &:nth-child(2) {
-        margin-top: 15px;
-    }
-}
-
 .edit-profile {
     padding: 10px;
 }

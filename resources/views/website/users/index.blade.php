@@ -3,59 +3,105 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('users.index.public') }}" method="get" id="form1">
-                <select name="perPage" class="form-control" onchange="document.getElementById('form1').submit();">
-                    <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
-                    @for ($i = $step; $i <= $max; $i += $step)
-                        <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
-                    @endfor
-                <select>
-            </form>
+            <form method="get" class="dynamic-data" action="{{ route('users.index.public') }}">
+                <input type="hidden" name="sort_column" value="username">
+                <input type="hidden" name="sort_order" value="asc">
 
-            @if ($perPage > 0)
-                <div class="row justify-content-center">
-                    {{ $users->appends('perPage', $perPage)->links() }}
-                </div>
-            @endif
+                <section class="text-center">
+                    <button type="submit" class="btn btn-success">Primeni</button>
+                </section>
+
+                <fieldset>
+                    <section class="paginate d-flex">
+                        <select name="per_page" class="form-control">
+                            <option value="0" {{ !$per_page ? 'selected' : '' }}>&infin;</option>
+                            @for ($i = $pagination_step; $i <= $pagination_max; $i += $pagination_step)
+                                <option value="{{ $i }}" {{ $per_page === $i ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                        <select>
+                        @if ($per_page > 0)
+                            {{-- {{ $users->appends('per_page', $per_page)->links() }} --}}
+                        @endif
+                    </section>
+                    <section class="search">
+                        <input type="text" name="search_query" value="" class="form-control" placeholder="Pretraži...">
+                        <select name="search_field" class="form-control">
+                            @foreach ($columns as $_column => $_)
+                                <option value="{{ $_column }}">{{ trans("db.users.$_column") }}</option>
+                            @endforeach
+                        <select>
+                    </section>
+                </fieldset>
+                <fieldset>
+                    <section class="user-status d-flex">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="user_status" checked> Svi
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="user_status"> Aktivni
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="user_status"> Banovani
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="user_status"> Prognani
+                            </label>
+                        </div>
+                    </section>
+                    <section class="user-group btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="user_group" value="all" checked> Svi
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="user_group" value="simple_users"> Obični korisnici
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="user_group" value="simple_admins"> Obični administratori
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="user_group" value="forum_owners"> Vlasnici forumova
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="user_group" value="master_admins"> Master administratori
+                        </label>
+                    </section>
+                </fieldset>
+                <fieldset>
+                    <section class="columns">
+                        @foreach ($columns as $_column => $_checked)
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="show_columns" class="form-check-input" value="{{ $_column }}"{{ $_checked ? ' checked' : ''}}> {{ trans("db.users.$_column") }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </section>
+                </fieldset>
+            </form>
 
             <table class="table table-light table-striped table-hover users">
                 <thead class="thead-dark text-nowrap">
                     <tr>
-                        <th>#</th>
-                        @th_users_sort(username)
-                        @th_users_sort(about)
-                        @th_users_sort(registered_at)
-                        @th_users_sort(post_count)
+                        @foreach ($columns as $_column => $_checked)
+                            @if ($_checked)
+                                <th>{{ trans("db.users.$_column") }}</th>
+                            @endif
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
-                    @php ($i = 0)
                     @foreach ($users as $_user)
                         <tr>
-                            <td>{{ ++$i }}</td>
-                            <td><a href="{{ route_user_show($_user) }}">{{ $_user->username }}</a></td>
-                            <td class="about">{{ limit_words($_user->about ?: '-', 10) }}</td>
-                            <td>{{ extract_date($_user->registered_at) }}</td>
-                            <td>{{ $_user->post_count }}</td>
+                            @foreach ($columns as $_column => $_checked)
+                                @if ($_checked)
+                                    <td>{{ $_user->{$_column} }}</td>
+                                @endif
+                            @endforeach
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            @if ($perPage > 0)
-                <div class="row justify-content-center">
-                    {{ $users->appends('perPage', $perPage)->links() }}
-                </div>
-            @endif
-
-            <form action="{{ route('users.index.public') }}" method="get" id="form2">
-                <select name="perPage" class="form-control" onchange="document.getElementById('form2').submit();">
-                    <option value="0" {{ !$perPage ? 'selected' : '' }}>&infin;</option>
-                    @for ($i = $step; $i <= $max; $i += $step)
-                        <option value="{{ $i }}" {{ $perPage === $i ? 'selected' : '' }}>{{ $i }}</option>
-                    @endfor
-                <select>
-            </form>
         </div>
     </div>
 @stop

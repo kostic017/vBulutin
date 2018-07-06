@@ -155,7 +155,7 @@
                             <a href="{{ route('website.index') }}">Napravi i ti svoj forum</a>
                         </p>
                     @endif
-                    Copyright &copy; 2017-{{ date('Y') }} Nikola Kostić
+                    Copyright &copy; {{ date('Y') }} Nikola Kostić
                 </div>
             </section>
         </div>

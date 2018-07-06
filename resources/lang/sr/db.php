@@ -25,4 +25,19 @@ return [
         'slug' => 'U tabeli ":table" ne postoji red sa slug-om ":slug".',
         'email-token' => 'Token ":token" za potvrdu email adrese je nevažeći.',
     ],
+
+    'users' => [
+        'id' => 'ID',
+        'username' => 'Korisničko ime',
+        'registered_at' => 'Pridružio se',
+        'name' => 'Ime i prezime',
+        'about' => 'O meni',
+        'birthday_on' => 'Rođendan',
+        'sex' => 'Pol',
+        'job' => 'Zanimanje',
+        'birthplace' => 'Mesto rođenja',
+        'residence' => 'Prebivalište',
+        'signature' => 'Potpis',
+        'post_count' => 'Ukupno poruka',
+    ],
 ];
