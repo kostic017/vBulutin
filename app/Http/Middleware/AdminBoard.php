@@ -6,13 +6,10 @@ use Auth;
 use Closure;
 use App\Board;
 
-class AdminBoard
-{
+class AdminBoard {
     public function handle($request, Closure $next) {
         if (Auth::check()) {
-            $address = $request->route('board_address');
-            $board = get_board($address);
-            if ($board->is_admin()) {
+            if (get_board($request->route('board_address'))->is_admin()) {
                 return $next($request);
             }
         }

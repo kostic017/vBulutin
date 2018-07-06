@@ -28,6 +28,7 @@ Route::group(['domain' => config('app.domain')], function() {
 });
 
 Route::group([
+    'middleware' => 'viewshare.board',
     'domain' => '{board_address}.' . config('app.domain'),
 ], function () {
     Route::get('/', 'BoardsController@show')->name('boards.show');

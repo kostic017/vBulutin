@@ -12,16 +12,16 @@
                 <nav>
                     <ul class="list-group">
                         <li class="list-group-item {{ active_class(if_route('admin.index')) }}">
-                            <a href="{{ route('admin.index', [request()->route('board_address')]) }}">Početna</a>
+                            <a href="{{ route('admin.index', [$current_board->address]) }}">Početna</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_uri_pattern('admin/forums*') || if_uri_pattern('admin/categories*')) }}">
-                            <a href="{{ route('forums.index', [request()->route('board_address')]) }}">Struktura</a>
+                            <a href="{{ route('forums.index', [$current_board->address]) }}">Struktura</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_route('users.index.admin')) }}">
-                            <a href="{{ route('users.index.admin', [request()->route('board_address')]) }}">Korisnici</a>
+                            <a href="{{ route('users.index.admin', [$current_board->address]) }}">Korisnici</a>
                         </li>
                         <li class="list-group-item {{ active_class(if_route('reports.index')) }}">
-                            <a href="{{ route('reports.index', [request()->route('board_address')]) }}">Izveštaji</a>
+                            <a href="{{ route('reports.index', [$current_board->address]) }}">Izveštaji</a>
                         </li>
                     </ul>
                 </nav>

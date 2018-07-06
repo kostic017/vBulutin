@@ -5,8 +5,7 @@ namespace App\Http\Middleware;
 use Auth;
 use Closure;
 
-class LogoutUser
-{
+class LogoutUser {
     public function handle($request, Closure $next) {
         $user = Auth::user();
 

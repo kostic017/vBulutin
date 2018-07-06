@@ -16,18 +16,15 @@ class TopicsController extends Controller {
     public function show($board_address, $topic_slug) {
         $board = get_board($board_address);
         $topic = $board->topics()->where('topics.slug', $topic_slug)->firstOrFail();
-        $is_admin = $board->is_admin();
 
-        $posts = ($is_admin ? Post::withTrashed() : Post::query())
+        $posts = ($board->is_admin() ? Post::withTrashed() : Post::query())
                 ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
                 ->get();
 
         $vars = [
             'topic' => $topic,
             'posts' => $posts,
-            'is_admin' => $is_admin,
             'forum' => $topic->forum,
-            'current_board' => $board,
             'solution' => $topic->solution(),
             'last_post' => $topic->last_post(),
             'topic_starter' => $topic->starter(),

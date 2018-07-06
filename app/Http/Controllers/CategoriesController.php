@@ -89,7 +89,7 @@ class CategoriesController extends SectionsController {
         $category->description = $request->description;
         $category->save();
 
-        return alert_redirect(route("categories.show.admin", [request()->route('board_address'), $category->slug]), 'success', __('db.updated'));
+        return alert_redirect(route("categories.show.admin", [$board_address, $category->slug]), 'success', __('db.updated'));
     }
 
     public function show_admin($board_address, $category_slug) {
@@ -98,13 +98,8 @@ class CategoriesController extends SectionsController {
     }
 
     public function show($board_address, $category_slug) {
-        $board = get_board($board_address);
-        $category = $board->categories()->where('slug', $category_slug)->firstOrFail();
-
-        return view('public.category')
-            ->with('category', $category)
-            ->with('current_board', $board)
-            ->with('is_admin', $board->is_admin());
+        $category = get_board($board_address)->categories()->where('slug', $category_slug)->firstOrFail();
+        return view('public.category')->with('category', $category);
     }
 
 }

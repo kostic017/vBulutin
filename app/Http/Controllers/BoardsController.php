@@ -14,13 +14,10 @@ class BoardsController extends Controller {
         $board = get_board($address);
 
         if (!$board->is_visible) {
-            return alert_redirect(url()->previous(), 'info', 'Ovaj forum postoji ali nije vidljiv.');
+            return alert_redirect(url()->previous(), 'info', 'Forum trenutno nije vidljiv.');
         }
 
-        return view('public.index')
-            ->with('current_board', $board)
-            ->with('is_admin', $board->is_admin())
-            ->with('categories', $board->categories()->get());
+        return view('public.index')->with('categories', $board->categories()->get());
     }
 
     public function create($directory_slug) {

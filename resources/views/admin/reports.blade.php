@@ -16,7 +16,7 @@
                     </div>
                     <div id="collapseCategories" class="collapse show" aria-labelledby="headingCategories" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('reports.generate', [request()->route('board_address'), 'categories']) }}">
+                            <form method="post" action="{{ route('reports.generate', [$current_board->address, 'categories']) }}">
                                 @php ($columns = $categories)
                                 @include('admin.includes.report-form')
                             </form>
@@ -34,7 +34,7 @@
                     </div>
                     <div id="collapseForums" class="collapse" aria-labelledby="headingForums" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('reports.generate', [request()->route('board_address'), 'forums']) }}">
+                            <form method="post" action="{{ route('reports.generate', [$current_board->address, 'forums']) }}">
                                 @php ($columns = $forums)
                                 @include('admin.includes.report-form')
                             </form>
@@ -52,7 +52,7 @@
                     </div>
                     <div id="collapseTopics" class="collapse" aria-labelledby="headingTopics" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('reports.generate', [request()->route('board_address'), 'topics']) }}">
+                            <form method="post" action="{{ route('reports.generate', [$current_board->address, 'topics']) }}">
                                 @php ($columns = $topics)
                                 @include('admin.includes.report-form')
                             </form>
@@ -70,7 +70,7 @@
                     </div>
                     <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordion">
                         <div class="card-body">
-                            <form method="post" action="{{ route('reports.generate', [request()->route('board_address'), 'users']) }}">
+                            <form method="post" action="{{ route('reports.generate', [$current_board->address, 'users']) }}">
                                 @php ($columns = $users)
                                 @include('admin.includes.report-form')
                             </form>

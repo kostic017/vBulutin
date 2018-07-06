@@ -32,7 +32,7 @@
         <div class="topbox-actions">
             @if (!$topic->is_locked) <p><a href="#scform">Pošalji odgovor</a></p> @endif
             @if ($is_admin)
-                <form action="{{ route('topics.lock', [request()->route('board_address'), $topic->id]) }}" method="post">
+                <form action="{{ route('topics.lock', [$current_board->address, $topic->id]) }}" method="post">
                     @csrf
                     <button type="submit" class="btn btn-{{ $topic->is_locked ? 'success' : 'danger' }}">
                         {{ $topic->is_locked ? 'Otključaj' : 'Zaključaj' }} temu

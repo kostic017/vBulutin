@@ -1,5 +1,5 @@
 <div class="card-body">
-    <form method="post" action="{{ if_route('boards.create') ? route('boards.store') : route('boards.update', [request()->route('board_address')]) }}">
+    <form method="post" action="{{ if_route('boards.create') ? route('boards.store') : route('boards.update', [$current_board->address]) }}">
         @csrf
         @if (if_route('admin.index'))
             {{ method_field('PUT') }}

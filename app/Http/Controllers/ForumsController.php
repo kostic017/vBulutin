@@ -123,8 +123,6 @@ class ForumsController extends SectionsController {
 
         return view('public.forum')
             ->with('forum', $forum)
-            ->with('current_board', $board)
-            ->with('is_admin', $board->is_admin())
             ->with('child_forums', $forum->children()->get())
             ->with('topics', $forum->topics ()->orderBy('updated_at', 'desc')->get());
     }

@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin.board' => \App\Http\Middleware\AdminBoard::class,
         'admin.master' => \App\Http\Middleware\AdminMaster::class,
+        'viewshare.board' => \App\Http\Middleware\ViewShareBoard::class,
     ];
 }
