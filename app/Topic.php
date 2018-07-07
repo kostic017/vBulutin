@@ -43,9 +43,11 @@ class Topic extends Model {
         return $mine->merge($forum->get_all_watchers());
     }
 
+    //region Scopes
     public function scopeNewerTopics($query) {
         return $query->where('updated_at', '>', Carbon::now()->subDays((int)config('custom.recent_topic_days')));
     }
+    //endregion
 
     //region Relationships
     public function board() {

@@ -44,6 +44,45 @@ class User extends Authenticatable {
     }
     //endregion
 
+    //region Scopes
+    public function scopeActive($query) {
+        return $query->whereNotIn('users.id',
+            User::banned()->get(['id'])
+                ->merge(User::banished()->get(['id']))
+                ->toArray()
+        );
+    }
+
+    public function scopeBanished($query) {
+        return $query->where('users.is_banished', true);
+    }
+
+    public function scopeBanned($query) {
+        return $query->whereIn('users.id', BannedUser::pluck('user_id'));
+    }
+
+    public function scopeSimpleUsers($query) {
+        return $query->whereNotIn('users.id',
+            User::simpleAdmins()->get(['id'])
+                ->merge(User::forumOwners()->get(['id']))
+                ->merge(User::masterAdmins()->get(['id']))
+                ->toArray()
+        );
+    }
+
+    public function scopeSimpleAdmins($query) {
+        return $query->whereIn('users.id', BoardAdmin::pluck('user_id'));
+    }
+
+    public function scopeForumOwners($query) {
+        return $query->whereIn('users.id', Board::pluck('owner_id'));
+    }
+
+    public function scopeMasterAdmins($query) {
+        return $query->where('users.is_master', true);
+    }
+    //endregion
+
     //region Relationships
     public function posts()  {
         return $this->hasMany('App\Post');

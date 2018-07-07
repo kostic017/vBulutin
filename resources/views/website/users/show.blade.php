@@ -46,7 +46,7 @@
                         <dd>{{ $user->signature ?: '-' }}</dd>
                     </dl>
                 </section>
-                @if ($is_admin || $user->id == Auth::id())
+                @if (Auth::user()->is_master || $user->id == Auth::id())
                     <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
                 @endif
             </div>

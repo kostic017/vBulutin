@@ -11,42 +11,75 @@ use App\Post;
 use App\User;
 use App\Topic;
 
-use Illuminate\Validation\Rule;
-
 class UsersController extends Controller {
 
     public function index() {
         $request = request();
-        $query = User::query();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Default Values
-        |--------------------------------------------------------------------------
-        */
+        $pagination_max = (int)config('custom.pagination.max');
+        $pagination_step = (int)config('custom.pagination.step');
 
-        $columns = [
-            'id' => true,
-            'username' => true,
-            'registered_at' => true,
+        $show_columns = [
+            'id' => false,
+            'username' => false,
+            'registered_at' => false,
             'name' => false,
-            'sex' => true,
+            'sex' => false,
             'birthday_on' => false,
             'birthplace' => false,
             'residence' => false,
             'job' => false,
-            'post_count' => true,
+            'post_count' => false,
             'about' => false,
             'signature' => false,
         ];
 
-        $pagination_max = (int)config('custom.pagination.max');
-        $pagination_step = (int)config('custom.pagination.step');
-        $per_page = $pagination_step;
+        if ($request->has('show_columns')) {
+            if (count($request->show_columns)) {
+                foreach ($request->show_columns as $column)
+                    $show_columns[$column] = true;
+            } else {
+                $show_columns['username'] = true;
+            }
+        } else {
+            $show_columns['id'] = true;
+            $show_columns['username'] = true;
+            $show_columns['registered_at'] = true;
+            $show_columns['post_count'] = true;
+        }
 
-        $users = User::all();
+        $user_group = $request->input('user_group', 'all');
+        $sort_order = $request->input('sort_order', 'asc');
+        $search_query = $request->input('search_query', '');
+        $user_status = $request->input('user_status', 'all');
+        $per_page = $request->input('per_page', $pagination_step);
+        $sort_column = $request->input('sort_column', first_true_key($show_columns));
+        $search_field = $request->input('search_field', first_true_key($show_columns));
+
+        $query = User::select();
+
+        if ($user_status !== 'all')
+            $query->{$user_status}();
+        if ($user_group !== 'all')
+            $query->{$user_group}();
+        if (is_not_empty($search_query))
+            $query->where($search_field, 'like', "%$search_query%");
+        $query->orderBy($sort_column, $sort_order);
+
+        $users = $per_page > 0 ? $query->paginate($per_page) : $query->get();
+
         return view('website.users.index')->with(compact(
-            'users', 'per_page', 'pagination_step', 'pagination_max', 'columns'
+            'users',
+            'per_page',
+            'pagination_step',
+            'pagination_max',
+            'search_query',
+            'search_field',
+            'user_status',
+            'user_group',
+            'show_columns',
+            'sort_column',
+            'sort_order'
         ));
     }
 

@@ -108,6 +108,11 @@ span.invalid-feedback {
     display: block;
 }
 
+.table-cell {
+    overflow-y: auto;
+    max-height: 150px;
+}
+
 .dropdown-login {
     min-width: 15rem;
 }

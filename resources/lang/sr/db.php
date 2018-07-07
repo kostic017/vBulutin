@@ -26,7 +26,7 @@ return [
         'email-token' => 'Token ":token" za potvrdu email adrese je nevažeći.',
     ],
 
-    'users' => [
+    'columns' => [
         'id' => 'ID',
         'username' => 'Korisničko ime',
         'registered_at' => 'Pridružio se',
@@ -39,5 +39,11 @@ return [
         'residence' => 'Prebivalište',
         'signature' => 'Potpis',
         'post_count' => 'Ukupno poruka',
+    ],
+
+    'sex' => [
+        'm' => 'Muški',
+        'f' => 'Ženski',
+        'o' => 'Drugo',
     ],
 ];

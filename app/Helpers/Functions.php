@@ -56,6 +56,12 @@ function file_get_contents_curl($url) {
     return $data;
 }
 
+function first_true_key($array) {
+    foreach ($array as $key => $value)
+        if ($value) return $key;
+    return false;
+}
+
 function unique_slug($title, $id) {
     return str_slug($title) . '.' . $id;
 }

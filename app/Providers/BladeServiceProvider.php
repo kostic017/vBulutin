@@ -13,13 +13,13 @@ class BladeServiceProvider extends ServiceProvider {
             return '<img class="avatar-' . $size . '" src="{{ $user->avatar ?: asset(\'images/avatar.png\') }}" alt="{{ $user->username }}">';
         });
 
-        Blade::directive('th_users_sort', function ($column) {
+        Blade::directive('th_sort', function () {
             return
-                  '<th class="' . $column . '" data-column="' . $column . '"'
-                .   '{!! active_class($sortColumn === \'' . $column . '\', " data-order=\'{$sortOrder}\'") !!}'
+                  '<th data-column="{{ $_column }}"'
+                . '    {!! active_class($sort_column === $_column, \'data-order="\' . $sort_order . \'"\') !!}'
                 . '>'
-                .   '<a href="#" class="sort-link">{{ __(\'db.' . $column . '\') }}</a>'
-                .   '<i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i>'
+                . '    <a href="#" class="sort-link">{{ trans("db.columns.$_column") }}</a>'
+                . '    <i class="fas fa-caret-up"></i><i class="fas fa-caret-down"></i>'
                 . '</th>';
         });
     }
