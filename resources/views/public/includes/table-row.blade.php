@@ -1,6 +1,9 @@
 <tr class="table-row">
     <td class="icon">
         <img class="iconpost" src="{{ asset('images/forum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
+        @if ($row->is_locked ?? false)
+            <img class="lockpost" src="{{ asset('images/lock.png') }}">
+        @endif
     </td>
     <td class="main-info">
         <a href="{{ isset($is_topic) ? route_topic_show($row) : route_forum_show($row) }}" class="name">{{ $row->title }}</a>
@@ -8,7 +11,12 @@
             <ul class="subforum-list post-list">
                 @foreach ($child_forums as $_child_forum)
                     <li>
-                        <img class="iconpost" src="{{ asset('images/subforum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
+                        <span class="subforum-icon">
+                            <img class="iconpost" src="{{ asset('images/subforum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
+                            @if ($row->is_locked ?? false)
+                                <i class="fas fa-lock lockpost"></i>
+                            @endif
+                        </span>
                         <a href="{{ route_forum_show($_child_forum) }}">{{ $_child_forum->title }}</a>
                     </li>
                 @endforeach

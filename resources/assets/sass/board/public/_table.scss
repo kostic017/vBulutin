@@ -17,9 +17,9 @@
     caption {
         font-size: 1.1em;
         caption-side: top;
+        color: $c-captionlink;
         padding-left: 0.75rem;
         padding-right: 0.75rem;
-        color: $c-captionlink;
         background-color: $bgc-caption;
 
         a {
@@ -42,9 +42,16 @@
         &.icon {
             padding: 0 0 0 5px;
             text-align: center;
+            position: relative;
 
-            img {
+            .iconpost {
                 width: 60px;
+            }
+
+            .lockpost {
+                left: 7px;
+                width: 40px;
+                transform: translateY(50%);
             }
         }
 
@@ -66,24 +73,21 @@
         vertical-align: baseline;
     }
 
+    .lockpost {
+        position: absolute;
+    }
+
     .subforum-list {
         @include unstyle-list;
     }
 
-    .sort-bar {
-        margin-bottom: 0;
+    .subforum-icon {
+        position: relative;
 
-        ul {
-            display: flex;
-        }
-
-        li {
-            margin-right: 10px;
-        }
-
-        a {
-            display: block;
-            padding: 0 5px;
+        .lockpost {
+            right: 5px;
+            bottom: 2px;
+            font-size: 6px;
         }
     }
 
@@ -105,7 +109,7 @@
         list-style: none;
 
         li {
-            padding-left: 8px;
+            margin-left: 8px;
             background-repeat: no-repeat;
             background-position: left center;
         }
