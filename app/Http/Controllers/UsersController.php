@@ -57,9 +57,7 @@ class UsersController extends Controller {
     public function show($username) {
         if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
-            return view('website.users.show')
-                ->with('user', $user)
-                ->with('profile', $user->profile);
+            return view('website.users.show')->with('user', $user);
         } else {
             return alert_redirect(url()->previous(), 'info', __('auth.must-login'));
         }
@@ -69,9 +67,7 @@ class UsersController extends Controller {
         if (Auth::check()) {
             $user = User::where('username', $username)->firstOrFail();
             if (Auth::id() == $user->id || Auth::user()->is_master) {
-                return view('website.users.edit')
-                    ->with('user', $user)
-                    ->with('profile', $user->profile);
+                return view('website.users.edit')->with('user', $user);
             }
             return redirect(route_user_show($user));
         } else {
@@ -82,9 +78,7 @@ class UsersController extends Controller {
     public function update($username) {
         $errors = [];
         $request = request();
-
         $user = User::where('username', $username)->firstOrFail();
-        $profile = $user->profile;
 
         $user->is_invisible = $request->is_invisible;
 
@@ -116,18 +110,17 @@ class UsersController extends Controller {
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
-        $profile->about = $request->about;
-        $profile->birthday_on = $request->birthday_on;
-        $profile->sex = $request->sex;
-        $profile->job = $request->job;
-        $profile->name = $request->name;
-        $profile->residence = $request->residence;
-        $profile->birthplace = $request->birthplace;
-        $profile->avatar = $request->avatar;
-        $profile->signature = $request->signature;
+        $user->about = $request->about;
+        $user->birthday_on = $request->birthday_on;
+        $user->sex = $request->sex;
+        $user->job = $request->job;
+        $user->name = $request->name;
+        $user->residence = $request->residence;
+        $user->birthplace = $request->birthplace;
+        $user->avatar = $request->avatar;
+        $user->signature = $request->signature;
 
         $user->save();
-        $profile->save();
 
         return alert_redirect(route_user_show($user), 'success', __('db.updated'));
     }

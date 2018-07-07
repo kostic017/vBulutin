@@ -5,7 +5,6 @@ use App\Post;
 use App\Topic;
 use App\Forum;
 use App\Board;
-use App\Profile;
 use App\Category;
 use App\Directory;
 
@@ -25,11 +24,7 @@ class RandomSeeder extends Seeder
 
     public function run()
     {
-        factory(User::class, self::USER_COUNT)
-            ->create()
-            ->each(function ($user) {
-                factory(Profile::class, 1)->create(['user_id' => $user->id]);
-            });
+        factory(User::class, self::USER_COUNT)->create();
 
         Directory::all()->each(function ($directory) {
             factory(Board::class, self::BOARDS_PER_DIRECTORY)

@@ -10,7 +10,7 @@ use Illuminate\Support\ServiceProvider;
 class BladeServiceProvider extends ServiceProvider {
     public function boot() {
         Blade::directive('avatar', function ($size) {
-            return '<img class="avatar-' . $size . '" src="{{ $user->profile->avatar ?: asset(\'images/avatar.png\') }}" alt="{{ $user->username }}">';
+            return '<img class="avatar-' . $size . '" src="{{ $user->avatar ?: asset(\'images/avatar.png\') }}" alt="{{ $user->username }}">';
         });
 
         Blade::directive('th_users_sort', function ($column) {

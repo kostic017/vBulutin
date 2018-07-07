@@ -6,7 +6,6 @@ use Hash;
 use Validator;
 
 use App\User;
-use App\Profile;
 use App\Helpers\Logger;
 use App\Notifications\ConfirmEmail;
 use App\Http\Controllers\Controller;
@@ -55,10 +54,6 @@ class RegisterController extends Controller {
         $user->email_token = str_random(30);
         $user->password = Hash::make($data['password']);
         $user->save();
-
-        $profile = new Profile;
-        $profile->user_id = $user->id;
-        $profile->save();
 
         $user->notify(new ConfirmEmail($user->id, $user->email_token));
         return $user;

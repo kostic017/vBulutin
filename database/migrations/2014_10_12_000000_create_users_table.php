@@ -25,6 +25,16 @@ class CreateUsersTable extends Migration
             $table->boolean('to_logout')->default(false);
             $table->timestamp('registered_at')->useCurrent();
             $table->rememberToken();
+
+            $table->text('about')->nullable();
+            $table->date('birthday_on')->nullable();
+            $table->enum('sex', ['m', 'f', 'o'])->nullable();
+            $table->string('job')->nullable();
+            $table->string('name')->nullable();
+            $table->string('residence')->nullable();
+            $table->string('birthplace')->nullable();
+            $table->string('avatar')->nullable();
+            $table->text('signature')->nullable();
         });
     }
 

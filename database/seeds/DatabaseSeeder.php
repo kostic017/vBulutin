@@ -1,7 +1,6 @@
 <?php
 
 use App\User;
-use App\Profile;
 use App\Directory;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +14,6 @@ class DatabaseSeeder extends Seeder
         $admin->email = 'admin@forum.com';
         $admin->is_master = true;
         $admin->save();
-        factory(Profile::class, 1)->create(['user_id' => $admin->id]);
 
         $directories = [
             "Igre", "Sport", "Nauka","Muzika",

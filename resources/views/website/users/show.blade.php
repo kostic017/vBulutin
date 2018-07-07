@@ -21,7 +21,7 @@
                         <dd>{{ $user->posts()->get()->count() }}</dd>
                         <dt>Pol</dt>
                         <dd><?php
-                            switch ($profile->sex) {
+                            switch ($user->sex) {
                                 case 'm': echo 'Muški'; break;
                                 case 'f': echo 'Ženski'; break;
                                 case 'o': echo 'Drugo'; break;
@@ -31,19 +31,19 @@
                     </dl>
                     <dl>
                         <dt>Datum rođenja</dt>
-                        <dd>{{ $profile->birthday_on ?: '-' }}</dd>
+                        <dd>{{ $user->birthday_on ?: '-' }}</dd>
                         <dt>Mesto rođenja</dt>
-                        <dd>{{ $profile->birthplace ?: '-' }}</dd>
+                        <dd>{{ $user->birthplace ?: '-' }}</dd>
                         <dt>Prebivalište</dt>
-                        <dd>{{ $profile->residence ?: '-' }}</dd>
+                        <dd>{{ $user->residence ?: '-' }}</dd>
                         <dt>Zanimanje</dt>
-                        <dd>{{ $profile->job ?: '-' }}</dd>
+                        <dd>{{ $user->job ?: '-' }}</dd>
                     </dl>
                     <dl>
                         <dt>O meni</dt>
-                        <dd>{{ $profile->about ?: '-' }}</dd>
+                        <dd>{{ $user->about ?: '-' }}</dd>
                         <dt>Potpis</dt>
-                        <dd>{{ $profile->signature ?: '-' }}</dd>
+                        <dd>{{ $user->signature ?: '-' }}</dd>
                     </dl>
                 </section>
                 @if ($is_admin || $user->id == Auth::id())

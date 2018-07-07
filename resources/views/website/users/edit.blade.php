@@ -43,44 +43,44 @@
                     <div class="form-group">
                         <label for="sex">Pol</label>
                         <select class="form-control" name="sex" id="sex">
-                            <option value="m" {{ $profile->sex === 'm' ? 'selected' : '' }}>Мuški</option>
-                            <option value="f" {{ $profile->sex === 'f' ? 'selected' : '' }}>Ženski</option>
-                            <option value="o" {{ $profile->sex === 'o' ? 'selected' : '' }}>Drugo</option>
+                            <option value="m" {{ $user->sex === 'm' ? 'selected' : '' }}>Мuški</option>
+                            <option value="f" {{ $user->sex === 'f' ? 'selected' : '' }}>Ženski</option>
+                            <option value="o" {{ $user->sex === 'o' ? 'selected' : '' }}>Drugo</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="birthday">Datum rođenja</label>
-                        <input type="date" id="birthday" name="birthday_on" class="form-control" value="{{ $profile->birthday_on }}">
+                        <input type="date" id="birthday" name="birthday_on" class="form-control" value="{{ $user->birthday_on }}">
                     </div>
                     <div class="form-group">
                         <label for="birthplace">Mesto rođenja</label>
-                        <input type="text" id="birthplace" name="birthplace" class="form-control" value="{{ $profile->birthplace }}">
+                        <input type="text" id="birthplace" name="birthplace" class="form-control" value="{{ $user->birthplace }}">
                     </div>
                     <div class="form-group">
                         <label for="residence">Prebivalište</label>
-                        <input type="text" id="residence" name="residence" class="form-control" value="{{ $profile->residence }}">
+                        <input type="text" id="residence" name="residence" class="form-control" value="{{ $user->residence }}">
                     </div>
                     <div class="form-group">
                         <label for="job">Zanimanje</label>
-                        <input type="text" id="job" name="job" class="form-control" value="{{ $profile->job }}">
+                        <input type="text" id="job" name="job" class="form-control" value="{{ $user->job }}">
                     </div>
                     <div class="form-group">
                         <label for="avatar">Profilna slika</label>
-                        @if ($profile->avatar)
-                            <img src="{{ $profile->avatar }}" alt="{{ $user->username }}" class="avatar avatar-medium">
+                        @if ($user->avatar)
+                            <img src="{{ $user->avatar }}" alt="{{ $user->username }}" class="avatar avatar-medium">
                         @endif
-                        <input type="text" id="avatar" name="avatar" class="form-control" value="{{ $profile->avatar }}" placeholder="URL do slike...">
+                        <input type="text" id="avatar" name="avatar" class="form-control" value="{{ $user->avatar }}" placeholder="URL do slike...">
                     </div>
                 </fieldset>
 
                 <fieldset>
                     <div class="form-group">
                         <label for="about">O meni</label>
-                        <textarea class="form-control" name="about" id="about" rows="3">{{ $profile->about }}</textarea>
+                        <textarea class="form-control" name="about" id="about" rows="3">{{ $user->about }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="signature">Potpis</label>
-                        <textarea class="form-control" name="signature" id="signature" rows="3">{{ $profile->signature }}</textarea>
+                        <textarea class="form-control" name="signature" id="signature" rows="3">{{ $user->signature }}</textarea>
                     </div>
                 </fieldset>
 

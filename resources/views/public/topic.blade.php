@@ -61,7 +61,7 @@
                         {!! BBCode::parse($_post->content) !!}
                     </div>
                     <div class="signature">
-                        {{ $user->profile->signature }}
+                        {{ $user->signature }}
                     </div>
                 </div>
             </div>
