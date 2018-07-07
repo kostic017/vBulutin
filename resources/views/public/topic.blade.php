@@ -42,6 +42,7 @@
         </div>
     @endif
 
+    {{ $posts->links() }}
     @foreach ($posts as $_post)
         @php ($user = $_post->user)
         <div class="post p-main {{ $_post->deleted_at ? 'deleted' : '' }} {{ $topic->solution_id === $_post->id ? 'solution' : ''}}" id="post-{{ $_post->id }}">
@@ -98,6 +99,7 @@
             </div>
         </div>
     @endforeach
+    {{ $posts->links() }}
 
     @if ($topic->is_locked)
         <p>Tema je zaključana, te nije moguće odgovarati na nju.</p>

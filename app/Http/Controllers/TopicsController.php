@@ -19,7 +19,7 @@ class TopicsController extends Controller {
 
         $posts = ($board->is_admin() ? Post::withTrashed() : Post::query())
                 ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
-                ->get();
+                ->paginate();
 
         $vars = [
             'topic' => $topic,

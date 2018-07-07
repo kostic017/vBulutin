@@ -2,13 +2,13 @@
     @if (if_route('boards.show'))
         <caption>
             <div class="flex-center-xy">
-                <a href="{{ route_category_show($_category) }}">{{ $_category->title }}</a>
+                <a href="{{ route_category_show($category) }}">{{ $category->title }}</a>
                 <a href="#top" class="back2top" title="Top">Top</a>
             </div>
         </caption>
     @endif
 
-    @if (($parent_forums = $_category->parent_forums()->orderBy('position')->get())->isEmpty())
+    @if (($parent_forums = $category->parent_forums()->orderBy('position')->get())->isEmpty())
         <tr class="table-row">
             <td>Nema foruma u ovoj kategoriji.</td>
         </tr>

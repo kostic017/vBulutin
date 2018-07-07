@@ -47,6 +47,7 @@
     @if ($topics->isEmpty())
         <p>Nema tema u ovom forumu.</p>
     @else
+        {{ $topics->links() }}
         <table class="main-table table-hover">
             <caption>
                 <div class="flex-center-xy">
@@ -58,6 +59,7 @@
                 @include('public.includes.table-row', ['row' => $_topic, 'is_topic' => true])
             @endforeach
         </table>
+        {{ $topics->links() }}
     @endif
 
     @if ($forum->is_locked)
