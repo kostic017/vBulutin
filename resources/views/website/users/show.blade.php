@@ -49,10 +49,10 @@
                         <dd>{{ $user->signature ?: '-' }}</dd>
                     </dl>
                 </section>
-                @if ($user->owned_boards->count())
+                @if ($user->owner_of->count())
                     Vlasnik sledećih foruma:
                     <ul>
-                        @foreach ($user->owned_boards as $_owned_board)
+                        @foreach ($user->owner_of as $_owned_board)
                             <li><a href="{{ route('boards.show', [$_owned_board->address]) }}">{{ $_owned_board->title }}</a></li>
                         @endforeach
                     </ul>
@@ -65,55 +65,65 @@
                         @endforeach
                     </ul>
                 @endif
-                @if ($v_user->id === $user->id || ($v_user->is_master && $user->username !== 'admin'))
-                    <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
-                @endif
-                @if ($user->username !== 'admin' && $v_user->is_master && $v_user->id !== $user->id && !$user->is_banished)
-                    <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
-                        @csrf
-                        <button class="btn btn-danger">Progni</button>
-                    </form>
-                @endif
-                @if ($user->username !== 'admin' && $v_user->id !== $user->id && $v_user->owned_boards->count())
-                    <p class="mt-3 mb-0">Selektujte forum i pomoću strelica ga premestite u željeno polje.</p>
-                    <form method="post" action="{{ route('users.ban', [$user->id]) }}">
-                        @csrf
 
-                        <div class="banning">
-                            <div class="form-group not-banned-on">
-                                <select id="not-banned-on" name="not_banned_on[]" multiple class="form-control">
-                                    @foreach ($v_user->owned_boards as $_board)
-                                        @if (!$user->is_banned_on($_board->id))
-                                            <option value="{{ $_board->id }}">{{ $_board->title }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                <label for="not-banned-on">Nije banovan na</label>
-                            </div>
-                            <div class="buttons">
-                                <button id="move-right" type="button" class="btn btn-warning">
-                                    <i class="fas fa-long-arrow-alt-right"></i>
-                                </button>
-                                <button id="move-left" type="button" class="btn btn-warning">
-                                    <i class="fas fa-long-arrow-alt-left"></i>
-                                </button>
-                            </div>
-                            <div class="form-group banned-on">
-                                <select id="banned-on" name="banned_on[]" multiple class="form-control">
-                                    @foreach ($v_user->owned_boards as $_board)
-                                        @if ($user->is_banned_on($_board->id))
-                                            <option value="{{ $_board->id }}">{{ $_board->title }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                <label for="banned-on">Banovan je na</label>
-                            </div>
-                        </div>
+                @if ($user->username !== 'admin' || $v_user->username === 'admin')
+                    @if ($v_user->id === $user->id || $v_user->is_master)
+                        <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
+                    @endif
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Primeni</button>
-                        </div>
-                    </form>
+                    @if ($v_user->id !== $user->id && !$user->is_banished)
+                        @if ($v_user->is_master)
+                            <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
+                                @csrf
+                                <button class="btn btn-danger">Progni</button>
+                            </form>
+                        @endif
+
+                        @php($can_ban_on = $v_user->can_ban_user_on($user))
+                        @if ($can_ban_on->count())
+                            <p class="mt-3 mb-0">
+                                Selektujte forum i pomoću strelica ga premestite u željeno polje.
+                            </p>
+                            <form method="post" action="{{ route('users.ban', [$user->id]) }}">
+                                @csrf
+
+                                <div class="banning">
+                                    <div class="form-group not-banned-on">
+                                        <select id="not-banned-on" name="not_banned_on[]" multiple class="form-control">
+                                            @foreach ($can_ban_on as $_board)
+                                                @if (!$user->is_banned_on($_board->id))
+                                                    <option value="{{ $_board->id }}">{{ $_board->title }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <label for="not-banned-on">Nije banovan na</label>
+                                    </div>
+                                    <div class="buttons">
+                                        <button id="move-right" type="button" class="btn btn-warning">
+                                            <i class="fas fa-long-arrow-alt-right"></i>
+                                        </button>
+                                        <button id="move-left" type="button" class="btn btn-warning">
+                                            <i class="fas fa-long-arrow-alt-left"></i>
+                                        </button>
+                                    </div>
+                                    <div class="form-group banned-on">
+                                        <select id="banned-on" name="banned_on[]" multiple class="form-control">
+                                            @foreach ($can_ban_on as $_board)
+                                                @if ($user->is_banned_on($_board->id))
+                                                    <option value="{{ $_board->id }}">{{ $_board->title }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <label for="banned-on">Banovan je na</label>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Primeni</button>
+                                </div>
+                            </form>
+                        @endif
+                    @endif
                 @endif
             </div>
         </div>

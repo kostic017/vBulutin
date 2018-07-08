@@ -44,17 +44,14 @@ class User extends Authenticatable {
             ->first() !== null;
     }
 
+    public function can_ban_user_on($user) {
+        if ($user->username === 'admin' || ($this->username !== 'admin' && $user->is_master)) return collect();
+        return $this->owner_of->merge($this->admin_on()->where('owner_id', '<>', $user->id)->get());
+    }
+
     //region Custom Attributes
     public function getPostCountAttribute() {
         return $this->posts()->count();
-    }
-
-    public function getOwnedBoardsAttribute() {
-        return Board::where('owner_id', $this->id)->get();
-    }
-
-    public function getBannedOnAttribute() {
-        return Board::whereIn('id', BannedUser::where('user_id', $this->id)->pluck('board_id'))->get();
     }
     //endregion
 
@@ -102,20 +99,16 @@ class User extends Authenticatable {
         return $this->hasMany('App\Post');
     }
 
-    public function reports() {
-        return $this->belongsToMany('App\Post', 'user_reports');
+    public function banned_on() {
+        return $this->belongsToMany('App\Board', 'banned_users')->using('App\BannedUser');
     }
 
-    public function ratings() {
-        return $this->belongsToMany('App\Post', 'user_ratings');
+    public function admin_on() {
+        return $this->belongsToMany('App\Board', 'board_admins')->using('App\BoardAdmin');
     }
 
-    public function readTopics() {
-        return $this->belongsToMany('App\Topic', 'read_topics');
-    }
-
-    public function pollAnswers() {
-        return $this->belongsToMany('App\PollAnswer', 'user_answers');
+    public function owner_of() {
+        return $this->hasMany('App\Board', 'owner_id');
     }
     //endregion
 }
