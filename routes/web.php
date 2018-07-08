@@ -24,6 +24,8 @@ Route::group(['domain' => config('app.domain')], function() {
     Route::group(['middleware' => 'admin.master'], function () {
         Route::resource('users', 'UsersController')->only(['edit', 'update']);
         Route::resource('directories', 'DirectoriesController')->only(['create', 'store', 'edit', 'update', 'destroy']);
+
+        Route::post('users/{id}/banish', 'UsersController@banish')->name('users.banish');
     });
 });
 

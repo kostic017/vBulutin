@@ -161,6 +161,14 @@ class UsersController extends Controller {
         return alert_redirect(route_user_show($user), 'success', __('db.updated'));
     }
 
+    public function banish($id) {
+        $user = User::findOrFail($id);
+        $user->is_banished = true;
+        $user->save();
+
+        return alert_redirect(url()->previous(), 'success', "Korisnik $user->username je prognan sa foruma.");
+    }
+
     public function ban($username) {
         // $user = User::where('username', $username)->firstOrFail();
         // $user->is_banned = !$user->is_banned;

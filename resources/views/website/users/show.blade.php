@@ -46,8 +46,14 @@
                         <dd>{{ $user->signature ?: '-' }}</dd>
                     </dl>
                 </section>
-                @if (Auth::user()->is_master || $user->id == Auth::id())
+                @if (Auth::user()->is_master || Auth::id() === $user->id)
                     <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
+                @endif
+                @if (Auth::user()->is_master && Auth::id() !== $user->id && !$user->is_banished)
+                    <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
+                        @csrf
+                        <button class="btn btn-danger">Progni</button>
+                    </form>
                 @endif
             </div>
         </div>
