@@ -1,187 +1,189 @@
-.actions .btn {
-    padding: 0;
-    width: 25px;
-    height: 25px;
-    padding-top: 0;
-    padding-bottom: 0;
-    box-sizing: border-box;
-}
+.sections-index {
+    .actions .btn {
+        padding: 0;
+        width: 25px;
+        height: 25px;
+        padding-top: 0;
+        padding-bottom: 0;
+        box-sizing: border-box;
+    }
 
-a.btn {
-    color: #000;
-    background-color: buttonface;
-}
+    a.btn {
+        color: #000;
+        background-color: buttonface;
+    }
 
-.toplevel-buttons {
-    display: flex;
-    margin: 5px 0;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.category-header {
-    display: flex;
-    font-weight: bold;
-    cursor: ns-resize;
-    justify-content: space-between;
-
-    .title {
+    .toplevel-buttons {
         display: flex;
+        margin: 5px 0;
         align-items: center;
+        justify-content: space-between;
     }
 
-    .btn {
-        @include margins-but(last, right, 3px);
+    .category-header {
+        display: flex;
+        font-weight: bold;
+        cursor: ns-resize;
+        justify-content: space-between;
+
+        .title {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            @include margins-but(last, right, 3px);
+        }
     }
-}
 
 
-.sortable-category {
-    padding: 15px;
-    padding-left: 5px;
-    margin-bottom: 15px;
-    background: #f6f6f6;
-    border: 1px solid #c5c5c5;
-}
-
-.dd-list {
-    margin: 0;
-    padding: 0 0 0 20px;
+    .sortable-category {
+        padding: 15px;
+        padding-left: 5px;
+        margin-bottom: 15px;
+        background: #f6f6f6;
+        border: 1px solid #c5c5c5;
+    }
 
     .dd-list {
-        padding-left: 50px;
+        margin: 0;
+        padding: 0 0 0 20px;
+
+        .dd-list {
+            padding-left: 50px;
+        }
     }
-}
 
-.dd-item,
-.dd-empty,
-.dd-placeholder {
-    display: block;
-}
-
-.dd-item {
-    position: relative;
-
-    > button {
-        border: 0;
-        padding: 0;
-        float: left;
-        width: 25px;
-        height: 12px;
+    .dd-item,
+    .dd-empty,
+    .dd-placeholder {
         display: block;
-        line-height: 1;
-        font-size: 12px;
-        margin-top: 5px;
-        overflow: hidden;
-        text-indent: 100%;
-        font-weight: bold;
-        text-align: center;
+    }
+
+    .dd-item {
         position: relative;
-        white-space: nowrap;
-        background: transparent;
-        transform: translateY(50%);
-        font-family: Font Awesome\ 5 Free;
 
-        &:before {
-            width: 100%;
+        > button {
+            border: 0;
+            padding: 0;
+            float: left;
+            width: 25px;
+            height: 12px;
             display: block;
-            text-indent: 0;
-            content: '\f067';
-            position: apsolute;
+            line-height: 1;
+            font-size: 12px;
+            margin-top: 5px;
+            overflow: hidden;
+            text-indent: 100%;
+            font-weight: bold;
             text-align: center;
+            position: relative;
+            white-space: nowrap;
+            background: transparent;
+            transform: translateY(50%);
+            font-family: Font Awesome\ 5 Free;
+
+            &:before {
+                width: 100%;
+                display: block;
+                text-indent: 0;
+                content: '\f067';
+                position: apsolute;
+                text-align: center;
+            }
+
+            &[data-action="collapse"]:before {
+                content: '\f068';
+            }
+         }
+
+        > .actions {
+            top: 4px;
+            right: 10px;
+            text-align: right;
+            position: absolute;
         }
-
-        &[data-action="collapse"]:before {
-            content: '\f068';
-        }
-     }
-
-    > .actions {
-        top: 4px;
-        right: 10px;
-        text-align: right;
-        position: absolute;
-    }
-}
-
-.dd-handle {
-    color: #333;
-    cursor: move;
-    margin: 5px 0;
-    display: flex;
-    padding: 5px 10px;
-    border-radius: 3px;
-    background: #fafafa;
-    border: 1px solid #ccc;
-    justify-content: space-between;
-    background: linear-gradient(to bottom, #fafafa 0%, #eee 100%);
-
-    &:hover {
-        color: #2ea8e5;
-        background: #fff;
-    }
-}
-
-.dd-item-button,
-.dd-item > .btn,
-.collapse-category {
-    border: 0;
-    background: transparent;
-}
-
-.collapse-category {
-    .minus {
-        display: none;
-    }
-
-    .plus {
-        display: block;
-    }
-
-    &[data-action=collapse] {
-        .minus {
-            display: block;
-        }
-
-        .plus {
-            display: none;
-        }
-    }
-}
-
-.dd-placeholder,
-.dd-empty {
-    padding: 0;
-    margin: 5px 0;
-    min-height: 30px;
-    background: #f2fbff;
-    box-sizing: border-box;
-    border: 1px dashed #b6bcbf;
-}
-
-.dd-empty {
-    min-height: 100px;
-    border: 1px dashed #bbb;
-    background-color: #e5e5e5;
-    background-size: 60px 60px;
-    background-position: 0 0, 30px 30px;
-    background-image: linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
-}
-
-.dd-dragel {
-    z-index: 9999;
-    position: absolute;
-    pointer-events: none;
-
-    >.dd-item .dd-handle {
-        margin-top: 0;
     }
 
     .dd-handle {
-        box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
-    }
-}
+        color: #333;
+        cursor: move;
+        margin: 5px 0;
+        display: flex;
+        padding: 5px 10px;
+        border-radius: 3px;
+        background: #fafafa;
+        border: 1px solid #ccc;
+        justify-content: space-between;
+        background: linear-gradient(to bottom, #fafafa 0%, #eee 100%);
 
-.trashed {
-    text-decoration: line-through red;
+        &:hover {
+            color: #2ea8e5;
+            background: #fff;
+        }
+    }
+
+    .dd-item-button,
+    .dd-item > .btn,
+    .collapse-category {
+        border: 0;
+        background: transparent;
+    }
+
+    .collapse-category {
+        .minus {
+            display: none;
+        }
+
+        .plus {
+            display: block;
+        }
+
+        &[data-action=collapse] {
+            .minus {
+                display: block;
+            }
+
+            .plus {
+                display: none;
+            }
+        }
+    }
+
+    .dd-placeholder,
+    .dd-empty {
+        padding: 0;
+        margin: 5px 0;
+        min-height: 30px;
+        background: #f2fbff;
+        box-sizing: border-box;
+        border: 1px dashed #b6bcbf;
+    }
+
+    .dd-empty {
+        min-height: 100px;
+        border: 1px dashed #bbb;
+        background-color: #e5e5e5;
+        background-size: 60px 60px;
+        background-position: 0 0, 30px 30px;
+        background-image: linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
+    }
+
+    .dd-dragel {
+        z-index: 9999;
+        position: absolute;
+        pointer-events: none;
+
+        >.dd-item .dd-handle {
+            margin-top: 0;
+        }
+
+        .dd-handle {
+            box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
+        }
+    }
+
+    .trashed {
+        text-decoration: line-through red;
+    }
 }

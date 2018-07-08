@@ -17,11 +17,17 @@
                         <li class="list-group-item {{ active_class(if_uri_pattern(['admin/forums*', 'admin/categories*'])) }}">
                             <a href="{{ route('forums.index', [$board->address]) }}">Struktura</a>
                         </li>
-                        <li class="list-group-item {{ active_class(if_route('users.index.admin')) }}">
-                            <a href="{{ route('users.index.admin', [$board->address]) }}">Korisnici</a>
-                        </li>
                         <li class="list-group-item {{ active_class(if_route('reports.index')) }}">
                             <a href="{{ route('reports.index', [$board->address]) }}">Izveštaji</a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
+
+                        <li class="list-group-item {{ active_class(if_uri('admin/users/banned')) }}">
+                            <a href="{{ route('users.index.admin', [$board->address, 'banned']) }}">Banuj korisnike</a>
+                        </li>
+                        <li class="list-group-item {{ active_class(if_uri('admin/users/admins')) }}">
+                            <a href="{{ route('users.index.admin', [$board->address, 'admins']) }}">Postavi administratore</a>
                         </li>
                     </ul>
                 </nav>

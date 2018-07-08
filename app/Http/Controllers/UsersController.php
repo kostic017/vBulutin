@@ -10,6 +10,7 @@ use Validator;
 use App\Post;
 use App\User;
 use App\Topic;
+use App\BoardAdmin;
 use App\BannedUser;
 
 class UsersController extends Controller {
@@ -84,8 +85,32 @@ class UsersController extends Controller {
         ));
     }
 
-    public function index_admin($board_address) {
-        return view('website.users.index')->with('users', User::all());
+    public function index_admin($board_address, $page) {
+        $query = User::query();
+        $board = get_board($board_address);
+        $user_group = request()->input('user_group', 'all');
+
+        $query->where('username', '<>', 'admin')
+            ->where('id', '<>', get_board($board_address)->owner_id)
+            ->where('is_banished', false);
+
+        if ($page === 'banned') {
+            if ($user_group === 'nonbanned')
+                $query->whereNotIn('id', BannedUser::where('board_id', $board->id)->pluck('user_id'));
+            elseif ($user_group === 'banned')
+                $query->whereIn('id', BannedUser::where('board_id', $board->id)->pluck('user_id'));
+        } elseif ($page === 'admins') {
+            if ($user_group === 'nonadmins')
+                $query->whereNotIn('id', BoardAdmin::where('board_id', $board->id)->pluck('user_id'));
+            elseif ($user_group === 'admins')
+                $query->whereIn('id', BoardAdmin::where('board_id', $board->id)->pluck('user_id'));
+            $query->whereNotIn('id', BannedUser::where('board_id', $board->id)->pluck('user_id'));
+        }
+
+        return view('admin.users')
+            ->with('page', $page)
+            ->with('users', $query->paginate())
+            ->with('user_group', $user_group);
     }
 
     public function show($username) {
@@ -167,19 +192,36 @@ class UsersController extends Controller {
     public function banish($id) {
         $user = User::findOrFail($id);
         $user->is_banished = true;
+        $user->is_master = false;
         $user->save();
 
         return alert_redirect(route_user_show($user), 'success', "Korisnik $user->username je prognan sa foruma.");
     }
 
-    public function ban($id) {
-        $request = request();
-        DB::transaction(function () use ($id, $request) {
-            foreach ($request->not_banned_on ?? [] as $not_banned_on)
-                BannedUser::where('user_id', $id)->where('board_id', $not_banned_on)->delete();
-            foreach ($request->banned_on ?? [] as $banned_on)
-                BannedUser::create(['user_id' => $id, 'board_id' => $banned_on, 'banned_by' => Auth::id()]);
-        });
+    public function ban($board_address, $id) {
+        $user = User::findOrFail($id);
+        $board = get_board($board_address);
+
+        if ($user->is_banned_on($board)) {
+            BannedUser::where('user_id', $id)->where('board_id', $board->id)->delete();
+        } else {
+            BannedUser::create(['user_id' => $id, 'board_id' => $board->id, 'banned_by' => Auth::id()]);
+            BoardAdmin::where('user_id', $id)->where('board_id', $board->id)->delete();
+        }
+
+        return alert_redirect(url()->previous(), 'success', __('db.updated'));
+    }
+
+    public function admin($board_address, $id) {
+        $user = User::findOrFail($id);
+        $board = get_board($board_address);
+
+        if ($user->is_admin_of($board)) {
+            BoardAdmin::where('user_id', $id)->where('board_id', $board->id)->delete();
+        } else {
+            BoardAdmin::create(['user_id' => $id, 'board_id' => $board->id]);
+        }
+
         return alert_redirect(url()->previous(), 'success', __('db.updated'));
     }
 

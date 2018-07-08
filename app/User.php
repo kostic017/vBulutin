@@ -38,9 +38,15 @@ class User extends Authenticatable {
         return Topic::findMany(UserWatches::select('topic_id')->where('user_id', $this->id)->get()->toArray());
     }
 
-    public function is_banned_on($board_id) {
+    public function is_banned_on($board) {
         return BannedUser::where('user_id', $this->id)
-            ->where('board_id', $board_id)
+            ->where('board_id', $board->id)
+            ->first() !== null;
+    }
+
+    public function is_admin_of($board) {
+        return BoardAdmin::where('user_id', $this->id)
+            ->where('board_id', $board->id)
             ->first() !== null;
     }
 

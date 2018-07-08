@@ -8,7 +8,6 @@ Route::group(['domain' => config('app.domain')], function() {
 
     Route::get('users', 'UsersController@index')->name('users.index.public');
     Route::get('users/{username}/show', 'UsersController@show')->name('users.show');
-    Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
 
     Route::get('directories/{slug}/show', 'DirectoriesController@show')->name('directories.show');
     Route::get('directories/{slug}/create-board', 'BoardsController@create')->name('boards.create');
@@ -70,6 +69,9 @@ Route::group([
         Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
 
         Route::get('reports', 'ReportsController@index')->name('reports.index');
-        Route::get('users', 'UsersController@index_admin')->name('users.index.admin');
+
+        Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
+        Route::post('users/{id}/admin', 'UsersController@admin')->name('users.admin');
+        Route::get('users/{page}', 'UsersController@index_admin')->name('users.index.admin');
     });
 });
