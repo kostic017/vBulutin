@@ -65,16 +65,16 @@
                         @endforeach
                     </ul>
                 @endif
-                @if ($v_user->is_master || $v_user->id === $user->id)
+                @if ($v_user->id === $user->id || ($v_user->is_master && $user->username !== 'admin'))
                     <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
                 @endif
-                @if ($v_user->is_master && $v_user->id !== $user->id && !$user->is_banished)
+                @if ($user->username !== 'admin' && $v_user->is_master && $v_user->id !== $user->id && !$user->is_banished)
                     <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
                         @csrf
                         <button class="btn btn-danger">Progni</button>
                     </form>
                 @endif
-                @if ($v_user->id !== $user->id && $v_user->owned_boards->count())
+                @if ($user->username !== 'admin' && $v_user->id !== $user->id && $v_user->owned_boards->count())
                     <p class="mt-3 mb-0">Selektujte forum i pomoću strelica ga premestite u željeno polje.</p>
                     <form method="post" action="{{ route('users.ban', [$user->id]) }}">
                         @csrf
