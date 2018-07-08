@@ -183,4 +183,12 @@ class UsersController extends Controller {
         return alert_redirect(url()->previous(), 'success', __('db.updated'));
     }
 
+    public function master($id) {
+        $user = User::findOrFail($id);
+        $user->is_master = !$user->is_master;
+        $user->save();
+
+        return alert_redirect(route_user_show($user), 'success', __('db.updated'));
+    }
+
 }

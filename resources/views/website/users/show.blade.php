@@ -73,6 +73,10 @@
 
                     @if ($v_user->id !== $user->id && !$user->is_banished)
                         @if ($v_user->is_master)
+                            <form class="d-inline-block" method="post" action="{{ route('users.master', [$user->id]) }}">
+                                @csrf
+                                <button class="btn btn-info">{{ $user->is_master ? 'Oduzmi master' : 'Daj master' }}</button>
+                            </form>
                             <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
                                 @csrf
                                 <button class="btn btn-danger">Progni</button>

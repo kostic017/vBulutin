@@ -27,6 +27,7 @@ Route::group(['domain' => config('app.domain')], function() {
         Route::resource('directories', 'DirectoriesController')->only(['create', 'store', 'edit', 'update', 'destroy']);
 
         Route::post('users/{id}/banish', 'UsersController@banish')->name('users.banish');
+        Route::post('users/{id}/master', 'UsersController@master')->name('users.master');
     });
 });
 
