@@ -78,6 +78,8 @@
                 </fieldset>
             </form>
 
+            <p>Samo prijavljeni korisnici mogu pregledati profile.</p>
+
             Broj rezultata: {{ $users->count() }}
 
             @if ($users->count())
@@ -134,7 +136,7 @@
 
             $(`select:not([name=search_field]),
                 input:not([name=search_query])
-            `).on('change', function () {
+            `, form).on('change', function () {
                 form.submit();
             });
 
