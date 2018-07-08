@@ -47,6 +47,10 @@ class Topic extends Model {
     public function scopeNewerTopics($query) {
         return $query->where('updated_at', '>', Carbon::now()->subDays((int)config('custom.recent_topic_days')));
     }
+
+    public function scopeOlderTopics($query) {
+        return $query->where('updated_at', '<=', Carbon::now()->subDays((int)config('custom.recent_topic_days')));
+    }
     //endregion
 
     //region Relationships
