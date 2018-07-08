@@ -29,7 +29,7 @@
             {{ config('app.name') }}
         </title>
 
-        <link rel="icon" href="{{ asset("favicon.ico") }}">
+        <link rel="icon" href="{{ asset('images/favicon.gif') }}">
 
         <link rel="stylesheet" href="{{ asset('fonts/Raleway/Raleway.css') }}">
 
