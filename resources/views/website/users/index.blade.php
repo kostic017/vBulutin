@@ -83,49 +83,56 @@
             Broj rezultata: {{ $users->count() }}
 
             @if ($users->count())
-                <table class="table table-light table-striped table-hover users" data-formid="dynamic-users">
-                    <thead class="thead-dark text-nowrap">
-                        <tr>
-                            @foreach ($show_columns as $_column => $_shown)
-                                @if ($_shown)
-                                    @th_sort
-                                @endif
-                            @endforeach
-                            @auth
-                                <th>&nbsp;</th>
-                            @endauth
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $_user)
+                <div class="top-scrollbar">
+                    <div></div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-light table-striped table-hover users" data-formid="dynamic-users">
+                        <thead class="thead-dark text-nowrap">
                             <tr>
+                                @auth
+                                    <th>&nbsp;</th>
+                                @endauth
                                 @foreach ($show_columns as $_column => $_shown)
                                     @if ($_shown)
-                                        <td><div class="table-cell">
-                                            @switch ($_column)
-                                                @case('sex')
-                                                    {{ $_user->{$_column} ? trans('db.sex.' . $_user->{$_column}) : '' }}
-                                                    @break
-                                                @case('about')
-                                                @case('signature')
-                                                    {!! BBCode::parse($_user->{$_column}) !!}
-                                                    @break
-                                                @default
-                                                    {{ $_user->{$_column} }}
-                                                    @break
-                                            @endswitch
-                                        </div></td>
+                                        @th_sort
                                     @endif
                                 @endforeach
-                                @auth
-                                    <td>
-                                        <a href="{{ route('users.show', [$_user->username]) }}" class="btn btn-primary" title="Prikaži profil"><i class="fas fa-eye"></i></a>
-                                    </td>
-                                @endauth
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $_user)
+                                <tr>
+                                    @auth
+                                        <td>
+                                            <a href="{{ route('users.show', [$_user->username]) }}" class="btn btn-primary" title="Prikaži profil"><i class="fas fa-eye"></i></a>
+                                        </td>
+                                    @endauth
+                                    @foreach ($show_columns as $_column => $_shown)
+                                        @if ($_shown)
+                                            <td>
+                                                <div{!! $_column === 'about' || $_column === 'signature' ? ' class="table-cell"' : '' !!}>
+                                                    @switch ($_column)
+                                                        @case('sex')
+                                                            {{ $_user->{$_column} ? trans('db.sex.' . $_user->{$_column}) : '' }}
+                                                            @break
+                                                        @case('about')
+                                                        @case('signature')
+                                                            {!! BBCode::parse($_user->{$_column}) !!}
+                                                            @break
+                                                        @default
+                                                            {{ $_user->{$_column} }}
+                                                            @break
+                                                    @endswitch
+                                                </div>
+                                            </td>
+                                        @endif
+                                    @endforeach
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             @endif
         </div>
     </div>
@@ -143,6 +150,16 @@
             $("button[name=clear-search]").on('click', function() {
                 $("input[name=search_query]").val("");
                 form.submit();
+            });
+
+            const topScrollbar = $(".top-scrollbar");
+            const tableDiv = $(".table-responsive");
+            $("div", topScrollbar).width($("table", tableDiv).width());
+            topScrollbar.scroll(function() {
+                tableDiv.scrollLeft(topScrollbar.scrollLeft());
+            });
+            tableDiv.scroll(function() {
+                topScrollbar.scrollLeft(tableDiv.scrollLeft());
             });
         });
     </script>

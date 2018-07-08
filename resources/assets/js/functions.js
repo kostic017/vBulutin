@@ -6,7 +6,7 @@ function is_not_empty(string) {
     return string.trim().length > 0;
 }
 
-function isEqualToAnyWord(haystack, needle, ignoreCase = true) {
+function is_equal_to_any_word(haystack, needle, ignoreCase = true) {
     if (ignoreCase)
         needle = needle.toLowerCase();
     for (let word of haystack.split(" ")) {
@@ -16,10 +16,4 @@ function isEqualToAnyWord(haystack, needle, ignoreCase = true) {
             return true;
     }
     return false;
-}
-
-function appendDataToForm(form, name, value) {
-    if (is_not_empty(value)) {
-        form.append($("<input>").attr("type", "hidden").attr("name", name).val(value));
-    }
 }

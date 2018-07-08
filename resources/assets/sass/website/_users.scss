@@ -7,10 +7,6 @@ form.profile fieldset {
     @include margins-but(last, bottom, $m-main);
 }
 
-table.users .about {
-    width: 100%;
-}
-
 .edit-profile {
     padding: 10px;
 }
@@ -23,12 +19,6 @@ table.users .about {
 
     dl {
         margin-left: $m-main;
-    }
-}
-
-@media screen and (max-width: 630px) {
-    table.users .about {
-        display: none;
     }
 }
 

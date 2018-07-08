@@ -108,9 +108,28 @@ span.invalid-feedback {
     display: block;
 }
 
+.top-scrollbar {
+    margin-top: 1rem;
+    overflow-x: scroll;
+
+    div {
+        height: 1px;
+    }
+}
+
+.table-responsive {
+    overflow-x: scroll;
+
+    table {
+        margin: 0;
+    }
+}
+
 .table-cell {
     overflow-y: auto;
+    min-width: 150px;
     max-height: 150px;
+    word-break: break-word;
 }
 
 .dropdown-login {
