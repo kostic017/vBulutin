@@ -8,10 +8,11 @@ Route::group(['domain' => config('app.domain')], function() {
 
     Route::get('users', 'UsersController@index')->name('users.index.public');
     Route::get('users/{username}/show', 'UsersController@show')->name('users.show');
+    Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
 
     Route::get('directories/{slug}/show', 'DirectoriesController@show')->name('directories.show');
-
     Route::get('directories/{slug}/create-board', 'BoardsController@create')->name('boards.create');
+
     Route::post('boards', 'BoardsController@store')->name('boards.store');
 
     Route::post('topics', 'TopicsController@store')->name('topics.store');
@@ -30,7 +31,7 @@ Route::group(['domain' => config('app.domain')], function() {
 });
 
 Route::group([
-    'middleware' => 'viewshare.board',
+    'middleware' => ['viewshare.board', 'banned'],
     'domain' => '{board_address}.' . config('app.domain'),
 ], function () {
     Route::get('/', 'BoardsController@show')->name('boards.show');
@@ -62,8 +63,8 @@ Route::group([
 
         Route::post('topics/{id}/lock', 'TopicsController@lock')->name('topics.lock');
 
-        Route::post('users/{id}/ban', 'UsersController@ban')->name('users.ban');
         Route::post('reports/{table}/generate', 'ReportsController@generate')->name('reports.generate');
+
         Route::post('forums/{id}/restore', 'ForumsController@restore')->name('forums.restore');
         Route::post('categories/{id}/restore', 'CategoriesController@restore')->name('categories.restore');
 

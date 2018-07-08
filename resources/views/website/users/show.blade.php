@@ -46,16 +46,72 @@
                         <dd>{{ $user->signature ?: '-' }}</dd>
                     </dl>
                 </section>
-                @if (Auth::user()->is_master || Auth::id() === $user->id)
+                @if ($v_user->is_master || $v_user->id === $user->id)
                     <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
                 @endif
-                @if (Auth::user()->is_master && Auth::id() !== $user->id && !$user->is_banished)
+                @if ($v_user->is_master && $v_user->id !== $user->id && !$user->is_banished)
                     <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
                         @csrf
                         <button class="btn btn-danger">Progni</button>
                     </form>
                 @endif
+                @if ($v_user->id !== $user->id && $v_user->owned_boards->count())
+                    <p class="mt-3 mb-0">Selektujte forum i pomoću strelica ga premestite u željeno polje.</p>
+                    <form method="post" action="{{ route('users.ban', [$user->id]) }}">
+                        @csrf
+
+                        <div class="banning">
+                            <div class="form-group not-banned-on">
+                                <select id="not-banned-on" name="not_banned_on[]" multiple class="form-control">
+                                    @foreach ($v_user->owned_boards as $_board)
+                                        @if (!$user->is_banned_on($_board->id))
+                                            <option value="{{ $_board->id }}">{{ $_board->title }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <label for="not-banned-on">Nije banovan na</label>
+                            </div>
+                            <div class="buttons">
+                                <button id="move-right" type="button" class="btn btn-warning">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </button>
+                                <button id="move-left" type="button" class="btn btn-warning">
+                                    <i class="fas fa-long-arrow-alt-left"></i>
+                                </button>
+                            </div>
+                            <div class="form-group banned-on">
+                                <select id="banned-on" name="banned_on[]" multiple class="form-control">
+                                    @foreach ($v_user->owned_boards as $_board)
+                                        @if ($user->is_banned_on($_board->id))
+                                            <option value="{{ $_board->id }}">{{ $_board->title }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <label for="banned-on">Banovan je na</label>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Primeni</button>
+                        </div>
+                    </form>
+                @endif
             </div>
         </div>
     </div>
+
+    <script>
+        $(function () {
+            const bannedOn = $("#banned-on");
+            const notBannedOn = $("#not-banned-on");
+
+            $("#move-right").click(function() {
+                $("option:selected", notBannedOn).appendTo(bannedOn);
+            });
+
+            $("#move-left").click(function() {
+                $("option:selected", bannedOn).appendTo(notBannedOn);
+            });
+        });
+    </script>
 @stop

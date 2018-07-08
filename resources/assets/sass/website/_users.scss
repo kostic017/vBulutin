@@ -22,6 +22,34 @@ form.profile fieldset {
     }
 }
 
+.banning {
+    display: flex;
+
+    .form-group {
+        width: 100%;
+        display: block;
+
+        &.not-banned-on {
+            margin-right: 10px;
+        }
+
+        &.banned-on {
+            margin-left: 10px;
+
+            label {
+                float: right;
+            }
+        }
+    }
+
+    .buttons {
+        button {
+            display: block;
+            @include margins-but(last, bottom, 10px);
+        }
+    }
+}
+
 @media screen and (max-width: 400px) {
     table.users {
         td {

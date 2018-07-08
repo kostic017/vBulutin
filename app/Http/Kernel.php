@@ -34,8 +34,8 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \App\Http\Middleware\LogoutUser::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\LogoutUser::class,
         ],
 
         'api' => [
@@ -52,16 +52,17 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'admin.board' => \App\Http\Middleware\AdminBoard::class,
+        'banned' => \App\Http\Middleware\RedirectIfBanned::class,
+        'admin.master' => \App\Http\Middleware\AdminMaster::class,
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'viewshare.board' => \App\Http\Middleware\ViewShareBoard::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin.board' => \App\Http\Middleware\AdminBoard::class,
-        'admin.master' => \App\Http\Middleware\AdminMaster::class,
-        'viewshare.board' => \App\Http\Middleware\ViewShareBoard::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
     ];
 }

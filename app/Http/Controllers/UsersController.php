@@ -10,6 +10,7 @@ use Validator;
 use App\Post;
 use App\User;
 use App\Topic;
+use App\BannedUser;
 
 class UsersController extends Controller {
 
@@ -88,9 +89,11 @@ class UsersController extends Controller {
     }
 
     public function show($username) {
-        if (Auth::check()) {
+        if ($v_user = Auth::user()) {
             $user = User::where('username', $username)->firstOrFail();
-            return view('website.users.show')->with('user', $user);
+            return view('website.users.show')
+                ->with('user', $user)
+                ->with('v_user', $v_user);
         } else {
             return alert_redirect(url()->previous(), 'info', __('auth.must-login'));
         }
@@ -166,14 +169,18 @@ class UsersController extends Controller {
         $user->is_banished = true;
         $user->save();
 
-        return alert_redirect(url()->previous(), 'success', "Korisnik $user->username je prognan sa foruma.");
+        return alert_redirect(route_user_show($user), 'success', "Korisnik $user->username je prognan sa foruma.");
     }
 
-    public function ban($username) {
-        // $user = User::where('username', $username)->firstOrFail();
-        // $user->is_banned = !$user->is_banned;
-        // $user->save();
-        // return redirect()->back();
+    public function ban($id) {
+        $request = request();
+        DB::transaction(function () use ($id, $request) {
+            foreach ($request->not_banned_on ?? [] as $not_banned_on)
+                BannedUser::where('user_id', $id)->where('board_id', $not_banned_on)->delete();
+            foreach ($request->banned_on ?? [] as $banned_on)
+                BannedUser::create(['user_id' => $id, 'board_id' => $banned_on, 'banned_by' => Auth::id()]);
+        });
+        return alert_redirect(url()->previous(), 'success', __('db.updated'));
     }
 
 }
