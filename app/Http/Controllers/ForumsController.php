@@ -138,12 +138,18 @@ class ForumsController extends Controller {
     }
 
     public function show($board_address, $forum_slug) {
-        $forum = get_board($board_address)->forums()->where('forums.slug', $forum_slug)->firstOrFail();
+        $board = get_board($board_address);
+        $forum = $board->forums()->where('forums.slug', $forum_slug)->firstOrFail();
+
+        $topicsQ = $forum->topics();
+        if ($board->is_admin())
+            $topicsQ = $topicsQ->withTrashed();
+        $topics = $topicsQ->orderBy('updated_at', 'desc')->paginate();
 
         return view('public.forum')
             ->with('forum', $forum)
-            ->with('child_forums', $forum->children()->orderBy('position')->get())
-            ->with('topics', $forum->topics()->orderBy('updated_at', 'desc')->paginate());
+            ->with('topics', $topics)
+            ->with('child_forums', $forum->children()->orderBy('position')->get());
     }
 
     public function lock($board_address, $id) {

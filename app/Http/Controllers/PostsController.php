@@ -55,14 +55,17 @@ class PostsController extends Controller {
 
         if ($topic->posts()->count() == 0) {
             $topic->delete();
-            return route_forum_show($topic->forum);
+            return redirect(route_forum_show($topic->forum));
         }
 
         return redirect()->back();
     }
 
     public function restore($id) {
-        Post::onlyTrashed()->findOrFail($id)->restore();
+        $post = Post::onlyTrashed()->findOrFail($id);
+        if ($post->topic->trashed())
+            $post->topic->restore();
+        $post->restore();
         return redirect()->back();
     }
 

@@ -15,7 +15,11 @@ class TopicsController extends Controller {
 
     public function show($board_address, $topic_slug) {
         $board = get_board($board_address);
-        $topic = $board->topics()->where('topics.slug', $topic_slug)->firstOrFail();
+
+        $topicQ = $board->topics();
+        if ($board->is_admin())
+            $topicQ = $topicQ->withTrashed();
+        $topic = $topicQ->where('topics.slug', $topic_slug)->firstOrFail();
 
         $posts = ($board->is_admin() ? Post::withTrashed() : Post::query())
                 ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
@@ -27,6 +31,7 @@ class TopicsController extends Controller {
             'forum' => $topic->forum,
             'solution' => $topic->solution(),
             'last_post' => $topic->last_post(),
+            'first_post' => $topic->first_post(),
             'topic_starter' => $topic->starter(),
             'category' => $topic->forum->category,
             'parent_forum' => $topic->forum->parent,

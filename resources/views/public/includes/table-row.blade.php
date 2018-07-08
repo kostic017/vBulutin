@@ -26,7 +26,11 @@
     <td class="side-info count">
         @if (if_route('forums.show.public'))
             {{-- row = topic --}}
-            <strong>{{ $row->posts()->count() - 1 }}</strong> odgovora
+            @if (!$row->trashed())
+                <strong>{{ $row->posts()->count() - 1 }}</strong> odgovora
+            @else
+                <strong>Obrisana</strong>
+            @endif
         @else
             {{-- row = forum --}}
             <strong>{{ $row->topics()->get()->count() }}</strong> tema/e<br>

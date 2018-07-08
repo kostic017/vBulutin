@@ -28,7 +28,7 @@ class Post extends Model {
     }
 
     public function topic() {
-        return $this->belongsTo('App\Topic');
+        return $this->belongsTo('App\Topic')->withTrashed();
     }
 
     public function user() {

@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <th>{{ __('db.trashed') }}</th>
-                    <td>{{ $category->deleted_at ?: '-' }}</td>
+                    <td>{{ $category->trashed() ?: '-' }}</td>
                 </tr>
             </table>
         </div>

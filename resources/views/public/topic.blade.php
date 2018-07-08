@@ -45,7 +45,7 @@
     {{ $posts->links() }}
     @foreach ($posts as $_post)
         @php ($user = $_post->user)
-        <div class="post p-main {{ $_post->deleted_at ? 'deleted' : '' }} {{ $topic->solution_id === $_post->id ? 'solution' : ''}}" id="post-{{ $_post->id }}">
+        <div class="post p-main {{ $_post->trashed() ? 'deleted' : '' }} {{ $topic->solution_id === $_post->id ? 'solution' : ''}}" id="post-{{ $_post->id }}">
             <div class="d-flex flex-wrap">
                 <ul class="profile">
                     <li><a href="{{ route_user_show($user) }}">@avatar(medium)</a></li>
@@ -71,12 +71,13 @@
                     @auth
                         @if ($is_admin || (Auth::id() == $user->id && $last_post->id === $_post->id))
                             <li>
-                                @if ($_post->deleted_at)
+                                @if ($_post->trashed() && (!$_post->topic->trashed() || $first_post->id === $_post->id))
                                     <form method="post" action="{{ route('posts.restore', [$_post->id]) }}">
                                         @csrf
                                         <button type="submit" class="btn btn-link">Vrati</button>
                                     </form>
-                                @else
+                                @endif
+                                @if (!$_post->trashed())
                                     <form method="post" action="{{ route('posts.destroy', [$_post->id]) }}">
                                         @csrf
                                         {{ method_field('DELETE') }}
@@ -85,7 +86,7 @@
                                 @endif
                             </li>
                         @endif
-                        @if (!$_post->deleted_at && ($is_admin || Auth::id() == $topic_starter->id))
+                        @if (!$_post->trashed() && ($is_admin || Auth::id() == $topic_starter->id))
                             @if ($solution && $solution->id === $_post->id)
                                 <li><a href="#" class="unmarksolution">Ipak nije ovo rešenje</a></li>
                             @else

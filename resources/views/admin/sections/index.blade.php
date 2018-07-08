@@ -28,7 +28,7 @@
                 <div class="sortable-category">
 
                     <div class="category-header">
-                        <div class="title{{ $_category->deleted_at ? ' trashed' : '' }}">
+                        <div class="title{{ $_category->trashed() ? ' trashed' : '' }}">
                             <button class="collapse-category" data-action="collapse">
                                 <span class="minus"><i class="fas fa-minus"></i></span>
                                 <span class="plus"><i class="fas fa-plus"></i></span>
@@ -39,7 +39,7 @@
                             <a href="{{ route('categories.show.admin', [$board->address, $_category->slug]) }}" class="btn" title="Pregledaj kategoriju"><i class="fas fa-eye"></i></a>
                             <a href="{{ route('forums.create', [$board->address, 'category', $_category->id]) }}" class="btn" title="Novi forum"><i class="fas fa-file-alt"></i></a>
                             <a href="{{ route('categories.edit', [$board->address, $_category->slug]) }}" class="btn" title="Izmeni kategoriju"><i class="fas fa-pencil-alt"></i></a>
-                            @if ($_category->deleted_at)
+                            @if ($_category->trashed())
                                 <form class="d-inline-block" method="post" action="{{ route('categories.restore', [$board->address, $_category->id]) }}">
                                     @csrf
                                     <button type="submit" class="btn" title="Vrati kategoriju"><i class="fas fa-history"></i></button>
@@ -63,14 +63,14 @@
                             <ol class="dd-list">
                                 @foreach ($_category["parent_forums"] as $_parent_forum)
                                    <li class="dd-item" data-id="{{ $_parent_forum->id }}">
-                                        <div class="dd-handle {{ $_parent_forum->deleted_at ? 'trashed' : '' }}">
+                                        <div class="dd-handle {{ $_parent_forum->trashed() ? 'trashed' : '' }}">
                                             ({{ $_parent_forum->id }}) {{ $_parent_forum->title }}
                                         </div>
                                         <div class="actions">
                                             <a href="{{ route('forums.show.admin', [$board->address, $_parent_forum->slug]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
                                             <a href="{{ route('forums.create', [$board->address, 'parent_forum', $_parent_forum->id]) }}" class="btn" title="Novi potforum"><i class="fas fa-file-alt"></i></a>
                                             <a href="{{ route('forums.edit', [$board->address, $_parent_forum->slug]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
-                                            @if ($_parent_forum->deleted_at)
+                                            @if ($_parent_forum->trashed())
                                                 <form class="d-inline-block" method="post" action="{{ route('forums.restore', [$board->address, $_parent_forum->id]) }}">
                                                     @csrf
                                                     <button type="submit" class="btn" title="Vrati forum"><i class="fas fa-history"></i></button>
@@ -87,13 +87,13 @@
                                             <ol class="dd-list">
                                                 @foreach ($_parent_forum['child_forums'] as $_child_forum)
                                                     <li class="dd-item" data-id="{{ $_child_forum->id }}">
-                                                        <div class="dd-handle {{ $_child_forum->deleted_at ? ' trashed' : '' }}">
+                                                        <div class="dd-handle {{ $_child_forum->trashed() ? ' trashed' : '' }}">
                                                             ({{ $_child_forum->id }}) {{ $_child_forum->title }}
                                                         </div>
                                                         <div class="actions">
                                                             <a href="{{ route('forums.show.admin', [$board->address, $_child_forum->slug]) }}" class="btn" title="Pregledaj forum"><i class="fas fa-eye"></i></a>
                                                             <a href="{{ route('forums.edit', [$board->address, $_child_forum->slug]) }}" class="btn" title="Izmeni forum"><i class="fas fa-pencil-alt"></i></a>
-                                                            @if ($_child_forum->deleted_at)
+                                                            @if ($_child_forum->trashed())
                                                                 <form class="d-inline-block" method="post" action="{{ route('forums.restore', [$board->address, $_child_forum->id]) }}">
                                                                     @csrf
                                                                     <button type="submit" class="btn" title="Vrati forum"><i class="fas fa-history"></i></button>

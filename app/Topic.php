@@ -15,11 +15,11 @@ class Topic extends Model {
     }
 
     public function last_post() {
-        return $this->posts()->orderBy('created_at', 'desc')->firstOrFail();
+        return $this->posts()->withTrashed()->orderBy('created_at', 'desc')->firstOrFail();
     }
 
     public function first_post() {
-        return $this->posts()->orderBy('created_at', 'asc')->firstOrFail();
+        return $this->posts()->withTrashed()->orderBy('created_at', 'asc')->firstOrFail();
     }
 
     public function starter() {
