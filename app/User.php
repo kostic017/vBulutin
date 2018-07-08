@@ -52,6 +52,10 @@ class User extends Authenticatable {
     public function getOwnedBoardsAttribute() {
         return Board::where('owner_id', $this->id)->get();
     }
+
+    public function getBannedOnAttribute() {
+        return Board::whereIn('id', BannedUser::where('user_id', $this->id)->pluck('board_id'))->get();
+    }
     //endregion
 
     //region Scopes

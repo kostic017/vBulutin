@@ -5,6 +5,9 @@
         <div class="card-body">
             <div class="show-profile bgc-main p-main">
                 <h2 class="username">{{ $user->username }}</h2>
+                @if ($user->is_banished)
+                    <p class="text-danger"><strong>Korisnik je prognan.</strong></p>
+                @endif
                 <section>
                     <div class="avatar">
                         @avatar(big)
@@ -46,6 +49,22 @@
                         <dd>{{ $user->signature ?: '-' }}</dd>
                     </dl>
                 </section>
+                @if ($user->owned_boards->count())
+                    Vlasnik sledećih foruma:
+                    <ul>
+                        @foreach ($user->owned_boards as $_owned_board)
+                            <li><a href="{{ route('boards.show', [$_owned_board->address]) }}">{{ $_owned_board->title }}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
+                @if ($user->banned_on->count())
+                    Banovan na sledećim forumima:
+                    <ul>
+                        @foreach ($user->banned_on as $_banned_on)
+                            <li><a href="{{ route('boards.show', [$_banned_on->address]) }}">{{ $_banned_on->title }}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
                 @if ($v_user->is_master || $v_user->id === $user->id)
                     <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
                 @endif
