@@ -41,6 +41,6 @@ class GarbageCollect extends Command
     public function handle()
     {
         $count = ReadTopic::whereIn('topic_id', Topic::olderTopics()->pluck('id'))->delete();
-        \App\Helpers\Logger::log('info', 'artisan', "Removed $count topics from `read_topics` table.");
+        \App\Helpers\Logger::log("Removed $count topics from `read_topics` table.");
     }
 }

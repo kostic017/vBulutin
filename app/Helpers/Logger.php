@@ -25,7 +25,7 @@ class Logger
         fwrite($this->file, "[$date] $level@$method: $message\n");
     }
 
-    public static function log($level, $method, $message) {
+    public static function log($message, $level = 'info', $method = '') {
         if (!self::$logger) {
             self::$logger = new Logger('forum_log');
         }

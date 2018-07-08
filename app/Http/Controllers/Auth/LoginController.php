@@ -36,7 +36,7 @@ class LoginController extends Controller {
         }
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
-            Logger::log('error', __METHOD__, $request->ip() . ' has failed captcha.');
+            Logger::log($request->ip() . ' has failed captcha.', 'error', __METHOD__);
             return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
         }
 
