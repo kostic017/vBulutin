@@ -7,12 +7,13 @@
 
             <form class="profile" action="{{ route('users.update', [$user->username]) }}" method="post">
                 @csrf
+                {{ method_field('PUT') }}
 
                 <fieldset>
                     <div class="form-group">
                         <label for="username">Korisničko ime</label>
-                        <input type="text" id="username" class="form-control" value="{{ $user->username }}" aria-describedby="usernameHelp" disabled>
-                        <small id="usernameHelp" class="form-text text-muted">Isključivo administrator može da promeni.</small>
+                        <input type="text" id="username" name="username" class="form-control" value="{{ $user->username }}" aria-describedby="usernameHelp" {{ !Auth::user()->is_master ? 'disabled' : '' }}>
+                        <small id="usernameHelp" class="form-text text-muted">Isključivo master administratori mogu da promene.</small>
                     </div>
                     <div class="form-group form-check">
                         <input type="hidden" name="is_invisible" value="0">

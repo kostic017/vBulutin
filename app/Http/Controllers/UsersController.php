@@ -115,6 +115,9 @@ class UsersController extends Controller {
 
         $user->is_invisible = $request->is_invisible;
 
+        if (Auth::user()->is_master)
+            $user->username = $request->username;
+
         if ($user->email !== $request->email || is_not_empty($request->password) || is_not_empty($request->password_confirm)) {
             if (is_empty($request->password_current)) {
                 $errors['password_current'] = 'Niste upisali trenutnu šifru.';
