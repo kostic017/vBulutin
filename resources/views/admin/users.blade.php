@@ -57,9 +57,9 @@
                                             <form class="d-inline-block" method="post" action="{{ route('users.admin', [$board->address, $_user->id]) }}">
                                                 @csrf
                                                 @if ($_user->is_admin_of($board))
-                                                    <button class="btn btn-info">Daj admin</button>
-                                                @else
                                                     <button class="btn btn-danger">Oduzmi admin</button>
+                                                @else
+                                                    <button class="btn btn-info">Daj admin</button>
                                                 @endif
                                             </form>
                                         @elseif ($page === 'banned')
