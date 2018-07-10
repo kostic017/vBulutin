@@ -5,7 +5,7 @@
         <div class="card-body">
             <h2 class="card-title">Izveštaji</h2>
 
-            <div id="accordion">
+            <div id="accordion" class="reports-accordion">
                 <div class="card">
                     <div class="card-header p-1" id="headingCategories">
                         <h3 class="mb-0">
@@ -54,24 +54,6 @@
                         <div class="card-body">
                             <form method="post" action="{{ route('reports.generate', [$board->address, 'topics']) }}">
                                 @php ($columns = $topics)
-                                @include('admin.includes.report-form')
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header p-1" id="headingUsers">
-                        <h3 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseTopics">
-                                Korisnici
-                            </button>
-                        </h3>
-                    </div>
-                    <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordion">
-                        <div class="card-body">
-                            <form method="post" action="{{ route('reports.generate', [$board->address, 'users']) }}">
-                                @php ($columns = $users)
                                 @include('admin.includes.report-form')
                             </form>
                         </div>

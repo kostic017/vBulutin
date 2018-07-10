@@ -10,26 +10,30 @@ use PdfReport;
 class ReportsController extends Controller {
 
     public function index($board_address) {
+        $users = Schema::getColumnListing('users');
+
         return view('admin.reports')
             ->with('categories', Schema::getColumnListing('categories'))
             ->with('forums', Schema::getColumnListing('forums'))
-            ->with('topics', Schema::getColumnListing('topics'))
-            ->with('users', Schema::getColumnListing('users'));
+            ->with('topics', Schema::getColumnListing('topics'));
     }
 
     public function generate($board_address, $table) {
         $request = request();
 
-        if (!$request->columns) {
+        if (!$request->columns)
             return alert_redirect('error', url()->previous(), 'Odaberite bar jednu kolonu.');
-        }
 
-        $data = array_combine($request->columns, $request->sort);
 
-        $query = DB::table($table)->select($request->columns);
-        foreach ($data as $key => $value) {
+        $columns = $request->columns;
+        foreach ($columns as &$column)
+            $column = "$table.$column";
+
+        $data = array_combine($columns, $request->sort);
+        $query = get_board($board_address)->{$table}()->select();
+
+        foreach ($data as $key => $value)
             $query = $query->orderBy($key, $value);
-        }
 
         return PdfReport::of($table, [], $query, $request->columns)
             ->setCss([
@@ -37,6 +41,6 @@ class ReportsController extends Controller {
                 'table tr td:first-child' => 'display: none',
                 'table tr th:first-child' => 'display: none',
             ])
-            ->download($table . '-report-' . Carbon::now());
+            ->download($table . '-report.' . Carbon::now()->format('d-m-y.H-i-s'));
     }
 }

@@ -25,6 +25,19 @@ table.show {
     margin-bottom: 0;
 }
 
+.reports-accordion {
+    table {
+        margin-bottom: 10px;
+    }
+
+    .btn-link {
+        width: 100%;
+        height: 100%;
+        display: block;
+        text-align: left;
+    }
+}
+
 .admin-actions {
     .form-control {
         width: auto;
