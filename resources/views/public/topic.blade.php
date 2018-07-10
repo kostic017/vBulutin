@@ -106,6 +106,8 @@
         <p>Tema je zaključana, te nije moguće odgovarati na nju.</p>
     @elseif ($forum->is_locked)
         <p>Tema se nalazi u zaključanom forumu, te nije moguće odgovorati na nju.</p>
+    @elseif ($topic->trashed())
+        <p>Tema je obrisana, te nije moguće odgovorati na nju.</p>
     @elseif (Auth::check())
         <form action="{{ route('posts.store') }}" method="post" id="scform">
             @csrf

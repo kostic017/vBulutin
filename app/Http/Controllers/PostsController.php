@@ -8,6 +8,7 @@ use Validator;
 
 use App\Post;
 use App\Topic;
+use App\ReadTopic;
 
 class PostsController extends Controller {
 
@@ -38,6 +39,7 @@ class PostsController extends Controller {
         }
 
         $topic->touch();
+        ReadTopic::where('topic_id', $topic->id)->delete();
 
         return redirect(route_topic_show($topic));
     }
