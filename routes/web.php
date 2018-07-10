@@ -21,8 +21,9 @@ Route::group(['domain' => config('app.domain')], function() {
     Route::resource('posts', 'PostsController')->only(['store', 'destroy']);
     Route::post('posts/{id}/restore', 'PostsController@restore')->name('posts.restore');
 
+    Route::resource('users', 'UsersController')->only(['edit', 'update']);
+
     Route::group(['middleware' => 'admin.master'], function () {
-        Route::resource('users', 'UsersController')->only(['edit', 'update']);
         Route::resource('directories', 'DirectoriesController')->only(['create', 'store', 'edit', 'update', 'destroy']);
 
         Route::post('users/{id}/banish', 'UsersController@banish')->name('users.banish');
