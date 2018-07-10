@@ -23,12 +23,12 @@ class PostsController extends Controller {
         }
 
         $topic = Topic::findOrFail($request->topic_id);
-        $post = $topic->last_post();
+        $last_post = $topic->last_post();
 
-        if (Auth::id() === $post->user->id) {
-            $post->content .= "\n\n[b]========== " . __('generic.update') . ' ' .
+        if (Auth::id() === $last_post->user->id && !$last_post->trashed()) {
+            $last_post->content .= "\n\n[b]========== " . __('generic.update') . ' ' .
                 Carbon::now()->toDateTimeString() . " ==========[/b]\n\n" . $request->content;
-            $post->save();
+            $last_post->save();
         } else {
             $post = new Post;
             $post->content = $request->content;
