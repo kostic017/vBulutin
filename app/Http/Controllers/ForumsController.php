@@ -34,6 +34,32 @@ class ForumsController extends Controller {
         return view('admin.sections.index', ['categories' => $categories]);
     }
 
+    public function show($board_address, $forum_slug) {
+        $board = get_board($board_address);
+        $forum = $board->forums()->where('forums.slug', $forum_slug)->firstOrFail();
+
+        // Ne dozvoli pristup ako je obrisan roditeljski forum ili kategorija.
+        if ($forum->parent_id)
+            $forum->parent()->firstOrFail();
+        $forum->category()->firstOrFail();
+
+        $topicsQ = $forum->topics();
+        if ($board->is_admin())
+            $topicsQ = $topicsQ->withTrashed();
+        $topics = $topicsQ->orderBy('updated_at', 'desc')->paginate();
+
+        return view('public.forum')
+            ->with('forum', $forum)
+            ->with('topics', $topics)
+            ->with('child_forums', $forum->children()->orderBy('position')->get());
+    }
+
+    public function show_admin($board_address, $forum_slug) {
+        $board = get_board($board_address);
+        $forum = $board->forums()->withTrashed()->where('forums.slug', $forum_slug)->firstOrFail();
+        return view('admin.sections.forums.show')->with('forum', $forum);
+    }
+
     public function edit($board_address, $slug) {
         return view('admin.sections.forums.edit')->with(
             'forum', get_board($board_address)->forums()->where('forums.slug', $slug)->firstOrFail()
@@ -129,27 +155,6 @@ class ForumsController extends Controller {
         $forum->save();
 
         return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', __('db.updated'));
-    }
-
-    public function show_admin($board_address, $forum_slug) {
-        $board = get_board($board_address);
-        $forum = $board->forums()->withTrashed()->where('forums.slug', $forum_slug)->firstOrFail();
-        return view('admin.sections.forums.show')->with('forum', $forum);
-    }
-
-    public function show($board_address, $forum_slug) {
-        $board = get_board($board_address);
-        $forum = $board->forums()->where('forums.slug', $forum_slug)->firstOrFail();
-
-        $topicsQ = $forum->topics();
-        if ($board->is_admin())
-            $topicsQ = $topicsQ->withTrashed();
-        $topics = $topicsQ->orderBy('updated_at', 'desc')->paginate();
-
-        return view('public.forum')
-            ->with('forum', $forum)
-            ->with('topics', $topics)
-            ->with('child_forums', $forum->children()->orderBy('position')->get());
     }
 
     public function lock($board_address, $id) {

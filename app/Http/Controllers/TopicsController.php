@@ -21,6 +21,12 @@ class TopicsController extends Controller {
             $topicQ = $topicQ->withTrashed();
         $topic = $topicQ->where('topics.slug', $topic_slug)->firstOrFail();
 
+        // Ne dozvoli pristup ako je obrisan forum ili kategorija.
+        if ($forum = $topic->forum()->firstOrFail())
+            if ($forum->parent_id)
+                $forum->parent()->firstOrFail();
+        $topic->category()->firstOrFail();
+
         $posts = ($board->is_admin() ? Post::withTrashed() : Post::query())
                 ->where('topic_id', $topic->id)->orderBy('created_at', 'asc')
                 ->paginate();
