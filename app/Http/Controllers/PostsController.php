@@ -27,7 +27,7 @@ class PostsController extends Controller {
 
         if (Auth::id() === $post->user->id) {
             $post->content .= "\n\n[b]========== " . __('generic.update') . ' ' .
-                Carbon::now()->toDateTimeString() . "==========[/b]\n\n" . $request->content;
+                Carbon::now()->toDateTimeString() . " ==========[/b]\n\n" . $request->content;
             $post->save();
         } else {
             $post = new Post;
