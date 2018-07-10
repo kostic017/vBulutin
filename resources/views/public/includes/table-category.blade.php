@@ -14,7 +14,7 @@
         </tr>
     @else
         @foreach ($parent_forums as $_parent_forum)
-            @include('public.includes.table-row', ['row' => $_parent_forum, 'child_forums' => $_parent_forum->children()->orderBy('position')->get()])
+            @include('public.includes.table-row', ['row' => $_parent_forum, 'row_type' => 'forum', 'child_forums' => $_parent_forum->children()->orderBy('position')->get()])
         @endforeach
     @endif
 </table>

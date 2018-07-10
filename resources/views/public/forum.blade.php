@@ -39,7 +39,7 @@
                 </div>
             </caption>
             @foreach ($child_forums as $_child_forum)
-                @include('public.includes.table-row', ['row' => $_child_forum])
+                @include('public.includes.table-row', ['row' => $_child_forum, 'row_type' => 'forum'])
             @endforeach
         </table>
     @endif
@@ -56,7 +56,7 @@
                 </div>
             </caption>
             @foreach ($topics as $_topic)
-                @include('public.includes.table-row', ['row' => $_topic, 'is_topic' => true])
+                @include('public.includes.table-row', ['row' => $_topic, 'row_type' => 'topic'])
             @endforeach
         </table>
         {{ $topics->links() }}
