@@ -48,7 +48,7 @@ class CategoriesController extends Controller {
         $category->board_id = $board->id;
         $category->save();
 
-        return alert_redirect(route('categories.show.admin', [$board_address, $category->slug]), 'success', __('db.stored'));
+        return alert_redirect(route('forums.index', [$board_address]), 'success', __('db.stored'));
     }
 
     public function update($board_address, $id) {

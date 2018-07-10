@@ -93,7 +93,7 @@ class ForumsController extends Controller {
 
         $forum->save();
 
-        return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', __('db.stored'));
+        return alert_redirect(route('forums.index', [$board_address]), 'success', __('db.stored'));
     }
 
     public function update($board_address, $id) {
