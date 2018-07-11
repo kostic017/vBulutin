@@ -21,8 +21,8 @@ class Logger
 
     private function add_record($level, $method, $message) {
         $level = strtoupper($level);
-        $date = Carbon::now()->toDateString();
-        fwrite($this->file, "[$date] $level@$method: $message\n");
+        $datetime = Carbon::now()->toDateTimeString();
+        fwrite($this->file, "[$datetime] $level@$method: $message\n");
     }
 
     public static function log($message, $level = 'info', $method = '') {
