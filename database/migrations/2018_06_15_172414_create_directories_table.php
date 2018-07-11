@@ -17,7 +17,7 @@ class CreateDirectoriesTable extends Migration
             $table->increments('id');
             $table->string('slug');
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
         });
     }
 

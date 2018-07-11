@@ -17,7 +17,7 @@ class Boards extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('address');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('is_visible')->default(false);
             $table->integer('owner_id');
             $table->integer('directory_id');
