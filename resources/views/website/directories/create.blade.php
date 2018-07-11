@@ -7,6 +7,7 @@
         </div>
         <div class="card-body">
             <form method="post" action="{{ route('directories.store') }}">
+                @csrf
                 <div class="form-group required">
                     <label for="title">Naslov</label>
                     <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" name="title" value="{{ old('title') }}">

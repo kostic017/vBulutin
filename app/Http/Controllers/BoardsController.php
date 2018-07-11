@@ -14,7 +14,7 @@ class BoardsController extends Controller {
         $board = get_board($address);
 
         if (!$board->is_visible) {
-            return alert_redirect(url()->previous(), 'info', 'Forum trenutno nije vidljiv.');
+            return alert_redirect(route('website.index'), 'info', 'Forum trenutno nije vidljiv.');
         }
 
         return view('public.index')->with('categories', $board->categories()->orderBy('position')->get());

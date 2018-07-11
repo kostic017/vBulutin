@@ -11,7 +11,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>
-            @if (if_uri_pattern('admin*'))
+            @if (if_uri_pattern('*admin*'))
                 Admin panel |
             @endif
             @if (isset($topic))

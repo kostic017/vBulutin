@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('email');
             $table->string('email_token')->nullable();
-            $table->integer('admin_of')->nullable();
             $table->boolean('is_master')->default(false);
             $table->boolean('is_invisible')->default(false);
             $table->boolean('is_banished')->default(false);

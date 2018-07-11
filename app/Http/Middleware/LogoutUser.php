@@ -26,7 +26,7 @@ class LogoutUser {
             }
 
             Auth::logout();
-            return alert_redirect(url()->previous(), $level, $message);
+            return alert_redirect('/', $level, $message);
         }
 
         return $next($request);

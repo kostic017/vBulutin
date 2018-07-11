@@ -13,6 +13,6 @@ class AdminBoard {
                 return $next($request);
             }
         }
-        return alert_redirect(url()->previous(), 'error', 'Nemate pravo da pristupite ovoj stranici.');
+        return alert_redirect('/', 'error', 'Nemate pravo da pristupite ovoj stranici.');
     }
 }

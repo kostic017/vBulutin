@@ -95,7 +95,9 @@
                                 <li><a href="#" class="marksolution" data-postid="{{ $_post->id }}">Označi kao rešenje</a></li>
                             @endif
                         @endif
-                        <li><a href="#" class="quotepost" data-postid="{{ $_post->id }}">Citiraj</a></li>
+                        @if (!($topic->trashed() || $topic->is_locked || $forum->is_locked))
+                            <li><a href="#" class="quotepost" data-postid="{{ $_post->id }}">Citiraj</a></li>
+                        @endif
                     @endauth
                     <li><a href="#top" class="back2top" title="Top">Top</a></li>
                 </ul>

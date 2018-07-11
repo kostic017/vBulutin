@@ -17,7 +17,7 @@
                     </div>
                     <div class="form-group form-check">
                         <input type="hidden" name="is_invisible" value="0">
-                        <input type="checkbox" name="is_invisible" class="form-check-input" id="is_invisible" {{ $user->is_invisible ? 'checked' : '' }}>
+                        <input type="checkbox" name="is_invisible" class="form-check-input" id="is_invisible" {{ $user->is_invisible ? 'checked' : '' }} value="1">
                         <label class="form-check-label" for="is_invisible">Hoću da sam nevidljiv.</label>
                     </div>
                     <div class="form-group">
@@ -70,7 +70,7 @@
                         @if ($user->avatar)
                             <img src="{{ $user->avatar }}" alt="{{ $user->username }}" class="avatar avatar-medium">
                         @endif
-                        <input type="text" id="avatar" name="avatar" class="form-control" value="{{ $user->avatar }}" placeholder="URL do slike...">
+                        <input type="text" id="avatar" name="avatar" class="form-control mt-1" value="{{ $user->avatar }}" placeholder="URL do slike...">
                     </div>
                 </fieldset>
 

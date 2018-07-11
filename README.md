@@ -36,12 +36,6 @@ Potrebno je dodati hosts mapiranja i za njih. Nemoguće je jednostavno izlistati
 
 *Kako bi što više olakšao instalaciju i testiranje, po defaultu će se ipak koristiti poddirektorijumi (`http://pmf-web-forum.test/boards/matematika`), čak i ako to nije moja originalna zamisao.*
 
-*Sajt možete lako podeliti na lokalnoj mreži tako što ćete izvršiti sledeću komandu:*
-
-```bash
-$ php artisan serve --host 0.0.0.0 --port 8818
-```
-
 *Ako želite da koristite poddomene:*
 ```
 mv routes/web.php routes/web.subdirectories.php

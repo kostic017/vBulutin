@@ -12,6 +12,7 @@ use App\User;
 use App\Topic;
 use App\BoardAdmin;
 use App\BannedUser;
+use App\Notifications\ConfirmEmail;
 
 class UsersController extends Controller {
 
@@ -120,7 +121,7 @@ class UsersController extends Controller {
                 ->with('user', $user)
                 ->with('v_user', $v_user);
         } else {
-            return alert_redirect(url()->previous(), 'info', __('auth.must-login'));
+            return alert_redirect(route('users.index.public'), 'info', __('auth.must-login'));
         }
     }
 
@@ -132,7 +133,7 @@ class UsersController extends Controller {
             }
             return redirect(route_user_show($user));
         } else {
-            return alert_redirect(route(url()->previous()), 'info', __('auth.must-login'));
+            return alert_redirect(route('users.index.public'), 'info', __('auth.must-login'));
         }
     }
 
@@ -156,7 +157,7 @@ class UsersController extends Controller {
                     $user->to_logout = true;
                     $user->email = $request->email;
                     $user->email_token = str_random(30);
-                    $user->notify(new ConfirmEmail($user->email_token));
+                    $user->notify(new ConfirmEmail($user->id, $user->email_token));
                 }
 
                 if (is_not_empty($request->password) || is_not_empty($request->password_confirm)) {
@@ -209,7 +210,7 @@ class UsersController extends Controller {
             BoardAdmin::where('user_id', $id)->where('board_id', $board->id)->delete();
         }
 
-        return alert_redirect(url()->previous(), 'success', __('db.updated'));
+        return alert_redirect(route('users.index.admin', [$board_address, 'banned']), 'success', __('db.updated'));
     }
 
     public function admin($board_address, $id) {
@@ -222,7 +223,7 @@ class UsersController extends Controller {
             BoardAdmin::create(['user_id' => $id, 'board_id' => $board->id]);
         }
 
-        return alert_redirect(url()->previous(), 'success', __('db.updated'));
+        return alert_redirect(route('users.index.admin', [$board_address, 'admins']), 'success', __('db.updated'));
     }
 
     public function master($id) {

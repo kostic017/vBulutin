@@ -78,7 +78,7 @@ class CategoriesController extends Controller {
         $category->description = $request->description;
         $category->save();
 
-        return alert_redirect(route("categories.show.admin", [$board_address, $category->slug]), 'success', __('db.updated'));
+        return redirect(route('forums.index', [$board_address]));
     }
 
     public function show_admin($board_address, $category_slug) {

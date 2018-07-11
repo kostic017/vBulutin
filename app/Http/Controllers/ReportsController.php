@@ -22,7 +22,7 @@ class ReportsController extends Controller {
         $request = request();
 
         if (!$request->columns)
-            return alert_redirect('error', url()->previous(), 'Odaberite bar jednu kolonu.');
+            return alert_redirect('error', route('reports.index', [$board_address]), 'Odaberite bar jednu kolonu.');
 
 
         $columns = $request->columns;

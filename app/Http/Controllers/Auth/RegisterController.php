@@ -35,7 +35,7 @@ class RegisterController extends Controller {
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
             Logger::log($request->ip() . ' has failed captcha.', 'error', __METHOD__);
-            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+            return alert_redirect(route('register'), 'error', __('auth.captcha-failed'));
         }
 
         event(new Registered($user = $this->create($request->all())));
@@ -66,7 +66,7 @@ class RegisterController extends Controller {
                 ->firstOrFail();
             $user->email_token = null;
             $user->save();
-            return alert_redirect(url()->previous(), 'success', __('auth.can-login'));
+            return alert_redirect('/', 'success', __('auth.can-login'));
         } catch (ModelNotFoundException $e) {
             Logger::log(request()->ip() . ' has failed to confirm his email address.', 'error', __METHOD__);
         }

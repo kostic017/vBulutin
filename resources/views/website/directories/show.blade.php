@@ -33,11 +33,13 @@
         @if (!Auth::check())
             <script>
                 $(function() {
-                    $('#create-forum').click(function(e){
+                    $("#create-forum").click(function(e){
                         e.stopPropagation();
+                        $(".navbar-collapse").collapse("show");
                         const dropdown = $("#dropdown-login");
-                        if ($('.dropdown-menu', dropdown).is(":hidden")){
-                            $('.dropdown-toggle', dropdown).dropdown('toggle');
+                        if ($(".dropdown-menu", dropdown).is(":hidden")){
+                            $(".dropdown-toggle", dropdown).dropdown("toggle");
+                            $("#login-email").focus();
                         }
                     });
                 });

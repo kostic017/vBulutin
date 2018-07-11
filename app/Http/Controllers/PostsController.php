@@ -24,12 +24,12 @@ class PostsController extends Controller {
         }
 
         $topic = Topic::findOrFail($request->topic_id);
-        $last_post = $topic->last_post();
+        $post = $topic->last_post();
 
-        if (Auth::id() === $last_post->user->id && !$last_post->trashed()) {
-            $last_post->content .= "\n\n[b]========== " . __('generic.update') . ' ' .
-                Carbon::now()->toDateTimeString() . " ==========[/b]\n\n" . $request->content;
-            $last_post->save();
+        if (Auth::id() === $post->user->id && !$post->trashed()) {
+            $date = Carbon::now()->toDateTimeString();
+            $post->content .= "\n\n[b]========== Ažuriranje " . extract_date($date) . " "  . extract_time($date) . " ==========[/b]\n\n" . $request->content;
+            $post->save();
         } else {
             $post = new Post;
             $post->content = $request->content;
@@ -41,7 +41,7 @@ class PostsController extends Controller {
         $topic->touch();
         ReadTopic::where('topic_id', $topic->id)->delete();
 
-        return redirect(route_topic_show($topic));
+        return redirect(route_topic_show($topic) . "#post-{$post->id}");
     }
 
     public function destroy($id) {
@@ -60,6 +60,9 @@ class PostsController extends Controller {
             return redirect(route_forum_show($topic->forum));
         }
 
+        $topic->updated_at = $topic->posts()->orderBy('created_at', 'desc')->firstOrFail()->created_at;
+        $topic->save();
+
         return redirect()->back();
     }
 
@@ -68,7 +71,8 @@ class PostsController extends Controller {
         if ($post->topic->trashed())
             $post->topic->restore();
         $post->restore();
-        return redirect()->back();
+        $post->topic->touch();
+        return redirect(route_topic_show($post->topic) . "#post-{$post->id}");
     }
 
 }

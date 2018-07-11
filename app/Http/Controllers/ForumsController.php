@@ -154,7 +154,7 @@ class ForumsController extends Controller {
 
         $forum->save();
 
-        return alert_redirect(route('forums.show.admin', [$board_address, $forum->slug]), 'success', __('db.updated'));
+        return redirect(route('forums.index', [$board_address]));
     }
 
     public function lock($board_address, $id) {

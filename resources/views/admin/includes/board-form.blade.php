@@ -1,7 +1,7 @@
 <div class="card-body">
     <form method="post" action="{{ if_route('boards.create') ? route('boards.store') : route('boards.update', [$board->address]) }}">
         @csrf
-        @if (if_route('admin.index'))
+        @if (if_route('admin.index'/*boards.edit*/))
             {{ method_field('PUT') }}
         @endif
 

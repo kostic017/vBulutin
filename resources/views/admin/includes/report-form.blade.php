@@ -1,4 +1,3 @@
-@csrf
 <p>Označite koja polja želite da budu prisutna u izveštaju, a onda označite da li i kako želite da sortirate po tom polju.</p>
 <table>
     @foreach ($columns as $_column)

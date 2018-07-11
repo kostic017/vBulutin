@@ -30,7 +30,7 @@ class ResetPasswordController extends Controller {
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
             \App\Helpers\Logger::log($request->ip() . ' has failed captcha.', 'error', __METHOD__);
-            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+            return alert_redirect(route('password.reset', [$request->token]), 'error', __('auth.captcha-failed'));
         }
 
         $response = $this->broker()->reset(

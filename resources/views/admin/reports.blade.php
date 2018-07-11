@@ -17,6 +17,7 @@
                     <div id="collapseCategories" class="collapse show" aria-labelledby="headingCategories" data-parent="#accordion">
                         <div class="card-body">
                             <form method="post" action="{{ route('reports.generate', [$board->address, 'categories']) }}">
+                                @csrf
                                 @php ($columns = $categories)
                                 @include('admin.includes.report-form')
                             </form>
@@ -35,6 +36,7 @@
                     <div id="collapseForums" class="collapse" aria-labelledby="headingForums" data-parent="#accordion">
                         <div class="card-body">
                             <form method="post" action="{{ route('reports.generate', [$board->address, 'forums']) }}">
+                                @csrf
                                 @php ($columns = $forums)
                                 @include('admin.includes.report-form')
                             </form>
@@ -53,6 +55,7 @@
                     <div id="collapseTopics" class="collapse" aria-labelledby="headingTopics" data-parent="#accordion">
                         <div class="card-body">
                             <form method="post" action="{{ route('reports.generate', [$board->address, 'topics']) }}">
+                                @csrf
                                 @php ($columns = $topics)
                                 @include('admin.includes.report-form')
                             </form>

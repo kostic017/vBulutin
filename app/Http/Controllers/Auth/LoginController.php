@@ -37,7 +37,7 @@ class LoginController extends Controller {
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
             Logger::log($request->ip() . ' has failed captcha.', 'error', __METHOD__);
-            return alert_redirect(url()->previous(), 'error', __('auth.captcha-failed'));
+            return alert_redirect('/', 'error', __('auth.captcha-failed'));
         }
 
         if ($user = User::where($this->username(), $request[$this->username()])->first()) {
@@ -51,8 +51,8 @@ class LoginController extends Controller {
         $this->incrementLoginAttempts($request);
 
         return ($user && is_not_empty($user->email_token)) ?
-            alert_redirect(url()->previous(), 'error', __('auth.not-confirmed')) :
-            alert_redirect(url()->previous(), 'error', __('auth.failed'));
+            alert_redirect('/', 'error', __('auth.not-confirmed')) :
+            alert_redirect('/', 'error', __('auth.failed'));
     }
 
     protected function authenticated(Request $request, $user) {
