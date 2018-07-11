@@ -30,11 +30,9 @@ Međutim, za identifikaciju različitih foruma na mreži se koriste poddomeni.
 http://<adresa-foruma>.<APP_DOMAIN>/ # http://matematika.pmf-web-forum.test/
 ```
 
-Potrebno je dodati hosts mapiranja i za njih. Nemoguće je jednostavno izlistati sve poddomene jer su dinamički, a pride Windows hosts fajl ne podržava wildcard znakove.
-
 ---
 
-*Kako bi što više olakšao instalaciju i testiranje, po defaultu će se ipak koristiti poddirektorijumi (`http://pmf-web-forum.test/boards/matematika`), čak i ako to nije moja originalna zamisao.*
+*Kako bi olakšao instalaciju i testiranje, po defaultu će se ipak koristiti poddirektorijumi (`http://pmf-web-forum.test/boards/matematika`).*
 
 *Ako želite da koristite poddomene:*
 ```
@@ -43,6 +41,8 @@ mv routes/web.subdomains.php routes/web.php
 ```
 
 ---
+
+Potrebno je dodati hosts mapiranja i za njih. Nemoguće je jednostavno izlistati sve poddomene jer su dinamički, a pride Windows hosts fajl ne podržava wildcard znakove.
 
 Program [Acrylic DNS Proxy](https://mayakron.altervista.org/) dolazi uz svoj hosts fajl koji podržava wildcard znakove i regularne izraze. Da bi radio kako treba, potrebno je podesiti Preffered DNS Server aktivnog mrežnog adaptera na `127.0.0.1`.
 
@@ -60,9 +60,9 @@ U direktorijumu gde ste instalirali Acrylic DNS Proxy pronađite *AcrylicHosts.t
 
 Restartujte servis pokretanjem *RestartAcrylicService.bat*.
 
-Instalacija je dovoljno komplikovana, te je podešavanje automatskog čistača đubreta opciono. Uvek ga možete ručno pokrenuti naredbom `php artisan garbagec`.
+Čistač đubreta se može pokretati ručno naredbom `php artisan garbagec`, a po želji možete konfigurisati da se poziva automatski. Kada jednom bude pokrenut, izvršavaće se svakog dana u ponoć.
 
-1. Pokrenite Task Scheduler (Start meni →  `taskschd.msc`).
+1. Otvorite Task Scheduler (Start meni →  `taskschd.msc`).
 1. Action meni → Create Task...
 1. Kartica General → upišite Name po želji.
 1. Kartica Triggers → New... → Begin the task: At log on for any user → OK.

@@ -71,17 +71,17 @@
                         <a class="btn btn-success" href="{{ route('users.edit', [$user->username]) }}">Izmeni profil</a>
                     @endif
 
-                    @if ($v_user->id !== $user->id && !$user->is_banished)
-                        @if ($v_user->is_master)
+                    @if ($v_user->id !== $user->id && $v_user->is_master)
+                        @if (!$user->is_banished)
                             <form class="d-inline-block" method="post" action="{{ route('users.master', [$user->id]) }}">
                                 @csrf
                                 <button class="btn btn-info">{{ $user->is_master ? 'Oduzmi master' : 'Daj master' }}</button>
                             </form>
-                            <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
-                                @csrf
-                                <button class="btn btn-danger">Progni</button>
-                            </form>
                         @endif
+                        <form class="d-inline-block" method="post" action="{{ route('users.banish', [$user->id]) }}">
+                            @csrf
+                            <button class="btn btn-danger">{{ $user->is_banished ? 'Vrati na forum' : 'Progni sa foruma' }}</button>
+                        </form>
                     @endif
                 @endif
             </div>
