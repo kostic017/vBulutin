@@ -163,6 +163,17 @@ Da bi mogao da se prijavi na sajt, korisnik mora da potvrdi registraciju pomoću
 
 Laravel dolazi uz kompleksan sistem za logovanje i u log fajlovima upisuje detaljne informacije o nastalim greškama. Ponekad je veoma teško snaći se u njima, tako da sam napravio veoma prostu log klasu kako bi povremeno beležio neke kratke poruke.
 
+## Čistač đubreta
+
+Čistač đubreta briše zastarele podatke iz baze podataka.
+
+Da li je neka tema pročitana ili nije pročitana od strane određenog korisnika određujem na sledeći način:
+
+1. Tema je pročitana ako je zastarela, tj. ako nije ažurirana više od `RECENT_TOPIC_DAYS` dana.
+1. Korisnik koji ima ID `user_id` je pročitao temu koja ima ID `topic_id` ako u tabeli `read_topics` postoji unos (`user_id`, `topic_id`).
+
+Jasno je da tabela `read_topics` može postati veoma glomazna ako postoji veliki broj korisnika i veliki broj tema. Zato i postoji granica od `RECENT_TOPIC_DAYS` dana, kako bi nakon isteka tog vremenskog perioda mogao koliko toliko osloboditi tabelu `read_topics` brišući redove koji se odnose na zastarele teme.
+
 # Skrinšotovi
 
 ![](other/readme/ss_pocetna.png)
