@@ -47,7 +47,7 @@
     {{ $posts->links() }}
     @foreach ($posts as $_post)
         @php ($user = $_post->user)
-        <div class="post p-main {{ $_post->trashed() ? 'deleted' : '' }} {{ $topic->solution_id === $_post->id ? 'solution' : ''}}" id="post-{{ $_post->id }}">
+        <div class="post p-main {{ $_post->trashed() ? 'trashed' : '' }} {{ $topic->solution_id === $_post->id ? 'solution' : ''}}" id="post-{{ $_post->id }}">
             <div class="d-flex flex-wrap">
                 <ul class="profile">
                     <li><a href="{{ route_user_show($user) }}">@avatar(medium)</a></li>

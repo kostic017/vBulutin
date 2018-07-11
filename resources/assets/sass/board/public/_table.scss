@@ -33,6 +33,10 @@
 
     tr {
         border: 1px solid $bc-main;
+
+        &.table-row {
+            height: 110px;
+        }
     }
 
     td {

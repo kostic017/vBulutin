@@ -1,4 +1,4 @@
-<tr class="table-row">
+<tr class="table-row {{ $row->trashed() ? 'trashed' : '' }}">
     <td class="icon">
         <img class="iconpost" src="{{ asset('images/forum_' . ($row->is_read() ? 'old' : 'new') . '.png') }}">
         @if ($row->is_locked ?? false)
