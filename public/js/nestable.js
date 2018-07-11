@@ -1,15 +1,9 @@
 $(function() {
     $(".dd").nestable({
-        maxDepth: 2,
-        scroll: false
-    });
-
-    $('.dd').on('change', function () {
-        /* on change event */
+        maxDepth: 2
     });
 
     $(".sortable-categories").sortable({
-        scroll: false,
         handle: ".category-header",
         connectWith: ".sortable-categories"
     });
@@ -25,7 +19,6 @@ $(function() {
 
         if ($(this).is(".minus")) {
             dds.hide();
-            console.log("hidden");
             btns.attr("data-action", "");
         } else {
             dds.show();

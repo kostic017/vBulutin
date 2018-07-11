@@ -1,10 +1,9 @@
 .main-table {
     width: 100%;
     font-size: 0.95em;
-    margin-top: $m-main;
+    margin-bottom: $m-main;
     border: 1px solid $bc-main;
     background-color: $bgc-main;
-    @include margins-but(last, bottom, $m-main);
 
     a {
         color: $c-maintablelink;
@@ -36,6 +35,14 @@
 
         &.table-row {
             height: 110px;
+        }
+
+        &.trashed {
+            opacity: 0.60;
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 

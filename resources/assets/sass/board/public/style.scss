@@ -15,11 +15,3 @@
     background-image: url('/images/icon_back_top.gif');
     @include no-text;
 }
-
-.trashed {
-    opacity: 0.60;
-
-    &:hover {
-        opacity: 1;
-    }
-}

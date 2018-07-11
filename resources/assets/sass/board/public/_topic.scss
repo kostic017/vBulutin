@@ -3,6 +3,15 @@
     background-color: $bgc-main;
     @include margins-but(last, bottom, $m-main);
 
+
+    &.trashed {
+        opacity: 0.60;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
     &.solution {
         outline: 7px dotted green;
     }

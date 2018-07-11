@@ -12,6 +12,7 @@ let mix = require('laravel-mix');
  */
 
 mix.sass('resources/assets/sass/app.scss', 'public/css/app.css');
+mix.sass('resources/assets/sass/board/admin/nestable.scss', 'public/css/nestable.css');
 mix.sass('resources/assets/sass/board/admin/style.scss', 'public/css/board-admin.css');
 mix.sass('resources/assets/sass/board/public/style.scss', 'public/css/board-public.css');
 mix.sass('resources/assets/sass/website/style.scss', 'public/css/website.css');

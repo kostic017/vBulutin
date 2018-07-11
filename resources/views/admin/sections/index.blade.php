@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('css/nestable.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/jquery-ui/jquery-ui.min.css') }}">
 @stop
 
