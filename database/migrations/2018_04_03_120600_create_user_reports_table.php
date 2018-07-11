@@ -18,7 +18,6 @@ class CreateUserReportsTable extends Migration
             $table->text('reason');
             $table->integer('user_id');
             $table->integer('post_id');
-            $table->timestamp('recorded_at')->useCurrent();
         });
     }
 

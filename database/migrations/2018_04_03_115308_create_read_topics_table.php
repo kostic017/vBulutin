@@ -17,7 +17,6 @@ class CreateReadTopicsTable extends Migration
             $table->increments('id');
             $table->integer('topic_id');
             $table->integer('user_id');
-            $table->timestamp('recorded_at')->useCurrent();
         });
     }
 
@@ -28,6 +27,6 @@ class CreateReadTopicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('track_topics');
+        Schema::dropIfExists('read_topics');
     }
 }
