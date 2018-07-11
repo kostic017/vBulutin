@@ -45,4 +45,9 @@ class AjaxController extends Controller {
         return "[quote={$user->username}]{$post->content}[/quote]";
     }
 
+    public function address() {
+        $board_address = request('board_address');
+        return route('boards.show', [$board_address]);
+    }
+
 }

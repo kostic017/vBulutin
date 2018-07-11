@@ -34,16 +34,23 @@ Potrebno je dodati hosts mapiranja i za njih. Nemoguće je jednostavno izlistati
 
 ---
 
-*Za potrebe testiranja možete jednostavno ručno ubaciti par mapiranja u hosts fajl i time žavršiti sa instalacijom.*
+*Kako bi što više olakšao instalaciju i testiranje, po defaultu će se ipak koristiti poddirektorijumi (`http://pmf-web-forum.test/boards/matematika`), čak i ako to nije moja originalna zamisao.*
 
+*Sajt možete lako podeliti na lokalnoj mreži tako što ćete izvršiti sledeću komandu:*
+
+```bash
+$ php artisan serve --host 0.0.0.0 --port 8818
 ```
-127.0.0.1    pmf-web-forum.test
-127.0.0.1    forum1.pmf-web-forum.test forum2.pmf-web-forum.test
+
+*Ako želite da koristite poddomene:*
+```
+mv routes/web.php routes/web.subdirectories.php
+mv routes/web.subdomains.php routes/web.php
 ```
 
 ---
 
-Program [Acrylic DNS Proxy](https://mayakron.altervista.org/) dolazi uz svoj hosts fajl koji podržava wildcard znakove i regularne izraze. Da bi radio kako treba, potrebno je podesiti Preffered DNS Server aktivnog mrežnog adaptera na `127.0.0.1`. 
+Program [Acrylic DNS Proxy](https://mayakron.altervista.org/) dolazi uz svoj hosts fajl koji podržava wildcard znakove i regularne izraze. Da bi radio kako treba, potrebno je podesiti Preffered DNS Server aktivnog mrežnog adaptera na `127.0.0.1`.
 
  * [Windows 7](https://mayakron.altervista.org/wikibase/show.php?id=AcrylicWindows7Configuration)
  * [Windows 8](https://mayakron.altervista.org/wikibase/show.php?id=AcrylicWindows8Configuration)
@@ -96,7 +103,7 @@ U većini aspekata je prisutan neki vid hijerarhijske organizacije.
 
 ---
 
-*Na Internetu se često termin "forum" koristi da označi dva različita pojma, a iz konteksta se zaključuje o čemu se radi. U PHP kodu uvek jasno odvajam `board` i `forum`.* 
+*Na Internetu se često termin "forum" koristi da označi dva različita pojma, a iz konteksta se zaključuje o čemu se radi. U PHP kodu uvek jasno odvajam `board` i `forum`.*
 
 ---
 

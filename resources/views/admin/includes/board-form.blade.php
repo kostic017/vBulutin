@@ -13,7 +13,7 @@
         <div class="form-group required">
             <label for="address">Adresa</label>
             <input type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" id="address" name="address" aria-describedby="address-help" value="{{ old('address', isset($board) ? $board->address : 'adresa') }}">
-            <small id="address-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code>http://<span id="preview"></span>.{{ config('app.domain') }}/</code>. Dozvoljena su slova, brojevi, donja crta i crtica.</small>
+            <small id="address-help" class="form-text text-muted">Web adresa do Vašeg foruma će biti <code id="preview">momenat</code>. Dozvoljena su slova, brojevi, donja crta i crtica.</small>
             @include('includes.error', ['error_key' => 'address'])
         </div>
         <div class="form-group">
@@ -49,7 +49,9 @@
 <script>
     $(function() {
         $("input[name=address]").on('input', function() {
-            $("#preview").html($(this).val());
+            $.post('/ajax/address ', { board_address: $(this).val() }, function (url) {
+                $("#preview").html(url);
+            });
         }).trigger("input");
     });
 </script>
