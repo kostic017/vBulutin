@@ -12,34 +12,36 @@
         </div>
     </div>
 
-    @if ($is_admin || Auth::id() === $topic_starter->id)
-        <form id="solutionform" method="post" action="{{ route('topics.solution', [$topic->id]) }}">
-            @csrf
-            <input type="hidden" name="solution_id" value="{{ isset($solution) ? $solution->id : '' }}">
-        </form>
-        <a href="#" id="edittitle">Izmeni naslov</a>
-        <form id="edittitle-form" action="{{ route('topics.title', [$topic->id]) }}" method="post" class="m-2" style="display: none;">
-            @csrf
-            <div class="form-group d-flex flex-wrap">
-                <label for="title" class="sr-only">Novi naslov</label>
-                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $topic->title) }}">
-                <button type="submit" class="ml-1 btn btn-success">Izmeni</button>
-            </div>
-        </form>
-    @endif
+    @if (!$topic->trashed())
+        @if ($is_admin || Auth::id() === $topic_starter->id)
+            <form id="solutionform" method="post" action="{{ route('topics.solution', [$topic->id]) }}">
+                @csrf
+                <input type="hidden" name="solution_id" value="{{ isset($solution) ? $solution->id : '' }}">
+            </form>
+            <a href="#" id="edittitle">Izmeni naslov</a>
+            <form id="edittitle-form" action="{{ route('topics.title', [$topic->id]) }}" method="post" class="m-2" style="display: none;">
+                @csrf
+                <div class="form-group d-flex flex-wrap">
+                    <label for="title" class="sr-only">Novi naslov</label>
+                    <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $topic->title) }}">
+                    <button type="submit" class="ml-1 btn btn-success">Izmeni</button>
+                </div>
+            </form>
+        @endif
 
-    @if ($is_admin || !$topic->is_locked)
-        <div class="topbox-actions">
-            @if (!$topic->is_locked) <p><a href="#scform">Pošalji odgovor</a></p> @endif
-            @if ($is_admin)
-                <form action="{{ route('topics.lock', [$board->address, $topic->id]) }}" method="post">
-                    @csrf
-                    <button type="submit" class="btn btn-{{ $topic->is_locked ? 'success' : 'danger' }}">
-                        {{ $topic->is_locked ? 'Otključaj' : 'Zaključaj' }} temu
-                    </button>
-                </form>
-            @endif
-        </div>
+        @if ($is_admin || !$topic->is_locked)
+            <div class="topbox-actions">
+                @if (!$topic->is_locked) <p><a href="#scform">Pošalji odgovor</a></p> @endif
+                @if ($is_admin)
+                    <form action="{{ route('topics.lock', [$board->address, $topic->id]) }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-{{ $topic->is_locked ? 'success' : 'danger' }}">
+                            {{ $topic->is_locked ? 'Otključaj' : 'Zaključaj' }} temu
+                        </button>
+                    </form>
+                @endif
+            </div>
+        @endif
     @endif
 
     {{ $posts->links() }}
