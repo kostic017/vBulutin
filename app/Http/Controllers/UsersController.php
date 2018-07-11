@@ -192,11 +192,12 @@ class UsersController extends Controller {
 
     public function banish($id) {
         $user = User::findOrFail($id);
-        $user->is_banished = true;
-        $user->is_master = false;
+        $user->is_banished = !$user->is_banished;
+        if ($user->is_banished)
+            $user->is_master = false;
         $user->save();
 
-        return alert_redirect(route_user_show($user), 'success', "Korisnik $user->username je prognan sa foruma.");
+        return alert_redirect(route_user_show($user), 'success', "Korisnik $user->username je " . ($user->is_banished ? 'prognan sa foruma' : 'vraćen na forum') . '.');
     }
 
     public function ban($board_address, $id) {
