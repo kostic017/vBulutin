@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -18,6 +19,13 @@ class ForgotPasswordController extends Controller {
 
     public function sendResetLinkEmail(Request $request) {
         $this->validateEmail($request);
+
+        if ($user = User::where('email', $request->email)->first()) {
+            if ($user->email_token)
+                return alert_redirect(url()->previous(), 'error', __('auth.not-confirmed'));
+        } else {
+            return alert_redirect(url()->previous(), 'error', __('auth.failed'));
+        }
 
         if (is_captcha_set() && !validate_captcha($request->{'g-recaptcha-response'}, $request->ip())) {
             \App\Helpers\Logger::log($request->ip() . ' has failed captcha.', 'error', __METHOD__);
