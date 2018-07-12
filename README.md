@@ -60,15 +60,14 @@ U direktorijumu gde ste instalirali Acrylic DNS Proxy pronađite *AcrylicHosts.t
 
 Restartujte servis pokretanjem *RestartAcrylicService.bat*.
 
-Čistač đubreta se može pokretati ručno naredbom `php artisan garbagec`, a po želji možete konfigurisati da se poziva automatski. Kada jednom bude pokrenut, izvršavaće se svakog dana u ponoć.
+Čistač đubreta se može pokretati ručno naredbom `php artisan garbagec`, a po želji možete konfigurisati da se poziva automatski svakog dana u ponoć.
 
 1. Otvorite Task Scheduler (Start meni →  `taskschd.msc`).
 1. Action meni → Create Task...
 1. Kartica General → upišite Name po želji.
-1. Kartica Triggers → New... → Begin the task: At log on for any user → OK.
+1. Kartica Triggers → New... → Begin the task: On a schedule → Daily → u Start stavite 0:00:00 narednog dana → OK.
 1. Kartica Actions → New... → Action: Start a program → Browse → *php-web-forum/scheduler.bat* → OK.
 1. OK.
-1. Task Scheduler Library → pronađite novokreirani zadatak → desni klik → Run.
 
 # Testiranje
 
