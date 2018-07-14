@@ -15,18 +15,21 @@
             </div>
         </div>
         <div class="card-body">
-            @if ($boards->isEmpty())
-                <p>Još nema foruma u ovom direktorijumu.</p>
-            @else
-                @foreach ($boards as $_board)
+            @php($flag = false)
+            @foreach ($directory->boards as $_board)
+                @if ($_board->is_visible || $_board->is_admin())
+                    @php($flag = true)
                     <div class="board">
                         <h4>{{ $_board->title }}</h4>
                         @if (is_not_empty($_board->description))
                             <p>{!! BBCode::parse($_board->description) !!}</a></p>
                         @endif
-                        <a href="{{ route('boards.show', [$_board->address]) }}/">Poseti forum</a>
+                        <a href="{{ route('boards.show', [$_board->address]) }}/">Poseti forum</a> {{ !$_board->is_visible ? '(sakriven)' : '' }}
                     </div>
-                @endforeach
+                @endif
+            @endforeach
+            @if (!$flag)
+                Još nema foruma u ovom direktorijumu.
             @endif
         </div>
 

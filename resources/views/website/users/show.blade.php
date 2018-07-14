@@ -49,22 +49,34 @@
                         <dd>{{ $user->signature ?: '-' }}</dd>
                     </dl>
                 </section>
-                @if ($user->owner_of->count())
-                    Vlasnik sledećih foruma:
-                    <ul>
-                        @foreach ($user->owner_of as $_owned_board)
-                            <li><a href="{{ route('boards.show', [$_owned_board->address]) }}">{{ $_owned_board->title }}</a></li>
-                        @endforeach
-                    </ul>
-                @endif
-                @if ($user->banned_on->count())
-                    Banovan na sledećim forumima:
-                    <ul>
-                        @foreach ($user->banned_on as $_banned_on)
-                            <li><a href="{{ route('boards.show', [$_banned_on->address]) }}">{{ $_banned_on->title }}</a></li>
-                        @endforeach
-                    </ul>
-                @endif
+
+                Vlasnik sledećih foruma:
+                <ul>
+                    @php($flag = false)
+                    @foreach ($user->owner_of as $_owned_board)
+                        @if ($_owned_board->is_visible || $_owned_board->is_admin())
+                            @php($flag = true)
+                            <li><a href="{{ route('boards.show', [$_owned_board->address]) }}">{{ $_owned_board->title }}</a> {{ !$_owned_board->is_visible ? '(sakriven)' : '' }}</li>
+                        @endif
+                    @endforeach
+                    @if (!$flag)
+                        <li>nema</li>
+                    @endif
+                </ul>
+
+                Banovan na sledećim forumima:
+                <ul>
+                    @php($flag = false)
+                    @foreach ($user->banned_on as $_banned_on)
+                        @if ($_banned_on->is_visible || !$_banned_on->is_admin())
+                            @php($flag = true)
+                            <li><a href="{{ route('boards.show', [$_banned_on->address]) }}">{{ $_banned_on->title }}</a> {{ !$_banned_on->is_visible ? '(sakriven)' : '' }}</li>
+                        @endif
+                    @endforeach
+                    @if (!$flag)
+                        <li>nigde</li>
+                    @endif
+                </ul>
 
                 @if ($user->username !== 'admin' || $v_user->username === 'admin')
                     @if ($v_user->id === $user->id || $v_user->is_master)
