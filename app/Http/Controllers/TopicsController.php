@@ -16,6 +16,9 @@ class TopicsController extends Controller {
     public function show($board_address, $topic_slug) {
         $board = get_board($board_address);
 
+        if (!$board->is_admin() && !$board->is_visible)
+            return alert_redirect(route('website.index'), 'info', 'Forum trenutno nije vidljiv.');
+
         $topicQ = $board->topics();
         if ($board->is_admin())
             $topicQ = $topicQ->withTrashed();

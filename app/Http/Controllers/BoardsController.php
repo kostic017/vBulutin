@@ -13,9 +13,8 @@ class BoardsController extends Controller {
     public function show($address) {
         $board = get_board($address);
 
-        if (!$board->is_visible) {
+        if (!$board->is_admin() && !$board->is_visible)
             return alert_redirect(route('website.index'), 'info', 'Forum trenutno nije vidljiv.');
-        }
 
         return view('public.index')->with('categories', $board->categories()->orderBy('position')->get());
     }

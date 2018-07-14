@@ -36,6 +36,10 @@ class ForumsController extends Controller {
 
     public function show($board_address, $forum_slug) {
         $board = get_board($board_address);
+
+        if (!$board->is_admin() && !$board->is_visible)
+            return alert_redirect(route('website.index'), 'info', 'Forum trenutno nije vidljiv.');
+
         $forum = $board->forums()->where('forums.slug', $forum_slug)->firstOrFail();
 
         // Ne dozvoli pristup ako je obrisan roditeljski forum ili kategorija.

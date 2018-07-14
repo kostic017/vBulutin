@@ -10,6 +10,21 @@ use App\Category;
 
 class CategoriesController extends Controller {
 
+    public function show($board_address, $category_slug) {
+        $board = get_board($board_address);
+
+        if (!$board->is_admin() && !$board->is_visible)
+            return alert_redirect(route('website.index'), 'info', 'Forum trenutno nije vidljiv.');
+
+        $category = $board->categories()->where('slug', $category_slug)->firstOrFail();
+        return view('public.category')->with('category', $category);
+    }
+
+    public function show_admin($board_address, $category_slug) {
+        $category = get_board($board_address)->categories()->withTrashed()->where('categories.slug', $category_slug)->firstOrFail();
+        return view('admin.sections.categories.show')->with('category', $category);
+    }
+
     public function edit($board_address, $slug) {
         return view('admin.sections.categories.edit')->with(
             'category', get_board($board_address)->categories()->where('categories.slug', $slug)->firstOrFail()
@@ -79,16 +94,6 @@ class CategoriesController extends Controller {
         $category->save();
 
         return redirect(route('forums.index', [$board_address]));
-    }
-
-    public function show_admin($board_address, $category_slug) {
-        $category = get_board($board_address)->categories()->withTrashed()->where('categories.slug', $category_slug)->firstOrFail();
-        return view('admin.sections.categories.show')->with('category', $category);
-    }
-
-    public function show($board_address, $category_slug) {
-        $category = get_board($board_address)->categories()->where('slug', $category_slug)->firstOrFail();
-        return view('public.category')->with('category', $category);
     }
 
     public function destroy($board_address, $id) {
