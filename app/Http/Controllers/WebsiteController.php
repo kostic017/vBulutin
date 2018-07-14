@@ -18,6 +18,8 @@ class WebsiteController extends Controller {
             $refresh_online_minutes = config('custom.refresh_online_minutes');
 
             $visible_online = Activity::users($refresh_online_minutes)
+                ->distinct()
+                ->select('sessions.user_id', 'users.username')
                 ->join('users', 'sessions.user_id', 'users.id')
                 ->where('is_invisible', false)
                 ->get();
