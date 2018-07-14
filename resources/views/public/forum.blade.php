@@ -3,8 +3,13 @@
 @section('content')
     <div class="top-box">
         <ul class="path">
+            <li><a href="{{ route('website.index') }}">{{ config('app.name') }}</a></li>
+            <li><a href="{{ route('directories.show', [$board->directory->slug]) }}">{{ $board->directory->title }}</a></li>
+            <li><a href="{{ route('boards.show', [$board->address]) }}">{{ $board->title }}</a></li>
             <li><a href="{{ route_category_show($forum->category) }}">{{ $forum->category->title }}</a></li>
-            @if ($forum->parent) <li><a href="{{ route_forum_show($forum->parent) }}">{{ $forum->parent->title }}</a></li> @endif
+            @if ($forum->parent)
+                <li><a href="{{ route_forum_show($forum->parent) }}">{{ $forum->parent->title }}</a></li>
+            @endif
         </ul>
         <div class="page-info">
             <h2>{{ $forum->title }}</h2>

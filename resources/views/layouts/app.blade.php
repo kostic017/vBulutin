@@ -149,11 +149,7 @@
             <section class="footer">
                 <div>
                     @if (isset($board))
-                        @php($owner = $board->owner)
-                        <p>
-                            Vlasnik ovog foruma je <a href="{{ route_user_show($owner) }}">{{ $owner->username }}</a>.
-                            <a href="{{ route('website.index') }}">Napravi i ti svoj forum</a>
-                        </p>
+                        <p>Vlasnik ovog foruma je <a href="{{ route_user_show($board->owner) }}">{{ $board->owner->username }}</a></p>
                     @endif
                     Copyright &copy; {{ date('Y') }} Nikola Kostić
                 </div>
