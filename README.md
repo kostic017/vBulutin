@@ -32,13 +32,9 @@ http://<adresa-foruma>.<APP_DOMAIN>/ # http://matematika.pmf-web-forum.test/
 
 ---
 
-*Kako bi olakšao instalaciju i testiranje, po defaultu će se ipak koristiti poddirektorijumi (`http://pmf-web-forum.test/boards/matematika`).*
+*Kako bih olakšao instalaciju i testiranje, po defaultu će se ipak koristiti poddirektorijumi (http://pmf-web-forum.test/boards/matematika).*
 
-*Ako želite da koristite poddomene:*
-```
-mv routes/web.php routes/web.subdirectories.php
-mv routes/web.subdomains.php routes/web.php
-```
+*Stavite `APP_SUBDOMAINS` na `true` ako želite da koristite poddomene.*
 
 ---
 

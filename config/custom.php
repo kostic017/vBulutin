@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'domain' => env('APP_DOMAIN'),
+    'subdomains' => env('APP_SUBDOMAINS'),
+
     'pagination' => [
         'step' => env('PAGINATION_STEP'),
         'max' => env('PAGINATION_MAX'),

@@ -151,7 +151,7 @@ return [
     |
     */
 
-    'domain' => '.' . env('APP_DOMAIN'),
+    'domain' => env('APP_SUBDOMAINS') ? ('.' . env('APP_DOMAIN')) : env('SESSION_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------
