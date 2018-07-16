@@ -16,7 +16,7 @@
                             @endfor
                         <select>
                         @if ($per_page > 0)
-                            {{ $users->links() }}
+                            {{ $users->appends(request()->query())->links() }}
                         @endif
                     </section>
                     <section class="search">

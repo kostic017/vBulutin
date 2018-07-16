@@ -32,7 +32,7 @@
                 </section>
             </form>
 
-            {{ $users->links() }}
+            {{ $users->appends(['user_group' => $user_group])->links() }}
 
             @if (!$users->count())
                 Nema ničeg ovde...

@@ -24,7 +24,6 @@ class ReportsController extends Controller {
         if (!$request->columns)
             return alert_redirect('error', route('reports.index', [$board_address]), 'Odaberite bar jednu kolonu.');
 
-
         $columns = $request->columns;
         foreach ($columns as &$column)
             $column = "$table.$column";
